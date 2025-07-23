@@ -28,24 +28,25 @@ CREATE TABLE invite_codes (
 
 CREATE TABLE login_logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    ip_address VARCHAR(45) NOT NULL,
-    status ENUM('ok', 'wrong pass', 'wrong captcha', 'unknown') NOT NULL,
+    ip VARCHAR(45),
+    username VARCHAR(100),
+    status ENUM('ok', 'wrong pass', 'wrong captcha', 'unknown'),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+
 -- Ban List Table
+DROP TABLE IF EXISTS bans;
+
 CREATE TABLE bans (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    ip_address VARCHAR(45) NOT NULL,
-    username VARCHAR(50),
-    ban_time DATETIME NOT NULL,
-    is_active BOOLEAN DEFAULT 1,
-    user_id INT NULL,
+    username VARCHAR(100) NOT NULL,
+    user_id INT DEFAULT NULL,
+    is_active TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    expires_at DATETIME
 );
+
 
 
 

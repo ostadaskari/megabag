@@ -1,12 +1,17 @@
 <?php
+
 session_start();
 require_once("../db/db.php");
 
+//
 $errors = [];
 $username = trim($_POST['username'] ?? '');
 $password = trim($_POST['password'] ?? '');
 $captcha_input = trim($_POST['captcha'] ?? '');
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+
+
+
 
 // Track failures in session
 if (!isset($_SESSION['failures'])) $_SESSION['failures'] = [];
@@ -98,15 +103,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Load form if not POST
 include("../../design/views/auth/login_form.php");
 
-
 //  LOG LOGIN function
 function log_login_attempt($conn, $ip, $username, $status) {
     try {
         $stmt = $conn->prepare("INSERT INTO login_logs (ip, username, status) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $ip, $username, $status);
         $stmt->execute();
+        
     } catch (Exception $e) {
         // Fails silently if logging itself fails
     }
 }
+
 
