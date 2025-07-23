@@ -24,7 +24,7 @@
 <?php if ($role === 'admin'): ?>
     <h3>Admin Panel</h3>
     <ul>
-        <li><a href="#">Manage Users</a></li>
+        <li><a href="../manager/manage_users.php">Manage Users</a></li>
         <li><a href="#">System Settings</a></li>
     </ul>
 

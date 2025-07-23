@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head><title>Login</title>
@@ -14,4 +15,20 @@
 <a href="register.php">Register</a>
 </body>
 </html>
+
+<?php
+$message = $_GET['msg'] ?? null;
+$type = $_GET['type'] ?? 'info'; // 'success', 'error', etc.
+?>
+<?php if ($message): ?>
+<script>
+    Swal.fire({
+        icon: '<?php echo htmlspecialchars($type); ?>',
+        title: '<?php echo ucfirst($type); ?>',
+        text: '<?php echo htmlspecialchars($message); ?>',
+        timer: 3000,
+        showConfirmButton: false
+    });
+</script>
+<?php endif; ?>
 
