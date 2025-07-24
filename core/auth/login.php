@@ -13,14 +13,14 @@ $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
 
 
-// Track failures in session
+// set and Track failures in session for userrnames not IP. because we have just 2 ip in this projec
 if (!isset($_SESSION['failures'])) $_SESSION['failures'] = [];
 if (!isset($_SESSION['failures'][$username])) $_SESSION['failures'][$username] = 0;
 
-// Expire old bans
+// Expire old bans.. is_active column in database turn to 0 after 1hour )(expire date..)
 $conn->query("UPDATE bans SET is_active = 0 WHERE expires_at <= NOW()");
 
-// Check if user is already banned
+// Check if user is already banned or no...
 if ($username) {
     try {
         $ban_check = $conn->prepare("SELECT * FROM bans WHERE username = ? AND is_active = 1 AND expires_at > NOW() LIMIT 1");
@@ -44,7 +44,7 @@ if ($username) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
-        // Validate CAPTCHA
+        // Validate CAPTCHA and turn it to lowerCase letters for having better UX
         $input = preg_replace('/[^A-Za-z0-9]/', '', strtolower($captcha_input));
         $stored = preg_replace('/[^A-Za-z0-9]/', '', strtolower($_SESSION['captcha'] ?? ''));
         unset($_SESSION['captcha']);

@@ -7,7 +7,7 @@
 <body>
 
 <h2>Invite New User</h2>
-
+<h3><a href="../auth/dashboard.php">dashboard</a></h3>
 <?php foreach ($errors as $e): ?>
     <script>Swal.fire('Error', '<?php echo $e; ?>', 'error');</script>
 <?php endforeach; ?>

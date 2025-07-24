@@ -19,12 +19,12 @@ $noise_color = imagecolorallocate($image,100,120,180); //light blue
 //background 
 imagefilledrectangle($image,0,0, $width, $height, $bg_color);
 
-// نویز نقطه‌ای
+// dot noises
 for ($i = 0; $i < 300; $i++) {
     imagesetpixel($image, rand(0, $width), rand(0, $height), $noise_color);
 }
 
-// نویز خطی
+// line noises
 for ($i = 0; $i < 7; $i++) {
     imageline($image, rand(0,$width), rand(0,$height), rand(0,$width), rand(0,$height), $noise_color);
 }
