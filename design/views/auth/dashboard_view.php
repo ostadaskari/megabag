@@ -28,6 +28,7 @@
         <li><a href="../manager/manage_categories.php">Manage categories</a></li>
         <li><a href="../logs/login_logs.php">logins logs</a></li>
         <li><a href="../logs/bans.php">ban list logs</a></li>
+        <li><a href="../auth/profile.php">profile</a></li>
         <li><a href="#">products</a></li>
         <li><a href="#">categories</a></li>
     </ul>
