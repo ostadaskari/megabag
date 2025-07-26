@@ -55,10 +55,54 @@ CREATE TABLE categories (
     FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE CASCADE
 );
 
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(80) NOT NULL,
+    tag VARCHAR(60),
+    part_number VARCHAR(80) NOT NULL,        -- Renamed "p-n" to "part_number"
+    mfg VARCHAR(80),                         -- Manufacturer
+    qty MEDIUMINT UNSIGNED DEFAULT 0,        -- 0 to 16777215
+    company_cmt TEXT,                        --  company comment                                                                                                                                                                  
+    location VARCHAR(100),                   -- location adrress in stock 
+    status VARCHAR(80),                      -- You can later restrict this via ENUM or validation logic
 
+    user_id INT ,                    -- Submitter's user ID
+    category_id INT ,                -- Connects to the last child of categories
 
+    date_code ENUM('2024', '2024+'),         -- Extend as needed
+    recieve_code VARCHAR(80),
 
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -- Foreign Key Constraints
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+);
 
+CREATE TABLE images (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,       -- original filename
+    file_path VARCHAR(255) NOT NULL,       -- location on disk/server
+    file_size INT UNSIGNED,                -- file weight in bytes
+    file_extension VARCHAR(10),            -- helpful to enforce type (e.g., "jpg", "png", "pdf")
+    mime_type VARCHAR(50),                 -- useful for validation (image/png, application/pdf)
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- when the file was uploaded
+ 
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- automatically deletes images/PDFs when the product is deleted
+);
 
+CREATE TABLE pdfs (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,       -- original filename
+    file_path VARCHAR(255) NOT NULL,       -- location on disk/server
+    file_size INT UNSIGNED,                -- in bytes
+    file_extension VARCHAR(10),            -- helpful to enforce type (e.g., "jpg", "png", "pdf") 
+    mime_type VARCHAR(50),                 -- useful for validation (image/png, application/pdf) 
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,  -- when the file was uploaded
+
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- automatically deletes images/PDFs when the product is deleted
+);
 
 

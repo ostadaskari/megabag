@@ -12,22 +12,25 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
 try {
     //pagination 
     //set page number and limit items per page 
-    $limit= 3; //number of rows per page
-    $page= isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = 3;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
     $offset = ($page - 1) * $limit;
-            //COUNT TOTAL ROWS FOR LOGINS LOG
-    $result = $conn->query("SELECT COUNT(*) AS total FROM login_logs");
-    $totalRows = $result->fetch_assoc()['total'];
+    // Count total rows from the last 2 months only
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM login_logs WHERE created_at >= DATE_SUB(NOW(), INTERVAL 2 MONTH)");
+    $stmt->execute();
+    $stmt->bind_result($totalRows);
+    $stmt->fetch();
+    $stmt->close();
+
     $totalPages = ceil($totalRows / $limit);
 
-    $stmt = $conn->prepare("SELECT * FROM login_logs ORDER BY created_at DESC LIMIT ? OFFSET ?"); //select all logs in ordr of date and set limitation and offset for each page
-    $stmt->bind_param('ii', $limit, $offset); 
+        // Fetch logs only from the last 2 months
+    $stmt = $conn->prepare("SELECT * FROM login_logs WHERE created_at >= DATE_SUB(NOW(), INTERVAL 2 MONTH) ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    $stmt->bind_param('ii', $limit, $offset);
     $stmt->execute();
     $result = $stmt->get_result();
-    $logs = $result->fetch_all(MYSQLI_ASSOC); //the desired format for fetching data from a result set 'associative array'. This means that the array keys will be the names of the columns in your database table, making it easier to access data by column name rather than by numerical index
+    $logs = $result->fetch_all(MYSQLI_ASSOC);
 
-
-    
 } catch (Exception $e) {
     $error = "Failed to fetch logs.";
     $logs = [];

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form'] === 'info') {
         $update->bind_param("ssssi", $name, $family, $nickname, $email, $user_id);
         if ($update->execute()) {
             $success = "Profile updated successfully.";
-              // 🔁 Refresh user data from DB:
+              //  Refresh user data from DB:
                 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
                 $stmt->bind_param("i", $_SESSION['user_id']);
                 $stmt->execute();
