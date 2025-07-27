@@ -11,72 +11,94 @@
   <body>
 
     <!--########## navbar ###########-->
-    <div class="container px-0 div-navbar">
-      <div class="row d-flex flex-row" style="height: 100%;">
-        <div class="col-12">
-          <!-- main navbar-->
-          <nav class="navbar navbar-custom navbar-expand-lg d-flex flex-row justify-content-between" style="height: 100%;">
-            <div class="d-flex align-items-center">
-              <img src="./design/img/Logo-main.png" alt="logo" class="logo"/>
-              <h4 class="m-0 navbar-title text-center">
-                Pishro Pardaz Kahroba Electronics
-              </h4>
-            </div>
-
-            <div class="d-flex flex-row align-items-center div-clock-btn">
-
-              <!-- clock -->
-              <div class="d-flex clock-container">
-                <span id="clock" class="px-1"></span> |
-                <span id="date" class="px-1"></span>
-              </div>
-
-              <!-- btn-profile -->
-              <div>
-                <a class="text-white d-flex align-items-center dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg width="22" height="22" fill="#fff" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"></path>
-                </svg>
-               </a>
-
-                <ul class="dropdown-menu mt-2 shadow px-3 " aria-labelledby="userDropdown" style="min-width: 200px;">
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
-                      Sara
-                    <svg width="16" height="16" fill="var(--main-bg0-color)" class="bi bi-person-bounding-box mx-1" viewBox="0 0 16 16">
-                      <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"></path>
-                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
-                      </svg>
-                    </a>
-                  </li>
-                  <hr class="my-2" style="margin: auto; width: 100%;">
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
-                      Log Out
-                      <svg width="18" height="18" fill="#e35858" class="bi bi-box-arrow-right mx-1" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"></path>
-                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"></path>
-                      </svg>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+      <div class="container px-0 div-navbar">
+        <div class="row" style="height: 100%;">
+          <div class="col-12">
+            <!-- Main Navbar -->
+            <nav class="navbar navbar-custom navbar-expand-lg d-flex flex-column flex-md-row justify-content-between" style="height: 100%;">
               
-              <!-- btn humberger -->
-              <button class="btn d-md-none" type="button" id="toggleBtn">
-                <svg width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                </svg>
-              </button>
-            </div>
+              <!-- Top Section: Logo, Title, Hamburger Button -->
+              <div class="d-flex w-100 justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <img src="./design/img/Logo-main.png" alt="logo" class="logo" />
+                  <h4 class="m-0 navbar-title text-center ms-2">Pishro Pardaz Kahroba Electronics</h4>
+                </div>
+              </div>
 
-            <!-- navbar for mobile -->
-          </nav>
-          <!-- navbar -->
+              <!-- Bottom Section: Clock and Profile -->
+              <div class="d-flex flex-row align-items-center justify-content-md-end div-clock-btn p-0">
+                <!-- Profile Dropdown -->
+                <div>
+                  <a class="text-white d-flex align-items-center dropdown-toggle p-1" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg width="22" height="22" fill="#fff" class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
+                      <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1">
+                      </path>
+                    </svg>
+                  </a>
+
+                  <ul class="dropdown-menu mt-2 shadow px-2" aria-labelledby="userDropdown" style="min-width: 200px;">
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
+                        Sara
+                        <svg width="16" height="16" fill="var(--main-bg0-color)" class="bi bi-person-bounding-box mx-2"
+                          viewBox="0 0 16 16">
+                          <path
+                            d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5">
+                          </path>
+                          <path
+                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0">
+                          </path>
+                        </svg>
+                      </a>
+                    </li>
+                    <li>
+                       <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
+                        Sara2016@gmail.com
+                        <svg width="16" height="16" fill="var(--main-bg0-color)" class="bi bi-envelope-at-fill mx-2" viewBox="0 0 16 16">
+                            <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
+                            <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
+                          </svg>
+                      </a>
+                    </li>
+                    <hr class="my-2" style="margin: auto; width: 100%;">
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
+                        Log Out
+                        <svg width="18" height="18" fill="#e35858" class="bi bi-box-arrow-right mx-1" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z">
+                          </path>
+                          <path fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z">
+                          </path>
+                        </svg>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Clock -->
+                <div class="d-flex clock-container">
+                  <span id="clock" class="px-1"></span> |
+                  <span id="date" class="px-1"></span>
+                </div>
+
+                <!-- Hamburger Button (visible only on mobile) -->
+                <button class="btn d-md-none" type="button" id="toggleBtn">
+                  <svg width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                  </svg>
+                </button>
+
+              </div>
+              <!-- End of Bottom Section -->
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
     <!--########## end navbar ###########-->
 
 
@@ -89,11 +111,9 @@
             <!-- Dashboard -->
             <li class="menu-item" data-content="Dashbord">
               <a href="#" class="menu-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 4H10V10H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M14 4H20V10H14V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M4 14H10V20H4V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M14 14H20V20H14V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-border-outer" viewBox="0 0 16 16">
+                  <path d="M7.5 1.906v.938h1v-.938zm0 1.875v.938h1V3.78h-1zm0 1.875v.938h1v-.938zM1.906 8.5h.938v-1h-.938zm1.875 0h.938v-1H3.78v1zm1.875 0h.938v-1h-.938zm2.813 0v-.031H8.5V7.53h-.031V7.5H7.53v.031H7.5v.938h.031V8.5zm.937 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zM7.5 9.406v.938h1v-.938zm0 1.875v.938h1v-.938zm0 1.875v.938h1v-.938z"/>
+                  <path d="M0 0v16h16V0zm1 1h14v14H1z"/>
                 </svg>
                 <span>Dashboard</span>
               </a>
@@ -102,50 +122,42 @@
             <!-- Add to Product -->
               <li class="menu-item">
                 <a href="#" class="menu-link">
-                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                    <line x1="12" y1="8" x2="12" y2="16" />
-                    <line x1="8" y1="12" x2="16" y2="12" />
-                  </svg>
+                  <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-terminal-plus" viewBox="0 0 16 16">
+                      <path d="M2 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v4a.5.5 0 0 1-1 0V4a1 1 0 0 0-1-1z"/>
+                      <path d="M3.146 5.146a.5.5 0 0 1 .708 0L5.177 6.47a.75.75 0 0 1 0 1.06L3.854 8.854a.5.5 0 1 1-.708-.708L4.293 7 3.146 5.854a.5.5 0 0 1 0-.708M5.5 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"/>
+                    </svg>
                   <span>Product</span>
                 </a>
                 <ul class="submenu list-unstyled">
                   <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
                   <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
-                  <li><a href="#" data-content="">Add Product</a></li>
+                  <li><a href="#" data-content="List-Product">List Product</a></li>
                   <li><a href="#" data-content="">Add Products</a></li>
                 </ul>
-
               </li>
+              <!-- Insert -->
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"/>
+                    <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                  </svg>
+                  <span>Insert</span>
+                </a>
+                <!-- subMenu-->
+                <ul class="submenu list-unstyled">
+                  <li><a href="#"  data-content="">Submenu 1</a></li>
+                  <li><a href="#"  data-content="">Submenu 2</a></li>
+                </ul>
+              </li>
+
             <!-- Withdraw from Inventory -->
             <li class="menu-item">
               <a href="#" class="menu-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M4 6H20V18H4V6Z"
-                    stroke="var(--main-hover-color)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"/>
-                  <path
-                    d="M9 6H15"
-                    stroke="var(--main-hover-color)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"/>
-                  <path
-                    d="M12 12L12 16"
-                    stroke="var(--main-hover-color)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"/>
-                  <path
-                    d="M9 16L12 19L15 16"
-                    stroke="var(--main-hover-color)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"/>
-                </svg>
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                  </svg>
                 <span>Withdraw</span>
               </a>
               <!-- subMenu-->
@@ -158,11 +170,9 @@
             <!-- Reports -->
             <li class="menu-item">
               <a href="#" class="menu-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 4H20V20H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 12H10V16H8V12Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 8H14V16H12V8Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </svg>
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-flag" viewBox="0 0 16 16">
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
+                  </svg>
                 <span>Reports</span>
               </a>
               <!-- subMenu-->
@@ -176,11 +186,10 @@
             <!--  Management -->
             <li class="menu-item">
               <a href="#" class="menu-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 8V16M16 12H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4 10H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </svg>
+                <svg width="20" height="20" fill="var(--main-hover-color)" class="bi bi-kanban" viewBox="0 0 16 16">
+                    <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z"/>
+                  </svg>
                 <span>Management</span>
               </a>
               <!-- subMenu-->
@@ -228,132 +237,112 @@
 
         <!--***** Sidebar for mobile (Offcanvas) *****-->
         <div class="offcanvas d-md-none w-100" id="sidebarMenu">
-          <div class="offcanvas-header d-flex flex-row justify-content-between p-2">
-            <h5 class="offcanvas-title"></h5>
-            <button id="closeBtn" class="close-btn" type="button">
-              <svg width="26" height="18" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-              </svg>
-            </button>
-          </div>
 
-          <div class="offcanvas-body sidebar-Mobile d-flex flex-column">
-            <div class="dropdown px-2 d-flex justify-content-end mb-1">
-              <button class="btn dropdown-toggle btn-profile p-0" type="button" id="dropdownButton">
-                <svg width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                </svg>
-                <svg class="arrowDown" width="10" height="10" viewBox="0 0 10 10">
-                  <path d="M0 3 L5 8 L10 3" fill="none" stroke="white" stroke-width="2" />
-                </svg>
-              </button>
-              <ul class="dropdown-menu p-2" id="dropdownMenu">
-                <li class="d-flex flex-row align-items-center justify-content-between dropdown-item">
-                  <a class="p-0" href="#"> Home</a>
-                  <svg width="24" height="24" fill="currentColor" class="bi bi-house" style="margin-right: 3px" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                  </svg>
-                </li>
-                <li class="d-flex flex-row align-items-center justify-content-between mt-2 dropdown-item">
-                  <a class="logoutBtn text-danger p-0" href="#">Exit</a>
-                  <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                  </svg>
-                </li>
-              </ul>
-            </div>
-
+          <div class="offcanvas-body sidebar-Mobile d-flex flex-column mt-5">
             <ul class="list-unstyled">
-              <li class="menu-item" id="dashbord">
+              <!-- Dashboard -->
+              <li class="menu-item" data-content="Dashbord">
                 <a href="#" class="menu-link">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 4H10V10H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M14 4H20V10H14V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M4 14H10V20H4V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M14 14H20V20H14V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-border-outer" viewBox="0 0 16 16">
+                    <path d="M7.5 1.906v.938h1v-.938zm0 1.875v.938h1V3.78h-1zm0 1.875v.938h1v-.938zM1.906 8.5h.938v-1h-.938zm1.875 0h.938v-1H3.78v1zm1.875 0h.938v-1h-.938zm2.813 0v-.031H8.5V7.53h-.031V7.5H7.53v.031H7.5v.938h.031V8.5zm.937 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zM7.5 9.406v.938h1v-.938zm0 1.875v.938h1v-.938zm0 1.875v.938h1v-.938z"/>
+                    <path d="M0 0v16h16V0zm1 1h14v14H1z"/>
                   </svg>
                   <span>Dashboard</span>
                 </a>
               </li>
 
+              <!-- Add to Product -->
               <li class="menu-item">
                 <a href="#" class="menu-link">
-                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                    <line x1="12" y1="8" x2="12" y2="16" />
-                    <line x1="8" y1="12" x2="16" y2="12" />
-                  </svg>
+                  <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-terminal-plus" viewBox="0 0 16 16">
+                      <path d="M2 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v4a.5.5 0 0 1-1 0V4a1 1 0 0 0-1-1z"/>
+                      <path d="M3.146 5.146a.5.5 0 0 1 .708 0L5.177 6.47a.75.75 0 0 1 0 1.06L3.854 8.854a.5.5 0 1 1-.708-.708L4.293 7 3.146 5.854a.5.5 0 0 1 0-.708M5.5 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"/>
+                    </svg>
                   <span>Product</span>
                 </a>
                 <ul class="submenu list-unstyled">
                   <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
                   <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
-                  <li><a href="#" data-content="">Add Product</a></li>
+                  <li><a href="#" data-content="List-Product">List Product</a></li>
                   <li><a href="#" data-content="">Add Products</a></li>
                 </ul>
-
               </li>
-
+              <!-- Insert -->
               <li class="menu-item">
                 <a href="#" class="menu-link">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 6H15" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M12 12L12 16" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 16L12 19L15 16" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"/>
+                    <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                   </svg>
-                  <span>Withdraw</span>
+                  <span>Insert</span>
                 </a>
+                <!-- subMenu-->
                 <ul class="submenu list-unstyled">
-                  <li><a href="#" data-content="">Submenu 1</a></li>
-                  <li><a href="#" data-content="">Submenu 2</a></li>
+                  <li><a href="#"  data-content="">Submenu 1</a></li>
+                  <li><a href="#"  data-content="">Submenu 2</a></li>
                 </ul>
               </li>
 
-              <li class="menu-item">
-                <a href="#" class="menu-link" data-content="">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 4H20V20H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M8 12H10V16H8V12Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M12 8H14V16H12V8Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- Withdraw from Inventory -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
                   </svg>
-                  <span>Reports</span>
-                </a>
-                <ul class="submenu list-unstyled">
+                <span>Withdraw</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="#"  data-content="">Submenu 1</a></li>
+                <li><a href="#"  data-content="">Submenu 2</a></li>
+              </ul>
+            </li>
+
+            <!-- Reports -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-flag" viewBox="0 0 16 16">
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
+                  </svg>
+                <span>Reports</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
                   <li><a href="#" data-content="Report-Moein">Moein Report</a></li>
                   <li><a href="#" data-content="BandList">Babnd List</a></li>
                   <li><a href="#" data-content="LoginLogs">Login Logs</a></li>
                 </ul>
-              </li>
+            </li>
 
-              <li class="menu-item">
-                <a href="#" class="menu-link" data-content="">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 8V16M16 12H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M4 10H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <!--  Management -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="20" height="20" fill="var(--main-hover-color)" class="bi bi-kanban" viewBox="0 0 16 16">
+                    <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z"/>
                   </svg>
-                  <span>Management</span>
-                </a>
-                <ul class="submenu list-unstyled">
-                  <li><a href="#" data-submenu="submenu13">Submenu 1</a></li>
-                  <li><a href="#" data-submenu="submenu14">Submenu 2</a></li>
-                </ul>
-              </li>
+                <span>Management</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="#" data-content="">Submenu 1</a></li>
+                <li><a href="#" data-content="">Submenu 2</a></li>
+              </ul>
+            </li>
 
-              <li class="menu-item">
-                <a href="#" class="menu-link" data-content="Manage-users">
-                  <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
-                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-                    <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-                  </svg>
-                  <span>Manage users</span>
-                </a>
-              </li>
+             <!-- Manage users -->
+            <li class="menu-item" data-content="Manage-users">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
+                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                </svg>
+                <span>Manage users</span>
+              </a>
+            </li>
 
+            <!-- Search-Inventory -->
             <li class="menu-item" data-content="Search-Inventory">
               <a href="#" class="menu-link">
                 <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
@@ -362,7 +351,8 @@
                 <span>Search</span>
               </a>
             </li>
-
+            
+            <!-- profile -->
              <li class="menu-item" data-content="profile">
               <a href="#" class="menu-link">
                 <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-person-square" viewBox="0 0 16 16">
@@ -380,7 +370,7 @@
         <!--***** end sidbar for mobile *****-->
 
         <!--***** main content *****-->
-        <div class="col-12 col-md-10 content p-3" id="contentArea">
+        <div class="col-12 col-md-10 content px-3 pb-3 pt-2" id="contentArea">
           <!-- Dashbord -->
           <div id="Dashbord" class="tab-content active">
             <div class="row my-2">
@@ -490,22 +480,15 @@
           <!-- Add to Inventory -->
           <!-- "Add a single part":  -->
           <div id="Add-Single-part" class="tab-content">
-            <form id="partForm" class="d-flex flex-column">
-                <div class="container mt-1">
+            <form id="partForm" class="d-flex flex-column partForm">
+                <div class="container px-0">
                   <!-- part number and Manufacturer inputs -->
-                <div class="d-flex flex-row align-items-center my-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
-                    <defs>
-                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
-                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                      </linearGradient>
-                    </defs>
-                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
-                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
-                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
+                <div class="d-flex flex-row align-items-center mb-2">
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                   </svg>
-                  <h3 class="pl-1">part Details :</h3>
+                  <h3 class="pl-1">Part Details :</h3>
                 </div>
                   <div class="row border rounded bg-light">
                     
@@ -546,25 +529,18 @@
 
                 <!-- Category selection -->
                 <div class="d-flex flex-row align-items-center my-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <defs>
-                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
-                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                      </linearGradient>
-                    </defs>
-                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
-                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
-                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                   </svg>
-                  <h3 class="pl-1">part storage location:</h3>
+                  <h3 class="pl-1">Part storage location:</h3>
                 </div>
 
                 <!-- Category Dropdown Section -->
-                <div class="container mt-1 Category px-3 border rounded bg-light">
+                <div class="container mt-1 px-1 border rounded bg-light">
                   <div class="row d-flex flex-row justify-content-between">
 
-                    <div class="col-12 col-md-4 px-2">
+                    <div class="col-12 col-md-4 px-2 my-2">
                         <label for="" class="form-label">Categories:</label>
                         <select class="form-select">
                           <option selected disabled></option>
@@ -574,12 +550,12 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-4 px-2">
+                    <div class="col-12 col-md-4 px-2 my-2">
                       <label for="location" class="form-label" title="location in Inventory">Location:</label>
                       <input type="text" name="location" placeholder="Enter Location" required />
                     </div>
 
-                    <div class="col-12 col-md-4 px-2 dropdown">
+                    <div class="col-12 col-md-4 px-2 my-2">
                       <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
                       <input type="text" name="Received Code" placeholder="Received Code" required />
                     </div>
@@ -590,17 +566,10 @@
 
                 <!-- inputs files -->
                 <div class="d-flex flex-row align-items-center my-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <defs>
-                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
-                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                      </linearGradient>
-                    </defs>
-                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
-                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
-                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
-                  </svg>
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
                   <h3 class="pl-1">Upload Files:</h3>
                 </div>
 
@@ -617,19 +586,299 @@
                 </div>
 
 
-                <div class="mt-5" style="text-align: end">
+                <div class="mt-3" style="text-align: end">
                   <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
                 </div>
-
+                </div>
               </form>
-
           </div>
 
           <!-- "Add a group of parts":  -->
-          <div id="Add-Group-parts" class="tab-content">
+          <div id="Add-Group-parts" class="tab-content" >
             <h2>Add a Group of parts</h2>
             <p>Adding multiple parts at once.</p>
           </div>
+
+          <!-- List Product -->
+           <div id="List-Product" class="tab-content" >
+            <div class="container px-0">
+              <!-- searchbar -->
+              <div class="input-box">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <input type="text" placeholder="Search here..." />
+                <button class="button">Search</button>
+              </div>
+
+              <!-- table list product -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive fixed-table-container" style="max-height: 90vh;">
+                      <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Tag</th>
+                            <th scope="col">P/N</th>
+                            <th scope="col">MFG</th>
+                            <th scope="col">QTY</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Submitter</th>
+                            <th scope="col">Submit Date</th>
+                            <th scope="col">Action</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>johnny</td>
+                            <td>#pk</td>
+                            <td>1234-AB</td>
+                            <td>Siemens</td>
+                            <td>25</td>
+                            <td>Aisle 3</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Electrical</td>
+                            <td>Ali Reza</td>
+                            <td>2024-07-01</td>
+                            <td>
+                              <a href="#" class="" title="Delete">
+                                <svg width="20" height="20" fill="#8b000d" class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                              </a>
+                              <a href="#" class="" title="Edit" data-content="edit-product">
+                                <svg width="20" height="20" fill="#2b6496" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg>
+                              </a>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>2</td>
+                            <td>john</td>
+                            <td>#pk</td>
+                            <td>1234-AB</td>
+                            <td>Siemens</td>
+                            <td>25</td>
+                            <td>Aisle 3</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Electrical</td>
+                            <td>Ali Reza</td>
+                            <td>2024-07-01</td>
+                            <td>
+                              <a href="#" class="" title="Delete">
+                                <svg width="20" height="20" fill="#8b000d" class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                              </a>
+                              <a href="#" class="" title="Edit" data-content="edit-product">
+                                <svg width="20" height="20" fill="#2b6496" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg>
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <div class="row my-2">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path>
+                        </svg>
+                    First
+                    </a>
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight" id="prevBtn">
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path>
+                      </svg>
+                      Prev</a>
+
+                    <div class="px-4 px-custom">
+                      <span class="px-1 fw-bold text-danger">1</span>
+                      <span class="px-1 fw-bold">2</span>
+                      <span class="px-1 fw-bold">3</span>
+                    </div>
+
+
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                      Next
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                          <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path>
+                        </svg>
+                      </a>
+                      <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                        last
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"></path>
+                        </svg>
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end List Product -->
+
+          <!-- Edit product -->
+           <div class="tab-content" id="edit-product">
+            <div class="backBtn mb-3">
+              <svg width="24" height="24"fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+              </svg>
+              <span>Back</span>
+           </div>
+
+            <form id="EditPartForm" class="d-flex flex-column partForm">
+                <div class="container px-0">
+                  <!-- part number and Manufacturer inputs -->
+                <div class="d-flex flex-row align-items-center mb-2">
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+                  <h3 class="pl-1">Part Details :</h3>
+                </div>
+                  <div class="row border rounded bg-light">
+                    
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                      <input type="text" name="partNumber" placeholder="Part number" required="">
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="name" title="Name">Name:</label>
+                      <input type="text" name="name" placeholder="Name" required="">
+                    </div>
+                     <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
+                      <input type="text" name="tag name" placeholder="Tag Name" required="">
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                      <input type="text" name="manufacturer" placeholder="Manufacturer" required="">
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
+                      <input type="text" name="Quantity" placeholder="Quantity" required="">
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                        <label for="" class="form-label">Date Code:</label>
+                        <select class="form-select">
+                          <option selected="" disabled=""></option>
+                          <option value="2024">2024</option>
+                          <option value="2024+">2024+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-12 mt-2 px-2">
+                      <label for="editDescription" title="Company Comment">Company CMT:</label>
+                      <textarea id="editDescription" class="mt-2" name="editDescription" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Category selection -->
+                <div class="d-flex flex-row align-items-center my-2">
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                  <h3 class="pl-1">Part storage location:</h3>
+                </div>
+
+                <!-- Category Dropdown Section -->
+                <div class="container mt-1 Category px-3 border rounded bg-light">
+                  <div class="row d-flex flex-row justify-content-between">
+
+                    <div class="col-12 col-md-4 px-2">
+                        <label for="" class="form-label">Categories:</label>
+                        <select class="form-select">
+                          <option selected="" disabled=""></option>
+                          <option value="1">cbc1</option>
+                          <option value="2">cbc2</option>
+                          <option value="3">cbc3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2">
+                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                      <input type="text" name="location" placeholder="Enter Location" required="">
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2 dropdown">
+                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                      <input type="text" name="Received Code" placeholder="Received Code" required="">
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- inputs files -->
+                <div class="d-flex flex-row align-items-center my-2">
+                  <svg  width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                  <h3 class="pl-1">Upload Files:</h3>
+                </div>
+
+                <div class="row mt-1 d-flex flex-row justify-content-between">
+                    <!-- Datasheet Upload -->
+                    <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                      <label for="editDatasheetUpload" class="form-label">Upload Datasheet:</label>
+                      <input class="form-control" type="file" id="editDatasheetUpload" name="editDatasheetUpload" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+                      <ul id="editDatasheetList" class="mt-3 list-group small">
+                        <li class="d-flex flex-row align-items-center itemfile">
+                          <svg width="18" height="18" fill="" class="bi bi-trash mx-1" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                          </svg>
+                          <span>file-A</span>  
+                        </li>
+                      </ul>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                      <label for="editImageUpload" class="form-label">Uploadd Images:</label>
+                      <input class="form-control" type="file" id="editImageUpload" name="editImageUpload" multiple accept="image/*">
+                      <ul id="editImageList" class="mt-3 list-group small">
+                        <li class="d-flex flex-row align-items-center itemfile">
+                          <svg width="18" height="18" fill="" class="bi bi-trash mx-1" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                          </svg>
+                         <span>file-A</span>   
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                <div class="mt-3" style="text-align: end">
+                  <button type="submit" class="btn btn-primary" id="Editpart">Edit Part</button>
+                </div>
+
+                </div>
+              </form>
+           </div>
+           <!-- edit product -->
 
           <!-- "Confirmation of receipt in warehouse":  -->
           <div id="Confirmation-Warehouse" class="tab-content">
@@ -982,7 +1231,6 @@
               </div>
             </div>
           </div>
-
           <!-- "End manage subcategories" -->
 
           <!-- end Add to Inventory -->
@@ -1347,7 +1595,7 @@
                       </div>
                   </div>
                   <div class="col-12" style="height:100%;">
-                      <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
+                      <div class="table-responsive fixed-table-container" style="max-height: 80vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                           <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
@@ -1737,9 +1985,9 @@
            <!-- end search -->
 
            <!-- profile -->
-           <div class="tab-content" id="profile">
+           <div class="tab-content mt-2 mt-md-0" id="profile">
               <div class="row">
-                 <div class="col-12 col-md-8 px-1">
+                 <div class="col-12 col-md-8 px-1 mb-3">
                     <div class="p-3 border rounded shadow-sm bg-light h-100">
                       <!-- Title -->
                       <div class="d-flex align-items-center mb-3">
@@ -1753,19 +2001,19 @@
                       <!-- Form -->
                       <form id="profileForm" class="d-flex flex-column justify-content-between flex-grow-1">
                         <div class="row g-3">
-                          <div class="col-12 col-md-6 px-1 mb-3">
+                          <div class="col-12 col-lg-6 px-1 mb-3">
                             <label for="firstName" class="form-label ">First Name</label>
                             <input type="text" class="form-control my-2" id="firstName" placeholder="Enter first name">
                           </div>
-                          <div class="col-12 col-md-6 px-1 mb-3">
+                          <div class="col-12 col-lg-6 px-1 mb-3">
                             <label for="lastName" class="form-label ">Last Name</label>
                             <input type="text" class="form-control my-2" id="lastName" placeholder="Enter last name">
                           </div>
-                          <div class="col-12 col-md-6 px-1 mb-3">
+                          <div class="col-12 col-lg-6 px-1 mb-3">
                             <label for="nickName" class="form-label ">Nickname</label>
                             <input type="text" class="form-control my-2" id="nickName" placeholder="Enter nickname">
                           </div>
-                          <div class="col-12 col-md-12 px-1 mb-3">
+                          <div class="col-12 px-1 mb-3">
                             <label for="profileEmail" class="form-label ">Email Address</label>
                             <input type="email" class="form-control my-2" id="profileEmail" placeholder="Enter your email">
                           </div>
@@ -1779,7 +2027,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-4 px-1">
+                  <div class="col-12 col-md-4 px-1 mb-3">
                     <!-- changesPass -->
                       <div class="p-3 border rounded shadow-sm bg-light h-100">
                         <div class="d-flex flex-row align-items-center mb-3">

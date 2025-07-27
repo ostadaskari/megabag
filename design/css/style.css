@@ -52,7 +52,7 @@ table {
 .table-bordered th,
 .table-bordered td {
   border: 1px solid #dee2e6;
-  padding: 12px;
+  padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
   font-size: 14px;
@@ -94,10 +94,31 @@ table {
 /* navbar */
 
 .div-clock-btn {
-    display: flex;
-    flex-direction: column-reverse;
     justify-content: space-between;
-    align-items: flex-start;
+    width: 35%;
+}
+.div-clock-btn > div:first-child {
+  order: 1; 
+}
+
+.div-clock-btn > div.clock-container {
+  order: 2; 
+}
+
+.div-clock-btn > button {
+  order: 3; 
+}
+
+@media (min-width: 768px) {
+  .div-clock-btn > div:first-child {
+    order: 2; /* Profile dropdown */
+  }
+  .div-clock-btn > div.clock-container {
+    order: 1; /* Clock */
+  }
+  .div-clock-btn > button {
+    order: 3;
+  }
 }
 
 .clock-container {
@@ -146,13 +167,14 @@ table {
     color: #db3848;
   }
 
-
+/* This should be cleared for the backend.bib bib  */
 .tab-content {
   display: none;
 }
 .tab-content.active {
   display: block;
 }
+/* end This should be cleared for the backend. */
 
 /* sidebar */
     /* mobile */
@@ -163,7 +185,7 @@ table {
     width: 100%;
     height: 100%;
     background-color: transparent;
-    color:rgb(24, 24, 24);
+    color: rgb(24, 24, 24);
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
     z-index: 1050;
@@ -188,18 +210,12 @@ table {
     display: block;
 }
 
-#closeBtn {
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 190 0 / var(--tw-bg-opacity));
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-
 #toggleBtn {
+  width: 25px;
+  height: 25px;
     background-color: #dbe3ec;
     border: none;
-    padding:1px 5px;
+    padding:1px ;
     cursor: pointer;
 }
     /* end mobile */
@@ -239,7 +255,7 @@ table {
         z-index: 1200;
     }
     .sidebar-Mobile .list-unstyled {
-        width: 200px;
+        margin-top:40px;
     }
     .sidebar-Mobile a {
     font-size: 16px;
@@ -349,17 +365,10 @@ table {
   pointer-events: none;
 }
 
-
-
 /* content container */
 
-
-
-
-
-
 /* Adding a single part*/
-#partForm {
+.partForm {
     display: flex;
     flex-direction: column;
     max-width: 100%;
@@ -403,8 +412,8 @@ table {
   font-size: 12px!important;
 }
 /* Inputs & textarea */
-#partForm input,
-#partForm textarea {
+.partForm input,
+.partForm textarea {
     width: 100%;
     padding: 7px;
     border: 1px solid #ccc;
@@ -420,22 +429,16 @@ table {
 }
 
 /* Textarea */
-#partForm textarea {
+.partForm textarea {
     height: 150px;
     resize: none;
 }
 
 /* Button */
 
-/* category */
 h3{
     font-size:16px;
 }
-.Category{
-    padding: 15px 10px;
-    margin-top: 15px;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -546,7 +549,34 @@ h3{
   top: 42px;
 }
 
-/* end category */
+#edit-product svg{
+    fill:var(--main-bg0-color);
+}
+.itemfile{
+  background-color:#e3e9f17a;
+  padding: 8px;
+  margin: 1px;
+}
+.itemfile:hover{
+  cursor: pointer;
+  background-color:#e4effd7a;
+}
+.itemfile svg{
+ fill:  #8b000d!important;
+}
+.backBtn{
+  display: flex;
+  align-items:center;
+  background-color:var(--main-bg2-color);
+  width:70px;
+  border-radius:3px;
+  border:1px solid #ccc;
+  font-size: 14px;
+}
+.backBtn:hover{
+  cursor: pointer;
+  background-color:var(--main-hover-color);
+}
 /* end Adding a single part*/
 
 /* Manage Category */
@@ -597,10 +627,10 @@ td {
 
 @media (max-width: 768px) {
     .main {
-        height:88vh;
+        height:89vh;
     }
     .div-navbar{
-        height: 12vh;
+        height: 11vh;
     }
     .logo{
         width: 40px!important;
@@ -624,12 +654,17 @@ td {
         margin: auto;
     }
     .content {
-        width: 100vw!important;
+        width: 100%!important;
+        padding-bottom: 100px!important;
     }
     .submenu a {
         font-size: 10px !important;
     }
-    
+    .dropdown-menu{
+      left: 6%;
+      right: 90%;
+      top: 80%;
+    }
 }   
 
 @media (min-width: 768px) {
@@ -853,7 +888,7 @@ cursor: pointer;
  flex-direction: row;
  justify-content: space-between;
  margin: auto;
- background-color: white;
+ background-color:#e6eef77a;
  padding:10px 5px;
  margin-bottom: 5px; 
  border-radius:5px;
@@ -875,7 +910,7 @@ cursor: pointer;
   color:var(--main-text-color);
   border-radius: 5px;
   padding: 5px 8px;
-  font-size: 16px;
+  font-size: 14px;
   display: block;
   transition: all 0.3s ease;
 }
@@ -1004,3 +1039,71 @@ fill:var(--main-text-color);
     }
    }
 /* ########### end prevBtn and nextBtn ##########*/
+
+/* ########### search box ########### */
+.input-box {
+  position: relative;
+  height: 50px;
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  margin: 10px auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.input-box svg,
+.input-box .button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.input-box svg {
+  left: 20px;
+  font-size: 30px;
+  color: #707070;
+}
+.input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  padding:0 50px!important;
+  background-color: transparent;
+}
+.input-box .button {
+  right: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  border: none;
+  padding:10px 15px;
+  border-radius: 6px;
+  background-color: #4070f4;
+  cursor: pointer;
+}
+.input-box .button:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Responsive */
+@media screen and (max-width: 500px) {
+  .input-box {
+    height: 66px;
+    margin: 0 8px;
+  }
+  .input-box i {
+    left: 12px;
+    font-size: 25px;
+  }
+  .input-box input {
+    padding: 0 112px 0 50px;
+  }
+  .input-box .button {
+    right: 12px;
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+}
+/* ########### end search box ########### */

@@ -2,35 +2,37 @@
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("sidebarMenu");
     const toggleButton = document.getElementById("toggleBtn");
-    const closeButton = document.getElementById("closeBtn");
     const overlay = document.getElementById("overlay");
-    const subMenuItems = document.querySelectorAll(".submenu a"); 
+    const subMenuItems = document.querySelectorAll(".submenu a");
+
+    function toggleSidebar() {
+        sidebar.classList.toggle("show");
+        overlay.classList.toggle("show");
+    }
 
     function closeSidebar() {
         sidebar.classList.remove("show");
         overlay.classList.remove("show");
     }
 
-    toggleButton.addEventListener("click", function () {
-        sidebar.classList.add("show");
-        overlay.classList.add("show");
-    });
-
-    closeButton.addEventListener("click", closeSidebar);
+    toggleButton.addEventListener("click", toggleSidebar);
     overlay.addEventListener("click", closeSidebar);
 
     subMenuItems.forEach(subItem => {
-        subItem.addEventListener("click", function () {
-            closeSidebar();
-        });
+        subItem.addEventListener("click", closeSidebar);
     });
 
     document.addEventListener("click", function (event) {
-        if (!event.target.closest("#sidebarMenu") && !event.target.closest("#toggleBtn")) {
+        if (
+            sidebar.classList.contains("show") &&
+            !event.target.closest("#sidebarMenu") &&
+            !event.target.closest("#toggleBtn")
+        ) {
             closeSidebar();
         }
     });
 });
+
 //```````````````````` end humberger menu
 
 //```````````````````` dropdown
@@ -76,13 +78,7 @@ setInterval(updateClock, 1000);
 updateClock();
 //`````````````````````` end clock
 
-//`````````````````````` logoutBtn
-    document.querySelectorAll(".logoutBtn").forEach(function(button) {
-        button.addEventListener("click", function () {
-            window.location.href = "../html/login.html"; 
-        });
-    });
-//`````````````````````` end logoutBtn
+
 
 
 //```````````````````` item menu
