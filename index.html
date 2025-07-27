@@ -216,7 +216,7 @@
             </li>
 
              <!-- Categories -->
-             <li class="menu-item" data-content="profile">
+             <li class="menu-item" data-content="Categories">
               <a href="#" class="menu-link">
                 <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-bricks" viewBox="0 0 16 16">
                   <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5zM3 4v2h4.5V4zm5.5 0v2H13V4zM3 10v2h4.5v-2zm5.5 0v2H13v-2zM1 1v2h3.5V1zm4.5 0v2h5V1zm6 0v2H15V1zM1 7v2h3.5V7zm4.5 0v2h5V7zm6 0v2H15V7zM1 13v2h3.5v-2zm4.5 0v2h5v-2zm6 0v2H15v-2z"/>
@@ -2084,6 +2084,69 @@
               </div>
            </div>
           <!-- end Users List -->
+
+           <!--  categories -->
+         <div id="Categories" class="tab-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <form id="categoryForm" class="p-3 border rounded bg-light">
+                    <div class="mb-3">
+                      <label for="categoryName" class="form-label">Category Name</label>
+                      <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Enter category name" required />
+                    </div>
+
+                   <div class="mb-3">
+                      <label class="form-label">Parent Category</label>
+                      <ul class="category-tree" id="categoryTree">
+                        <li data-id="">-- None --</li>
+                        <li data-id="electronics" class="has-children">Electronics
+                          <ul>
+                            <li data-id="phones">Mobile Phones</li>
+                            <li data-id="laptops">Laptops</li>
+                          </ul>
+                        </li>
+                        <li data-id="clothing" class="has-children">Clothing
+                          <ul>
+                            <li data-id="men">Men</li>
+                            <li data-id="women">Women</li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <input type="hidden" id="parentCategory" name="parentCategory" value="">
+                    </div>
+                    <!-- script for parentCategory -->
+                    <script>
+                          const tree = document.getElementById("categoryTree");
+                          const hiddenInput = document.getElementById("parentCategory");
+
+                          tree.addEventListener("click", function (e) {
+                            const li = e.target.closest("li");
+                            if (!li) return;
+
+                            // Toggle submenu if it has children
+                            if (li.classList.contains("has-children")) {
+                              li.classList.toggle("open");
+                            }
+
+                            // Mark as selected
+                            tree.querySelectorAll("li").forEach(el => el.classList.remove("selected"));
+                            li.classList.add("selected");
+
+                            // Update hidden input
+                            const id = li.getAttribute("data-id");
+                            hiddenInput.value = id ? id : "";
+                          });
+                        </script>
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-success mx-3">Submit</button>
+                      <button type="reset" class="btn btn-secondary mx-3" onclick="clearSelection()">Clear</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+          </div>
 
           <!-- search -->
            <div id="Search-Inventory" class="tab-content">

@@ -1108,3 +1108,52 @@ fill:var(--main-text-color);
   }
 }
 /* ########### end search box ########### */
+/* ##################### Categories ################## */
+   .category-tree {
+    list-style: none;
+    padding-left: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+
+  .category-tree li {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .category-tree li:hover {
+    background-color: #d6e3ec;
+  }
+
+  .category-tree li.selected {
+    background-color: #e9f5fa88;
+    font-weight: bold;
+  }
+
+  .category-tree ul {
+    display: none;
+    padding-left: 1rem;
+  }
+
+  .category-tree li.open > ul {
+    display: block;
+  }
+
+  .category-tree li.has-children::before {
+    content: "▶";
+    position: absolute;
+    left: -10px;
+    top: 6px;
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+  }
+
+  .category-tree li.open.has-children::before {
+    transform: rotate(90deg);
+  }
+/* ##################### end Categories ################## */
