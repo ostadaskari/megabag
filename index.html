@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="fa" dir="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>سامانه انبارداری</title>
+
+    <!-- link CSS -->
+    <link rel="stylesheet" href="./design/css/style.css" />
+  </head>
+  <body>
+
+    <!--########## navbar ###########-->
+    <div class="container px-0 div-navbar">
+      <div class="row d-flex flex-row" style="height: 100%;">
+        <div class="col-12">
+          <!-- main navbar-->
+          <nav class="navbar navbar-custom navbar-expand-lg d-flex flex-row justify-content-between" style="height: 100%;">
+            <div class="d-flex align-items-center">
+              <img src="./design/img/Logo-main.png" alt="logo" class="logo"/>
+              <h4 class="m-0 navbar-title text-center">
+                Pishro Pardaz Kahroba Electronics
+              </h4>
+            </div>
+
+            <div class="d-flex flex-row align-items-center div-clock-btn">
+
+              <!-- clock -->
+              <div class="d-flex clock-container">
+                <span id="clock" class="px-1"></span> |
+                <span id="date" class="px-1"></span>
+              </div>
+
+              <!-- btn-profile -->
+              <div>
+                <a class="text-white d-flex align-items-center dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg width="22" height="22" fill="#fff" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"></path>
+                </svg>
+               </a>
+
+                <ul class="dropdown-menu mt-2 shadow px-3 " aria-labelledby="userDropdown" style="min-width: 200px;">
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
+                      Sara
+                    <svg width="16" height="16" fill="var(--main-bg0-color)" class="bi bi-person-bounding-box mx-1" viewBox="0 0 16 16">
+                      <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"></path>
+                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
+                      </svg>
+                    </a>
+                  </li>
+                  <hr class="my-2" style="margin: auto; width: 100%;">
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between gap-2 py-1" href="#">
+                      Log Out
+                      <svg width="18" height="18" fill="#e35858" class="bi bi-box-arrow-right mx-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"></path>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"></path>
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- btn humberger -->
+              <button class="btn d-md-none" type="button" id="toggleBtn">
+                <svg width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- navbar for mobile -->
+          </nav>
+          <!-- navbar -->
+        </div>
+      </div>
+    </div>
+    <!--########## end navbar ###########-->
+
+
+    <!--########## main ##########-->
+    <div class="container p-0 main">
+      <div class="row d-flex flex-row" style="height: 100%">
+        <!--***** sidebar *****-->
+        <div class="col-2 d-none d-md-flex sidebar flex-column position-relative">
+          <ul class="list-unstyled px-2">
+            <!-- Dashboard -->
+            <li class="menu-item" data-content="Dashbord">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4H10V10H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M14 4H20V10H14V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M4 14H10V20H4V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M14 14H20V20H14V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>Dashboard</span>
+              </a>
+            </li>
+
+            <!-- Add to Product -->
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg>
+                  <span>Product</span>
+                </a>
+                <ul class="submenu list-unstyled">
+                  <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
+                  <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
+                  <li><a href="#" data-content="">Add Product</a></li>
+                  <li><a href="#" data-content="">Add Products</a></li>
+                </ul>
+
+              </li>
+            <!-- Withdraw from Inventory -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4 6H20V18H4V6Z"
+                    stroke="var(--main-hover-color)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+                  <path
+                    d="M9 6H15"
+                    stroke="var(--main-hover-color)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+                  <path
+                    d="M12 12L12 16"
+                    stroke="var(--main-hover-color)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+                  <path
+                    d="M9 16L12 19L15 16"
+                    stroke="var(--main-hover-color)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+                </svg>
+                <span>Withdraw</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="#"  data-content="">Submenu 1</a></li>
+                <li><a href="#"  data-content="">Submenu 2</a></li>
+              </ul>
+            </li>
+
+            <!-- Reports -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4H20V20H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 12H10V16H8V12Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 8H14V16H12V8Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                </svg>
+                <span>Reports</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                  <li><a href="#" data-content="Report-Moein">Moein Report</a></li>
+                  <li><a href="#" data-content="BandList">Babnd List</a></li>
+                  <li><a href="#" data-content="LoginLogs">Login Logs</a></li>
+                </ul>
+            </li>
+
+            <!--  Management -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 8V16M16 12H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 10H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                </svg>
+                <span>Management</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="#" data-content="">Submenu 1</a></li>
+                <li><a href="#" data-content="">Submenu 2</a></li>
+              </ul>
+            </li>
+
+             <!-- Manage users -->
+            <li class="menu-item" data-content="Manage-users">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
+                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                </svg>
+                <span>Manage users</span>
+              </a>
+            </li>
+
+            <!-- Search-Inventory -->
+            <li class="menu-item" data-content="Search-Inventory">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <span>Search</span>
+              </a>
+            </li>
+            
+            <!-- profile -->
+             <li class="menu-item" data-content="profile">
+              <a href="#" class="menu-link">
+                <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-person-square" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                </svg>
+                <span>Profile</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+       <!--***** sidebar *****-->
+
+        <!--***** Sidebar for mobile (Offcanvas) *****-->
+        <div class="offcanvas d-md-none w-100" id="sidebarMenu">
+          <div class="offcanvas-header d-flex flex-row justify-content-between p-2">
+            <h5 class="offcanvas-title"></h5>
+            <button id="closeBtn" class="close-btn" type="button">
+              <svg width="26" height="18" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="offcanvas-body sidebar-Mobile d-flex flex-column">
+            <div class="dropdown px-2 d-flex justify-content-end mb-1">
+              <button class="btn dropdown-toggle btn-profile p-0" type="button" id="dropdownButton">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+                <svg class="arrowDown" width="10" height="10" viewBox="0 0 10 10">
+                  <path d="M0 3 L5 8 L10 3" fill="none" stroke="white" stroke-width="2" />
+                </svg>
+              </button>
+              <ul class="dropdown-menu p-2" id="dropdownMenu">
+                <li class="d-flex flex-row align-items-center justify-content-between dropdown-item">
+                  <a class="p-0" href="#"> Home</a>
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-house" style="margin-right: 3px" viewBox="0 0 16 16">
+                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                  </svg>
+                </li>
+                <li class="d-flex flex-row align-items-center justify-content-between mt-2 dropdown-item">
+                  <a class="logoutBtn text-danger p-0" href="#">Exit</a>
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                  </svg>
+                </li>
+              </ul>
+            </div>
+
+            <ul class="list-unstyled">
+              <li class="menu-item" id="dashbord">
+                <a href="#" class="menu-link">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 4H10V10H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14 4H20V10H14V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4 14H10V20H4V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14 14H20V20H14V14Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg>
+                  <span>Product</span>
+                </a>
+                <ul class="submenu list-unstyled">
+                  <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
+                  <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
+                  <li><a href="#" data-content="">Add Product</a></li>
+                  <li><a href="#" data-content="">Add Products</a></li>
+                </ul>
+
+              </li>
+
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 6H15" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 12L12 16" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 16L12 19L15 16" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Withdraw</span>
+                </a>
+                <ul class="submenu list-unstyled">
+                  <li><a href="#" data-content="">Submenu 1</a></li>
+                  <li><a href="#" data-content="">Submenu 2</a></li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="#" class="menu-link" data-content="">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 4H20V20H4V4Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8 12H10V16H8V12Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 8H14V16H12V8Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Reports</span>
+                </a>
+                <ul class="submenu list-unstyled">
+                  <li><a href="#" data-content="Report-Moein">Moein Report</a></li>
+                  <li><a href="#" data-content="BandList">Babnd List</a></li>
+                  <li><a href="#" data-content="LoginLogs">Login Logs</a></li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="#" class="menu-link" data-content="">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 8V16M16 12H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4 6H20V18H4V6Z" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4 10H20" stroke="var(--main-hover-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Management</span>
+                </a>
+                <ul class="submenu list-unstyled">
+                  <li><a href="#" data-submenu="submenu13">Submenu 1</a></li>
+                  <li><a href="#" data-submenu="submenu14">Submenu 2</a></li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="#" class="menu-link" data-content="Manage-users">
+                  <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
+                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                    <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+                  </svg>
+                  <span>Manage users</span>
+                </a>
+              </li>
+
+            <li class="menu-item" data-content="Search-Inventory">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <span>Search</span>
+              </a>
+            </li>
+
+             <li class="menu-item" data-content="profile">
+              <a href="#" class="menu-link">
+                <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-person-square" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                </svg>
+                <span>Profile</span>
+              </a>
+            </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+        <!--***** end sidbar for mobile *****-->
+
+        <!--***** main content *****-->
+        <div class="col-12 col-md-10 content p-3" id="contentArea">
+          <!-- Dashbord -->
+          <div id="Dashbord" class="tab-content active">
+            <div class="row my-2">
+              <div class="col-12 col-lg-3 col-md-4">
+                <div class="icon-dashbord-cart" style="background: linear-gradient(60deg, #ffe226, #de9152)">
+                  <svg width="25" height="25" fill="#f1f3f5" class="bi bi-puzzle" viewBox="0 0 16 16" >
+                    <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.5.5 0 0 0-.115.118l-.012.025L6.5 4.5v.003l.003.01q.005.015.036.053a.9.9 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.9.9 0 0 0 .271-.194.2.2 0 0 0 .039-.063v-.009l-.012-.025a.5.5 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.5.5 0 0 0 .115-.118l.012-.025.001-.006v-.003a.2.2 0 0 0-.039-.064.9.9 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11s-.912.1-1.19.24a.9.9 0 0 0-.271.194.2.2 0 0 0-.039.063v.003l.001.006.012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.5.5 0 0 0-.118-.115l-.025-.012L1.5 6.5h-.003a.2.2 0 0 0-.064.039.9.9 0 0 0-.193.27C1.1 7.09 1 7.51 1 8s.1.912.24 1.19c.07.14.14.225.194.271a.2.2 0 0 0 .063.039H1.5l.006-.001.025-.012a.5.5 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115l.025.012.006.001h.003a.2.2 0 0 0 .064-.039.9.9 0 0 0 .193-.27c.14-.28.24-.7.24-1.191s-.1-.912-.24-1.19a.9.9 0 0 0-.194-.271.2.2 0 0 0-.063-.039H14.5l-.006.001-.025.012a.5.5 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"/>
+                  </svg>
+                </div>
+                <div class="gadget p-3">
+                  <div class="d-flex flex-column w-100">
+                    <h4 class="">All parts</h4>
+                    <div class="value-box">14000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-3 col-md-4">
+                <div class="icon-dashbord-cart" style="background: linear-gradient(60deg, #ff269d, #de9152)">
+                  <svg width="25" height="25" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
+                    <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
+                  </svg>
+                </div>
+                <div class="gadget p-3">
+                  <div class="d-flex flex-column w-100">
+                    <h4 class="">categories</h4>
+                    <div class="value-box">14000</div>
+                  </div>
+                </div>
+              </div>
+           <div class="col-12 col-lg-3 col-md-4">
+              <div class="icon-dashbord-cart" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%)">
+                <svg width="25" height="25" fill="currentColor" class="bi bi-clipboard2-pulse" viewBox="0 0 16 16">
+                  <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+                  <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
+                  <path d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128z"/>
+                </svg>
+              </div>
+              <div class="gadget p-3">
+                <div class="d-flex flex-column w-100">
+                  <h4>Total value</h4>
+                  <div class="value-box">99.000.000</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-4">
+              <div class="icon-dashbord-cart" style="background: linear-gradient(135deg, #9bb8ee 0%, #4ea587 100%)">
+                <svg width="25" height="25" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
+                </svg>
+              </div>
+              <div class="gadget p-3">
+                <div class="d-flex flex-column w-100">
+                  <h4>Sales collection</h4>
+                  <div class="value-box">14000</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-4">
+              <div class="icon-dashbord-cart" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%)">
+                <svg width="25" height="25" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                </svg>
+              </div>
+              <div class="gadget p-3">
+                <div class="d-flex flex-column w-100">
+                  <h4>Reference set</h4>
+                  <div class="value-box">14000</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-4">
+              <div class="icon-dashbord-cart" style="background: linear-gradient(60deg, #f126ff, #de9152)">
+                <svg width="25" height="25" fill="currentColor" class="bi bi-list-ol" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5"/>
+                  <path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zM1.709 7.166h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635z"/>
+                </svg>
+              </div>
+              <div class="gadget p-3">
+                <div class="d-flex flex-column w-100">
+                  <h4>Number of reports</h4>
+                  <div class="value-box">100</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-4">
+              <div class="icon-dashbord-cart" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)">
+                <svg width="25" height="25" fill="currentColor" class="bi bi-substack" viewBox="0 0 16 16">
+                  <path d="M15 3.604H1v1.891h14v-1.89ZM1 7.208V16l7-3.926L15 16V7.208zM15 0H1v1.89h14z"/>
+                </svg>
+              </div>
+              <div class="gadget p-3">
+                <div class="d-flex flex-column w-100">
+                  <h4>Total value</h4>
+                  <div class="value-box">99.000.000</div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+          </div>
+          <!-- end Dashbord -->
+          <!-- Add to Inventory -->
+          <!-- "Add a single part":  -->
+          <div id="Add-Single-part" class="tab-content">
+            <form id="partForm" class="d-flex flex-column">
+                <div class="container mt-1">
+                  <!-- part number and Manufacturer inputs -->
+                <div class="d-flex flex-row align-items-center my-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+                    <defs>
+                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
+                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
+                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
+                  </svg>
+                  <h3 class="pl-1">part Details :</h3>
+                </div>
+                  <div class="row border rounded bg-light">
+                    
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                      <input type="text" name="partNumber" placeholder="Part number" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="name" title="Name">Name:</label>
+                      <input type="text" name="name" placeholder="Name" required />
+                    </div>
+                     <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
+                      <input type="text" name="tag name" placeholder="Tag Name" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                      <input type="text" name="manufacturer" placeholder="Manufacturer" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
+                      <input type="text" name="Quantity" placeholder="Quantity" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                        <label for="" class="form-label">Date Code:</label>
+                        <select class="form-select">
+                          <option selected disabled></option>
+                          <option value="2024">2024</option>
+                          <option value="2024+">2024+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-12 mt-2 px-2">
+                      <label for="description" title="Company Comment">Company CMT:</label>
+                      <textarea id="description" class="mt-2" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Category selection -->
+                <div class="d-flex flex-row align-items-center my-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <defs>
+                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
+                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
+                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
+                  </svg>
+                  <h3 class="pl-1">part storage location:</h3>
+                </div>
+
+                <!-- Category Dropdown Section -->
+                <div class="container mt-1 Category px-3 border rounded bg-light">
+                  <div class="row d-flex flex-row justify-content-between">
+
+                    <div class="col-12 col-md-4 px-2">
+                        <label for="" class="form-label">Categories:</label>
+                        <select class="form-select">
+                          <option selected disabled></option>
+                          <option value="1">cbc1</option>
+                          <option value="2">cbc2</option>
+                          <option value="3">cbc3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2">
+                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                      <input type="text" name="location" placeholder="Enter Location" required />
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2 dropdown">
+                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                      <input type="text" name="Received Code" placeholder="Received Code" required />
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- inputs files -->
+                <div class="d-flex flex-row align-items-center my-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <defs>
+                      <linearGradient id="gradpart" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(245, 185, 8); stop-opacity: 1" />
+                        <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="6" y="6" width="12" height="12" stroke="url(#gradpart)" stroke-width="2" />
+                    <path d="M9 2V6M15 2V6M9 18V22M15 18V22M2 9H6M2 15H6M18 9H22M18 15H22" stroke="url(#gradpart)" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="12" cy="12" r="2" fill="url(#gradpart)" />
+                  </svg>
+                  <h3 class="pl-1">Upload Files:</h3>
+                </div>
+
+                <div class="row mt-1 border p-3 rounded bg-light d-flex flex-row justify-content-between">
+                  <div class="col-12 col-md-4 mb-3">
+                    <label for="datasheetUpload" class="form-label">Upload Datasheet:</label>
+                    <input class="form-control" type="file" id="datasheetUpload" name="datasheetUpload[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+                  </div>
+
+                  <div class="col-12 col-md-4 mb-3">
+                    <label for="imageUpload" class="form-label">Upload Images:</label>
+                    <input class="form-control" type="file" id="imageUpload" name="imageUpload[]" multiple accept="image/*">
+                  </div>
+                </div>
+
+
+                <div class="mt-5" style="text-align: end">
+                  <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
+                </div>
+
+              </form>
+
+          </div>
+
+          <!-- "Add a group of parts":  -->
+          <div id="Add-Group-parts" class="tab-content">
+            <h2>Add a Group of parts</h2>
+            <p>Adding multiple parts at once.</p>
+          </div>
+
+          <!-- "Confirmation of receipt in warehouse":  -->
+          <div id="Confirmation-Warehouse" class="tab-content">
+            <h2>Confirmation of Receipt</h2>
+            <p>
+              Warehouse staff can confirm received items using this section.
+            </p>
+          </div>
+
+          <!-- "Manage categories":  -->
+         <div id="Manage-Categories" class="tab-content">
+            <!-- Header Section -->
+            <div class="d-flex flex-row align-items-center my-1">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="gradSubcategories" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M3 6H9L11 8H21V18C21 18.55 20.55 19 20 19H4C3.45 19 3 18.55 3 18V6Z"
+                  stroke="url(#gradSubcategories)" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M7 13H17M7 16H14"
+                  stroke="url(#gradSubcategories)" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <h3 class="pl-1">Manage Categories:</h3>
+            </div>
+
+            <!-- Manage Categories Form Section -->
+            <div class="container border ManageCategories px-2 bg-light">
+              <div class="row">
+                <!-- Add Category -->
+                <div class="col-12 col-md-6 p-2">
+                  <h3 class="my-1">Add Category:</h3>
+                  <form id="add-category-form" class="mt-3">
+                    <div class="input-group d-flex flex-row">
+                      <div class="d-flex flex-row">
+                        <label for="Add-categoryName">Name:</label>
+                        <input
+                          type="text"
+                          id="Add-categoryName"
+                          name="categoryName"
+                          placeholder="Choose name for the category:"
+                          class="form-control"
+                          required />
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-0" id="Add-Category">
+                        Add
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Remove Category -->
+                <div class="col-12 col-md-6 p-2">
+                  <h3 class="my-1">Remove Category:</h3>
+                  <form id="remove-category-form" class="mt-3">
+                    <div class="input-group d-flex flex-row">
+                      <div class="part-status d-flex flex-row">
+                        <label for="Label">Select:</label>
+                        <select  name="Label" required>
+                          <option value="Ic">Ic</option>
+                          <option value="Res">Res</option>
+                          <option value="Cap">Cap</option>
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-0" id="Remove-Category">
+                        Remove
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Edit Category -->
+              <h3 class="pl-2">Edit Category:</h3>
+              <form id="edit-category-form" class="mt-3 px-2">
+                <div class="row d-flex flex-row">
+                  <div class="col-md-6 col-12 p-1">
+                    <div class="input-group">
+                      <div class="part-status d-flex flex-row">
+                        <label for="Label">Select:</label>
+                        <select  name="Label" required>
+                          <option value="Ic">Ic</option>
+                          <option value="Res">Res</option>
+                          <option value="Cap">Cap</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12 p-1">
+                    <div class="input-group">
+                      <div class="d-flew flex-row">
+                        <label for="Edit-categoryName">Name:</label>
+                        <input
+                          type="text"
+                          id="Edit-categoryName"
+                          name="categoryName"
+                          placeholder="New name for category:"
+                          class="form-control"
+                          required />
+                      </div>
+                    </div>
+                    <div class="mt-1 d-flex justify-content-end">
+                      <button type="submit" class="btn btn-primary" id="Edit-Category">
+                        Edit Category
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Available Categories Header -->
+            <div class="d-flex flex-row align-items-center my-1">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="gradSubcategories" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M3 6H9L11 8H21V18C21 18.55 20.55 19 20 19H4C3.45 19 3 18.55 3 18V6Z"
+                  stroke="url(#gradSubcategories)" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M7 13H17M7 16H14"
+                  stroke="url(#gradSubcategories)" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <h3 class="pl-1">Available Categories:</h3>
+            </div>
+
+            <!-- Categories Table -->
+            <div class="container table-container border ManageCategories p-0 mt-1">
+              <div class="row">
+                <div class="col-12 fixed-table-container" style="max-height: 40vh;">
+                  <table class="table table-bordered table-striped table-hover mb-0 text-center p-1">
+                    <thead>
+                      <tr>
+                        <th>Row</th>
+                        <th>Subcategory</th>
+                        <th>Connected Categories</th>
+                        <th>Connected parts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
+                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- "Manage subcategories":  -->
+          <div id="Manage-Subcategories" class="tab-content">
+            <!-- Header -->
+            <div class="d-flex flex-row align-items-center my-1">
+              <svg width="20" height="20" fill="currentColor" class="bi bi-kanban" viewBox="0 0 16 16">
+                <defs>
+                  <linearGradient id="gradKanban" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                  </linearGradient>
+                </defs>
+                <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" fill="url(#gradKanban)" />
+                <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" fill="url(#gradKanban)" />
+              </svg>
+              <h3 class="pl-1">Manage Subcategories:</h3>
+            </div>
+
+            <!-- Management Section -->
+            <div class="container border ManageCategories px-2 py-1">
+              <div class="row">
+                <!-- Add Subcategory -->
+                <div class="col-12 col-md-6 px-1">
+                  <h3 class="my-1">Add Subcategory:</h3>
+                  <form id="add-subcategory-form" class="mt-3">
+                    <div class="input-group d-flex flex-row">
+                      <div class="d-flex flex-row">
+                        <label for="Add-subcategoryName">Name:</label>
+                        <input type="text" id="Add-subcategoryName" name="subcategoryName"
+                          placeholder="Choose name for the subcategory:" class="form-control" required />
+                      </div>
+                      <button type="submit" class="btn btn-primary my-0" id="Add-Subcategory">Add</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Remove Subcategory -->
+                <div class="col-12 col-md-6 px-1">
+                  <h3 class="my-1">Remove Subcategory:</h3>
+                  <form id="remove-subcategory-form" class="mt-3">
+                    <div class="input-group d-flex flex-row">
+                      <div class="part-status d-flex flex-row">
+                        <label for="SelectSubcategoryToRemove">Select:</label>
+                        <select id="SelectSubcategoryToRemove" name="Label" required>
+                          <option value="Ic">Ic</option>
+                          <option value="Res">Res</option>
+                          <option value="Cap">Cap</option>
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary my-0" id="Remove-Subcategory">Remove</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Edit Subcategory -->
+              <h3 class="mt-3">Edit Subcategory:</h3>
+              <form id="edit-subcategory-form" class="mt-3">
+                <div class="row d-flex flex-row">
+                  <div class="col-md-6 col-12 p-1">
+                    <div class="input-group d-flex flex-row">
+                      <div class="part-status d-flex flex-row">
+                        <label for="SelectSubcategoryToEdit">Select:</label>
+                        <select id="SelectSubcategoryToEdit" name="Label" required>
+                          <option value="Ic">Ic</option>
+                          <option value="Res">Res</option>
+                          <option value="Cap">Cap</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-12 p-1">
+                    <div class="input-group d-flex flex-row">
+                      <label for="Edit-subcategoryName">Name:</label>
+                      <input type="text" id="Edit-subcategoryName" name="subcategoryName"
+                        placeholder="New name for subcategory:" class="form-control" required />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Subcategory Dropdowns -->
+                <div class="container mt-3 Subcategory p-1">
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="Subcategory" class="mb-2">Subcategory:</label>
+
+                      <!-- Cap Dropdown -->
+                      <div class="col-12 col-lg-3 dropdown mb-2">
+                        <input class="dropdown-toggle" type="text" readonly />
+                        <div class="dropdown-text">Cap</div>
+                        <ul class="dropdown-content">
+                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Ceramic')">Ceramic</a></li>
+                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Tantal')">Tantal</a></li>
+                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Smd')">Smd</a></li>
+                        </ul>
+                      </div>
+
+                      <!-- Ic Dropdown -->
+                      <div class="col-12 col-lg-3 dropdown mb-2">
+                        <input class="dropdown-toggle" type="text" readonly />
+                        <div class="dropdown-text">Ic</div>
+                        <ul class="dropdown-content">
+                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Ic', 'Micro')">Micro</a></li>
+                        </ul>
+                      </div>
+
+                      <!-- Res Dropdown -->
+                      <div class="col-12 col-lg-3 dropdown mb-2">
+                        <input class="dropdown-toggle" type="text" readonly />
+                        <div class="dropdown-text">Res</div>
+                        <ul class="dropdown-content">
+                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value1')">Value1</a></li>
+                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value2')">Value2</a></li>
+                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value3')">Value3</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                      <div id="Subcategory-selected-label" class="selected-label">Selected:</div>
+                      <button type="submit" class="btn btn-primary" id="Edit-Subcategory">Edit Subcategory</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Available Categories Table -->
+            <div class="d-flex flex-row align-items-center my-1">
+              <svg width="20" height="20" fill="currentColor" class="bi bi-kanban" viewBox="0 0 16 16">
+                <defs>
+                  <linearGradient id="gradKanban" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
+                  </linearGradient>
+                </defs>
+                <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" fill="url(#gradKanban)" />
+                <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" fill="url(#gradKanban)" />
+              </svg>
+              <h3 class="pl-1">Available Categories:</h3>
+            </div>
+
+            <div class="container table-container border ManageCategories p-0 mt-2">
+              <div class="row">
+                <div class="col-12 fixed-table-container" style="max-height: 40vh;">
+                  <table class="table table-bordered table-striped table-hover mb-0 text-center p-1">
+                    <thead>
+                      <tr>
+                        <th>Row</th>
+                        <th>Subcategory</th>
+                        <th>Connected Categories</th>
+                        <th>Connected parts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>01</td><td>Cap</td><td>3</td><td>1</td></tr>
+                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
+                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
+                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
+                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
+                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
+                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
+                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
+                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
+                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
+                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
+                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
+                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
+                      <tr><td>70</td><td>...</td><td>...</td><td>...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- "End manage subcategories" -->
+
+          <!-- end Add to Inventory -->
+          <!--  Reports -->
+          <div id="MoeinReport" class="tab-content">
+          </div>
+
+          <!-- band list -->
+           <div class="tab-content" id="BandList">                    
+              <!-- Table View (Hidden by default) -->
+              <div class="row" id="tableRow">
+                <div class="col-12">
+                  <div class="card shadow-sm">
+                    <div class="fixed-table-container" style="max-height:80vh;">
+                      <table class="table table-bordered table-hover mb-0 text-center table-striped">
+                        <thead class="table-light position-sticky top-0" style="z-index: 1;">
+                          <tr>
+                            <th>#</th>
+                            <th>IP</th>
+                            <th>Username</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.1</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.2</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>192.168.1.3</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+                          <tr>
+                            <td>0004</td>
+                            <td>192.168.1.4</td>
+                            <td>user_01</td>
+                            <td>1404/01/01 - 12:34</td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- btns -->
+              <div class="row my-2">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"/>
+                        </svg>
+                    First
+                    </a>
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight" id="prevBtn">
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                      </svg>
+                      Prev</a>
+
+                    <div class="px-4 px-custom">
+                      <span class="px-1 fw-bold text-danger">1</span>
+                      <span class="px-1 fw-bold">2</span>
+                      <span class="px-1 fw-bold">3</span>
+                    </div>
+
+
+                    <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                      Next
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                          <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                      </a>
+                      <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                        last
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"/>
+                        </svg>
+                      </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          <!-- end band list -->
+           <!-- LoginLogs -->
+             <div class="tab-content" id="LoginLogs">                    
+              <!-- Table View (Hidden by default) -->
+              <div class="row" id="tableRow">
+                <div class="col-12">
+                  <div class="card shadow-sm">
+                    <div class="fixed-table-container" style="max-height:80vh;">
+                      <table class="table table-bordered table-hover mb-0 text-center table-striped">
+                        <thead class="table-light position-sticky top-0" style="z-index: 1;">
+                          <tr>
+                            <th>#</th>
+                            <th>IP</th>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>192.168.1.10</td>
+                            <td>admin</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>2025-07-24 09:12</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>192.168.1.15</td>
+                            <td>guest</td>
+                            <td><span class="badge bg-danger">Blocked</span></td>
+                            <td>2025-07-23 17:45</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>10.0.0.5</td>
+                            <td>leila</td>
+                            <td><span class="badge bg-warning text-dark">Pending</span></td>
+                            <td>2025-07-22 14:30</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- btns -->
+               <div class="row my-2">
+                  <div class="col-12 d-flex justify-content-center">
+                    <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
+                      <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
+                          <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"/>
+                          </svg>
+                      First
+                      </a>
+                      <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight" id="prevBtn">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                          <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                        </svg>
+                        Prev</a>
+
+                      <div class="px-4 px-custom">
+                        <span class="px-1 fw-bold text-danger">1</span>
+                        <span class="px-1 fw-bold">2</span>
+                        <span class="px-1 fw-bold">3</span>
+                      </div>
+
+
+                      <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                        Next
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                          </svg>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft" id="nextBtn">
+                          last
+                          <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"/>
+                          </svg>
+                        </a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- end LoginLogs -->
+          <!-- end Reports -->
+
+           <!-- Manage users -->
+            <div id="Manage-users" class="tab-content">
+              <div class="row" >
+                  <div class="col-12 px-0"> 
+                  <div class="form-box">
+                     <div class="d-flex flex-row align-items-center gap-2">
+                        <label for="nameInput" class="form-label" style="width: 150px;">Nick name:</label>
+                        <input type="text" class="form-control" id="nameInput" placeholder="">
+
+                        <!-- Select element -->
+                        <select class="form-control ml-1" id="roleSelector" style="width: 100px;height: 31px;">
+                          <option value="user">User</option>
+                          <option value="manager">Manager</option>
+                          <option value="admin">Admin</option>
+                        </select>
+
+                        <!-- Generate button -->
+                        <button class="btn btn-primary" style="height: 31px;" id="generateBtn" type="button">Generate</button>
+                      </div>
+
+                      <div id="codeOutput" class="output-label">
+                          url:
+                          <input class="form-control" type="text" id="copyText" value="https://www.google.com" readonly />
+                          <button type="button" id="btn-copy" class="btn btn-outline-secondary d-flex align-items-center p-2">
+                          <svg width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                          </svg>
+                          </button>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="col-12" style="height:100%;">
+                      <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
+                        <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                          <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nickname</th>
+                              <th scope="col">Role</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Invit Link</th>
+                              <th scope="col">Create by</th>
+                              <th scope="col">Generated At</th>
+                              <th scope="col">User Created At</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                              <tr>
+                              <td>1</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>100</td>
+                              <td>johnny</td>
+                              <td>user</td>
+                              <td>Active</td>
+                              <td><a href="#" class="copy-link" data-link="https://example.com/john">https://example.com/john</a></td>
+                              <td>vihan</td>
+                              <td>2023-01-15</td>
+                              <td>2025-01-15</td>
+                              <td><svg width="16" height="16"
+                                  fill="currentColor" class="bi bi-fire text-danger" viewBox="0 0 16 16">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+                              </svg>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                  </div>
+              </div>
+           </div>
+          <!-- end Manage users -->
+
+          <!-- search -->
+           <div id="Search-Inventory" class="tab-content">is loading</div>
+           <!-- end search -->
+
+           <!-- profile -->
+           <div class="tab-content" id="profile">
+              <div class="row">
+                 <div class="col-12 col-md-8 px-1">
+                    <div class="p-3 border rounded shadow-sm bg-light h-100">
+                      <!-- Title -->
+                      <div class="d-flex align-items-center mb-3">
+                        <svg width="20" height="20" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                          <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                        </svg>
+                        <h4 class="mx-2 mb-0">Profile Information</h4>
+                      </div>
+
+                      <!-- Form -->
+                      <form id="profileForm" class="d-flex flex-column justify-content-between flex-grow-1">
+                        <div class="row g-3">
+                          <div class="col-12 col-md-6 px-1 mb-3">
+                            <label for="firstName" class="form-label ">First Name</label>
+                            <input type="text" class="form-control my-2" id="firstName" placeholder="Enter first name">
+                          </div>
+                          <div class="col-12 col-md-6 px-1 mb-3">
+                            <label for="lastName" class="form-label ">Last Name</label>
+                            <input type="text" class="form-control my-2" id="lastName" placeholder="Enter last name">
+                          </div>
+                          <div class="col-12 col-md-6 px-1 mb-3">
+                            <label for="nickName" class="form-label ">Nickname</label>
+                            <input type="text" class="form-control my-2" id="nickName" placeholder="Enter nickname">
+                          </div>
+                          <div class="col-12 col-md-12 px-1 mb-3">
+                            <label for="profileEmail" class="form-label ">Email Address</label>
+                            <input type="email" class="form-control my-2" id="profileEmail" placeholder="Enter your email">
+                          </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="text-end mt-3">
+                          <button type="submit" class="btn btn-saveChanges px-3">Save Changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-4 px-1">
+                    <!-- changesPass -->
+                      <div class="p-3 border rounded shadow-sm bg-light h-100">
+                        <div class="d-flex flex-row align-items-center mb-3">
+                              <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                              </svg>
+                              <h4 class="mx-2 mb-0">Change Password</h4>
+                          </div>
+                          
+                          <form id="changePasswordForm">
+                            <div class="row mb-3">
+                              <div class="col-12 mb-3">
+                                <label for="currentPassword" class="form-label ">Current Password</label>
+                                <input type="text" class="form-control my-2" id="currentPassword" placeholder="Enter current password">
+                              </div>
+                              <div class="col-12 mb-3">
+                                <label for="newPassword" class="form-label ">New Password</label>
+                                <input type="text" class="form-control my-2" id="newPassword" placeholder="Enter new password">
+                              </div>
+                              <div class="col-12 mb-3">
+                                <label for="confirmPassword" class="form-label ">Confirm New Password</label>
+                                <input type="text" class="form-control my-2" id="confirmPassword" placeholder="Confirm new password">
+                              </div>
+                            </div>
+                          
+                            <div class="text-end">
+                              <button type="submit" class="btn px-2 btn-changesPass">Change Password</button>
+                            </div>
+                          </form>
+                          <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                              const fields = ["currentPassword", "newPassword", "confirmPassword"];
+                          
+                              fields.forEach(function (fieldId) {
+                                const input = document.getElementById(fieldId);
+                          
+                                // Wrap input in a div with position: relative
+                                const wrapper = document.createElement("div");
+                                wrapper.classList.add("password-wrapper");
+                          
+                                // Clone the input and replace
+                                input.parentNode.insertBefore(wrapper, input);
+                                wrapper.appendChild(input);
+                          
+                                // Set type to password
+                                input.type = "password";
+                          
+                                // Create the toggle eye icon
+                                const toggle = document.createElement("span");
+                                toggle.classList.add("toggle-eye");
+                          
+                                // Default icon (eye-slash)
+                                toggle.innerHTML = `
+                                  <svg width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
+                                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
+                                    <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
+                                  </svg>
+                                `;
+                          
+                                toggle.addEventListener("click", function () {
+                                  if (input.type === "password") {
+                                    input.type = "text";
+                                    toggle.innerHTML = `
+                                      <svg width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                      </svg>
+                                    `;
+                                  } else {
+                                    input.type = "password";
+                                    toggle.innerHTML = `
+                                      <svg width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
+                                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
+                                        <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
+                                      </svg>
+                                    `;
+                                  }
+                                });
+                          
+                                // Append eye icon to wrapper
+                                wrapper.appendChild(toggle);
+                              });
+                            });
+                          </script>
+                            
+                            
+                      </div>
+                  </div>
+              </div>
+          </div>
+           <!-- end profile -->
+        </div>
+        <!-- ***** end main content ***** -->
+      </div>
+    </div>
+    <!--########## end main ##########-->
+
+
+
+    <!-- SweetAlert2 -->
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- my js -->
+    <script src="./design/js/script.js" defer></script>
+  </body>
+</html>

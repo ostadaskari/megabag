@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+
+    <!-- link CSS -->
+    <link rel="stylesheet" href="./design/css/inventory.css" />
+  </head>
+  <style>
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container .top:before,
+.container .top:after,
+.container .bottom:before,
+.container .bottom:after {
+  transition: all 0.8s ease;
+  margin-left: 0;
+  transform-origin: center;
+}
+
+
+.container.active .top:before,
+.container.active .top:after,
+.container.active .bottom:before,
+.container.active .bottom:after {
+  margin-left: 300px;
+  transform-origin: -300px 50%;
+}
+
+.container.active .centerLogin {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+
+.top, .bottom{
+  &:before, &:after{
+    content:'';
+    display:block;
+    position:absolute;
+    width:200vmax;
+    height:200vmax;
+    top:50%;left:50%;
+    margin-top:-100vmax;
+    transform-origin: 0 50%;
+    transition:all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    z-index:10;
+    opacity:0.65;
+    transition-delay:0.2s;
+  }
+}
+
+.top{
+  &:before{transform:rotate(45deg);background:#ECA400;}
+  &:after{transform:rotate(135deg);background:#eca5006e;}
+}
+
+.bottom{
+  &:before{transform:rotate(-45deg);background:#006992;}
+  &:after{transform:rotate(-135deg);background:#001D4A;}
+}
+
+.centerLogin{
+  position:absolute;
+  width:400px;
+  top: 50%;
+  left: 50%;
+  margin-left:-200px;
+  margin-top:-200px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:20px;
+  opacity:0;
+  transition:all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  transition-delay:0s;
+  color:#333;
+  background: rgba(35, 65, 102, 0.09);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.4px);
+  -webkit-backdrop-filter: blur(3.4px);
+  border: 1px solid rgba(35, 65, 102, 0.18);
+  z-index:100;
+}
+.h2Form{
+  color:var(--main-bg0-color);
+  margin-bottom: 20px;
+  z-index: 1200;
+  font-size: 20px;
+}
+
+    .form-section {
+      width: 100%;
+      height: 75%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items:center;
+    }
+   
+    .form-section input{
+        padding:10px 30px;
+        margin:10px auto ;
+        border-radius:1px;
+        border:1px solid #ccc;
+        font-family:inherit;
+        border-radius:0.25rem;
+        font-size: 14px;
+        background-color:rgba(240, 248, 255, 0.466);
+    } 
+   
+    .loginTo,
+    .registerTo{
+        background:var(--main-bg0-color);
+        color: #fff;
+        padding:10px 15px ;
+    }
+    .registerTo:hover,.loginTo:hover {
+        background: var(--main-hover-color);
+        color:var(--main-darktext-color)
+        }
+    
+    .input-captcha{
+    width:50%;
+    align-self:start;
+    margin: 0!important;
+
+    } 
+
+    .divCaptcha{
+      width: 48%;
+      height: 40px;
+      position: relative;
+    }
+   .imgCaptcha {
+      width: 100%;
+      height:100%;
+      border:none;
+      border-radius:0.25rem;
+      position: relative;
+    }
+    .divCaptcha svg{
+      position: absolute;
+      top: 24%;
+      right:5%;
+    }
+    .divInput{
+      position: relative;
+    }
+    
+.toggle-password {
+  position: absolute;
+    right: 26px;
+    top: 35%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 100;
+}
+
+.toggle-password .eye-icon {
+  color: #666;
+}
+
+    .divInput svg{
+    position: absolute;
+    top: 35%;
+    left: 2%;
+    fill: var(--main-bg1-color);
+    }
+
+  @media (max-width: 768px) {
+  .centerLogin {
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+  }
+  h2{
+    font-size: 17px;
+  }
+}
+
+  </style>
+<body>
+    <div class="container">
+        <div class="top">
+            <div class="bottom">
+                <div class="centerLogin">
+                    <h2 class="h2Form">Login in warehousing system</h2>
+                    <form id="loginForm" class="form-section">
+  
+                      <div class="w-100 divInput">
+                          <svg width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                          </svg>
+                          <input type="text" class="form-control" placeholder="Username" required/>
+                      </div>
+                      <div class="w-100 divInput position-relative">
+
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                        </svg>
+
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+
+                        <span class="toggle-password" toggle="#loginPassword">
+                          <svg class="eye-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/>
+                          </svg>
+                        </span>
+                      </div>
+
+                        <div class=" d-flex flex-row align-items-center justify-content-between w-100 my-2">
+                            <input type="text" class="form-control input-captcha" placeholder="Enter" required>
+                            <div class="divCaptcha">
+                              <img src="" class="imgCaptcha">
+                              <svg width="20" height="20" fill="var(--main-bg1-color)" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                              </svg>
+                            </div>
+                        </div>
+                        <button class="btn loginTo mt-4">login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".container");
+
+    if (container) {
+      setTimeout(() => {
+        container.classList.add("active");
+      }, 300); 
+    }
+  });
+</script>
+<!-- script for taggle eye -->
+ <script src="./design/js/log-reg.js"></script>
+<!-- end script for taggle eye -->
+
+
+</body>
+</html>
