@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO products (name, pn, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssisiisssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code);
 
         if ($stmt->execute()) {
@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $target = "../../uploads/images/" . uniqid() . "_" . basename($fileName);
                 if (move_uploaded_file($tmpName, $target)) {
-                    $stmtImg = $conn->prepare("INSERT INTO images (product_id, file_path, file_size, file_extension) VALUES (?, ?, ?, ?)");
-                    $stmtImg->bind_param("isis", $product_id, $target, $fileSize, $fileExt);
+                    $stmtImg = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                    $stmtImg->bind_param("issis", $product_id, $fileName, $target, $fileSize, $fileExt);
                     $stmtImg->execute();
                 }
             }
@@ -64,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $target = "../../uploads/pdfs/" . uniqid() . "_" . basename($fileName);
                 if (move_uploaded_file($tmpName, $target)) {
-                    $stmtPdf = $conn->prepare("INSERT INTO pdfs (product_id, file_path, file_size, file_extension) VALUES (?, ?, ?, ?)");
-                    $stmtPdf->bind_param("isis", $product_id, $target, $fileSize, $fileExt);
+                    $stmtPdf = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                    $stmtPdf->bind_param("issis", $product_id, $fileName, $target, $fileSize, $fileExt);
                     $stmtPdf->execute();
                 }
             }

@@ -11,24 +11,14 @@
         .success { background-color: #d4edda; color: #155724; }
         .error { background-color: #f8d7da; color: #721c24; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
 <h2>Create New Product</h2>
 <h3><a href="../auth/dashboard.php">dashboard</a></h3>
-<?php if (!empty($success)): ?>
-    <div class="alert success"><?= htmlspecialchars($success) ?></div>
-<?php endif; ?>
 
-<?php if (!empty($errors)): ?>
-    <div class="alert error">
-        <ul>
-            <?php foreach ($errors as $e): ?>
-                <li><?= htmlspecialchars($e) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 
 <form method="post" enctype="multipart/form-data">
     <label>Name:
@@ -135,6 +125,36 @@ document.getElementById('category_search').addEventListener('input', function ()
 // Load categories on page load
 fetchCategories();
 </script>
+
+   <!-- sweet alerts -->
+<?php if (!empty($success)): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: <?= json_encode($success) ?>,
+                confirmButtonColor: '#3085d6'
+            });
+        });
+    </script>
+<?php endif; ?>
+
+<?php if (!empty($errors)): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: <?= json_encode('<ul><li>' . implode('</li><li>', array_map('htmlspecialchars', $errors)) . '</li></ul>') ?>,
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+<?php endif; ?>
+
+  <!-- end sweet alert -->
+
 
 
 

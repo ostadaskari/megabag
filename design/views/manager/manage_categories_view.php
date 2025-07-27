@@ -26,7 +26,7 @@
     <input type="text" name="name" id="name" placeholder="Category Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
 
     <label for="search-category"><strong>Parent Category:</strong></label><br>
-    <input type="text" id="search-category" placeholder="Search category..." style="width: 100%; padding: 8px; margin-bottom: 5px;" readonly>
+    <input type="text" id="search-category" placeholder="Search category..." style="width: 100%; padding: 8px; margin-bottom: 5px;" >
     <div id="category-tree" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 5px; background: #f9f9f9; border-radius: 5px; margin-bottom: 15px;"></div>
 
     <input type="hidden" name="parent_id" id="parent_id" value="">
