@@ -1,0 +1,56 @@
+<?php
+require_once '../db/db.php';
+session_start();
+// ACL: Allow only manager or admin
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+$errors = [];
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['user_id'];
+    $products = $_POST['products'] ?? [];
+
+    foreach ($products as $index => $item) {
+        $product_id = (int) ($item['product_id'] ?? 0);
+        $qty_issued = (int) ($item['qty_issued'] ?? 0);
+        $issued_to = (int) ($item['issued_to_id'] ?? 0);
+        $remarks = trim($item['remarks'] ?? '');
+
+        if (!$product_id || !$qty_issued || !$issued_to) {
+            $errors[] = "Row #".($index+1)." is missing required fields.";
+            continue;
+        }
+
+        // Check available stock
+        $check = $conn->prepare("SELECT qty FROM products WHERE id = ?");
+        $check->bind_param("i", $product_id);
+        $check->execute();
+        $res = $check->get_result()->fetch_assoc();
+
+        if (!$res || $res['qty'] < $qty_issued) {
+            $errors[] = "Not enough stock in row #".($index+1).".";
+            continue;
+        }
+
+        // Insert stock issue log
+        $stmt = $conn->prepare("INSERT INTO stock_issues (product_id, user_id, issued_to, qty_issued, remarks) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiiis", $product_id, $user_id, $issued_to, $qty_issued, $remarks);
+        $stmt->execute();
+
+        // Update stock
+        $update = $conn->prepare("UPDATE products SET qty = qty - ? WHERE id = ?");
+        $update->bind_param("ii", $qty_issued, $product_id);
+        $update->execute();
+    }
+
+    if (empty($errors)) {
+        $success = "Stock issued successfully.";
+    }
+}
+
+include '../../design/views/manager/stock_issue_view.php';
+?>

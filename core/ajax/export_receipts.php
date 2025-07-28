@@ -17,20 +17,20 @@ $query = "SELECT s.*, u.nickname, p.name, p.part_number, p.tag
 // Add filters
 $params = [];
 $types = '';
-
+//search section
 if (!empty($keyword)) {
     $query .= " AND (p.name LIKE ? OR p.tag LIKE ? OR p.part_number LIKE ? OR u.name LIKE ? OR u.family LIKE ? OR u.nickname LIKE ?)";
     $kw = "%$keyword%";
     $params = array_fill(0, 6, $kw);
     $types .= str_repeat('s', 6);
 }
-
+//filter date from
 if (!empty($from_date)) {
     $query .= " AND s.created_at >= ?";
     $params[] = $from_date;
     $types .= 's';
 }
-
+//filter date to 
 if (!empty($to_date)) {
     $query .= " AND s.created_at <= ?";
     $params[] = $to_date;
@@ -53,18 +53,27 @@ $result = $stmt->get_result();
 if ($format === 'excel') {
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment;filename=receipts_export.csv');
+    header('Pragma: no-cache');
+    header('Expires: 0');
 
     $output = fopen('php://output', 'w');
+
+    // Set UTF-8 BOM for Excel compatibility
+    fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+    // CSV Header row
     fputcsv($output, ['Product Name', 'Part Number', 'Tag', 'Qty', 'User', 'Date', 'Remarks']);
 
     while ($row = $result->fetch_assoc()) {
+        $formattedDate = date('Y-n-d H:i', strtotime($row['created_at'])); // Ensure readable format
+
         fputcsv($output, [
             $row['name'],
             $row['part_number'],
             $row['tag'],
             $row['qty_received'],
             $row['nickname'],
-            $row['created_at'],
+            $formattedDate,
             $row['remarks']
         ]);
     }
@@ -72,6 +81,7 @@ if ($format === 'excel') {
     fclose($output);
     exit;
 }
+
 
 // ---------------------------
 // Export to PDF (optional)
