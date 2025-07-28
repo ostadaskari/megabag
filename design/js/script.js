@@ -78,29 +78,36 @@ setInterval(updateClock, 1000);
 updateClock();
 //`````````````````````` end clock
 
-
-
-
 //```````````````````` item menu
-  document.addEventListener("DOMContentLoaded", function () {
-    const contentBoxes = document.querySelectorAll(".tab-content");
-    const links = document.querySelectorAll("[data-content]");
+document.addEventListener("DOMContentLoaded", function () {
+  const contentBoxes = document.querySelectorAll(".tab-content");
+  const links = document.querySelectorAll("[data-content]");
+  const allLis = document.querySelectorAll("li");
 
-    links.forEach(link => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
+  links.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
 
-        const targetId = this.getAttribute("data-content");
+      const targetId = this.getAttribute("data-content");
 
-        contentBoxes.forEach(box => box.classList.remove("active"));
+      links.forEach(l => l.classList.remove("active"));
+      allLis.forEach(li => li.classList.remove("active"));
 
-        const targetBox = document.getElementById(targetId);
-        if (targetBox) {
-          targetBox.classList.add("active");
-        }
-      });
+      this.classList.add("active");
+
+      const li = this.closest("li");
+      if (li) li.classList.add("active");
+
+      const parentLi = li?.closest("ul")?.closest("li");
+      if (parentLi) parentLi.classList.add("active");
+
+      contentBoxes.forEach(box => box.classList.remove("active"));
+      const targetBox = document.getElementById(targetId);
+      if (targetBox) targetBox.classList.add("active");
     });
   });
+});
+
 //```````````````````` item menu
 
 //```````````````````` copy url in top

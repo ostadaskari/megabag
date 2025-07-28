@@ -332,6 +332,11 @@ table {
 /* end sidebar */
 
 /* main */
+[data-content].active,
+li.active > a {
+  background-color:var(--main-bgTitle-color);
+}
+
 .main{
     height: 94vh;
 }
@@ -369,6 +374,9 @@ table {
 /* content container */
 
 /* Adding a single part*/
+#Add-Single-part svg{
+  fill:var(--main-bg0-color);
+}
 .partForm {
     display: flex;
     flex-direction: column;
@@ -1046,11 +1054,11 @@ fill:var(--main-text-color);
   position: relative;
   height: 40px;
   max-width: 900px;
-  width: 100%;
+  width:50%;
   background: #fff;
   margin: 10px auto;
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .input-box svg,
 .input-box .button {
@@ -1068,13 +1076,13 @@ fill:var(--main-text-color);
   width: 100%;
   outline: none;
   font-size: 14px;
-  border:1px solid #ccc;
+  border:2px solid var(--main-bg1-color);
   border-radius:8px;
   padding:0 50px!important;
   background-color: transparent;
 }
 .input-box .button {
-  right: 20px;
+  right: 5px;
   padding: 7px 10px;
   background-color: var(--main-bg0-color);
   color: white;
@@ -1121,9 +1129,10 @@ fill:var(--main-text-color);
 
   .category-tree li {
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 10px 8px;
     border-radius: 4px;
     position: relative;
+    font-size: 14px;
   }
 
   .category-tree li:hover {
@@ -1148,7 +1157,7 @@ fill:var(--main-text-color);
     content: "▶";
     position: absolute;
     left: -10px;
-    top: 6px;
+    top: 10px;
     font-size: 0.7rem;
     transition: transform 0.2s ease;
   }
@@ -1157,3 +1166,108 @@ fill:var(--main-text-color);
     transform: rotate(90deg);
   }
 /* ##################### end Categories ################## */
+
+/* ##################### Insert // List-Of-Receives ################## */
+#List-Of-Receives table svg{
+ fill: rgb(43, 100, 150);
+}
+
+  .custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+  }
+
+  .modal-box {
+    position: relative;
+    margin: 5% auto;
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    z-index: 10000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.3s;
+  }
+
+  .modal-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .modal-close {
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover {
+    color: #000;
+  }
+
+  .modal-body {
+    padding: 16px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .open-modal {
+    cursor: pointer;
+    color: #0d6efd;
+    text-decoration: underline;
+  }
+
+  .open-modal:hover {
+    color: #0a58ca;
+  }
+/* ##################### end Insert // List-Of-Receives ################## */
+
+
+/* ##################### Insert // Receive-Stock ################## */
+#Receive-Stock .mt-4{
+  margin-top: 1.75rem!important;
+}
+/* ##################### end Insert // Receive-Stock ################## */
+
+.hoverSvg:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}

@@ -657,7 +657,7 @@ position: relative !important;
   background-color:#e6eef77a;
 }
 .shadow-sm {
-  box-shadow: 0 1px 2px #05a2e073;
+  box-shadow: 0 1px 5px #05a2e073;
 }
 .text-end{
   text-align: end;
