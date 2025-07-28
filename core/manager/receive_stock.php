@@ -1,8 +1,9 @@
 <?php
-session_start();
 require_once '../db/db.php';
+session_start();
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'manager'])) {
+// ACL: Allow only manager or admin
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
     exit;
 }
@@ -10,44 +11,48 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'mana
 $errors = [];
 $success = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = intval($_POST['product_id']);
-    $qty_received = intval($_POST['qty']);
-    $remarks = trim($_POST['remarks']);
+// Handle POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_array($_POST['products'])) {
+    $products = $_POST['products'];
     $user_id = $_SESSION['user_id'];
+    $now = date('Y-m-d H:i:s');
 
-    if ($qty_received <= 0) {
-        $errors[] = "Quantity must be greater than zero.";
-    }
+    foreach ($products as $index => $product) {
+        $product_id = isset($product['product_id']) ? (int) $product['product_id'] : 0;
+        $quantity = isset($product['qty_received']) ? (int) $product['qty_received'] : 0;
+        $notes = trim($product['remarks'] ?? '');
 
-    $stmt = $conn->prepare("SELECT qty FROM products WHERE id = ?");
-    $stmt->bind_param("i", $product_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $product = $result->fetch_assoc();
-    $stmt->close();
+        if ($product_id <= 0) {
+            $errors[] = "Row " . ($index + 1) . ": Invalid product selection.";
+            continue;
+        }
 
-    if (!$product) {
-        $errors[] = "Product not found.";
+        if ($quantity <= 0) {
+            $errors[] = "Row " . ($index + 1) . ": Quantity must be greater than 0.";
+            continue;
+        }
+
+        // Insert into stock_receipts
+        $stmt = $conn->prepare("INSERT INTO stock_receipts (product_id, user_id, qty_received, remarks, created_at) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiiss", $product_id, $user_id, $quantity, $notes, $now);
+        if (!$stmt->execute()) {
+            $errors[] = "Row " . ($index + 1) . ": Failed to insert into stock_receipts.";
+            continue;
+        }
+
+        // Update product quantity
+        $update = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
+        $update->bind_param("ii", $quantity, $product_id);
+        if (!$update->execute()) {
+            $errors[] = "Row " . ($index + 1) . ": Failed to update product stock.";
+            continue;
+        }
     }
 
     if (empty($errors)) {
-        $new_qty = $product['qty'] + $qty_received;
-
-        // Update quantity in products table
-        $stmt = $conn->prepare("UPDATE products SET qty = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("ii", $new_qty, $product_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Insert into stock_receipts
-        $stmt = $conn->prepare("INSERT INTO stock_receipts (product_id, user_id, qty_received, remarks) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiis", $product_id, $user_id, $qty_received, $remarks);
-        $stmt->execute();
-        $stmt->close();
-
         $success = "Stock received successfully.";
     }
 }
 
-require_once '../../design/views/manager/receive_stock_view.php';
+// Load view
+include '../../design/views/manager/receive_stock_view.php';

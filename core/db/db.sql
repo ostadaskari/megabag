@@ -105,4 +105,29 @@ CREATE TABLE pdfs (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- automatically deletes images/PDFs when the product is deleted
 );
 
+CREATE TABLE stock_receipts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    user_id INT,
+    qty_received INT NOT NULL,
+    remarks TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE stock_issues (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    user_id INT,
+    qty_issued INT NOT NULL,
+    issued_to VARCHAR(255),
+    remarks TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+
+
 
