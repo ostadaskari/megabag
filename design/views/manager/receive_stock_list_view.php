@@ -12,18 +12,25 @@
 <div class="container mt-5">
     <h2 class="mb-4">Inventory Receipts</h2>
         <h3><a href="../auth/dashboard.php">dashboard</a></h3>
-    <div class="row g-3 mb-3">
-        <div class="col-md-4">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by product name, tag, P/N or user name/family/nickname">
-        </div>
+    <div class="row mb-3">
         <div class="col-md-3">
-            <input type="date" id="fromDate" class="form-control" placeholder="From date">
-        </div>
-        <div class="col-md-3">
-            <input type="date" id="toDate" class="form-control" placeholder="To date">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name, tag, part number or user">
         </div>
         <div class="col-md-2">
-            <button class="btn btn-primary w-100" onclick="fetchReceipts(1)">Search</button>
+            <input type="date" id="fromDate" class="form-control">
+        </div>
+        <div class="col-md-2">
+            <input type="date" id="toDate" class="form-control">
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary w-100" onclick="fetchReceipts()">Search</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-secondary w-100" onclick="resetFilters()">Clear Filters</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success w-100 mb-2" onclick="exportReceipts('excel')">Export to Excel</button>
+            <button class="btn btn-danger w-100" onclick="exportReceipts('pdf')">Export to PDF</button>
         </div>
     </div>
 
@@ -69,6 +76,31 @@ function fetchReceipts(page = 1) {
 }
 
 document.addEventListener("DOMContentLoaded", () => fetchReceipts());
+
+//excel and pdf export
+function exportReceipts(format) {
+    const keyword = document.getElementById("searchInput").value;
+    const fromDate = document.getElementById("fromDate").value;
+    const toDate = document.getElementById("toDate").value;
+
+    const url = `../ajax/export_receipts.php?format=${format}&keyword=${encodeURIComponent(keyword)}&from_date=${fromDate}&to_date=${toDate}`;
+
+    window.open(url, '_blank');
+}
+
+
+//reset filter and search
+function resetFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('fromDate').value = '';
+    document.getElementById('toDate').value = '';
+    fetchReceipts(1); // Reload full list
+}
+// refresh page for full loading
+window.onload = function() {
+    fetchReceipts(1); // Load full list on initial load
+}
+
 </script>
 </body>
 </html>
