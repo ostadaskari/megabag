@@ -512,7 +512,7 @@
           </div>
           <!-- end Dashbord -->
 
-          <!-- Insert -->
+          <!--******** Insert ********-->
             <!-- Receive Stock -->
             <div class="tab-content" id="Receive-Stock">
               <div class="container mt-1">
@@ -523,7 +523,7 @@
                   </svg>
                   Insert Product</h3>
 
-                <div class="row d-flex align-items-center bg-light my-1 p-2">
+                <div class="row d-flex align-items-center bg-light rounded border my-1 p-2">
                     <!-- Product Input -->
                     <div class="col-2 mx-1">
                       <label for="productInput" class="form-label">Product</label>
@@ -554,7 +554,7 @@
                     </div>
                 </div>
 
-                <div class="row d-flex align-items-center bg-light my-1 p-2">
+                <div class="row d-flex align-items-center bg-light rounded border my-1 p-2">
                   <!-- Product Input -->
                   <div class="col-2 mx-1">
                     <label for="productInput" class="form-label">Product</label>
@@ -583,7 +583,8 @@
                       </svg>
                     </a>
                   </div>
-              </div>
+                </div>
+                
               </div>
               <div class="d-flex flex-row justify-content-between align-items-center w-100 px-3 mt-3">
                 <div class="" title="Add Row" >
@@ -593,7 +594,7 @@
                 </div>
 
                 <div class="">
-                  <button class="btn">
+                  <button class="btn" title="Submit">
                     Submit
                   </button>
                 </div>
@@ -711,9 +712,9 @@
             <!-- end script for modal show comment -->
 
             <!-- end List Of Receives -->
-          <!-- end Insert -->
+          <!--******** end Insert ********-->
 
-          <!-- Add to Inventory -->
+          <!--******** Add to Inventory ********-->
           <!-- "Add a single part":  -->
           <div id="Add-Single-part" class="tab-content">
             <form id="partForm" class="d-flex flex-column partForm">
@@ -850,7 +851,7 @@
               <!-- table list product -->
               <div class="row">
                 <div class="col-12">
-                  <div class="table-responsive fixed-table-container" style="max-height: 90vh;">
+                  <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
                       <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                           <tr>
@@ -1473,7 +1474,7 @@
           <!--  Reports -->
           <div id="MoeinReport" class="tab-content">
           </div>
-
+          <!-- end Reports -->
           <!-- band list -->
            <div class="tab-content" id="BandList">                    
               <!-- Table View (Hidden by default) -->
@@ -2242,8 +2243,8 @@
                                 <td>Admin</td>
                                 <td>ali@example.com</td>
                                 <td>
-                                  <a>
-                                    <svg width="20" height="20" fill="red" class="bi bi-ban" viewBox="0 0 16 16">
+                                  <a href="#" title="Block">
+                                    <svg width="20" height="20" fill="red" class="bi bi-ban hoverSvg" viewBox="0 0 16 16">
                                       <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
                                     </svg>
                                   </a>
@@ -2257,8 +2258,8 @@
                                 <td>User</td>
                                 <td>sara@example.com</td>
                                 <td>
-                                  <a>
-                                    <svg width="20" height="20" fill="#2b6496" class="bi bi-ban" viewBox="0 0 16 16">
+                                  <a href="#" title="Block">
+                                    <svg width="20" height="20" fill="#2b6496" class="bi bi-ban hoverSvg" viewBox="0 0 16 16">
                                       <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
                                     </svg>
                                   </a>
@@ -2272,8 +2273,8 @@
                                 <td>Manage</td>
                                 <td>reza@example.com</td>
                                 <td>
-                                  <a>
-                                    <svg width="20" height="20" fill="#2b6496" class="bi bi-ban" viewBox="0 0 16 16">
+                                  <a href="#" title="Block">
+                                    <svg width="20" height="20" fill="#2b6496" class="bi bi-ban hoverSvg" viewBox="0 0 16 16">
                                       <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
                                     </svg>
                                   </a>
@@ -2294,7 +2295,7 @@
           <div class="container mt-5">
             <div class="row d-flex justify-content-center">
               <div class="col-7">
-                <form id="categoryForm" class="p-3 border rounded bg-light">
+                <form id="categoryForm" class="p-3 border rounded shadow-sm bg-light">
                   <h3 class="card-title mb-4 d-flex align-items-center">
                     <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-bricks mx-1" viewBox="0 0 16 16">
                       <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5zM3 4v2h4.5V4zm5.5 0v2H13V4zM3 10v2h4.5v-2zm5.5 0v2H13v-2zM1 1v2h3.5V1zm4.5 0v2h5V1zm6 0v2H15V1zM1 7v2h3.5V7zm4.5 0v2h5V7zm6 0v2H15V7zM1 13v2h3.5v-2zm4.5 0v2h5v-2zm6 0v2H15v-2z"></path>
@@ -2368,10 +2369,10 @@
                 <input type="text" placeholder="Search here...">
               </div>
 
-              <!-- table list product -->
+              <!-- table Search-Inventory -->
               <div class="row">
                 <div class="col-12">
-                  <div class="table-responsive fixed-table-container" style="max-height: 90vh;">
+                  <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
                       <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                           <tr>

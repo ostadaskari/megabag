@@ -1099,8 +1099,7 @@ fill:var(--main-text-color);
 /* Responsive */
 @media screen and (max-width: 500px) {
   .input-box {
-    height: 66px;
-    margin: 0 8px;
+    width: 100%;
   }
   .input-box i {
     left: 12px;
