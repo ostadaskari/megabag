@@ -27,10 +27,11 @@
         <li><a href="../manager/manage_users.php">Manage Users</a></li>
         <li><a href="../manager/manage_categories.php">Manage categories</a></li>
         <br>
-        <li><a href="../manager/receive_stock.php">receive stock</a></li>
-        <li><a href="../manager/list_receipts.php">receives list</a></li>
+        <li><a href="../manager/receive_stock.php">Insert items</a></li>
+        <li><a href="../manager/list_receipts.php">Insert in list</a></li>
         <br>
-        <li><a href="../manager/stock_issue.php">withdraw</a></li>
+        <li><a href="../manager/stock_issue.php">withdraw items</a></li>
+        <li><a href="../manager/list_issues.php">withdraw list</a></li>
         <br>
         <li><a href="../manager/create_product.php">Create Product</a></li>
         <li><a href="../manager/products_list.php">Product List</a></li>  

@@ -18,20 +18,20 @@
                 <div class="row g-2 align-items-end">
                     <div class="col-md-3">
                         <label>Product</label>
-                        <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search name/tag/part" required>
+                        <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search name/tag/part" autocomplete="off" required>
                         <input type="hidden" name="products[0][product_id]" class="product-id">
                     </div>
                     <div class="col-md-2">
                         <label>Quantity to Issue</label>
                         <div class="d-flex align-items-center">
-                            <input type="number" name="issues[0][qty_issued]" class="form-control qty-input" min="1" required>
+                            <input type="number" name="products[0][qty_issued]" class="form-control qty-input" min="1" required>
                             <span class="ms-2 text-muted small current-qty">(Available: <span class="qty-value">--</span>)</span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <label>Issued To</label>
-                        <input type="text" name="products[0][issued_to_search]" class="form-control user-search" placeholder="Name, Family, Nickname" required>
+                        <input type="text" name="products[0][issued_to_search]" class="form-control user-search" placeholder="Name, Family, Nickname" autocomplete="off" required>
                         <input type="hidden" name="products[0][issued_to_id]" class="user-id">
                     </div>
                     <div class="col-md-3">
@@ -162,5 +162,31 @@ function showDropdown(data, input, hiddenInputClass, idKey, nameKey, secondaryKe
     input.parentNode.appendChild(box);
 }
 </script>
+
+<!-- Check if product-id and user-id are filled before allowing form submission -->
+<script>
+document.getElementById('stockIssueForm').addEventListener('submit', function (e) {
+    let valid = true;
+
+    document.querySelectorAll('.stock-row').forEach(row => {
+        const productId = row.querySelector('.product-id')?.value;
+        const userId = row.querySelector('.user-id')?.value;
+
+        if (!productId || !userId) {
+            valid = false;
+        }
+    });
+
+    if (!valid) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Missing Fields',
+            text: 'Please make sure you selected valid product and user from the dropdown.'
+        });
+    }
+});
+</script>
+
 </body>
 </html>

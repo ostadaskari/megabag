@@ -19,7 +19,7 @@
             <div class="row g-2 align-items-end">
                 <div class="col-md-4 position-relative">
                     <label>Product</label>
-                    <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" required>
+                    <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
                     <input type="hidden" name="products[0][product_id]" class="product-id">
                 </div>
                 <div class="col-md-2">

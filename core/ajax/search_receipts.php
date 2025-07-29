@@ -1,5 +1,6 @@
 <?php
 require_once '../db/db.php';
+require_once '../auth/check_manager.php';
 
 $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';

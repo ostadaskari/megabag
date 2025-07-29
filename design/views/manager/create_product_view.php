@@ -42,9 +42,9 @@
     </label>
 
                 <!-- categories -->
-       <input type="text" id="category_search" placeholder="Search categories...">
-<input type="hidden" name="category_id" id="category_id">
-<ul id="category-dropdown" style="border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:0;"></ul>
+       <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off">
+        <input type="hidden" name="category_id" id="category_id">
+        <ul id="category-dropdown" style="border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:0;"></ul>
 
 
     <label>Location:
