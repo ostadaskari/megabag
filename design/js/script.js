@@ -66,12 +66,11 @@ function updateClock() {
     
     let hours = now.toLocaleString('en-US', { ...options, hour: '2-digit' });
     let minutes = now.toLocaleString('en-US', { ...options, minute: '2-digit' });
-    let seconds = now.toLocaleString('en-US', { ...options, second: '2-digit' });
 
     let day = now.toLocaleDateString('en-US', { ...options, weekday: 'long' });
     let date = now.toLocaleDateString('en-US', { ...options, year: 'numeric', month: 'long', day: 'numeric' });
 
-    document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById("clock").textContent = `${hours}:${minutes}`;
     document.getElementById("date").textContent = `${day} - ${date}`;
 }
 setInterval(updateClock, 1000);

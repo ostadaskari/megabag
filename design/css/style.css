@@ -82,11 +82,6 @@ table {
       color: rgb(255, 252, 252);
       text-transform:capitalize;
   }
-
-   tr:hover {
-      background-color: #f1f1f1;
-  }
-
    td {
       color: #333;
   }
@@ -96,40 +91,17 @@ table {
 .div-clock-btn {
     width: 35%;
 }
-.div-clock-btn > div:first-child {
-  order: 1; 
-}
 
-.div-clock-btn > div.clock-container {
-  order: 2; 
-}
-
-.div-clock-btn > button {
-  order: 3; 
-}
-
-@media (min-width: 768px) {
-  .div-clock-btn > div:first-child {
-    order: 2; /* Profile dropdown */
-  }
-  .div-clock-btn > div.clock-container {
-    order: 1; /* Clock */
-  }
-  .div-clock-btn > button {
-    order: 3;
-  }
-}
 
 .clock-container {
-    margin-right: 10px;
     color:var(--main-text-color);
+    padding-top: 3px;
     font-size: 12px;
 }
 .logo{
     width:40px;
     height:40px;
 }
-
 
 .navbar-custom{
     left: 0;
@@ -142,7 +114,7 @@ table {
     z-index: 1101;
 }
 .navbar-title{
-    font-size: 16px;
+    font-size: 18px;
     margin-left: 20px;
     padding-right: 5px;
     color:var(--main-text-color);
@@ -221,9 +193,22 @@ table {
      .div-navbar{
         height: 5vh;
     }
+    .userNameTop{
+      width: 83%;
+      height:60px;
+      margin: 8px auto;
+      font-size: 14px;
+      border-radius:8px;
+      display: flex;
+      align-items:center;
+      justify-content: baseline;
+      flex-direction: row;
+      background-color:#ffffff3f;
+      
+    }
+  
     .sidebar {
     position: relative;
-    padding-top: 15px;
     width: 17vw !important;
     background: transparent !important;
     z-index: 1100;
@@ -639,8 +624,8 @@ td {
 /* responsive */
 
 @media (max-width:376px) {
-.content .container{
- margin-top: 10px;
+.content{
+ padding-top: 30px!important;
 }
 }
 @media (max-width: 768px) {
@@ -1178,7 +1163,8 @@ fill:var(--main-text-color);
   }
 /* ##################### end Categories ################## */
 
-/* ##################### Insert // List-Of-Receives ################## */
+/* ##################### stock in // List-Of-Receives ################## */
+
 #List-Of-Receives table svg{
  fill: rgb(43, 100, 150);
 }
@@ -1269,14 +1255,29 @@ fill:var(--main-text-color);
   .open-modal:hover {
     color: #0a58ca;
   }
-/* ##################### end Insert // List-Of-Receives ################## */
 
 
-/* ##################### Insert // Receive-Stock ################## */
+  /* Responsive */
+@media (max-width: 767.98px) {
+  .responsive-textarea {
+    min-height: 90px; 
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-textarea {
+    min-height: 30px;
+  }
+}
+
+/* ##################### end stock in // List-Of-Receives ################## */
+
+
+/* ##################### stock in // Receive-Stock ################## */
 #Receive-Stock .mt-4{
   margin-top: 1.75rem!important;
 }
-/* ##################### end Insert // Receive-Stock ################## */
+/* ##################### end stock on // Receive-Stock ################## */
 
 .hoverSvg:hover{
   transform: scale(1.1);
