@@ -2,8 +2,14 @@
 session_start();
 require_once("../db/db.php");
 
+// ACL: Only admin/manager allowed
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
 $errors = [];
-$success = false;
+$success = '';
 
 // --- Handle POST Actions ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,41 +18,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $category_id = intval($_POST['category_id'] ?? 0);
 
-    if ($action === 'add') {
-        try {
+    try {
+        if ($action === 'add') {
             $stmt = $conn->prepare("INSERT INTO categories (name, parent_id) VALUES (?, ?)");
             $stmt->bind_param("si", $name, $parent_id);
             $stmt->execute();
-            $success = true;
-        } catch (Exception $e) {
-            $errors[] = "Failed to add category.";
-        }
-    }
-
-    if ($action === 'edit' && $category_id) {
-        try {
+            $success = "Category added successfully.";
+        } elseif ($action === 'edit' && $category_id) {
             $stmt = $conn->prepare("UPDATE categories SET name = ?, parent_id = ? WHERE id = ?");
             $stmt->bind_param("sii", $name, $parent_id, $category_id);
             $stmt->execute();
-            $success = true;
-        } catch (Exception $e) {
-            $errors[] = "Failed to update category.";
-        }
-    }
-
-    if ($action === 'delete' && $category_id) {
-        try {
-            // Delete current and all subcategories recursively
+            $success = "Category updated successfully.";
+        } elseif ($action === 'delete' && $category_id) {
             deleteCategoryRecursive($conn, $category_id);
-            $success = true;
-        } catch (Exception $e) {
-            $errors[] = "Failed to delete category.";
+            $success = "Category and its subcategories deleted successfully.";
+        } else {
+            $errors[] = "Invalid action or missing category ID.";
         }
+    } catch (Exception $e) {
+        $errors[] = "Database error: " . $e->getMessage();
     }
 
-    // Redirect to clear POST data and avoid resubmission
-    header("Location: manage_categories.php");
+    // Build query string
+    $query = '';
+    if (!empty($success)) {
+        $query = 'success=' . urlencode($success);
+    } elseif (!empty($errors)) {
+        $query = 'error=' . urlencode(implode(' | ', $errors));
+    }
+
+    // Redirect with PRG
+    header("Location: manage_categories.php" . ($query ? "?$query" : ""));
     exit;
+}
+
+// --- Handle PRG messages ---
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+if (isset($_GET['error'])) {
+    $errors = explode(' | ', $_GET['error']);
 }
 
 // --- Recursive Category Fetcher ---
@@ -59,20 +70,20 @@ function fetchCategories($conn) {
 
 // --- Recursive Delete Helper ---
 function deleteCategoryRecursive($conn, $catId) {
-    // Find children
     $childStmt = $conn->prepare("SELECT id FROM categories WHERE parent_id = ?");
     $childStmt->bind_param("i", $catId);
     $childStmt->execute();
     $children = $childStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $childStmt->close();
 
     foreach ($children as $child) {
         deleteCategoryRecursive($conn, $child['id']);
     }
 
-    // Delete current category
     $delStmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
     $delStmt->bind_param("i", $catId);
     $delStmt->execute();
+    $delStmt->close();
 }
 
 // --- Fetch All Categories for Form and Tree ---

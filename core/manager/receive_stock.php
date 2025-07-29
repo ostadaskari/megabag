@@ -11,6 +11,14 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
 $errors = [];
 $success = '';
 
+// Read messages from query string for SweetAlert
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+if (isset($_GET['error'])) {
+    $errors = explode(' | ', $_GET['error']); // Returns an array of strings, 
+}
+
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_array($_POST['products'])) {
     $products = $_POST['products'];
@@ -50,7 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
     }
 
     if (empty($errors)) {
-        $success = "Stock received successfully.";
+        header("Location: receive_stock.php?success=" . urlencode("Stock received successfully."));
+        exit;
+    } else {
+        header("Location: receive_stock.php?error=" . urlencode(implode(' | ', $errors)));
+        exit;
     }
 }
 

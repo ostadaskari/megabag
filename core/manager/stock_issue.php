@@ -1,14 +1,22 @@
 <?php
 require_once '../db/db.php';
 session_start();
+
 // ACL: Allow only manager or admin
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
     exit;
 }
 
+// SweetAlert variables
 $errors = [];
 $success = '';
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+if (isset($_GET['error'])) {
+    $errors[] = $_GET['error'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
@@ -21,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $remarks = trim($item['remarks'] ?? '');
 
         if (!$product_id || !$qty_issued || !$issued_to) {
-            $errors[] = "Row #".($index+1)." is missing required fields.";
+            $errors[] = "Row #" . ($index + 1) . " is missing required fields.";
             continue;
         }
 
@@ -32,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $res = $check->get_result()->fetch_assoc();
 
         if (!$res || $res['qty'] < $qty_issued) {
-            $errors[] = "Not enough stock in row #".($index+1).".";
+            $errors[] = "Not enough stock in row #" . ($index + 1) . ".";
             continue;
         }
 
@@ -47,10 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $update->execute();
     }
 
+    // Redirect to avoid resubmission
     if (empty($errors)) {
-        $success = "Stock issued successfully.";
+        header("Location: stock_issue.php?success=" . urlencode("Stock issued successfully."));
+        exit;
+    } else {
+        header("Location: stock_issue.php?error=" . urlencode(implode(' | ', $errors)));
+        exit;
     }
 }
 
+// Load view
 include '../../design/views/manager/stock_issue_view.php';
-?>

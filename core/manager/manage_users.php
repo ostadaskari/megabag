@@ -1,12 +1,10 @@
 <?php
-//this page is used for generating ivite links and show all users with their roles and accessibilties..
+// This page is used for generating invite links and showing all users with their roles and accessibilities.
 
 require_once('../middleware/auth.php');
-
 if ($_SESSION['role'] !== 'admin') {
     die("Access denied.");
 }
-
 require_once('../db/db.php');
 
 $inviteLink = '';
@@ -14,8 +12,8 @@ $errors = [];
 $success = '';
 $invites = [];
 
-// Handle delete request first
-if (isset($_POST['delete_code_id'])) {
+// --- Handle DELETE Invite Code ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_code_id'])) {
     $delete_id = intval($_POST['delete_code_id']);
 
     $checkStmt = $conn->prepare("SELECT is_used FROM invite_codes WHERE id = ?");
@@ -31,14 +29,20 @@ if (isset($_POST['delete_code_id'])) {
         $delStmt = $conn->prepare("DELETE FROM invite_codes WHERE id = ?");
         $delStmt->bind_param("i", $delete_id);
         if ($delStmt->execute()) {
-            $success = "Invite code deleted.";
+            header("Location: manage_users.php?success=" . urlencode("Invite code deleted."));
+            exit;
         } else {
             $errors[] = "Failed to delete invite code.";
         }
     }
+
+    if (!empty($errors)) {
+        header("Location: manage_users.php?error=" . urlencode(implode(' | ', $errors)));
+        exit;
+    }
 }
 
-// Handle invite code generation
+// --- Handle CREATE Invite Code ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname']) && isset($_POST['role'])) {
     $nickname = trim($_POST['nickname']);
     $role = trim($_POST['role']);
@@ -47,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname']) && isset(
     if (!$nickname || !$role) {
         $errors[] = "Nickname and role are required.";
     } else {
-        // Check if nickname already exists in invite_codes
         $checkStmt = $conn->prepare("SELECT id FROM invite_codes WHERE nickname = ?");
         $checkStmt->bind_param("s", $nickname);
         $checkStmt->execute();
@@ -56,23 +59,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname']) && isset(
         if ($checkStmt->num_rows > 0) {
             $errors[] = "This nickname is already in use. Please choose another.";
         } else {
-            $code = bin2hex(random_bytes(5)); // 10-char random code
+            $code = bin2hex(random_bytes(5)); // 10-character random code
             $stmt = $conn->prepare("INSERT INTO invite_codes (code, nickname, role, created_by) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("sssi", $code, $nickname, $role, $created_by);
 
             if ($stmt->execute()) {
+                // Redirect with invite link and success
                 $inviteLink = "http://localhost/megabag/core/auth/register.php?code=$code";
-                $success = "Invite code generated.";
+                header("Location: manage_users.php?success=" . urlencode("Invite code generated.") . "&link=" . urlencode($inviteLink));
+                exit;
             } else {
                 $errors[] = "Error: " . $stmt->error;
             }
         }
-
         $checkStmt->close();
+    }
+
+    if (!empty($errors)) {
+        header("Location: manage_users.php?error=" . urlencode(implode(' | ', $errors)));
+        exit;
     }
 }
 
-// Fetch invite code list with creator and user info
+// --- Handle messages from URL ---
+$success = $_GET['success'] ?? '';
+$inviteLink = $_GET['link'] ?? '';
+$errors = isset($_GET['error']) ? explode(' | ', $_GET['error']) : [];
+
+// --- Fetch all invite codes ---
 $sql = "
     SELECT 
         ic.*,
@@ -91,8 +105,5 @@ if ($result) {
     }
 }
 
-// Render view
+// --- Render view ---
 include('../../design/views/manager/manage_users_view.php');
-
-
-

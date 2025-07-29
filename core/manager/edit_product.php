@@ -1,7 +1,8 @@
 <?php
 session_start();
 require_once '../db/db.php';
-// (ACL) Restrict access to admins/managers only  (access level )
+
+// (ACL) Restrict access to admins/managers only
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
     exit;
@@ -13,9 +14,17 @@ $product = null;
 $images = [];
 $pdfs = [];
 
-// Load product data on GET
+// Read success/error messages from URL (for SweetAlert)
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+if (isset($_GET['error'])) {
+    $errors = explode(' | ', $_GET['error']);
+}
 
-    $id = intval($_GET['id']);
+// Load product data on GET
+$id = intval($_GET['id'] ?? 0);
+if ($id > 0) {
     $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -25,21 +34,19 @@ $pdfs = [];
     if (!$product) {
         $errors[] = 'Product not found.';
     } else {
-        // Fetch images
         $stmt = $conn->prepare("SELECT * FROM images WHERE product_id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
 
-        // Fetch PDFs
         $stmt = $conn->prepare("SELECT * FROM pdfs WHERE product_id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $pdfs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
     }
-
+}
 
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -64,86 +71,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("UPDATE products SET name=?, part_number=?, MFG=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, recieve_code=?, category_id=?, updated_at=NOW() WHERE id=?");
         $stmt->bind_param("sssissssssii", $name, $p_n, $MFG, $qty, $company_cmt, $location, $status, $tag, $date_code, $receive_code, $category_id, $id);
         if ($stmt->execute()) {
-            $success = "Product updated successfully.";
+            $stmt->close();
+
+            // Upload images
+            $imageDir = '../../uploads/images/';
+            if (!file_exists($imageDir)) mkdir($imageDir, 0777, true);
+
+            if (!empty($_FILES['images']['name'][0])) {
+                foreach ($_FILES['images']['name'] as $key => $filename) {
+                    $tmp_name = $_FILES['images']['tmp_name'][$key];
+                    $size = $_FILES['images']['size'][$key];
+                    if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
+                        if ($size > 20 * 1024 * 1024) {
+                            continue;
+                        }
+
+                        $target = $imageDir . uniqid() . "_" . basename($filename);
+
+                        if (move_uploaded_file($tmp_name, $target)) {
+                            $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                            $stmt->bind_param("issis", $id,  $filename, $target, $size, $ext);
+                            $stmt->execute();
+                            $stmt->close();
+                        }
+                    }
+                }
+            }
+
+            // Upload PDFs
+            $pdfDir = '../../uploads/pdfs/';
+            if (!file_exists($pdfDir)) mkdir($pdfDir, 0777, true);
+
+            if (!empty($_FILES['pdfs']['name'][0])) {
+                foreach ($_FILES['pdfs']['name'] as $key => $filename) {
+                    $tmp_name = $_FILES['pdfs']['tmp_name'][$key];
+                    $size = $_FILES['pdfs']['size'][$key];
+                    if ($_FILES['pdfs']['error'][$key] === UPLOAD_ERR_OK) {
+                        if ($size > 20 * 1024 * 1024) {
+                            continue;
+                        }
+
+                        $target = $pdfDir . uniqid() . "_" . basename($filename);
+
+                        if (move_uploaded_file($tmp_name, $target)) {
+                            $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?,?, ?, ?)");
+                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                            $stmt->bind_param("issis", $id, $filename, $target, $size, $ext);
+                            $stmt->execute();
+                            $stmt->close();
+                        }
+                    }
+                }
+            }
+
+            header("Location: edit_product.php?id=$id&success=" . urlencode("Product updated successfully."));
+            exit;
         } else {
             $errors[] = "Failed to update product.";
+            $stmt->close();
+            header("Location: edit_product.php?id=$id&error=" . urlencode(implode(' | ', $errors)));
+            exit;
         }
-        $stmt->close();
-
-        // Upload images
-        $imageDir = '../../uploads/images/';
-        if (!file_exists($imageDir)) mkdir($imageDir, 0777, true);
-
-        if (!empty($_FILES['images']['name'][0])) {
-            foreach ($_FILES['images']['name'] as $key => $filename) {
-                $tmp_name = $_FILES['images']['tmp_name'][$key];
-                $size = $_FILES['images']['size'][$key];
-                if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
-                    if ($size > 20 * 1024 * 1024) {
-                        $errors[] = "$filename exceeds the 20MB limit.";
-                        continue;
-                    }
-
-                    $target = "../../uploads/images/" . uniqid() . "_" . basename($filename);
-
-                    if (move_uploaded_file($tmp_name, $target)) {
-                        $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                        $stmt->bind_param("issis", $id,  $filename, $target, $size, $ext);
-                        $stmt->execute();
-                        $stmt->close();
-                    }
-                }
-            }
-        }
-
-        // Upload PDFs
-        $pdfDir = '../../uploads/pdfs/';
-        if (!file_exists($pdfDir)) mkdir($pdfDir, 0777, true);
-
-        if (!empty($_FILES['pdfs']['name'][0])) {
-            foreach ($_FILES['pdfs']['name'] as $key => $filename) {
-                $tmp_name = $_FILES['pdfs']['tmp_name'][$key];
-                $size = $_FILES['pdfs']['size'][$key];
-                if ($_FILES['pdfs']['error'][$key] === UPLOAD_ERR_OK) {
-                    if ($size > 20 * 1024 * 1024) {
-                        $errors[] = "$filename exceeds the 20MB limit.";
-                        continue;
-                    }
-
-                    $target = "../../uploads/pdfs/" . uniqid() . "_" . basename($filename);
-
-                    if (move_uploaded_file($tmp_name, $target)) {
-                        $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?,?, ?, ?)");
-                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                        $stmt->bind_param("issis", $id, $filename, $target, $size, $ext);
-                        $stmt->execute();
-                        $stmt->close();
-                    }
-                }
-            }
-        }
-
-        // Reload updated data
-        $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $product = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-
-        $stmt = $conn->prepare("SELECT * FROM images WHERE product_id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
-
-        $stmt = $conn->prepare("SELECT * FROM pdfs WHERE product_id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $pdfs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
+    } else {
+        header("Location: edit_product.php?id=$id&error=" . urlencode(implode(' | ', $errors)));
+        exit;
     }
 }
 
-require_once '../../design/views//manager/edit_product_view.php';
-
+require_once '../../design/views/manager/edit_product_view.php';
