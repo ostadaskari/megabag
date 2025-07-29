@@ -17,7 +17,7 @@ if (isset($_GET['success'])) {
 if (isset($_GET['error'])) {
     $errors[] = $_GET['error'];
 }
-
+// IF post method 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
     $products = $_POST['products'] ?? [];

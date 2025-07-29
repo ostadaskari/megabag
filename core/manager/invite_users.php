@@ -106,4 +106,4 @@ if ($result) {
 }
 
 // --- Render view ---
-include('../../design/views/manager/manage_users_view.php');
+include('../../design/views/manager/invite_users_view.php');

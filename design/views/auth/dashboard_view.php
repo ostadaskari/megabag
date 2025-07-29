@@ -24,7 +24,8 @@
 <?php if ($role === 'admin'): ?>
     <h3>Admin Panel</h3>
     <ul>
-        <li><a href="../manager/manage_users.php">Manage Users</a></li>
+        <li><a href="../manager/invite_users.php">Invite Users</a></li>
+        <li><a href="../admin/manage_users.php">Manage Users</a></li>
         <li><a href="../manager/manage_categories.php">Manage categories</a></li>
         <br>
         <li><a href="../manager/receive_stock.php">Insert items</a></li>

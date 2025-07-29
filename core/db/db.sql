@@ -7,6 +7,7 @@ CREATE TABLE users (
     password VARCHAR(100) NOT NULL,
     role ENUM('admin', 'manager', 'user') NOT NULL,
     nickname VARCHAR(100) DEFAULT NULL,
+    is_blocked BOOLEAN NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
