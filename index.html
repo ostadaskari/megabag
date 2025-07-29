@@ -503,7 +503,7 @@
                   </svg>
                   Insert Product</h3>
 
-                <div class="row d-flex align-items-center justify-content-between bg-light rounded border my-1 p-2">
+                <div class="row d-flex align-items-end justify-content-between bg-light rounded border my-1 p-2">
                     <!-- Product Input -->
                     <div class="col-6 col-md-2 px-1">
                       <label for="productInput" class="form-label">Product:</label>
@@ -523,12 +523,12 @@
           
                     <!-- Comment Textarea -->
                     <div class="col-10 col-md-5 px-1">
-                      <label for="commentInput" class="form-label">Comment:</label>
-                      <textarea class="form-control responsive-textarea" id="commentInput" name="comment" rows="1"></textarea>
+                      <label for="commentInputIn" class="form-label">Comment:</label>
+                      <textarea class="form-control responsive-textarea" id="commentInputIN" name="comment" rows="1"></textarea>
                     </div>
           
                     <!-- Button -->
-                    <div class="col d-flex justify-content-end align-items-center">
+                    <div class="col d-flex justify-content-end align-items-end">
                       <a href="#" class="mt-4" title="Remove">
                         <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg " viewBox="0 0 16 16">
                           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
@@ -567,38 +567,30 @@
                         <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"></path>
                       </svg>
                       Received Stock Log</h3>
-                    <div class="table-responsive fixed-table-container border shadow-sm" style="max-height: 85vh;">
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 85vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                           <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
                               <th>#</th>
-                              <th>Name</th>
+                              <th>Product</th>
                               <th>Tag</th>
-                              <th>Location</th>
+                              <th>P/N</th>
                               <th>QTY</th>
+                              <th>User</th>
+                              <th>Date</th>                            
                               <th style="width: 10%;">Comment</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>1</td>
-                              <td>johnny</td>
-                              <td>#pk</td>
-                              <td>1234-AB</td>
-                              <td>25</td>
+                              <td>Sensor</td>
+                              <td>#PK21</td>
+                              <td>SEN-1023</td>
+                              <td>5</td>
+                              <td>Ali Rezaei</td>
+                              <td>2025-07-29</td>
                               <td><a href="#" class="open-modal" title="Show Comment" data-comment="This is the full comment for johnny.">
-                                <svg width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill hoverSvg" viewBox="0 0 16 16">
-                                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-                                </svg>
-                              </a></td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>john</td>
-                              <td>#pk</td>
-                              <td>1234-AB</td>
-                              <td>25</td>
-                              <td><a href="#" class="open-modal" title="Show Comment" data-comment="This is the full comment for john.">
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill hoverSvg" viewBox="0 0 16 16">
                                   <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                                 </svg>
@@ -668,18 +660,18 @@
              <!-- Insert-By-CSV -->
               <div class="tab-content" id="Insert-By-CSV">
                 <div class="container px-0">
-                  <div class="row d-flex justify-content-between">
-                      <div class="col-12 col-md-5 px-1">
-                          <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 p-3">
-                              <svg width="40" height="40" fill="rgb(43, 100, 150)" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                  <div class="row d-flex justify-content-between border rounded shadow-sm bg-light p-2">
+                      <div class="col-12 col-md-5 p-2 d-flex flex-column align-items-center ">
+                          <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 px-3 py-1 w-100 bg-light">
+                              <svg width="30" height="30" fill="rgb(43, 100, 150)" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
                                   <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0m-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708z"/>
                                 </svg>
                                 <h3 class="">Download Sample</h3>
                               <button class="btn secBtn">Download</button>
                           </div>
           
-                          <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 p-3">
-                              <svg width="40" height="40" fill="rgb(43, 100, 150)" class="bi bi-cloud-upload" viewBox="0 0 16 16">
+                          <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 p-3 w-100 bg-light">
+                              <svg width="45" height="45" fill="rgb(43, 100, 150)" class="bi bi-cloud-upload" viewBox="0 0 16 16">
                                   <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
                                   <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
                                 </svg>
@@ -689,7 +681,7 @@
                       </div>
           
                       <div class="col-12 col-md-6 px-1 my-2">
-                          <div class="table-responsive fixed-table-container border rounded shadow-sm" style="max-height: 20vh;">
+                          <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light" style="max-height: 15vh;">
                               <table class="table table-bordered table-striped table-hover mb-0 text-center">
                                 <thead class="table-invitionLink sticky-top " style="top:-3px; z-index: 1;">
                                   <tr>
@@ -826,8 +818,8 @@
           
                   <div class="row mt-2">
                       <div class="col-12">
-                          <div class="table-responsive fixed-table-container border shadow-sm" style="max-height: 60vh;">
-                              <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                          <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 60vh;">
+                              <table class="table table-bordered table-striped table-hover mb-0 text-center " style="min-width: 800px;">
                                 <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                                   <tr>
                                     <th>#</th>
@@ -914,7 +906,7 @@
                   </svg>
                   withdraw Product</h3>
 
-                <div class="row d-flex align-items-center justify-content-between bg-light rounded border my-1 p-2">
+                <div class="row d-flex align-items-end justify-content-between bg-light rounded border shadow-sm my-1 p-3">
                     <!-- Product Input -->
                     <div class="col-6 col-md-2 px-1">
                       <label for="productInput" class="form-label">Product:</label>
@@ -939,12 +931,12 @@
 
                     <!-- Comment Textarea -->
                     <div class="col-10 col-md-4 px-1">
-                      <label for="commentInput" class="form-label">Comment:</label>
-                      <textarea class="form-control responsive-textarea" id="commentInput" name="comment" rows="1"></textarea>
+                      <label for="commentInputOut" class="form-label">Comment:</label>
+                      <textarea class="form-control responsive-textarea" id="commentInputOut" name="comment" rows="1"></textarea>
                     </div>
           
                     <!-- Button -->
-                    <div class="col d-flex justify-content-end align-items-center">
+                    <div class="col d-flex justify-content-end align-items-end">
                       <a href="#" class="mt-4" title="Remove">
                         <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg " viewBox="0 0 16 16">
                           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
@@ -970,6 +962,57 @@
               </div>
             </div>
             <!-- end whitdraw items -->
+
+            <!-- list of withdrow  -->
+              <div class="tab-content" id="List-Of-Withdraw">
+              <div class="container px-0">
+                <div class="row d-flex justify-content-center align-items-center">
+                  <div class="col-12">
+                    <h3 class="card-title mb-2 d-flex align-items-center">
+                      <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-in-left mx-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"></path>
+                        <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"></path>
+                      </svg>
+                      list of withdrow Log</h3>
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 85vh;">
+                        <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                          <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                            <tr>
+                              <th>#</th>
+                              <th>Product</th>
+                              <th>Tag</th>
+                              <th>P/N</th>
+                              <th>QTY</th>
+                              <th>Issued By</th>
+                              <th>Issued To</th>
+                              <th>Date</th>                            
+                              <th style="width: 10%;">Comment</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>Sensor</td>
+                              <td>#PK21</td>
+                              <td>SEN-1023</td>
+                              <td>5</td>
+                              <td>Ali Rezaei</td>
+                              <td>Reza Amiri</td>
+                              <td>2025-07-29</td>
+                              <td><a href="#" class="open-modal" title="Show Comment" data-comment="This is the full comment for johnny.">
+                                <svg width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill hoverSvg" viewBox="0 0 16 16">
+                                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                                </svg>
+                              </a></td>
+                            </tr>
+                          </tbody> 
+                        </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end list of withdrow -->
           <!-- ******* end stock out ******* -->
 
           <!--******** Add to Inventory ********-->
@@ -985,7 +1028,7 @@
                   </svg>
                   <h3 class="pl-1">Part Details :</h3>
                 </div>
-                  <div class="row border rounded bg-light">
+                  <div class="row bg-light border rounded shadow-sm p-3">
                     
                     <div class="col-12 col-md-4 px-2 my-2">
                       <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
@@ -1017,13 +1060,13 @@
                     </div>
                     
                     <div class="col-12 mt-2 px-2">
-                      <label for="description" title="Company Comment">Company CMT:</label>
+                      <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
                       <textarea class="form-control"  id="description" class="mt-2" name="description" rows="3"></textarea>
                     </div>
                 </div>
 
                 <!-- Category selection -->
-                <div class="d-flex flex-row align-items-center my-2">
+                <div class="d-flex flex-row align-items-center my-3">
                   <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -1032,7 +1075,7 @@
                 </div>
 
                 <!-- Category Dropdown Section -->
-                <div class="container mt-1 px-1 border rounded bg-light">
+                <div class="container mt-1 px-1 border rounded shadow-sm p-3 bg-light">
                   <div class="row d-flex flex-row justify-content-between">
 
                     <div class="col-12 col-md-4 px-2 my-2">
@@ -1060,7 +1103,7 @@
                 </div>
 
                 <!-- inputs files -->
-                <div class="d-flex flex-row align-items-center my-2">
+                <div class="d-flex flex-row align-items-center my-3">
                   <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -1069,12 +1112,12 @@
                 </div>
 
                 <div class="row mt-1 d-flex flex-row justify-content-between">
-                  <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                  <div class="col-12 col-md-5 mb-3 p-3 border rounded shadow-sm p-3bg-light">
                     <label for="datasheetUpload" class="form-label">Upload Datasheet:</label>
                     <input class="form-control" type="file" id="datasheetUpload" name="datasheetUpload[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
                   </div>
 
-                  <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                  <div class="col-12 col-md-5 mb-3 p-3 border rounded shadow-sm p-3 bg-light">
                     <label for="imageUpload" class="form-label">Upload Images:</label>
                     <input class="form-control" type="file" id="imageUpload" name="imageUpload[]" multiple accept="image/*">
                   </div>
@@ -1109,7 +1152,7 @@
               <!-- table list product -->
               <div class="row">
                 <div class="col-12">
-                  <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
+                  <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 70vh;">
                       <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                           <tr>
@@ -1739,7 +1782,7 @@
               <div class="row" id="tableRow">
                 <div class="col-12">
                   <div class="card shadow-sm">
-                    <div class="fixed-table-container" style="max-height:80vh;">
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:80vh;">
                       <table class="table table-bordered table-hover mb-0 text-center table-striped">
                         <thead class="table-light position-sticky top-0" style="z-index: 1;">
                           <tr>
@@ -1974,7 +2017,7 @@
               <div class="row" id="tableRow">
                 <div class="col-12">
                   <div class="card shadow-sm">
-                    <div class="fixed-table-container" style="max-height:80vh;">
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:80vh;">
                       <table class="table table-bordered table-hover mb-0 text-center table-striped">
                         <thead class="table-light position-sticky top-0" style="z-index: 1;">
                           <tr>
@@ -2090,7 +2133,7 @@
                       </div>
                   </div>
                   <div class="col-12">
-                      <div class="table-responsive fixed-table-container" style="max-height:75vh;">
+                      <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:75vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                           <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
@@ -2479,14 +2522,14 @@
             <div id="Users-List" class="tab-content">
               <div class="row" >
                   <div class="col-12" style="height:100%;">
-                      <div class="table-responsive fixed-table-container" style="max-height: 90vh;">
+                      <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 90vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                           <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
                               <th>#</th>
                               <th>Name</th>
                               <th>Family</th>
-                              <th>User Name</th>
+                              <th>Nick Name</th>
                               <th>Email</th>
                               <th style="width: 15%;">Role</th>
                               <th>Action</th>
@@ -2605,7 +2648,7 @@
               <!-- table Search-Inventory -->
               <div class="row">
                 <div class="col-12">
-                  <div class="table-responsive fixed-table-container" style="max-height: 70vh;">
+                  <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 70vh;">
                       <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                           <tr>
