@@ -34,7 +34,7 @@ body {
     --main-bg1-color:#006992;
     --main-bg2-color:#b5d4e0;
     --main-hover-color:#ECA400;
-    --main-bgTitle-color:#eca50054;
+    --main-bgTitle-color:#eca50079;
 }
 li{
     list-style: none;
@@ -348,7 +348,7 @@ li.active > a {
   background-image: url('../img/bgPatternContent.png');
   background-repeat: repeat;
   background-size: 300px; 
-  opacity: 0.25;
+  opacity: 0.35;
   z-index: -1;
   pointer-events: none;
 }
