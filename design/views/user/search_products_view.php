@@ -10,7 +10,7 @@
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by name, part number or tag">
 
     <div id="resultsContainer">
-        <p class="text-muted">Start typing to search...</p>
+        <p class="text-muted">Start typing to search...(more than 3 characters)</p>
     </div>
 
     <script>
@@ -18,7 +18,7 @@
         const resultsContainer = document.getElementById('resultsContainer');
 
         function searchProducts(query) {
-            fetch(`search_products.php?ajax=1&q=${encodeURIComponent(query)}`)
+            fetch(`user_search_products.php?ajax=1&q=${encodeURIComponent(query)}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
@@ -57,7 +57,7 @@
 
         searchInput.addEventListener('input', () => {
             const q = searchInput.value.trim();
-            if (q.length >= 2) {
+            if (q.length >= 3) {
                 searchProducts(q);
             } else {
                 resultsContainer.innerHTML = `<p class="text-muted">Start typing to search...</p>`;

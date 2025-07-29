@@ -40,7 +40,7 @@
         <li><a href="../logs/bans.php">ban list logs</a></li>
         <li><a href="../auth/profile.php">profile</a></li>
         <br>
-        <li><a href="../user/search_products.php">Search products</a></li>
+        <li><a href="../user/user_search_products.php">Search products</a></li>
         
     </ul>
 
@@ -63,13 +63,13 @@
         <li><a href="../logs/bans.php">ban list logs</a></li>
         <li><a href="../auth/profile.php">profile</a></li>
         <br>
-        <li><a href="../user/search_products.php">Search products</a></li>
+        <li><a href="../user/user_search_products.php">Search products</a></li>
     </ul>
 
 <?php elseif ($role === 'user'): ?>
     <h3>User Panel</h3>
     <ul>
-        <li><a href="../user/search_products.php">Search products</a></li>
+        <li><a href="../user/user_search_products.php">Search products</a></li>
     </ul>
 <?php endif; ?>
 

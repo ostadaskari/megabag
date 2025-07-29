@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
 // Handle AJAX search
 if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
     $keyword = '%' . trim($_GET['q'] ?? '') . '%';
+    
 
     $stmt = $conn->prepare("
         SELECT p.id, p.name, p.part_number, p.tag, p.qty, c.name AS category_name 
