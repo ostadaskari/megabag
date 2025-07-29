@@ -77,11 +77,10 @@ table {
   -webkit-overflow-scrolling: touch;
 }
 
-  th {
-      background: linear-gradient(135deg,var(--main-bg0-color), var(--main-bg2-color));
+  thead {
+      background: linear-gradient(135deg,var(--main-bg0-color), var(--main-bg1-color));
       color: rgb(255, 252, 252);
-      font-weight: 100;
-      text-transform: uppercase;
+      text-transform:capitalize;
   }
 
    tr:hover {
@@ -95,7 +94,6 @@ table {
 /* navbar */
 
 .div-clock-btn {
-    justify-content: space-between;
     width: 35%;
 }
 .div-clock-btn > div:first-child {
@@ -141,7 +139,6 @@ table {
     z-index: 100;
     background-color: var(--main-bg0-color);
     color:var(--main-text-color);
-    justify-content: end;
     z-index: 1101;
 }
 .navbar-title{
@@ -182,7 +179,7 @@ table {
 #sidebarMenu {
     position: fixed;
     top: -4px;
-    right: -600px;
+    right: -1000px;
     width: 100%;
     height: 100%;
     background-color: transparent;
@@ -222,7 +219,7 @@ table {
     /* end mobile */
     /* sidebar */
      .div-navbar{
-        height: 6vh;
+        height: 5vh;
     }
     .sidebar {
     position: relative;
@@ -338,7 +335,7 @@ li.active > a {
 }
 
 .main{
-    height: 94vh;
+    height: 95vh;
 }
 .tab-content{
 	display: none;
@@ -588,19 +585,27 @@ h3{
 }
 /* end Adding a single part*/
 
-/* Manage Category */
+/* Manage users */
+#Users-List select option{
+ font-size: 14px;
+ text-align: center;
+}
+#Users-List select option:nth-child(1) {
+  background-color: #09fc8352;
+  color:#333;
+}
 
-  .table-container {
-    height: 50%;
-    overflow:auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      text-align: center;
-  }
+#Users-List select option:nth-child(2) {
+  background-color: #1091fa62;
+  color:#333;
+}
 
- 
-/* end Manage Category */
+#Users-List select option:nth-child(3) {
+  background-color: #f8bf2073;
+  color:#333;
+}
+
+/* end Manage users */
 
 /* responsive */
 @media (max-width:912px) {
@@ -633,13 +638,17 @@ td {
 
 /* responsive */
 
-
+@media (max-width:376px) {
+.content .container{
+ margin-top: 10px;
+}
+}
 @media (max-width: 768px) {
     .main {
-        height:89vh;
+        height:91vh;
     }
     .div-navbar{
-        height: 11vh;
+        height: 9vh;
     }
     .logo{
         width: 40px!important;
@@ -655,7 +664,6 @@ td {
         }
     .navbar-title{
         text-align: start;
-        font-size: 12px;
         letter-spacing: .5px;
         margin-left: 0px;
         } 
@@ -674,6 +682,9 @@ td {
       right: 90%;
       top: 80%;
     }
+    h3 {
+    font-size: 14px;
+}
 }   
 
 @media (min-width: 768px) {
@@ -716,9 +727,6 @@ td {
 }
 .w-custom{
     width: 100%;
-}
-.navbar-custom{
-    height: 80px;
 }
 }
 
@@ -905,7 +913,7 @@ cursor: pointer;
     }
   
 .output-label {
- width: 40%;
+ width: 47%;
  font-size: 1rem;
  font-weight: 500;
  color: #3c6940;
@@ -959,13 +967,17 @@ background-color: var(--main-hover-color);
   .fixed-table-container table thead th {
     position: sticky;
     top:-3px;
-    background-color: var(--main-bg2-color);
     z-index: 2;
     box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    font-weight:normal;
   }
   .fixed-table-container table td ,th {
     text-align: center;
   }
+  .fixed-table-container table tr td:first-child {
+    color: #858484;
+}
+
 @media (max-width:768px) {
  .form-box {
     flex-direction: column;
