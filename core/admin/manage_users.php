@@ -32,7 +32,7 @@ $countStmt->close();
 
 $totalPages = ceil($total / $limit);
 
-$userSql = "SELECT id, name, family, nickname, role, is_blocked FROM users $whereSql ORDER BY created_at DESC LIMIT ?, ?";
+$userSql = "SELECT id, name, family, email, nickname, role, is_blocked FROM users $whereSql ORDER BY created_at DESC LIMIT ?, ?";
 $params[] = $offset;
 $params[] = $limit;
 $types .= 'ii';

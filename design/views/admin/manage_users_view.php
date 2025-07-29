@@ -30,6 +30,7 @@ function fetchUsers(page = 1) {
                         <td>${user.name}</td>
                         <td>${user.family}</td>
                         <td>${user.nickname}</td>
+                        <td>${user.email}</td>
                         <td>
                             <select onchange="changeRole(${user.id}, this.value, '${user.role}')" class="form-select form-select-sm">
                                 <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
@@ -52,7 +53,7 @@ function fetchUsers(page = 1) {
 
                 document.getElementById('userTableContainer').innerHTML = `
                     <table class="table table-bordered">
-                        <thead><tr><th>Name</th><th>Family</th><th>Nickname</th><th>Role</th><th>Action</th></tr></thead>
+                        <thead><tr><th>Name</th><th>Family</th><th>Nickname</th><th>Email</th><th>Role</th><th>Action</th></tr></thead>
                         <tbody>${rows}</tbody>
                     </table>
                     <div class="mt-2">${pagination}</div>
