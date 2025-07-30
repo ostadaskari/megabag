@@ -6,42 +6,42 @@
     <title>Login</title>
 
     <!-- link CSS -->
-    <link rel="stylesheet" href="./design/css/inventory.css" />
+    <link rel="stylesheet" href="./design/css/style.css" />
   </head>
   <style>
 
-.container {
+#containerLogin {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.container .top:before,
-.container .top:after,
-.container .bottom:before,
-.container .bottom:after {
+#containerLogin .topLog:before,
+#containerLogin .topLog:after,
+#containerLogin .bottomLog:before,
+#containerLogin .bottomLog:after {
   transition: all 0.8s ease;
   margin-left: 0;
   transform-origin: center;
 }
 
 
-.container.active .top:before,
-.container.active .top:after,
-.container.active .bottom:before,
-.container.active .bottom:after {
+#containerLogin.active .topLog:before,
+#containerLogin.active .topLog:after,
+#containerLogin.active .bottomLog:before,
+#containerLogin.active .bottomLog:after {
   margin-left: 300px;
   transform-origin: -300px 50%;
 }
 
-.container.active .centerLogin {
+#containerLogin.active .centerLogin {
   opacity: 1;
   transition-delay: 0.2s;
 }
 
 
-.top, .bottom{
+.topLog, .bottomLog{
   &:before, &:after{
     content:'';
     display:block;
@@ -58,17 +58,17 @@
   }
 }
 
-.top{
+.topLog{
   &:before{transform:rotate(45deg);background:#ECA400;}
   &:after{transform:rotate(135deg);background:#eca5006e;}
 }
 
-.bottom{
+.bottomLog{
   &:before{transform:rotate(-45deg);background:#006992;}
   &:after{transform:rotate(-135deg);background:#001D4A;}
 }
 
-.centerLogin{
+#containerLogin .centerLogin{
   position:absolute;
   width:400px;
   top: 50%;
@@ -92,14 +92,14 @@
   border: 1px solid rgba(35, 65, 102, 0.18);
   z-index:100;
 }
-.h2Form{
+#containerLogin .h2Form{
   color:var(--main-bg0-color);
   margin-bottom: 20px;
   z-index: 1200;
   font-size: 20px;
 }
 
-    .form-section {
+   #containerLogin .form-section {
       width: 100%;
       height: 75%;
       display: flex;
@@ -108,7 +108,7 @@
       align-items:center;
     }
    
-    .form-section input{
+   #containerLogin .form-section input{
         padding:10px 30px;
         margin:10px auto ;
         border-radius:1px;
@@ -130,35 +130,35 @@
         color:var(--main-darktext-color)
         }
     
-    .input-captcha{
+  #containerLogin .input-captcha{
     width:50%;
     align-self:start;
     margin: 0!important;
 
     } 
 
-    .divCaptcha{
+   #containerLogin .divCaptcha{
       width: 48%;
       height: 40px;
       position: relative;
     }
-   .imgCaptcha {
+  #containerLogin .imgCaptcha {
       width: 100%;
       height:100%;
       border:none;
       border-radius:0.25rem;
       position: relative;
     }
-    .divCaptcha svg{
+   #containerLogin .divCaptcha svg{
       position: absolute;
       top: 24%;
       right:5%;
     }
-    .divInput{
+   #containerLogin .divInput{
       position: relative;
     }
     
-.toggle-password {
+#containerLogin .toggle-password {
   position: absolute;
     right: 26px;
     top: 35%;
@@ -167,11 +167,11 @@
     z-index: 100;
 }
 
-.toggle-password .eye-icon {
+#containerLogin .toggle-password .eye-icon {
   color: #666;
 }
 
-    .divInput svg{
+   #containerLogin .divInput svg{
     position: absolute;
     top: 35%;
     left: 2%;
@@ -179,7 +179,7 @@
     }
 
   @media (max-width: 768px) {
-  .centerLogin {
+ #containerLogin .centerLogin {
     width: 90%;
     top: 50%;
     left: 50%;
@@ -187,16 +187,16 @@
     transform: translate(-50%, -50%);
     padding: 15px;
   }
-  h2{
+#containerLogin h2{
     font-size: 17px;
   }
 }
 
   </style>
 <body>
-    <div class="container">
-        <div class="top">
-            <div class="bottom">
+    <div class="container" id="containerLogin">
+        <div class="topLog">
+            <div class="bottomLog">
                 <div class="centerLogin">
                     <h2 class="h2Form">Login in warehousing system</h2>
                     <form id="loginForm" class="form-section">
@@ -240,12 +240,9 @@
         </div>
     </div>
 
-
-
-
 <script>
   window.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".container");
+    const container = document.querySelector("#containerLogin");
 
     if (container) {
       setTimeout(() => {

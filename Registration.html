@@ -6,41 +6,41 @@
     <title>Registration</title>
 
     <!-- link CSS -->
-    <link rel="stylesheet" href="./design/css/inventory.css" />
+    <link rel="stylesheet" href="./design/css/style.css" />
   </head>
   <style>
 
-.container {
+.container#containerReg {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.container .top:before,
-.container .top:after,
-.container .bottom:before,
-.container .bottom:after {
+#containerReg .topReg:before,
+#containerReg .topReg:after,
+#containerReg .bottomReg:before,
+#containerReg .bottomReg:after {
   transition: all 0.8s ease;
   margin-left: 0;
   transform-origin: center;
 }
 
-.container.active .top:before,
-.container.active .top:after,
-.container.active .bottom:before,
-.container.active .bottom:after {
+#containerReg.active .topReg:before,
+#containerReg.active .topReg:after,
+#containerReg.active .bottomReg:before,
+#containerReg.active .bottomReg:after {
   margin-left: 300px;
   transform-origin: -300px 50%;
 }
 
-.container.active .centerRegistration {
+#containerReg.active .centerRegistration {
   opacity: 1;
   transition-delay: 0.2s;
 }
 
 
-.top, .bottom{
+.topReg, .bottomReg{
   &:before, &:after{
     content:'';
     display:block;
@@ -57,12 +57,12 @@
   }
 }
 
-.top{
+#containerReg .topReg{
   &:before{transform:rotate(45deg);background:#ECA400;}
   &:after{transform:rotate(135deg);background:#eca5006e;}
 }
 
-.bottom{
+#containerReg .bottomReg{
   &:before{transform:rotate(-45deg);background:#006992;}
   &:after{transform:rotate(-135deg);background:#001D4A;}
 }
@@ -98,7 +98,7 @@
   font-size: 20px;
 }
 
-.form-section {
+#containerReg .form-section {
   width: 100%;
   height: 75%;
   display: flex;
@@ -107,7 +107,7 @@
   align-items:center;
 }
 
-.form-section input{
+#containerReg .form-section input{
     padding:10px 30px;
     margin:10px auto ;
     border-radius:1px;
@@ -133,7 +133,7 @@
   position: relative;
 }
 
-.toggle-password {
+#containerReg .toggle-password {
   position: absolute;
     right: 26px;
     top: 34%;
@@ -142,11 +142,11 @@
     z-index: 100;
 }
 
-.toggle-password .eye-icon {
+#containerReg .toggle-password .eye-icon {
   color: #666;
 }
 
-.divInput svg{
+#containerReg .divInput svg{
 position: absolute;
 top: 35%;
 left: 2%;
@@ -170,9 +170,9 @@ font-size: 17px;
 
   </style>
 <body>
-    <div class="container">
-        <div class="top">
-            <div class="bottom">
+    <div class="container" id="containerReg">
+        <div class="topReg">
+            <div class="bottomReg">
                 <div class="centerRegistration">
                     <h2 class="h2Form">Registration in warehousing system</h2>
                     <form id="loginForm" class="form-section">
@@ -245,7 +245,7 @@ font-size: 17px;
 
 <script>
   window.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".container");
+    const container = document.querySelector("#containerReg");
 
     if (container) {
       setTimeout(() => {
