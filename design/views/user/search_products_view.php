@@ -12,7 +12,6 @@
     <div id="resultsContainer">
         <p class="text-muted">Start typing to search...(more than 3 characters)</p>
     </div>
-
     <script>
         const searchInput = document.getElementById('searchInput');
         const resultsContainer = document.getElementById('resultsContainer');
@@ -26,7 +25,6 @@
                             resultsContainer.innerHTML = `<p class="text-muted">No products found.</p>`;
                             return;
                         }
-
                         const rows = data.products.map(p => `
                             <tr>
                                 <td>${p.name}</td>
