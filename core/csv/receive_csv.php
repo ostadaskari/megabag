@@ -8,5 +8,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
     exit;
 }
 
+
+
 // Load view
 include '../../design/views/manager/receive_stock_csv_view.php';

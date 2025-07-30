@@ -130,6 +130,16 @@ CREATE TABLE stock_issues (
     FOREIGN KEY (issued_to) REFERENCES users(id) ON DELETE SET NULL
 );
 
+CREATE TABLE uploaded_csvs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,        -- actual saved file name with unique prefix
+    original_name VARCHAR(255) NOT NULL,    -- original filename from user
+    file_size INT NOT NULL,
+    status ENUM('pending', 'checked', 'processed') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
 
 

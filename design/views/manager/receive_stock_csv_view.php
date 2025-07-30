@@ -1,140 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>receive by CSV</title>
+    <title>CSV Stock Upload</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-
+    <style>
+        .highlight-new {
+            background-color: #d4edda !important;
+        }
+    </style>
 </head>
-<body>
+<body class="container mt-4">
 
-<div class="container">
-    
-    <h2>REceive BY CSV</h2>
-    <a href="../stock/download_sample_csv.php" class="btn btn-sm btn-secondary">Download Sample CSV</a>
+<a href="download_sample_csv.php" class="btn btn-secondary mb-3" download>📄 Download Sample CSV</a>
 
-    <!-- Upload Section -->
-<input type="file" id="csvFile" class="form-control w-50">
-<button onclick="uploadCSV()" class="btn btn-primary mt-2">Upload CSV</button>
-<div id="csvList" class="mt-3"></div>
+<h3>Upload CSV for Stock Receiving</h3>
 
-<!-- CSV Preview -->
-<div id="csvPreview" class="mt-5"></div>
-
-<!-- Insert Button -->
-<button id="insertBtn" class="btn btn-success mt-3" style="display:none">Insert to Inventory</button>
-
-
+<div class="mb-3">
+    <form id="csvUploadForm" enctype="multipart/form-data">
+        <input type="file" name="csv_file" accept=".csv" required>
+        <button class="btn btn-primary btn-sm">Upload</button>
+    </form>
 </div>
 
+<h5>CSV Files Uploaded This Session</h5>
+<table class="table table-bordered" id="csvTable">
+    <thead>
+        <tr>
+            <th>Filename</th>
+            <th>Size (KB)</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div id="checkedData" class="mt-4"></div>
+
 <script>
-let csvData = [];
-let categories = [];
-
-function uploadCSV() {
-    const file = document.getElementById('csvFile').files[0];
-    if (!file) return Swal.fire('Please select a file');
-    const formData = new FormData();
-    formData.append('csv', file);
-
-    fetch('upload_csv.php', { method: 'POST', body: formData })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire('Uploaded');
-                loadCSVList();
-            } else Swal.fire('Error', data.message, 'error');
-        });
-}
-
-function loadCSVList() {
+function fetchCSVList() {
     fetch('list_csvs.php')
         .then(res => res.json())
         .then(data => {
-            document.getElementById('csvList').innerHTML = data.files.map(f => `
-                <div class="d-flex justify-content-between border p-2">
-                    ${f.name} (${f.size_kb} KB)
-                    <div>
-                        <button class="btn btn-sm btn-info" onclick="checkCSV('${f.name}')">Check</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteCSV('${f.name}')">Delete</button>
-                    </div>
-                </div>
-            `).join('');
+            if (data.success) {
+                const rows = data.csvs.map(csv => `
+                    <tr>
+                        <td>${csv.original_name}</td>
+                        <td>${(csv.file_size / 1024).toFixed(2)}</td>
+                        <td>${csv.status}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="deleteCSV(${csv.id})">Delete</button>
+                            <button class="btn btn-sm btn-info" onclick="checkCSV(${csv.id})">Check</button>
+                        </td>
+                    </tr>
+                `).join('');
+                document.querySelector('#csvTable tbody').innerHTML = rows;
+            }
         });
 }
 
-function deleteCSV(name) {
-    fetch('delete_csv.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `file=${encodeURIComponent(name)}`
-    }).then(() => {
-        Swal.fire('Deleted');
-        loadCSVList();
+function deleteCSV(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This CSV will be deleted!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+        if (result.isConfirmed) {
+            fetch('delete_csv.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fetchCSVList();
+                    Swal.fire('Deleted!', '', 'success');
+                } else {
+                    Swal.fire('Error!', data.message, 'error');
+                }
+            });
+        }
     });
 }
 
-function checkCSV(name) {
-    fetch('parse_csv.php?file=' + name)
+function checkCSV(csvId) {
+    fetch('parse_csv.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `csv_id=${csvId}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success || data.rows.length === 0) {
+            document.getElementById('checkedData').innerHTML = '<p class="text-muted">No data found in CSV.</p>';
+            return;
+        }
+
+        const rowsHtml = data.rows.map((row, idx) => {
+            const isNew = row.is_new;
+            const rowClass = isNew ? 'highlight-new' : '';
+            let catCell;
+
+            if (isNew) {
+                catCell = `
+                    <input type="text" class="form-control form-control-sm mb-1 category-search" 
+                        placeholder="Search category..." 
+                        data-select="cat-select-${idx}" 
+                        onkeyup="searchCategory(this)">
+                    <select class="form-select form-select-sm" id="cat-select-${idx}" name="category_id">
+                        <option value="">Select category</option>
+                    </select>
+                `;
+            } else {
+                catCell = row.matched_category;
+            }
+
+            return `
+                <tr class="${rowClass}">
+                    <td>${row.name}</td>
+                    <td>${row.part_number}</td>
+                    <td>${row.tag}</td>
+                    <td>${row.qty}</td>
+                    <td>${row.remark}</td>
+                    <td>${catCell}</td>
+                </tr>
+            `;
+        }).join('');
+
+        document.getElementById('checkedData').innerHTML = `
+            <h5>CSV Content</h5>
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>${rowsHtml}</tbody>
+            </table>
+            <button class="btn btn-success" onclick="submitStock(${csvId})">Insert Stock</button>
+        `;
+    })
+    .catch(() => {
+        Swal.fire('Error', 'Could not parse CSV.', 'error');
+    });
+}
+
+function searchCategory(input) {
+    const keyword = input.value.trim();
+    const selectId = input.getAttribute('data-select');
+    const select = document.getElementById(selectId);
+
+    if (!keyword || keyword.length < 2) {
+        select.innerHTML = '<option value="">Type at least 2 letters</option>';
+        return;
+    }
+
+    fetch(`search_leaf_categories.php?term=${encodeURIComponent(keyword)}`)
         .then(res => res.json())
         .then(data => {
-            csvData = data.rows;
-            fetch('fetch_leaf_categories.php')
-                .then(res => res.json())
-                .then(cat => {
-                    categories = cat.categories;
-                    renderPreview();
-                });
+            const options = data.categories.map(c => 
+                `<option value="${c.id}">${c.name}</option>`
+            ).join('');
+            select.innerHTML = options || '<option>No matches</option>';
         });
 }
 
-function renderPreview() {
-    const rows = csvData.map((row, i) => {
-        let catColumn = row.exists ? `<td>${row.category_id || '-'}</td>` : `
-            <td><select onchange="setCategory(${i}, this.value)">
-                <option value="">Select Category</option>
-                ${categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
-            </select></td>`;
+function submitStock(csvId) {
+    const tableRows = document.querySelectorAll('#checkedData table tbody tr');
+    const rows = [];
 
-        return `
-            <tr style="background:${row.exists ? '#fff' : '#d4edda'}">
-                <td>${row.name}</td><td>${row.part_number}</td><td>${row.tag}</td><td>${row.qty}</td><td>${row.remark}</td>${catColumn}
-            </tr>`;
-    }).join('');
+    for (const tr of tableRows) {
+        const tds = tr.querySelectorAll('td');
+        const isNew = tr.classList.contains('highlight-new');
 
-    document.getElementById('csvPreview').innerHTML = `
-        <h5>CSV Preview</h5>
-        <table class="table table-bordered">
-            <thead><tr><th>Name</th><th>Part Number</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th></tr></thead>
-            <tbody>${rows}</tbody>
-        </table>`;
-    document.getElementById('insertBtn').style.display = 'block';
-}
+        const name = tds[0].textContent.trim();
+        const part_number = tds[1].textContent.trim();
+        const tag = tds[2].textContent.trim();
+        const qty = parseInt(tds[3].textContent.trim());
+        const remark = tds[4].textContent.trim();
 
-function setCategory(index, id) {
-    csvData[index].category_id = parseInt(id);
-}
+        let category_id = null;
 
-document.getElementById('insertBtn').addEventListener('click', () => {
+        if (isNew) {
+            const select = tr.querySelector('select[name="category_id"]');
+            if (select && select.value) {
+                category_id = parseInt(select.value);
+            } else {
+                Swal.fire('Error', `Please select a category for "${part_number}"`, 'error');
+                return;
+            }
+        }
+
+        rows.push({ name, part_number, tag, qty, remark, category_id });
+    }
+
     fetch('insert_csv_stock.php', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({rows: csvData})
-    }).then(res => res.json()).then(data => {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ csv_id: csvId, rows })
+    })
+    .then(res => res.json())
+    .then(data => {
         if (data.success) {
-            Swal.fire('Success', 'Stock inserted', 'success');
-            document.getElementById('csvPreview').innerHTML = '';
-            document.getElementById('insertBtn').style.display = 'none';
-            loadCSVList();
-        } else Swal.fire('Error');
+            Swal.fire('Success', 'Stock inserted successfully', 'success').then(() => {
+                location.reload();
+            });
+        } else {
+            Swal.fire('Error', data.message || 'Insertion failed', 'error');
+        }
+    });
+}
+
+document.getElementById('csvUploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('upload_csv.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            fetchCSVList();
+            Swal.fire('Uploaded!', '', 'success');
+        } else {
+            Swal.fire('Error!', data.message, 'error');
+        }
     });
 });
 
-loadCSVList();
+fetchCSVList();
 </script>
-
-
 </body>
 </html>
