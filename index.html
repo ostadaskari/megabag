@@ -106,7 +106,6 @@
                 </a>
                 <ul class="submenu list-unstyled">
                   <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
-                  <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
                   <li><a href="#" data-content="List-Product">List Product</a></li>
                   <li><a href="#" data-content="">Add Products</a></li>
                 </ul>
@@ -155,7 +154,6 @@
               </a>
               <!-- subMenu-->
               <ul class="submenu list-unstyled">
-                  <li><a href="#" data-content="Report-Moein">Moein Report</a></li>
                   <li><a href="#" data-content="BandList">Babnd List</a></li>
                   <li><a href="#" data-content="LoginLogs">Login Logs</a></li>
                 </ul>
@@ -256,7 +254,6 @@
 
                 <ul class="submenu list-unstyled">
                   <li><a href="#" data-content="Add-Single-part">Add a single part</a></li>
-                  <li><a href="#" data-content="Add-Group-parts">Add a group of parts</a></li>
                   <li><a href="#" data-content="List-Product">List Product</a></li>
                   <li><a href="#" data-content="">Add Products</a></li>
                 </ul>
@@ -306,7 +303,6 @@
               </a>
               <!-- subMenu-->
               <ul class="submenu list-unstyled">
-                  <li><a href="#" data-content="Report-Moein">Moein Report</a></li>
                   <li><a href="#" data-content="BandList">Babnd List</a></li>
                   <li><a href="#" data-content="LoginLogs">Login Logs</a></li>
                 </ul>
@@ -676,7 +672,7 @@
                                   <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
                                 </svg>
                                 <h3 class="">Upload CSV</h3>
-                              <input type="file" id="fileUpload" class="form-control mx-auto" style="width: 25%;"/>
+                              <input type="file" id="fileUpload" class="form-control mx-auto" style="width: 50%;"/>
                           </div>
                       </div>
           
@@ -687,7 +683,7 @@
                                   <tr>
                                     <th>#</th>
                                     <th>CSV File Name</th>
-                                    <th>Value</th>
+                                    <th>valumn</th>
                                     <th>Action</th>
                                   </tr>
                                 </thead>
@@ -832,9 +828,7 @@
                                     <th>Status</th>
                                     <th style="width: 12%;">Category</th>
                                     <th>Submitter</th>
-                                    <th>Submit Date</th>
-                                    <th>Action</th>
-          
+                                    <th>Submit Date</th>          
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -852,14 +846,6 @@
                                     </td>
                                     <td>Ali Reza</td>
                                     <td>2024-07-01</td>
-                                    <td>
-                                      <a href="#" title="Import">
-                                        <svg width="20" height="20" fill="#2b6496" class="bi bi-box-arrow-in-down-right hoverSvg" viewBox="0 0 16 16">
-                                          <path fill-rule="evenodd" d="M6.364 2.5a.5.5 0 0 1 .5-.5H13.5A1.5 1.5 0 0 1 15 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 2 13.5V6.864a.5.5 0 1 1 1 0V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-10a.5.5 0 0 0-.5-.5H6.864a.5.5 0 0 1-.5-.5"/>
-                                          <path fill-rule="evenodd" d="M11 10.5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1 0-1h3.793L1.146 1.854a.5.5 0 1 1 .708-.708L10 9.293V5.5a.5.5 0 0 1 1 0z"/>
-                                        </svg>  
-                                      </a>
-                                    </td>
                                   </tr>
           
                                   <tr>
@@ -876,17 +862,14 @@
                                     </td>
                                     <td>Ali Reza</td>
                                     <td>2024-07-01</td>
-                                    <td>
-                                      <a href="#" title="Import">
-                                          <svg width="20" height="20" fill="#2b6496" class="bi bi-box-arrow-in-down-right hoverSvg" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M6.364 2.5a.5.5 0 0 1 .5-.5H13.5A1.5 1.5 0 0 1 15 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 2 13.5V6.864a.5.5 0 1 1 1 0V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-10a.5.5 0 0 0-.5-.5H6.864a.5.5 0 0 1-.5-.5"/>
-                                            <path fill-rule="evenodd" d="M11 10.5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1 0-1h3.793L1.146 1.854a.5.5 0 1 1 .708-.708L10 9.293V5.5a.5.5 0 0 1 1 0z"/>
-                                          </svg>  
-                                        </a>
-                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
+                          </div>
+                          <div class="d-flex justify-content-end">
+                            <button class="btn mt-3">
+                              Insert To Inventory
+                            </button>
                           </div>
                       </div>
                   </div>
@@ -1131,12 +1114,6 @@
               </form>
           </div>
 
-          <!-- "Add a group of parts":  -->
-          <div id="Add-Group-parts" class="tab-content" >
-            <h2>Add a Group of parts</h2>
-            <p>Adding multiple parts at once.</p>
-          </div>
-
           <!-- List Product -->
            <div id="List-Product" class="tab-content" >
             <div class="container px-0">
@@ -1287,14 +1264,14 @@
             <form id="EditPartForm" class="d-flex flex-column partForm">
                 <div class="container px-0">
                   <!-- part number and Manufacturer inputs -->
-                <div class="d-flex flex-row align-items-center mb-2">
+                <div class="d-flex flex-row align-items-center mb-3">
                   <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                 </svg>
                   <h3 class="pl-1">Part Details :</h3>
                 </div>
-                  <div class="row border rounded bg-light">
+                  <div class="row border rounded shadow-sm bg-light p-3">
                     
                     <div class="col-12 col-md-4 px-2 my-2">
                       <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
@@ -1332,7 +1309,7 @@
                 </div>
 
                 <!-- Category selection -->
-                <div class="d-flex flex-row align-items-center my-2">
+                <div class="d-flex flex-row align-items-center my-3">
                   <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -1341,7 +1318,7 @@
                 </div>
 
                 <!-- Category Dropdown Section -->
-                <div class="container mt-1 Category px-3 border rounded bg-light">
+                <div class="container mt-1 Category border rounded shadow-sm bg-light p-3">
                   <div class="row d-flex flex-row justify-content-between">
 
                     <div class="col-12 col-md-4 px-2">
@@ -1369,7 +1346,7 @@
                 </div>
 
                 <!-- inputs files -->
-                <div class="d-flex flex-row align-items-center my-2">
+                <div class="d-flex flex-row align-items-center my-3">
                   <svg  width="24" height="24" fill="currentColor" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -1379,7 +1356,7 @@
 
                 <div class="row mt-1 d-flex flex-row justify-content-between">
                     <!-- Datasheet Upload -->
-                    <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                    <div class="col-12 col-md-5 mb-3 border rounded shadow-sm bg-light p-3">
                       <label for="editDatasheetUpload" class="form-label">Upload Datasheet:</label>
                       <input class="form-control" type="file" id="editDatasheetUpload" name="editDatasheetUpload" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
                       <ul id="editDatasheetList" class="mt-3 list-group small">
@@ -1394,7 +1371,7 @@
                     </div>
 
                     <!-- Image Upload -->
-                    <div class="col-12 col-md-5 mb-3 p-3 border rounded bg-light">
+                    <div class="col-12 col-md-5 mb-3 border rounded shadow-sm bg-light p-3">
                       <label for="editImageUpload" class="form-label">Uploadd Images:</label>
                       <input class="form-control" type="file" id="editImageUpload" name="editImageUpload" multiple accept="image/*">
                       <ul id="editImageList" class="mt-3 list-group small">
@@ -1417,365 +1394,10 @@
               </form>
            </div>
            <!-- edit product -->
-
-          <!-- "Confirmation of receipt in warehouse":  -->
-          <div id="Confirmation-Warehouse" class="tab-content">
-            <h2>Confirmation of Receipt</h2>
-            <p>
-              Warehouse staff can confirm received items using this section.
-            </p>
-          </div>
-
-          <!-- "Manage categories":  -->
-         <div id="Manage-Categories" class="tab-content">
-            <!-- Header Section -->
-            <div class="d-flex flex-row align-items-center my-1">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <defs>
-                  <linearGradient id="gradSubcategories" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M3 6H9L11 8H21V18C21 18.55 20.55 19 20 19H4C3.45 19 3 18.55 3 18V6Z"
-                  stroke="url(#gradSubcategories)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                  d="M7 13H17M7 16H14"
-                  stroke="url(#gradSubcategories)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <h3 class="pl-1">Manage Categories:</h3>
-            </div>
-
-            <!-- Manage Categories Form Section -->
-            <div class="container border ManageCategories px-2 bg-light">
-              <div class="row">
-                <!-- Add Category -->
-                <div class="col-12 col-md-6 p-2">
-                  <h3 class="my-1">Add Category:</h3>
-                  <form id="add-category-form" class="mt-3">
-                    <div class="input-group d-flex flex-row">
-                      <div class="d-flex flex-row">
-                        <label for="Add-categoryName">Name:</label>
-                        <input
-                          type="text"
-                          id="Add-categoryName"
-                          name="categoryName"
-                          placeholder="Choose name for the category:"
-                          class="form-control"
-                          required />
-                      </div>
-                      <button type="submit" class="btn btn-primary mt-0" id="Add-Category">
-                        Add
-                      </button>
-                    </div>
-                  </form>
-                </div>
-
-                <!-- Remove Category -->
-                <div class="col-12 col-md-6 p-2">
-                  <h3 class="my-1">Remove Category:</h3>
-                  <form id="remove-category-form" class="mt-3">
-                    <div class="input-group d-flex flex-row">
-                      <div class="part-status d-flex flex-row">
-                        <label for="Label">Select:</label>
-                        <select  name="Label" required>
-                          <option value="Ic">Ic</option>
-                          <option value="Res">Res</option>
-                          <option value="Cap">Cap</option>
-                        </select>
-                      </div>
-                      <button type="submit" class="btn btn-primary mt-0" id="Remove-Category">
-                        Remove
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-              <!-- Edit Category -->
-              <h3 class="pl-2">Edit Category:</h3>
-              <form id="edit-category-form" class="mt-3 px-2">
-                <div class="row d-flex flex-row">
-                  <div class="col-md-6 col-12 p-1">
-                    <div class="input-group">
-                      <div class="part-status d-flex flex-row">
-                        <label for="Label">Select:</label>
-                        <select  name="Label" required>
-                          <option value="Ic">Ic</option>
-                          <option value="Res">Res</option>
-                          <option value="Cap">Cap</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12 p-1">
-                    <div class="input-group">
-                      <div class="d-flew flex-row">
-                        <label for="Edit-categoryName">Name:</label>
-                        <input
-                          type="text"
-                          id="Edit-categoryName"
-                          name="categoryName"
-                          placeholder="New name for category:"
-                          class="form-control"
-                          required />
-                      </div>
-                    </div>
-                    <div class="mt-1 d-flex justify-content-end">
-                      <button type="submit" class="btn btn-primary" id="Edit-Category">
-                        Edit Category
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <!-- Available Categories Header -->
-            <div class="d-flex flex-row align-items-center my-1">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <defs>
-                  <linearGradient id="gradSubcategories" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M3 6H9L11 8H21V18C21 18.55 20.55 19 20 19H4C3.45 19 3 18.55 3 18V6Z"
-                  stroke="url(#gradSubcategories)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                  d="M7 13H17M7 16H14"
-                  stroke="url(#gradSubcategories)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <h3 class="pl-1">Available Categories:</h3>
-            </div>
-
-            <!-- Categories Table -->
-            <div class="container table-container border ManageCategories p-0 mt-1">
-              <div class="row">
-                <div class="col-12 fixed-table-container" style="max-height: 40vh;">
-                  <table class="table table-bordered table-striped table-hover mb-0 text-center p-1">
-                    <thead>
-                      <tr>
-                        <th>Row</th>
-                        <th>Subcategory</th>
-                        <th>Connected Categories</th>
-                        <th>Connected parts</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
-                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- "Manage subcategories":  -->
-          <div id="Manage-Subcategories" class="tab-content">
-            <!-- Header -->
-            <div class="d-flex flex-row align-items-center my-1">
-              <svg width="20" height="20" fill="currentColor" class="bi bi-kanban" viewBox="0 0 16 16">
-                <defs>
-                  <linearGradient id="gradKanban" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" fill="url(#gradKanban)" />
-                <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" fill="url(#gradKanban)" />
-              </svg>
-              <h3 class="pl-1">Manage Subcategories:</h3>
-            </div>
-
-            <!-- Management Section -->
-            <div class="container border ManageCategories px-2 py-1">
-              <div class="row">
-                <!-- Add Subcategory -->
-                <div class="col-12 col-md-6 px-1">
-                  <h3 class="my-1">Add Subcategory:</h3>
-                  <form id="add-subcategory-form" class="mt-3">
-                    <div class="input-group d-flex flex-row">
-                      <div class="d-flex flex-row">
-                        <label for="Add-subcategoryName">Name:</label>
-                        <input type="text" id="Add-subcategoryName" name="subcategoryName"
-                          placeholder="Choose name for the subcategory:" class="form-control" required />
-                      </div>
-                      <button type="submit" class="btn btn-primary my-0" id="Add-Subcategory">Add</button>
-                    </div>
-                  </form>
-                </div>
-
-                <!-- Remove Subcategory -->
-                <div class="col-12 col-md-6 px-1">
-                  <h3 class="my-1">Remove Subcategory:</h3>
-                  <form id="remove-subcategory-form" class="mt-3">
-                    <div class="input-group d-flex flex-row">
-                      <div class="part-status d-flex flex-row">
-                        <label for="SelectSubcategoryToRemove">Select:</label>
-                        <select id="SelectSubcategoryToRemove" name="Label" required>
-                          <option value="Ic">Ic</option>
-                          <option value="Res">Res</option>
-                          <option value="Cap">Cap</option>
-                        </select>
-                      </div>
-                      <button type="submit" class="btn btn-primary my-0" id="Remove-Subcategory">Remove</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-              <!-- Edit Subcategory -->
-              <h3 class="mt-3">Edit Subcategory:</h3>
-              <form id="edit-subcategory-form" class="mt-3">
-                <div class="row d-flex flex-row">
-                  <div class="col-md-6 col-12 p-1">
-                    <div class="input-group d-flex flex-row">
-                      <div class="part-status d-flex flex-row">
-                        <label for="SelectSubcategoryToEdit">Select:</label>
-                        <select id="SelectSubcategoryToEdit" name="Label" required>
-                          <option value="Ic">Ic</option>
-                          <option value="Res">Res</option>
-                          <option value="Cap">Cap</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 col-12 p-1">
-                    <div class="input-group d-flex flex-row">
-                      <label for="Edit-subcategoryName">Name:</label>
-                      <input type="text" id="Edit-subcategoryName" name="subcategoryName"
-                        placeholder="New name for subcategory:" class="form-control" required />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Subcategory Dropdowns -->
-                <div class="container mt-3 Subcategory p-1">
-                  <div class="row">
-                    <div class="col-12">
-                      <label for="Subcategory" class="mb-2">Subcategory:</label>
-
-                      <!-- Cap Dropdown -->
-                      <div class="col-12 col-lg-3 dropdown mb-2">
-                        <input class="dropdown-toggle" type="text" readonly />
-                        <div class="dropdown-text">Cap</div>
-                        <ul class="dropdown-content">
-                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Ceramic')">Ceramic</a></li>
-                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Tantal')">Tantal</a></li>
-                          <li><a href="#" onclick="updateSubcategoryTitle('Cap', 'Smd')">Smd</a></li>
-                        </ul>
-                      </div>
-
-                      <!-- Ic Dropdown -->
-                      <div class="col-12 col-lg-3 dropdown mb-2">
-                        <input class="dropdown-toggle" type="text" readonly />
-                        <div class="dropdown-text">Ic</div>
-                        <ul class="dropdown-content">
-                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Ic', 'Micro')">Micro</a></li>
-                        </ul>
-                      </div>
-
-                      <!-- Res Dropdown -->
-                      <div class="col-12 col-lg-3 dropdown mb-2">
-                        <input class="dropdown-toggle" type="text" readonly />
-                        <div class="dropdown-text">Res</div>
-                        <ul class="dropdown-content">
-                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value1')">Value1</a></li>
-                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value2')">Value2</a></li>
-                          <li><a href="#" onclick="updateSubcategoryTitle('Subcategory', 'Res', 'Value3')">Value3</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row mt-3">
-                    <div class="col-12 d-flex justify-content-between align-items-center">
-                      <div id="Subcategory-selected-label" class="selected-label">Selected:</div>
-                      <button type="submit" class="btn btn-primary" id="Edit-Subcategory">Edit Subcategory</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <!-- Available Categories Table -->
-            <div class="d-flex flex-row align-items-center my-1">
-              <svg width="20" height="20" fill="currentColor" class="bi bi-kanban" viewBox="0 0 16 16">
-                <defs>
-                  <linearGradient id="gradKanban" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color: var(--main-hover-color); stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: var(--main-bg0-color); stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" fill="url(#gradKanban)" />
-                <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" fill="url(#gradKanban)" />
-              </svg>
-              <h3 class="pl-1">Available Categories:</h3>
-            </div>
-
-            <div class="container table-container border ManageCategories p-0 mt-2">
-              <div class="row">
-                <div class="col-12 fixed-table-container" style="max-height: 40vh;">
-                  <table class="table table-bordered table-striped table-hover mb-0 text-center p-1">
-                    <thead>
-                      <tr>
-                        <th>Row</th>
-                        <th>Subcategory</th>
-                        <th>Connected Categories</th>
-                        <th>Connected parts</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr><td>01</td><td>Cap</td><td>3</td><td>1</td></tr>
-                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
-                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
-                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
-                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
-                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
-                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
-                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
-                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
-                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>7</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>1</td><td>Cap</td><td>3</td><td>1</td></tr>
-                      <tr><td>2</td><td>Ic</td><td>1</td><td>...</td></tr>
-                      <tr><td>3</td><td>Res</td><td>...</td><td>...</td></tr>
-                      <tr><td>4</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>5</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>6</td><td>...</td><td>...</td><td>...</td></tr>
-                      <tr><td>70</td><td>...</td><td>...</td><td>...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- "End manage subcategories" -->
-
           <!-- end Add to Inventory -->
+           
           <!--  Reports -->
-          <div id="MoeinReport" class="tab-content">
-          </div>
-          <!-- end Reports -->
+
           <!-- band list -->
            <div class="tab-content" id="BandList">                    
               <!-- Table View (Hidden by default) -->
@@ -2011,6 +1633,7 @@
 
             </div>
           <!-- end band list -->
+
            <!-- LoginLogs -->
              <div class="tab-content" id="LoginLogs">                    
               <!-- Table View (Hidden by default) -->
