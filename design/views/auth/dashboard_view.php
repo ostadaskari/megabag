@@ -1,81 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
 
-<?php if ($msg): ?>
-<script>
-    Swal.fire({
-        icon: '<?php echo htmlspecialchars($type); ?>',
-        title: '<?php echo ucfirst($type); ?>',
-        text: '<?php echo htmlspecialchars($msg); ?>',
-        timer: 3000,
-        showConfirmButton: false
-    });
-</script>
-<?php endif; ?>
 
-<h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
-<p>Your role: <strong><?php echo htmlspecialchars($role); ?></strong></p>
+<?php include(__DIR__ . '/../partials/header.php'); ?>
+<?php include(__DIR__ . '/../partials/navbar.php'); ?>
 
-<?php if ($role === 'admin'): ?>
-    <h3>Admin Panel</h3>
-    <ul>
-        <li><a href="../manager/invite_users.php">Invite Users</a></li>
-        <li><a href="../admin/manage_users.php">Manage Users</a></li>
-        <li><a href="../manager/manage_categories.php">Manage categories</a></li>
-        <br>
-        <li><a href="../manager/receive_stock.php">Insert items</a></li>
-        <li><a href="../manager/list_receipts.php">Receipts list</a></li>
-        <li><a href="../csv/receive_csv.php">Insert by CSV</a></li>
-        <br>
-        <li><a href="../manager/stock_issue.php">withdraw items</a></li>
-        <li><a href="../manager/list_issues.php">withdraw list</a></li>
-        <br>
-        <li><a href="../manager/create_product.php">Create Product</a></li>
-        <li><a href="../manager/products_list.php">Product List</a></li>  
-        <br>
-        <li><a href="../logs/login_logs.php">logins logs</a></li>
-        <li><a href="../logs/bans.php">ban list logs</a></li>
-        <li><a href="../auth/profile.php">profile</a></li>
-        <br>
-        <li><a href="../user/user_search_products.php">Search products</a></li>
-        
-    </ul>
+    <!--########## main ##########-->
+    <div class="container p-0 main">
+      <div class="row d-flex flex-row" style="height: 100%">
+         <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
 
-<?php elseif ($role === 'manager'): ?>
-    <h3>Manager Panel</h3>
-    <ul>
-        <li><a href="../manager/invite_users.php">Invite Users</a></li>
-            
-        <li><a href="../manager/manage_categories.php">Manage categories</a></li>
-        <br>
-        <li><a href="../manager/receive_stock.php">Insert items</a></li>
-        <li><a href="../manager/list_receipts.php">Insert in list</a></li>
-        <br>
-        <li><a href="../manager/stock_issue.php">withdraw items</a></li>
-        <li><a href="../manager/list_issues.php">withdraw list</a></li>
-        <br>
-        <li><a href="../manager/create_product.php">Create Product</a></li>
-        <li><a href="../manager/products_list.php">Product List</a></li>  
-        <br>
-        <li><a href="../logs/login_logs.php">logins logs</a></li>
-        <li><a href="../logs/bans.php">ban list logs</a></li>
-        <li><a href="../auth/profile.php">profile</a></li>
-        <br>
-        <li><a href="../user/user_search_products.php">Search products</a></li>
-    </ul>
+            <section class="content w-100 p-4">
+                <?php if ($msg): ?>
+                <script>
+                    Swal.fire({
+                        icon: '<?= htmlspecialchars($type) ?>',
+                        title: '<?= ucfirst($type) ?>',
+                        text: '<?= htmlspecialchars($msg) ?>',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                </script>
+                <?php endif; ?>
 
-<?php elseif ($role === 'user'): ?>
-    <h3>User Panel</h3>
-    <ul>
-        <li><a href="../user/user_search_products.php">Search products</a></li>
-    </ul>
-<?php endif; ?>
+                <!-- 🔽 The dynamic include block -->
 
-<a href="logout.php">Logout</a>
-</body>
-</html>
+                <?php
+                    if ($content_file && file_exists( $content_file)) {
+                        include( $content_file);
+                    } elseif ($page === 'home') {
+                        echo "<h2>Welcome, " . htmlspecialchars($username) . "!</h2><p>Your role: <strong>" . htmlspecialchars($role) . "</strong></p>";
+                    } else {
+                        echo "<p>Page not found or access denied.</p>";
+                    }
+                ?>
+
+                <!--  The dynamic include block -->
+            </section>
+      </div>
+    </div>
+
+<?php include(__DIR__ . '/../partials/footer.php'); ?>
+

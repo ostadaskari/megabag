@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Manage Users</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-
 <h2>Invite New User</h2>
 <h3><a href="../auth/dashboard.php">dashboard</a></h3>
 <?php foreach ($errors as $e): ?>
@@ -135,5 +127,3 @@ function copyInviteLink(code) {
 
 
 
-</body>
-</html>
