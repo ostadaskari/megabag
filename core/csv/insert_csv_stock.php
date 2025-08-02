@@ -17,13 +17,17 @@ if (!$user_id || !$csv_id || empty($rows)) {
 $conn->begin_transaction();
 
 try {
-    foreach ($rows as $row) {
-        $part = trim($row['part_number']);
-        $qty = (int) $row['qty'];
-        $name = trim($row['name']);
-        $tag = trim($row['tag']);
-        $remark = trim($row['remark']);
-        $category_id = isset($row['category_id']) ? (int)$row['category_id'] : null;
+    foreach ($rows as $index => $row) {
+        $part = trim($row['part_number'] ?? '');
+        $qty = isset($row['qty']) ? (int) $row['qty'] : 0;
+        $name = trim($row['name'] ?? '');
+        $tag = trim($row['tag'] ?? '');
+        $remark = trim($row['remark'] ?? '');
+        $category_id = isset($row['category_id']) ? (int) $row['category_id'] : null;
+
+        if ($qty <= 0 || $part === '' || $name === '') {
+            throw new Exception("Missing or invalid fields on row " . ($index + 1));
+        }
 
         // Check if product exists
         $stmt = $conn->prepare("SELECT id FROM products WHERE part_number = ?");
@@ -46,9 +50,9 @@ try {
             $stmt->execute();
             $stmt->close();
         } else {
-            // New product must have category_id
+            // For new products, category is required
             if (!$category_id) {
-                throw new Exception("Missing category for new product: $part");
+                throw new Exception("Missing category for new product: $part (row " . ($index + 1) . ")");
             }
 
             // Insert new product

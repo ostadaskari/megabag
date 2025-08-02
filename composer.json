@@ -1,0 +1,12 @@
+{
+    "name": "pc_7/megabag",
+    "authors": [
+        {
+            "name": "ostadaskari",
+            "email": "askaraskarinejad@outlook.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.5"
+    }
+}
