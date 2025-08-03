@@ -1,8 +1,6 @@
 <?php
 $role = $_SESSION['role'] ?? 'guest';
 ?>
-
-        <!--***** sidebar *****-->
         <div class="col-2 d-none d-md-flex sidebar flex-column position-relative pt-2">
            <div class="userNameTop">
             <svg width="50" height="50" fill="var(--main-bg1-color)" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -215,9 +213,9 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
                 <!-- subMenu-->
                 <ul class="submenu list-unstyled">
-                  <li><a href="../manager/receive_stock.php"  >Insert Items</a></li>
-                  <li><a href="../manager/list_receipts.php"  >List Of Receives</a></li>
-                  <li><a href="../csv/receive_csv.php"  >Insert By CSV</a></li>
+                  <li><a href="?page=receive_stock"  >Insert Items</a></li>
+                  <li><a href="?page=list_receipts"  >List Of Receives</a></li>
+                  <li><a href="?page=receive_csv"  >Insert By CSV</a></li>
                 </ul>
               </li>
 
@@ -232,8 +230,8 @@ $role = $_SESSION['role'] ?? 'guest';
               </a>
               <!-- subMenu-->
               <ul class="submenu list-unstyled">
-                <li><a href="../manager/stock_issue.php" >Withdraw Items</a></li>
-                <li><a href="../manager/list_issues.php" >List Of Withdraw</a></li>
+                <li><a href="?page=stock_issue" >Withdraw Items</a></li>
+                <li><a href="?page=list_issues" >List Of Withdraw</a></li>
                 
               </ul>
             </li>
@@ -248,14 +246,14 @@ $role = $_SESSION['role'] ?? 'guest';
               </a>
               <!-- subMenu-->
               <ul class="submenu list-unstyled">
-                  <li><a href="../logs/bans.php" >Ban List</a></li>
-                  <li><a href="../logs/login_logs.php" >Login Log</a></li>
+                  <li><a href="?page=bans" >Ban List</a></li>
+                  <li><a href="?page=login_logs" >Login Log</a></li>
                 </ul>
             </li>
 
             <!-- Categories -->
              <li class="menu-item" >
-              <a href="../manager/manage_categories.php" class="menu-link">
+              <a href="?page=manage_categories" class="menu-link">
                 <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-bricks" viewBox="0 0 16 16">
                   <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5zM3 4v2h4.5V4zm5.5 0v2H13V4zM3 10v2h4.5v-2zm5.5 0v2H13v-2zM1 1v2h3.5V1zm4.5 0v2h5V1zm6 0v2H15V1zM1 7v2h3.5V7zm4.5 0v2h5V7zm6 0v2H15V7zM1 13v2h3.5v-2zm4.5 0v2h5v-2zm6 0v2H15v-2z"/>
                 </svg>
@@ -267,7 +265,7 @@ $role = $_SESSION['role'] ?? 'guest';
             <?php if (in_array($role, ['user', 'manager', 'admin'])): ?>
             <!-- Search-Inventory -->
             <li class="menu-item">
-              <a href="../user/user_search_products.php" class="menu-link">
+              <a href="?page=user_search_products" class="menu-link">
                 <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
@@ -277,7 +275,7 @@ $role = $_SESSION['role'] ?? 'guest';
             
             <!-- profile -->
              <li class="menu-item" >
-              <a href="../auth/profile.php" class="menu-link">
+              <a href="?page=profile" class="menu-link">
                 <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-person-square" viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                   <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>

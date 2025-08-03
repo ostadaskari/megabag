@@ -1,9 +1,25 @@
 <?php
-require_once('../db/db.php');
-require_once('../middleware/auth.php');
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-if ($_SESSION['role'] !== 'admin') {
-    die("Access denied.");
+require_once('../db/db.php');
+
+// Check for authorization. If the request is AJAX, return a JSON error. Otherwise, redirect.
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'error' => 'Access denied. You must be an administrator.'
+        ]);
+        exit;
+    } else {
+        header("Location: ../auth/login.php");
+        exit;
+    }
 }
 
 $search = trim($_GET['search'] ?? '');
@@ -44,6 +60,7 @@ $result = $userStmt->get_result();
 $users = $result->fetch_all(MYSQLI_ASSOC);
 
 if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
+    header('Content-Type: application/json');
     echo json_encode([
         'success' => true,
         'users' => $users,

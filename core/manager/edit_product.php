@@ -1,7 +1,10 @@
 <?php
-session_start();
 require_once '../db/db.php';
-
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // (ACL) Restrict access to admins/managers only
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
@@ -86,12 +89,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             continue;
                         }
 
-                        $target = $imageDir . uniqid() . "_" . basename($filename);
+                        $newFilename = uniqid() . "_" . basename($filename);
+                        $target = $imageDir . $newFilename;
+                        $relative_path = "uploads/images/" . $newFilename;
 
                         if (move_uploaded_file($tmp_name, $target)) {
-                            $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                            $stmt->bind_param("issis", $id,  $filename, $target, $size, $ext);
+                            $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size) VALUES (?, ?, ?, ?)");
+                            $stmt->bind_param("isss", $id, $filename, $relative_path, $size);
                             $stmt->execute();
                             $stmt->close();
                         }
@@ -103,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdfDir = '../../uploads/pdfs/';
             if (!file_exists($pdfDir)) mkdir($pdfDir, 0777, true);
 
+            // Corrected file upload logic for PDFs
             if (!empty($_FILES['pdfs']['name'][0])) {
                 foreach ($_FILES['pdfs']['name'] as $key => $filename) {
                     $tmp_name = $_FILES['pdfs']['tmp_name'][$key];
@@ -112,31 +117,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             continue;
                         }
 
-                        $target = $pdfDir . uniqid() . "_" . basename($filename);
+                        $newFilename = uniqid() . "_" . basename($filename);
+                        $target = $pdfDir . $newFilename;
+                        $relative_path = "uploads/pdfs/" . $newFilename;
 
                         if (move_uploaded_file($tmp_name, $target)) {
-                            $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?,?, ?, ?)");
-                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                            $stmt->bind_param("issis", $id, $filename, $target, $size, $ext);
+                            $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size) VALUES (?, ?, ?, ?)");
+                            $stmt->bind_param("isss", $id, $filename, $relative_path, $size);
                             $stmt->execute();
                             $stmt->close();
                         }
                     }
                 }
             }
-
-            header("Location: edit_product.php?id=$id&success=" . urlencode("Product updated successfully."));
+            header("Location: ../auth/dashboard.php?page=edit_product&id=$id&success=" . urlencode("Product updated successfully."));
             exit;
         } else {
             $errors[] = "Failed to update product.";
             $stmt->close();
-            header("Location: edit_product.php?id=$id&error=" . urlencode(implode(' | ', $errors)));
+            header("Location: ../auth/dashboard.php?page=edit_product&id=$id&error=" . urlencode(implode(' | ', $errors)));
             exit;
         }
     } else {
-        header("Location: edit_product.php?id=$id&error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=edit_product&id=$id&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }
-
 require_once '../../design/views/manager/edit_product_view.php';
+?>

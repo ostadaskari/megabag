@@ -13,5 +13,6 @@
 
     <!-- link CSS -->
     <link rel="stylesheet" href="../../design/assets/css/style.css" />
+    <link rel="stylesheet" href="../../design/assets/css/style2.css" />
   </head>
   <body>

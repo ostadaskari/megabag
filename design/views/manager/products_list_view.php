@@ -1,103 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Product List</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-        .action-btn {
-            cursor: pointer;
-            margin: 0 5px;
-        }
-        .actions svg {
-            width: 18px;
-            height: 18px;
-            vertical-align: middle;
-        }
-        .pagination {
-    margin-top: 20px;
-    text-align: center;
-}
-.pagination ul {
-    list-style: none;
-    padding: 0;
-    display: inline-flex;
-    gap: 5px;
-}
-.pagination li {
-    display: inline;
-}
-.pagination a {
-    text-decoration: none;
-    padding: 6px 12px;
-    color: #333;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-.pagination a:hover {
-    background-color: #ddd;
-}
-.pagination a[style*="font-weight:bold"] {
-    background-color: #007bff;
-    color: white;
-    pointer-events: none;
-}
+<!-- List Product -->
+<div id="List-Product" class="tab-content" >
+<div class="container px-0">
+    <!-- searchbar -->
+    <div class="d-flex flex-row" >
+            <div class="input-box">
+                            <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." />
+            </div>
 
-    </style>
-</head>
-<body>
-
-<h2>Product List</h2>
-<h3><a href="../auth/dashboard.php">dashboard</a></h3>
-<!-- Search and Filter -->
-    <div style="margin-bottom: 15px;">
-        <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." style="padding: 6px; width: 250px;">
-        
-        <select id="statusFilter" style="padding: 6px;">
-            <option value="">All Statuses</option>
-            <option value="available">Available</option>
-        </select>
+            <select id="statusFilter" class="form-select">
+                <option value="">All Statuses</option>
+                <option value="available">Available</option>
+            </select>
     </div>
 
-        <!-- table -->
-         <table border="1" cellpadding="8" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>P/N</th>
-                <th>MFG</th>
-                <th>Qty</th>
-                <th>Submitter</th>
-                <th>Category</th>
-                <th>Submit Date</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Tag</th>
-                <th>Date Code</th>
-                <th>Recieve Code</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="productsTableBody">
-            <!-- Filled dynamically via AJAX -->
-        </tbody>
-    </table>
-        <div id="pagination" class="pagination-container"></div>
+    <!-- table list product -->
+    <div class="row">
+    <div class="col-12">
+        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 65vh;">
+            <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+            <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">P/N</th>
+                <th scope="col">MFG</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Submitter</th>
+                <th scope="col">Category</th>
+                <th scope="col">Submit Date</th>
+                <th scope="col">Location</th>
+                <th scope="col">Status</th>
+                <th scope="col">Tag</th>
+                <th scope="col">Date Code</th>
+                <th scope="col">Recieve Code</th>
+                <th scope="col">Actions</th>
+
+                </tr>
+            </thead>
+        
+            <tbody id="productsTableBody">
+                <!-- Filled dynamically via AJAX -->
+            </tbody>
+            
+            </table>
+        </div>
+    </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row my-2">
+    <div class="col-12 d-flex justify-content-center">
+            <div id="pagination" class="pagination-container"></div>
+    </div>
+    </div>
+</div>
+</div>
+<!-- end List Product -->
+
 
 
 
@@ -175,9 +137,9 @@ function deleteProduct(productId) {
 
 
 function editProduct(productId) {
-    window.location.href = "edit_product.php?id=" + productId;
+    window.location.href = "../auth/dashboard.php?page=edit_product&id=" + productId;
 }
 </script>
 
-</body>
-</html>
+
+

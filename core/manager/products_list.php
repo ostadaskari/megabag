@@ -1,6 +1,11 @@
 <?php
 require_once '../db/db.php';
-session_start();
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // (ACL) Restrict access to admins/managers only  (access level )
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
@@ -66,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
         }).then(() => window.location.reload());
     </script>";
     // Redirect to avoid re-submission
-    header("Location: products_list.php");
+    header("Location: ../auth/dashboard.php?page=products_list");
     exit;
 }
 
@@ -91,7 +96,7 @@ try {
         $deleteStmt = $conn->prepare("DELETE FROM products WHERE id = ?");
         $deleteStmt->bind_param("i", $_POST['product_id']);
         $deleteStmt->execute();
-        header("Location: products_list.php");
+        header("Location: ../auth/dashboard.php?page=products_list");
         exit;
     }
 } catch (Exception $e) {

@@ -1,92 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Product</title>
-    <style>
-        form { max-width: 600px; margin: auto; }
-        label { display: block; margin-top: 10px; }
-        input, textarea, select { width: 100%; padding: 6px; margin-top: 5px; }
-        .alert { padding: 10px; margin: 10px 0; }
-        .success { background-color: #d4edda; color: #155724; }
-        .error { background-color: #f8d7da; color: #721c24; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-</head>
-<body>
-
-<h2>Create New Product</h2>
 <h3><a href="../auth/dashboard.php">dashboard</a></h3>
+            <!-- "Add a single part":  -->
+          <div id="Add-Single-part" class="tab-content">
+            <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
+                <div class="container px-0">
+                  <!-- part number and Manufacturer inputs -->
+                <div class="d-flex flex-row align-items-center mb-2">
+                  <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                  </svg>
+                  <h3 class="pl-1">Part Details :</h3>
+                </div>
+                  <div class="row bg-light border rounded shadow-sm p-3">
+                    
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                      <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="name" title="Name">Name:</label>
+                      <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
+                    </div>
+                     <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
+                      <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                      <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
+                      <input class="form-control" type="text" name="qty" placeholder="Quantity" min="0" required />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                        <label for="" class="form-label">Date Code:</label>
+                        <select class="form-select" name="date_code">
+                          <option value="2024+">2024+</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-12 mt-2 px-2">
+                      <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
+                      <textarea class="form-control"  id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Category selection -->
+                <div class="d-flex flex-row align-items-center my-3">
+                  <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                  </svg>
+                  <h3 class="pl-1">Part storage location:</h3>
+                </div>
+
+                <!-- Category Dropdown Section -->
+                <div class="container mt-1 px-1 border rounded shadow-sm p-3 bg-light">
+                  <div class="row d-flex flex-row justify-content-between">
+
+                    <div class="col-12 col-md-4 px-2 my-2">
+                        <label for="" class="form-label">Categories:</label>
+                        <!-- categories -->
+                        <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
+                        <input type="hidden" name="category_id" id="category_id">
+                        <ul id="category-dropdown" style="border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:5px 10px; background-color:white;"></ul>
+
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                      <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                    </div>
+
+                    <div class="col-12 col-md-4 px-2 my-2">
+                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                      <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- inputs files -->
+                <div class="d-flex flex-row align-items-center my-3">
+                  <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                  <h3 class="pl-1">Upload Files:</h3>
+                </div>
+
+                <div class="row mt-1 d-flex flex-row justify-content-between">
+                  <div class="col-12 col-md-5 mb-3 border rounded shadow-sm p-3 bg-light">
+                    <label for="datasheetUpload" class="form-label">Upload Datasheet:</label>
+                    <input class="form-control" type="file" id="datasheetUpload" name="pdfs[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+                  </div>
+
+                  <div class="col-12 col-md-5 mb-3 border rounded shadow-sm p-3 bg-light">
+                    <label for="imageUpload" class="form-label">Upload Images:</label>
+                    <input class="form-control" type="file" id="imageUpload" name="images[]" multiple accept="image/*" >
+                  </div>
+                </div>
 
 
-<form method="post" enctype="multipart/form-data">
-    <label>Name:
-        <input type="text" name="name" required>
-    </label>
-
-    <label>Part Number:
-        <input type="text" name="pn">
-    </label>
-
-    <label>MFG:
-        <input type="text" name="mfg">
-    </label>
-
-    <label>Quantity:
-        <input type="number" name="qty" min="0">
-    </label>
-
-    <label>Company Comment:
-        <textarea name="company_cmt"></textarea>
-    </label>
-
-                <!-- categories -->
-       <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off">
-        <input type="hidden" name="category_id" id="category_id">
-        <ul id="category-dropdown" style="border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:0;"></ul>
+                <div class="mt-3" style="text-align: end">
+                  <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
+                </div>
+                </div>
+              </form>
+          </div>
 
 
-    <label>Location:
-        <input type="text" name="location">
-    </label>
-
-    <label>Status:
-        <input type="text" name="status">
-    </label>
-
-    <label>Tag:
-        <input type="text" name="tag">
-    </label>
-
-    <label>Date Code:
-        <select name="date_code">
-                <option value="2024+">2024+</option>
-                <option value="2024">2024</option>
-        </select>
-    </label>
-
-    <label>Receive Code:
-        <input type="text" name="recieve_code">
-    </label>
-
-    <label>Upload Images (multiple, max 20MB each):
-        <input type="file" name="images[]" multiple accept="image/*">
-    </label>
-
-    <label>Upload PDFs (multiple, max 20MB each):
-        <input type="file" name="pdfs[]" multiple accept="application/pdf">
-    </label>
-
-    <button type="submit">Submit Product</button>
-</form>
 
 
 <script>
 let categories = [];
 
 async function fetchCategories() {
-    const response = await fetch('../../core/ajax/fetch_leaf_categories.php');
+    const response = await fetch('../ajax/fetch_leaf_categories.php');
     categories = await response.json();
     renderDropdown('');
 }
@@ -155,8 +188,3 @@ fetchCategories();
 
   <!-- end sweet alert -->
 
-
-
-
-</body>
-</html>

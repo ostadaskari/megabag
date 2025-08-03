@@ -315,13 +315,7 @@ li.active > a {
 .main{
     height: 95vh;
 }
-.tab-content{
-	display: none;
-}
 
-.tab-content.current{
-	display: block;
-}
 .content {
   width: calc(100vw - 17vw) !important;
   position: relative;

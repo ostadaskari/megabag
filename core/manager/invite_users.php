@@ -1,6 +1,5 @@
 <?php
 // This page is used for generating invite links and showing all users with their roles and accessibilities.
-
 require_once('../middleware/auth.php');
 if ($_SESSION['role'] !== 'admin') {
     die("Access denied.");
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_code_id'])) {
         $delStmt = $conn->prepare("DELETE FROM invite_codes WHERE id = ?");
         $delStmt->bind_param("i", $delete_id);
         if ($delStmt->execute()) {
-            header("Location: manage_users.php?success=" . urlencode("Invite code deleted."));
+            header("Location: ../auth/dashboard.php?page=invite_users&success=" . urlencode("Invite code deleted."));
             exit;
         } else {
             $errors[] = "Failed to delete invite code.";
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_code_id'])) {
     }
 
     if (!empty($errors)) {
-        header("Location: manage_users.php?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=invite_users&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname']) && isset(
             if ($stmt->execute()) {
                 // Redirect with invite link and success
                 $inviteLink = "http://localhost/megabag/core/auth/register.php?code=$code";
-                header("Location: manage_users.php?success=" . urlencode("Invite code generated.") . "&link=" . urlencode($inviteLink));
+                header("Location: ../auth/dashboard.php?page=invite_users&success=" . urlencode("Invite code generated.") . "&link=" . urlencode($inviteLink));
                 exit;
             } else {
                 $errors[] = "Error: " . $stmt->error;
@@ -76,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname']) && isset(
     }
 
     if (!empty($errors)) {
-        header("Location: manage_users.php?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=invite_users&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }

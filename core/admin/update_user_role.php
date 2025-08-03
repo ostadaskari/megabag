@@ -1,6 +1,6 @@
 <?php
 require_once('../db/db.php');
-require_once('../middleware/auth.php');
+
 
 if ($_SESSION['role'] !== 'admin') {
     http_response_code(403);

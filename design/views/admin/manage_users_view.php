@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-
 <div class="container mt-4">
     <h2 class="mb-3">Manage Users</h2>
     <h3><a href="../auth/dashboard.php">dashboard</a></h3>
@@ -21,7 +10,7 @@
 <script>
 function fetchUsers(page = 1) {
     const search = document.getElementById('searchInput').value;
-    fetch(`manage_users.php?ajax=1&page=${page}&search=${encodeURIComponent(search)}`)
+    fetch(`../admin/manage_users.php?ajax=1&page=${page}&search=${encodeURIComponent(search)}`)
         .then(res => res.json())
         .then(data => {
             if (data.success) {
@@ -74,7 +63,7 @@ function changeRole(userId, newRole, oldRole) {
         cancelButtonText: 'Cancel'
     }).then(result => {
         if (result.isConfirmed) {
-            fetch('update_user_role.php', {
+            fetch('../admin/update_user_role.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: userId, role: newRole })
@@ -106,7 +95,7 @@ function toggleBlock(userId, isBlocked) {
         cancelButtonText: 'Cancel'
     }).then(result => {
         if (result.isConfirmed) {
-            fetch('toggle_block_user.php', {
+            fetch('../admin/toggle_block_user.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: userId })
@@ -130,5 +119,3 @@ fetchUsers();
 
 </script>
 
-</body>
-</html>

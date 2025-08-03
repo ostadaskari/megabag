@@ -1,5 +1,9 @@
 <?php
-session_start();
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once("../db/db.php");
 
 // (ACL) Restrict access to admins/managers only
@@ -78,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Redirect with success message
-            header("Location: create_product.php?success=" . urlencode("Product created successfully!"));
+            header("Location: ../auth/dashboard.php?page=create_product&success=" . urlencode("Product created successfully!"));
             exit;
         } else {
             $errors[] = "Failed to save product.";
@@ -87,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If errors, redirect with error messages
     if (!empty($errors)) {
-        header("Location: create_product.php?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=create_product?error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }
