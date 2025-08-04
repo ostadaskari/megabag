@@ -1,292 +1,294 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Excel Stock Upload</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .highlight-new { background-color: #d4edda !important; }
-        .category-suggestions {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            background: white;
-            position: absolute;
-            z-index: 1000;
-            width: 100%;
-        }
-        .category-suggestion-item {
-            padding: 5px;
-        }
-        .category-suggestion-item:hover {
-            background-color: #f1f1f1;
-        }
-        .position-relative {
-            position: relative;
-        }
-    </style>
-</head>
-<body class="container mt-4">
+<div class="tab-content" id="Insert-By-CSV">
+    <div class="container px-0">
+        <div class="row d-flex justify-content-between border rounded shadow-sm bg-light p-2">
+            <div class="col-12 col-md-5 d-flex flex-column align-items-center">
+                <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 px-3 py-2 w-100 bg-light">
+                    <svg width="30" height="30" fill="rgb(43, 100, 150)" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0m-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708z"/>
+                    </svg>
+                    <h3 class="">Download Sample</h3>
+                    <a href="../csv/download_sample_xlsx.php" class="btn secBtn" download>Download</a>
+                </div>
 
-<a href="download_sample_xlsx.php" class="btn btn-secondary mb-3" download>📄 Download Sample Excel</a>
-<h3>Upload Excel (.xlsx) for Stock Receiving</h3>
+                <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm mt-2 p-3 w-100 bg-light">
+                    <svg width="45" height="45" fill="rgb(43, 100, 150)" class="bi bi-cloud-upload" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/>
+                        <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
+                    </svg>
+                    <h3 class="">Upload Excel (.xlsx)</h3>
+                    <form id="csvUploadForm" enctype="multipart/form-data">
+                        <input type="file" name="csv_file" accept=".xlsx" required class="form-control mx-auto" style="width: 50%;">
+                        <button class="btn btn-primary btn-sm mt-2">Upload</button>
+                    </form>
+                </div>
+            </div>
 
-<div class="mb-3">
-    <form id="csvUploadForm" enctype="multipart/form-data">
-        <input type="file" name="csv_file" accept=".xlsx" required>
-        <button class="btn btn-primary btn-sm">Upload</button>
-    </form>
+            <div class="col-12 col-md-6 px-1 my-2">
+                <h5>Uploaded Excel Files This Session</h5>
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light" style="max-height: 15vh;">
+                    <table class="table table-bordered table-striped table-hover mb-0 text-center" id="csvTable">
+                        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                            <tr>
+                                <th>Filename</th>
+                                <th>File Size</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12">
+                <div id="checkedData" class="mt-4">
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<h5>Uploaded Excel Files This Session</h5>
-<table class="table table-bordered" id="csvTable">
-    <thead>
-        <tr>
-            <th>Filename</th>
-            <th>Size (KB)</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-<div id="checkedData" class="mt-4"></div>
 
 <script>
-function fetchCSVList() {
-    fetch('list_csvs.php')
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                const rows = data.csvs.map(csv => `
-                    <tr>
-                        <td>${csv.original_name}</td>
-                        <td>${(csv.file_size / 1024).toFixed(2)}</td>
-                        <td>${csv.status}</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" onclick="deleteCSV(${csv.id})">Delete</button>
-                            <button class="btn btn-sm btn-info" onclick="checkCSV(${csv.id})">Check</button>
-                        </td>
-                    </tr>
-                `).join('');
-                document.querySelector('#csvTable tbody').innerHTML = rows;
-            }
-        });
-}
-
-function deleteCSV(id) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "This file will be deleted!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!'
-    }).then(result => {
-        if (result.isConfirmed) {
-            fetch('delete_csv.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            })
+    function fetchCSVList() {
+        fetch('../csv/list_csvs.php')
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    fetchCSVList();
-                    Swal.fire('Deleted!', '', 'success');
-                } else {
-                    Swal.fire('Error!', data.message, 'error');
+                    const rows = data.csvs.map(csv => `
+                        <tr>
+                            <td>${csv.original_name}</td>
+                            <td>${csv.file_size_readable}</td>
+                            <td>${csv.status}</td>
+                            <td>
+                                <a href="#" class="" title="Delete" onclick="event.preventDefault(); deleteCSV(${csv.id});">
+                                    <svg width="20" height="20" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+                                    </svg>
+                                </a>
+                                <a href="#" class="" title="Check" onclick="event.preventDefault(); checkCSV(${csv.id});">
+                                    <svg width="20" height="20" fill="#2b6496" class="bi bi-check2-circle hoverSvg" viewBox="0 0 16 16">
+                                        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
+                                        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    `).join('');
+                    document.querySelector('#csvTable tbody').innerHTML = rows;
                 }
             });
-        }
-    });
-}
-
-function checkCSV(csvId) {
-    fetch('parse_csv.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `csv_id=${csvId}`
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (!data.success || data.rows.length === 0) {
-            document.getElementById('checkedData').innerHTML = '<p class="text-muted">No data found in file.</p>';
-            return;
-        }
-
-        const rowsHtml = data.rows.map((row, idx) => {
-            const isNew = row.is_new;
-            const rowClass = isNew ? 'highlight-new' : '';
-            let catCell;
-
-            if (isNew) {
-                catCell = `
-                    <div class="position-relative">
-                        <input type="text" class="form-control form-control-sm category-autocomplete" 
-                            placeholder="Search category..." 
-                            data-index="${idx}" 
-                            data-category-id="" />
-                        <div class="category-suggestions d-none" data-index="${idx}"></div>
-                    </div>
-                `;
-            } else {
-                catCell = row.matched_category;
-            }
-
-            return `
-                <tr class="${rowClass}">
-                    <td>${row.name}</td>
-                    <td>${row.part_number}</td>
-                    <td>${row.tag}</td>
-                    <td>${row.qty}</td>
-                    <td>${row.remark}</td>
-                    <td>${catCell}</td>
-                </tr>
-            `;
-        }).join('');
-
-        document.getElementById('checkedData').innerHTML = `
-            <h5>File Content</h5>
-            <table class="table table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
-                    </tr>
-                </thead>
-                <tbody>${rowsHtml}</tbody>
-            </table>
-            <button class="btn btn-success" onclick="submitStock(${csvId})">Insert Stock</button>
-        `;
-    });
-}
-
-function submitStock(csvId) {
-    const tableRows = document.querySelectorAll('#checkedData table tbody tr');
-    const rows = [];
-
-    for (const tr of tableRows) {
-        const tds = tr.querySelectorAll('td');
-        const isNew = tr.classList.contains('highlight-new');
-
-        const name = tds[0].textContent.trim();
-        const part_number = tds[1].textContent.trim();
-        const tag = tds[2].textContent.trim();
-        const qty = parseInt(tds[3].textContent.trim());
-        const remark = tds[4].textContent.trim();
-
-        let category_id = null;
-
-        if (isNew) {
-            const input = tr.querySelector('input.category-autocomplete');
-            category_id = input.dataset.categoryId;
-            if (!category_id) {
-                Swal.fire('Error', `Please select a category for "${part_number}"`, 'error');
-                return;
-            }
-        }
-
-        rows.push({ name, part_number, tag, qty, remark, category_id });
     }
 
-    fetch('insert_csv_stock.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ csv_id: csvId, rows })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire('Success', 'Stock inserted successfully', 'success').then(() => {
-                location.reload();
-            });
-        } else {
-            Swal.fire('Error', data.message || 'Insertion failed', 'error');
+    function deleteCSV(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This file will be deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!'
+        }).then(result => {
+            if (result.isConfirmed) {
+                fetch('../csv/delete_csv.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchCSVList();
+                        Swal.fire('Deleted!', '', 'success');
+                    } else {
+                        Swal.fire('Error!', data.message, 'error');
+                    }
+                });
+            }
+        });
+    }
+
+    function checkCSV(csvId) {
+        fetch('../csv/parse_csv.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `csv_id=${csvId}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success || data.rows.length === 0) {
+                document.getElementById('checkedData').innerHTML = '<p class="text-muted">No data found in file.</p>';
+                return;
+            }
+
+            const rowsHtml = data.rows.map((row, idx) => {
+                const isNew = row.is_new;
+                const rowClass = isNew ? 'highlight-new' : '';
+                let catCell;
+
+                if (isNew) {
+                    catCell = `
+                                <div class="category-autocomplete-container">
+                                    <input type="text" class="form-control form-control-sm category-autocomplete" 
+                                        placeholder="Search category..." 
+                                        data-index="${idx}" 
+                                        data-category-id="" />
+                                    <div class="category-suggestions d-none" data-index="${idx}"></div>
+                                </div>
+                            `;
+                } else {
+                    catCell = row.matched_category;
+                }
+
+                return `
+                    <tr class="${rowClass}">
+                        <td>${row.name}</td>
+                        <td>${row.part_number}</td>
+                        <td>${row.tag}</td>
+                        <td>${row.qty}</td>
+                        <td>${row.remark}</td>
+                        <td>${catCell}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('checkedData').innerHTML = `
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 60vh;">
+                    <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                            <tr>
+                                <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success mt-3" onclick="submitStock(${csvId})">Insert to Inventory</button>
+                </div>
+            `;
+
+            // Re-apply event listeners for autocomplete
+            setupCategoryAutocomplete();
+        });
+    }
+
+    function submitStock(csvId) {
+        const tableRows = document.querySelectorAll('#checkedData table tbody tr');
+        const rows = [];
+
+        for (const tr of tableRows) {
+            const tds = tr.querySelectorAll('td');
+            const isNew = tr.classList.contains('highlight-new');
+
+            const name = tds[0].textContent.trim();
+            const part_number = tds[1].textContent.trim();
+            const tag = tds[2].textContent.trim();
+            const qty = parseInt(tds[3].textContent.trim());
+            const remark = tds[4].textContent.trim();
+
+            let category_id = null;
+
+            if (isNew) {
+                const input = tr.querySelector('input.category-autocomplete');
+                category_id = input.dataset.categoryId;
+                if (!category_id) {
+                    Swal.fire('Error', `Please select a category for "${part_number}"`, 'error');
+                    return;
+                }
+            }
+
+            rows.push({ name, part_number, tag, qty, remark, category_id });
         }
+
+        fetch('../csv/insert_csv_stock.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ csv_id: csvId, rows })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire('Success', 'Stock inserted successfully', 'success').then(() => {
+                    location.reload();
+                });
+            } else {
+                Swal.fire('Error', data.message || 'Insertion failed', 'error');
+            }
+        });
+    }
+
+    document.getElementById('csvUploadForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('../csv/upload_csv.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                fetchCSVList();
+                Swal.fire('Uploaded!', '', 'success');
+            } else {
+                Swal.fire('Error!', data.message, 'error');
+            }
+        });
     });
-}
 
-document.getElementById('csvUploadForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
+    function setupCategoryAutocomplete() {
+        // Category search & auto-complete
+        document.querySelectorAll('.category-autocomplete').forEach(input => {
+            input.addEventListener('input', function () {
+                const term = this.value.trim();
+                const index = this.dataset.index;
+                const suggestionsDiv = document.querySelector(`.category-suggestions[data-index="${index}"]`);
 
-    fetch('upload_csv.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            fetchCSVList();
-            Swal.fire('Uploaded!', '', 'success');
-        } else {
-            Swal.fire('Error!', data.message, 'error');
-        }
-    });
-});
-
-fetchCSVList();
-</script>
-
-<script>
-// Category search & auto-complete
-document.addEventListener('input', function (e) {
-    if (e.target.classList.contains('category-autocomplete')) {
-        const input = e.target;
-        const index = input.dataset.index;
-        const term = input.value.trim();
-        const suggestionsDiv = document.querySelector(`.category-suggestions[data-index="${index}"]`);
-
-        if (term.length < 2) {
-            suggestionsDiv.innerHTML = '';
-            suggestionsDiv.classList.add('d-none');
-            input.dataset.categoryId = '';
-            return;
-        }
-
-        fetch(`search_leaf_categories.php?term=${encodeURIComponent(term)}`)
-            .then(res => res.json())
-            .then(data => {
-                const cats = data.categories || [];
-
-                if (cats.length === 1) {
-                    input.value = cats[0].name;
-                    input.dataset.categoryId = cats[0].id;
+                if (term.length < 2) {
                     suggestionsDiv.innerHTML = '';
                     suggestionsDiv.classList.add('d-none');
+                    this.dataset.categoryId = '';
                     return;
                 }
 
-                const suggestions = cats.map(cat => `
-                    <div class="category-suggestion-item" data-id="${cat.id}" data-name="${cat.name}">
-                        ${cat.name}
-                    </div>
-                `).join('');
-                suggestionsDiv.innerHTML = suggestions;
-                suggestionsDiv.classList.remove('d-none');
+                fetch(`../csv/search_leaf_categories.php?term=${encodeURIComponent(term)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const cats = data.categories || [];
+                        const suggestions = cats.map(cat => `
+                            <div class="category-suggestion-item" data-id="${cat.id}" data-name="${cat.name}">
+                                ${cat.name}
+                            </div>
+                        `).join('');
+                        suggestionsDiv.innerHTML = suggestions;
+                        suggestionsDiv.classList.remove('d-none');
+                    });
             });
-    }
-});
+        });
 
-// Handle category selection
-document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('category-suggestion-item')) {
-        const name = e.target.dataset.name;
-        const id = e.target.dataset.id;
-        const parent = e.target.closest('.category-suggestions');
-        const index = parent.dataset.index;
-        const input = document.querySelector(`input.category-autocomplete[data-index="${index}"]`);
+        // Handle category selection
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('category-suggestion-item')) {
+                const name = e.target.dataset.name;
+                const id = e.target.dataset.id;
+                const parent = e.target.closest('.category-suggestions');
+                const index = parent.dataset.index;
+                const input = document.querySelector(`input.category-autocomplete[data-index="${index}"]`);
 
-        input.value = name;
-        input.dataset.categoryId = id;
-        parent.innerHTML = '';
-        parent.classList.add('d-none');
-    } else {
-        // Hide all suggestions if clicked outside
-        document.querySelectorAll('.category-suggestions').forEach(div => div.classList.add('d-none'));
+                input.value = name;
+                input.dataset.categoryId = id;
+                parent.innerHTML = '';
+                parent.classList.add('d-none');
+            } else {
+                // Hide all suggestions if clicked outside
+                document.querySelectorAll('.category-suggestions').forEach(div => div.classList.add('d-none'));
+            }
+        });
     }
-});
+
+    // Initial load
+    fetchCSVList();
 </script>
-
-</body>
-</html>

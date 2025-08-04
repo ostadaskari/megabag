@@ -1,6 +1,11 @@
 <?php
 require_once('../db/db.php');
-session_start();
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csv_file'])) {
     $file = $_FILES['csv_file'];
