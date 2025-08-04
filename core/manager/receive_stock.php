@@ -62,10 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
     }
 
     if (empty($errors)) {
-        header("Location: receive_stock.php?success=" . urlencode("Stock received successfully."));
+        header("Location: ../auth/dashboard.php?page=receive_stock&success=" . urlencode("Stock received successfully."));
         exit;
     } else {
-        header("Location: receive_stock.php?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=receive_stock&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }

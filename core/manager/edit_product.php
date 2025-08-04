@@ -89,13 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             continue;
                         }
 
-                        $newFilename = uniqid() . "_" . basename($filename);
-                        $target = $imageDir . $newFilename;
-                        $relative_path = "uploads/images/" . $newFilename;
+                        $target = $imageDir . uniqid() . "_" . basename($filename);
 
                         if (move_uploaded_file($tmp_name, $target)) {
-                            $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size) VALUES (?, ?, ?, ?)");
-                            $stmt->bind_param("isss", $id, $filename, $relative_path, $size);
+                            $stmt = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                            $stmt->bind_param("issis", $id,  $filename, $target, $size, $ext);
                             $stmt->execute();
                             $stmt->close();
                         }
@@ -107,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdfDir = '../../uploads/pdfs/';
             if (!file_exists($pdfDir)) mkdir($pdfDir, 0777, true);
 
-            // Corrected file upload logic for PDFs
             if (!empty($_FILES['pdfs']['name'][0])) {
                 foreach ($_FILES['pdfs']['name'] as $key => $filename) {
                     $tmp_name = $_FILES['pdfs']['tmp_name'][$key];
@@ -117,19 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             continue;
                         }
 
-                        $newFilename = uniqid() . "_" . basename($filename);
-                        $target = $pdfDir . $newFilename;
-                        $relative_path = "uploads/pdfs/" . $newFilename;
+                        $target = $pdfDir . uniqid() . "_" . basename($filename);
 
                         if (move_uploaded_file($tmp_name, $target)) {
-                            $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size) VALUES (?, ?, ?, ?)");
-                            $stmt->bind_param("isss", $id, $filename, $relative_path, $size);
+                            $stmt = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?,?, ?, ?)");
+                            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                            $stmt->bind_param("issis", $id, $filename, $target, $size, $ext);
                             $stmt->execute();
                             $stmt->close();
                         }
                     }
                 }
             }
+
             header("Location: ../auth/dashboard.php?page=edit_product&id=$id&success=" . urlencode("Product updated successfully."));
             exit;
         } else {
@@ -143,5 +141,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
 require_once '../../design/views/manager/edit_product_view.php';
-?>
