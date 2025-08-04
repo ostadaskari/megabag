@@ -1,6 +1,10 @@
 <?php
 require_once '../db/db.php';
-session_start();
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // ACL: Allow only manager or admin
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
@@ -57,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Redirect to avoid resubmission
     if (empty($errors)) {
-        header("Location: stock_issue.php?success=" . urlencode("Stock issued successfully."));
+        header("Location: ../auth/dashboard.php?page=stock_issue&success=" . urlencode("Stock issued successfully."));
         exit;
     } else {
-        header("Location: stock_issue.php?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=stock_issue&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }
