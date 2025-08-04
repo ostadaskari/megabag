@@ -392,6 +392,11 @@ li.active > a {
 .content button:hover {
   background-color: var(--main-hover-color);
 }
+.btnSvg{
+  background-color:transparent!important;
+  padding: 0!important;
+}
+
 /* Labels */
 .content label {
   align-content: center;
