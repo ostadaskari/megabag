@@ -44,16 +44,13 @@
 
         <!-- Pagination Section -->
         <?php if ($totalPages > 1): ?>
-            <?php
-                $baseUrl = strtok($_SERVER["REQUEST_URI"], '?'); // get path without query string
-            ?>
             <div class="row my-2">
                 <div class="col-12 d-flex justify-content-center">
                     <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
-
+                        
                         <!-- First Page -->
                         <?php if ($page > 1): ?>
-                            <a href="<?= $baseUrl ?>?page=1" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
+                            <a href="../auth/dashboard.php?page=ban_list&pg=1" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"/>
                                 </svg>
@@ -70,7 +67,7 @@
 
                         <!-- Previous Page -->
                         <?php if ($page > 1): ?>
-                            <a href="<?= $baseUrl ?>?page=<?= $page - 1 ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
+                            <a href="../auth/dashboard.php?page=ban_list&pg=<?= $page - 1 ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                 </svg>
@@ -79,7 +76,7 @@
                         <?php else: ?>
                             <span class="btn btn-outline-secondary px-3 px-custom d-flex align-items-center btnNP borderRight disabled">
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                    <path d="m3.86 8.753 5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                 </svg>
                                 Prev
                             </span>
@@ -96,14 +93,14 @@
                                 <?php if ($i == $page): ?>
                                     <span class="px-1 fw-bold text-danger"><?= $i ?></span>
                                 <?php else: ?>
-                                    <a href="<?= $baseUrl ?>?page=<?= $i ?>" class="px-1 fw-bold"><?= $i ?></a>
+                                    <a href="../auth/dashboard.php?page=ban_list&pg=<?= $i ?>" class="px-1 fw-bold"><?= $i ?></a>
                                 <?php endif; ?>
                             <?php endfor; ?>
                         </div>
 
                         <!-- Next Page -->
                         <?php if ($page < $totalPages): ?>
-                            <a href="<?= $baseUrl ?>?page=<?= $page + 1 ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft">
+                            <a href="../auth/dashboard.php?page=ban_list&pg=<?= $page + 1 ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft">
                                 Next
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
@@ -120,7 +117,7 @@
 
                         <!-- Last Page -->
                         <?php if ($page < $totalPages): ?>
-                            <a href="<?= $baseUrl ?>?page=<?= $totalPages ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft">
+                            <a href="../auth/dashboard.php?page=ban_list&pg=<?= $totalPages ?>" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft">
                                 last
                                 <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"/>
@@ -134,7 +131,6 @@
                                 </svg>
                             </span>
                         <?php endif; ?>
-
                     </div>
                 </div>
             </div>

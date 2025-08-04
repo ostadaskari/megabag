@@ -1,6 +1,10 @@
 <?php
-session_start();
 require_once("../db/db.php");
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 
 // (ACL) Restrict access to admins/managers only  (access level )
@@ -13,7 +17,8 @@ try {
     //pagination 
     //set page number and limit items per page 
     $limit = 3;
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+    // We now use 'pg' for pagination to avoid conflict with the 'page' view parameter
+    $page = isset($_GET['pg']) && is_numeric($_GET['pg']) ? (int) $_GET['pg'] : 1;
     $offset = ($page - 1) * $limit;
     // Count total rows from the last 2 months only
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM login_logs WHERE created_at >= DATE_SUB(NOW(), INTERVAL 2 MONTH)");
