@@ -1,7 +1,10 @@
 <?php
-session_start();
 require_once("../db/db.php");
-
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 //  Check if user has permission (e.g., admin or manager)
 if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
