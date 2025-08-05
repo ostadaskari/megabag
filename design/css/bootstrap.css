@@ -765,4 +765,7 @@ position: relative !important;
   .flex-md-row {
     flex-direction: row !important;
   }
+  .flex-md-column{
+    flex-direction: column!important;
+  }
 }

@@ -953,7 +953,7 @@ background-color: var(--main-hover-color);
     margin: 0;
   }
   
-  .fixed-table-container table thead th {
+  .fixed-table-container table thead {
     position: sticky;
     top:-3px;
     z-index: 2;
@@ -1168,7 +1168,23 @@ fill:var(--main-text-color);
 /* ##################### end Categories ################## */
 
 /* ##################### stock in // List-Of-Receives ################## */
-
+#List-Of-Receives input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    border: 2px solid var(--main-bg1-color);
+    border-radius: 8px;
+    padding: 0 5px!important;
+    background-color: transparent;
+    height: 40px;
+}
+.fontS{
+  font-size: 12px!important;
+}
+.filesBtn button{
+ background-color:transparent;
+}
 .bi-chat-left-dots-fill{
  fill: rgb(43, 100, 150);
 }
@@ -1248,6 +1264,7 @@ fill:var(--main-text-color);
       transform: translateY(0);
       opacity: 1;
     }
+    
   }
 
   .open-modal {
@@ -1266,12 +1283,14 @@ fill:var(--main-text-color);
   .responsive-textarea {
     min-height: 90px; 
   }
+
 }
 
 @media (min-width: 768px) {
   .responsive-textarea {
     min-height: 30px;
   }
+
 }
 
 /* ##################### end stock in // List-Of-Receives ################## */
