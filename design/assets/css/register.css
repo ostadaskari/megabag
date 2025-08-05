@@ -1,0 +1,180 @@
+
+.container#containerReg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#containerReg .topReg:before,
+#containerReg .topReg:after,
+#containerReg .bottomReg:before,
+#containerReg .bottomReg:after {
+  transition: all 0.8s ease;
+  margin-left: 0;
+  transform-origin: center;
+}
+
+#containerReg.active .topReg:before,
+#containerReg.active .topReg:after,
+#containerReg.active .bottomReg:before,
+#containerReg.active .bottomReg:after {
+  margin-left: 300px;
+  transform-origin: -300px 50%;
+}
+
+#containerReg.active .centerRegistration {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+
+.topReg, .bottomReg{
+  &:before, &:after{
+    content:'';
+    display:block;
+    position:absolute;
+    width:200vmax;
+    height:200vmax;
+    top:50%;left:50%;
+    margin-top:-100vmax;
+    transform-origin: 0 50%;
+    transition:all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    z-index:10;
+    opacity:0.65;
+    transition-delay:0.2s;
+  }
+}
+
+#containerReg .topReg{
+  &:before{transform:rotate(45deg);background:#ECA400;}
+  &:after{transform:rotate(135deg);background:#eca5006e;}
+}
+
+#containerReg .bottomReg{
+  &:before{transform:rotate(-45deg);background:#006992;}
+  &:after{transform:rotate(-135deg);background:#001D4A;}
+}
+
+.centerRegistration{
+  position:absolute;
+  max-width:500px;
+  top: 38%;
+  left: 49%;
+  margin-left:-200px;
+  margin-top:-200px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:30px;
+  opacity:0;
+  transition:all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  transition-delay:0s;
+  color:#333;
+  background: rgba(35, 65, 102, 0.09);
+  border-radius: 16px;
+  backdrop-filter: blur(3.4px);
+  -webkit-backdrop-filter: blur(3.4px);
+  border: 1px solid rgba(35, 65, 102, 0.18);
+  z-index: 100;
+}
+.h2Form{
+  color:var(--main-bg0-color);
+  margin-bottom: 20px;
+  z-index: 1200;
+  font-size: 20px;
+}
+
+#containerReg .form-section {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}
+
+#containerReg .form-section input{
+    padding:10px 30px;
+    margin:10px auto ;
+    border-radius:1px;
+    border:1px solid #ccc;
+    font-family:inherit;
+    border-radius:5px;
+    font-size: 14px;
+    background-color:#fff;
+} 
+
+.loginTo,
+.registerTo{
+    background:var(--main-bg0-color);
+    color: #fff;
+    padding:10px 15px ;
+}
+.registerTo:hover,.loginTo:hover {
+    background: var(--main-hover-color);
+    color:var(--main-darktext-color)
+    }
+
+.divInput {
+  position: relative;
+}
+
+#containerReg .toggle-password {
+  position: absolute;
+    right: 26px;
+    top: 34%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 100;
+}
+
+#containerReg .toggle-password .eye-icon {
+  color: #666;
+}
+
+#containerReg .divInput svg{
+position: absolute;
+top: 35%;
+left: 2%;
+fill: var(--main-bg1-color);
+z-index: 100;
+}
+
+@media (max-width: 768px) {
+.centerRegistration {
+width: 90%;
+top: 50%;
+left: 50%;
+margin: 0 auto;
+transform: translate(-50%, -50%);
+padding: 15px;
+}
+h2{
+font-size: 17px;
+}
+}
+
+
+        /* This style block ensures all error messages are red and include the icon */
+        .error {
+            color: #dc3545; /* Bootstrap's 'danger' red */
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .error-message-container {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* space between icon and text */
+            margin-top: 5px;
+        }
+        .error-message {
+            color: #dc3545; /* Red color for the message */
+        }
+        .error-icon {
+            color: #dc3545; /* Red color for the SVG */
+        }
