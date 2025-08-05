@@ -103,3 +103,98 @@
 }
 
 /* end Autocomplete dropdown styling design\views\manager\stock_issue_view.php */
+
+
+    /* design\views\manager\manage_categories_view.php Styling for the category tree and form */
+        /* Global styles for the category lists */
+    .category-tree ul,
+    .tree-display ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+
+    .category-tree li,
+    .tree-display li {
+        position: relative;
+        padding: 5px 0;
+        cursor: pointer;
+    }
+    
+    /* Styling for the selection tree */
+    #category-tree li:hover {
+        background-color: #eef;
+    }
+
+    #category-tree li.selected {
+        background-color: #d0f0ff;
+        font-weight: bold;
+    }
+
+    /* Tree connection lines for the display tree */
+    .tree-display .root-tree > ul {
+        border-left: 1px dashed #ccc;
+    }
+
+    .tree-display li:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 10px;
+        height: 50%;
+        border-left: 1px dashed #ccc;
+        border-bottom: 1px dashed #ccc;
+    }
+    
+    .tree-display li:first-child:before {
+        height: 50%;
+    }
+    
+    .tree-display li:last-child:before {
+        height: 50%;
+    }
+
+    .tree-display li:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -10px;
+        width: 10px;
+        height: 1px;
+        border-bottom: 1px dashed #ccc;
+    }
+    
+    .tree-display li:first-child::before,
+    .tree-display li:last-child::before {
+        border-top: none;
+    }
+
+    /* Fixed height and scroll for both trees */
+    .fixed-height-scroll {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    /* Initially hide the category tree box for the search input */
+    #category-tree {
+        display: none;
+    }
+
+    /* Icon styling */
+    .action-icon {
+        background-color: transparent;
+        border: none;
+        width: 20px;
+        height: 20px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 5px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .action-icon:hover {
+        transform: scale(1.2);
+    }
+        /* design\views\manager\manage_categories_view.php end  Styling for the category tree and form */

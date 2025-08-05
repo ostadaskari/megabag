@@ -995,7 +995,7 @@ background-color: var(--main-hover-color);
 
 .toggle-eye {
   position: absolute;
-  top: 46%;
+  top: 54%;
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;

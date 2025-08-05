@@ -1,7 +1,9 @@
 <?php
-session_start();
 require_once("../db/db.php");
-
+// Check if a session has already been started before starting a new one.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // ACL: Only admin/manager allowed
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
@@ -47,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = 'error=' . urlencode(implode(' | ', $errors));
     }
 
-    // Redirect with PRG
-    header("Location: manage_categories.php" . ($query ? "?$query" : ""));
+    // Redirect with PRG, fixing the double '?'
+    header("Location: ../auth/dashboard.php?page=manage_categories" . ($query ? "&$query" : ""));
     exit;
 }
 

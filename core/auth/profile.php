@@ -1,6 +1,11 @@
 <?php
 require_once("../db/db.php");
 //chick if login or not
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once('../middleware/auth.php');
 
 $errors = [];
