@@ -1,27 +1,32 @@
 <?php
-require_once("../db/db.php");
+// Include your database connection file
+require_once '../db/db.php';
 
 header('Content-Type: application/json');
 
-// Check if a search query is provided
-$searchTerm = $_GET['query'] ?? '';
+$query = $_GET['query'] ?? '';
 
-// Sanitize the search term to prevent SQL injection
-$searchTerm = "%" . $conn->real_escape_string($searchTerm) . "%";
+try {
+    // Sanitize the query to prevent SQL injection
+    $query = '%' . $query . '%';
 
-// Prepare the SQL query to search for categories
-$stmt = $conn->prepare("SELECT id, name, parent_id FROM categories WHERE name LIKE ? ORDER BY name ASC");
-$stmt->bind_param("s", $searchTerm);
-$stmt->execute();
-$result = $stmt->get_result();
+    // Prepare a SQL statement to search for categories
+    $sql = "SELECT id, name, parent_id FROM categories WHERE name LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Fetch all results into an associative array
-$categories = $result->fetch_all(MYSQLI_ASSOC);
+    $categories = [];
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row;
+    }
 
-// Return the categories as a JSON response
-echo json_encode($categories);
+    echo json_encode($categories);
 
-$stmt->close();
-$conn->close();
-
-exit;
+} catch (Exception $e) {
+    // Log the error and return an empty array or an error message
+    error_log("Error fetching categories: " . $e->getMessage());
+    echo json_encode([]);
+}
+?>

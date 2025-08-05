@@ -11,7 +11,7 @@ $page = $_GET['page'] ?? 'home';
 
 // Allow only specific internal pages
 $allowed_pages = [
-    'home',
+    'home' => '../manager/home.php',
     'invite_users' => '../manager/invite_users.php',
     'manage_users' => '../admin/manage_users.php',
     'manage_categories' => '../manager/manage_categories.php',

@@ -104,97 +104,110 @@
 
 /* end Autocomplete dropdown styling design\views\manager\stock_issue_view.php */
 
-
-    /* design\views\manager\manage_categories_view.php Styling for the category tree and form */
+ /* design\views\manager\manage_categories_view.php Styling for the category tree and form */
+        
         /* Global styles for the category lists */
-    .category-tree ul,
-    .tree-display ul {
-        list-style-type: none;
-        padding-left: 20px;
-    }
+        #category-tree ul,
+        .tree-display ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin: 0;
+        }
 
-    .category-tree li,
-    .tree-display li {
-        position: relative;
-        padding: 5px 0;
-        cursor: pointer;
-    }
-    
-    /* Styling for the selection tree */
-    #category-tree li:hover {
-        background-color: #eef;
-    }
+        #category-tree li,
+        .tree-display li {
+            position: relative;
+            padding: 5px 0;
+            cursor: pointer;
+        }
 
-    #category-tree li.selected {
-        background-color: #d0f0ff;
-        font-weight: bold;
-    }
+        /* Styling for the selection tree */
+        #category-tree {
+            /* Position the dropdown over other elements */
+            z-index: 1000;
+            position: absolute;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            width: calc(100% - 2rem);
+            max-height: 200px;
+            overflow-y: auto;
+            /* Initially hidden, JS will control visibility */
+            display: none;
+        }
 
-    /* Tree connection lines for the display tree */
-    .tree-display .root-tree > ul {
-        border-left: 1px dashed #ccc;
-    }
+        #category-tree li:hover {
+            background-color: #eef;
+        }
 
-    .tree-display li:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -10px;
-        width: 10px;
-        height: 50%;
-        border-left: 1px dashed #ccc;
-        border-bottom: 1px dashed #ccc;
-    }
-    
-    .tree-display li:first-child:before {
-        height: 50%;
-    }
-    
-    .tree-display li:last-child:before {
-        height: 50%;
-    }
+        #category-tree li.selected {
+            background-color: #d0f0ff;
+            font-weight: bold;
+        }
 
-    .tree-display li:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: -10px;
-        width: 10px;
-        height: 1px;
-        border-bottom: 1px dashed #ccc;
-    }
-    
-    .tree-display li:first-child::before,
-    .tree-display li:last-child::before {
-        border-top: none;
-    }
+        /* Tree connection lines for the display tree */
+        .tree-display .root-tree > ul {
+            border-left: none; /* Remove default border */
+        }
 
-    /* Fixed height and scroll for both trees */
-    .fixed-height-scroll {
-        max-height: 200px;
-        overflow-y: auto;
-    }
+        .tree-display li {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
 
-    /* Initially hide the category tree box for the search input */
-    #category-tree {
-        display: none;
-    }
+        .tree-display li:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 50%;
+            width: 15px;
+            border-left: 1px dashed;
+            border-bottom: 1px dashed;
+        }
+        
+        .tree-display li:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            bottom: -50%;
+            width: 15px;
+            border-left: 1px dashed;
+        }
+        
+        /* Remove extra line on last child */
+        .tree-display li:last-child:after {
+            border-left: none;
+        }
 
-    /* Icon styling */
-    .action-icon {
-        background-color: transparent;
-        border: none;
-        width: 20px;
-        height: 20px;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 5px;
-        transition: transform 0.2s ease-in-out;
-    }
-    .action-icon:hover {
-        transform: scale(1.2);
-    }
-        /* design\views\manager\manage_categories_view.php end  Styling for the category tree and form */
+        /* Color-coding for tree levels */
+        .tree-display li.level-0:before, .tree-display li.level-0:after { border-color: #0d6efd; }
+        .tree-display li.level-1:before, .tree-display li.level-1:after { border-color: #6c757d; }
+        .tree-display li.level-2:before, .tree-display li.level-2:after { border-color: #ffc107; }
+        .tree-display li.level-3:before, .tree-display li.level-3:after { border-color: #20c997; }
+
+        /* Fixed height and scroll for the display tree */
+        .fixed-height-scroll {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Icon styling */
+        .action-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin-left: 5px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .action-icon:hover {
+            transform: scale(1.2);
+        }
+        /* design\views\manager\manage_categories_view.php end Styling for the category tree and form */
