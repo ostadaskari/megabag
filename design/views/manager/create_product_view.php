@@ -1,4 +1,4 @@
-<h3><a href="../auth/dashboard.php">dashboard</a></h3>
+
             <!-- "Add a single part":  -->
           <div id="Add-Single-part" class="tab-content">
             <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
@@ -65,7 +65,7 @@
                         <!-- categories -->
                         <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
                         <input type="hidden" name="category_id" id="category_id">
-                        <ul id="category-dropdown" style="border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:5px 10px; background-color:white;"></ul>
+                        <ul id="category-dropdown" style="z-index:1000; border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:5px 10px; background-color:white;"></ul>
 
                     </div>
 
@@ -105,7 +105,7 @@
                 </div>
 
 
-                <div class="mt-3" style="text-align: end">
+                <div class="" style="text-align: end">
                   <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
                 </div>
                 </div>

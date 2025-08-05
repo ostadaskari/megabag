@@ -8,7 +8,7 @@
       <div class="row d-flex flex-row" style="height: 100%">
          <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
 
-            <section class="content w-100 p-4">
+            <div class="content w-100 p-2">
                 <?php if ($msg): ?>
                 <script>
                     Swal.fire({
@@ -34,7 +34,7 @@
                 ?>
 
                 <!--  The dynamic include block -->
-            </section>
+                </div>
       </div>
     </div>
 

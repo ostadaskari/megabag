@@ -1,4 +1,4 @@
-  <div class="container mt-4">
+  <div class="container px-0">
 
 
         <!-- Error and Success messages using SweetAlert2 -->
@@ -19,7 +19,7 @@
                             <!-- All form elements are now in a single row -->
                             <div class="d-flex flex-row align-items-center gap-2">
                                 <label for="nicknameInput" class="form-label mb-0" style="width: 200px;">Nickname:</label>
-                                <input type="text" name="nickname" class="form-control" id="nicknameInput" placeholder="Nickname for Invite" required>
+                                <input type="text" name="nickname" class="form-control" style="height: 38px;" id="nicknameInput" placeholder="Nickname for Invite" required>
 
                                 <select name="role" class="form-control ml-1" id="roleSelector" style="width: 150px; height: 38px;" required>
                                     <option value="user" <?php echo (isset($_POST['role']) && $_POST['role'] === 'user') ? 'selected' : ''; ?>>User</option>
@@ -27,12 +27,12 @@
                                     <option value="admin" <?php echo (isset($_POST['role']) && $_POST['role'] === 'admin') ? 'selected' : ''; ?>>Admin</option>
                                 </select>
 
-                                <button class="btn btn-primary" style="height: 38px;" type="submit">Generate</button>
+                                <button class="btn btn-primary mx-1" style="height: 38px;" type="submit">Generate</button>
                             </div>
                         </form>
 
                         <?php if ($inviteLink): ?>
-                            <div id="codeOutput" class="output-label d-flex align-items-center gap-2 mt-3">
+                            <div id="codeOutput" class="output-label d-flex align-items-center gap-2">
                                 <span>URL:</span>
                                 <input class="form-control" type="text" id="copyText" value="<?php echo htmlspecialchars($inviteLink); ?>" readonly />
                                 <button type="button" id="btn-copy" class="btn btn-outline-secondary d-flex align-items-center p-2" onclick="copyInviteLinkFromInput()">

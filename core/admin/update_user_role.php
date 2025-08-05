@@ -1,8 +1,13 @@
 <?php
+// Check if a session has already been started before starting a new one.
+// This prevents the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once('../db/db.php');
 
-
-if ($_SESSION['role'] !== 'admin') {
+// Check if the user is an admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
@@ -18,6 +23,7 @@ if (!in_array($role, $validRoles)) {
     exit;
 }
 
+// Prepare the SQL statement to prevent SQL injection
 $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
 $stmt->bind_param("si", $role, $user_id);
 $success = $stmt->execute();

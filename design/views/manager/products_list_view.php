@@ -2,18 +2,20 @@
 <div id="List-Product" class="tab-content" >
 <div class="container px-0">
     <!-- searchbar -->
-    <div class="d-flex flex-row" >
-            <div class="input-box">
+    <div class="d-flex flex-row align-items-center justify-content-between" >
+            <div class="input-box w-50" style="margin: 10px 0!important;">
                             <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
                 <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." />
             </div>
 
-            <select id="statusFilter" class="form-select">
-                <option value="">All Statuses</option>
-                <option value="available">Available</option>
-            </select>
+            <div class="w-25">
+                <select id="statusFilter" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="available">Available</option>
+                </select>
+            </div>
     </div>
 
     <!-- table list product -->
