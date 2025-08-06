@@ -8,7 +8,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, (int)($_GET['page'] ?? 1));
-$limit = 10;
+$limit = 7;
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -58,9 +58,15 @@ $stmt = $conn->prepare("
     JOIN users u2 ON si.issued_to = u2.id
     $where
     ORDER BY si.created_at DESC
-    LIMIT $limit OFFSET $offset
+    LIMIT ? OFFSET ?
 ");
-if ($types) {
+
+// Append limit and offset types and parameters
+$types .= 'ii';
+$params[] = $limit;
+$params[] = $offset;
+
+if (!empty($params)) { // Ensure params array is not empty before binding
     $stmt->bind_param($types, ...$params);
 }
 $stmt->execute();
@@ -87,28 +93,60 @@ while ($row = $res->fetch_assoc()) {
     $i++;
 }
 
-// Build pagination with first last and prev next 
-$pagination = '';
+// Build frontend pagination HTML
+$paginationHtml = '';
 if ($totalPages > 1) {
-    $pagination .= '<nav><ul class="pagination justify-content-center">';
-    if ($page > 1) {
-        $pagination .= "<li class='page-item'><a class='page-link' href='#' onclick='fetchIssues(1)'>First</a></li>";
-        $pagination .= "<li class='page-item'><a class='page-link' href='#' onclick='fetchIssues(".($page-1).")'>Prev</a></li>";
+    $paginationHtml .= '<div class="row my-2"><div class="col-12 d-flex justify-content-center">';
+    $paginationHtml .= '<div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">';
+
+    // First button
+    $firstDisabled = ($page <= 1) ? 'disabled' : '';
+    $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ' . $firstDisabled . '" onclick="fetchIssues(1)" id="firstBtn">';
+    $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path></svg>';
+    $paginationHtml .= 'First</a>';
+
+    // Prev button
+    $prevDisabled = ($page <= 1) ? 'disabled' : '';
+    $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ' . $prevDisabled . '" onclick="fetchIssues(' . max(1, $page - 1) . ')" id="prevBtn">';
+    $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path></svg>';
+    $paginationHtml .= 'Prev</a>';
+
+    // Page numbers
+    $paginationHtml .= '<div class="px-4 px-custom">';
+    $startPage = max(1, $page - 2);
+    $endPage = min($totalPages, $page + 2);
+
+    for ($p = $startPage; $p <= $endPage; $p++) {
+        $activeClass = ($p == $page) ? 'text-danger' : '';
+        $paginationHtml .= "<span class='px-1 fw-bold " . $activeClass . "'><a href='#' onclick='fetchIssues($p)' style='text-decoration: none; color: inherit;'>" . $p . "</a></span>";
     }
-    for ($p = max(1, $page-2); $p <= min($totalPages, $page+2); $p++) {
-        $active = $p == $page ? ' active' : '';
-        $pagination .= "<li class='page-item$active'><a class='page-link' href='#' onclick='fetchIssues($p)'>$p</a></li>";
-    }
-    if ($page < $totalPages) {
-        $pagination .= "<li class='page-item'><a class='page-link' href='#' onclick='fetchIssues(".($page+1).")'>Next</a></li>";
-        $pagination .= "<li class='page-item'><a class='page-link' href='#' onclick='fetchIssues($totalPages)'>Last</a></li>";
-    }
-    $pagination .= '</ul></nav>';
+    $paginationHtml .= '</div>';
+
+    // Next button
+    $nextDisabled = ($page >= $totalPages) ? 'disabled' : '';
+    $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ' . $nextDisabled . '" onclick="fetchIssues(' . min($totalPages, $page + 1) . ')" id="nextBtn">';
+    $paginationHtml .= 'Next';
+    $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path></svg>';
+    $paginationHtml .= '</a>';
+
+    // Last button
+    $lastDisabled = ($page >= $totalPages) ? 'disabled' : '';
+    $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ' . $lastDisabled . '" onclick="fetchIssues(' . $totalPages . ')" id="lastBtn">';
+    $paginationHtml .= 'Last';
+    $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"></path></svg>';
+    $paginationHtml .= '</a>';
+
+    $paginationHtml .= '</div></div></div>';
 }
 
 // send data to front 
-
 echo json_encode([
-    'html' => $html ?: '<tr><td colspan="9" class="text-center">No records found.</td></tr>',
-    'pagination' => $pagination
+    'html' => $html ?: '<tr><td colspan="9" class="text-center">No records found.</td></tr>', // Colspan for 9 columns
+    'pagination' => $paginationHtml,
+    'totalPages' => $totalPages,
+    'currentPage' => $page
 ]);
+
+$stmt->close();
+$conn->close();
+?>

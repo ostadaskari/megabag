@@ -62,7 +62,7 @@
                             <td>${p.name}</td>
                             <td>${p.tag}</td>
                             <td>${p.part_number}</td>
-                            <td>${p.mfg}</td> <!-- MFG -->
+                            <td>-</td> <!-- MFG -->
                             <td> <!-- This is the Availability column -->
                                 ${p.qty > 0
                                     ? '<span class="badge bg-success">Available</span>'
