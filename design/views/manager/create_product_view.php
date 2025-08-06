@@ -1,9 +1,22 @@
+            <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+              
+              <h2 class="d-flex align-items-center">
+                <svg  width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
+                  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
+                </svg> 
+              Add a Single Product</h2>
+              <a href="../auth/dashboard.php?page=home" class="backBtn">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                </svg>
+                <span>Back</span>
+                </a>
+            </div>
 
             <!-- "Add a single part":  -->
           <div id="Add-Single-part" class="tab-content">
             <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
-                <div class="container px-0">
-                  <!-- part number and Manufacturer inputs -->
+               <!-- part number and Manufacturer inputs -->
                 <div class="d-flex flex-row align-items-center mb-2">
                   <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -11,7 +24,8 @@
                   </svg>
                   <h3 class="pl-1">Part Details :</h3>
                 </div>
-                  <div class="row bg-light border rounded shadow-sm p-3">
+                <div class="container bg-light border rounded shadow-sm p-3">
+                  <div class="row">
                     
                     <div class="col-12 col-md-4 px-2 my-2">
                       <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
@@ -25,15 +39,25 @@
                       <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
                       <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
                     </div>
-                    <div class="col-12 col-md-4 px-2 my-2">
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div class="col-12 col-md-2 px-2 my-2">
+                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                      <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                    </div>
+                    <div class="col-12 col-md-2 px-2 my-2">
+                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                      <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
+                    </div>
+                    <div class="col-12 col-md-2 px-2 my-2">
                       <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
                       <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
                     </div>
-                    <div class="col-12 col-md-4 px-2 my-2">
+                    <div class="col-12 col-md-2 px-2 my-2">
                       <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                      <input class="form-control" type="text" name="qty" placeholder="Quantity" min="0" required />
+                      <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
                     </div>
-                    <div class="col-12 col-md-4 px-2 my-2">
+                    <div class="col-12 col-md-2 px-2 my-2">
                         <label for="" class="form-label">Date Code:</label>
                         <select class="form-select" name="date_code">
                           <option value="2024+">2024+</option>
@@ -41,26 +65,17 @@
                         </select>
                     </div>
                     
-                    <div class="col-12 mt-2 px-2">
-                      <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
-                      <textarea class="form-control"  id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
-                    </div>
-                </div>
-
-                <!-- Category selection -->
-                <div class="d-flex flex-row align-items-center my-3">
-                  <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                  </svg>
-                  <h3 class="pl-1">Part storage location:</h3>
+                    
                 </div>
 
                 <!-- Category Dropdown Section -->
                 <div class="container mt-1 px-1 border rounded shadow-sm p-3 bg-light">
                   <div class="row d-flex flex-row justify-content-between">
-
-                    <div class="col-12 col-md-4 px-2 my-2">
+                    <div class="col-12 col-md-6 px-2">
+                      <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
+                      <textarea class="form-control"  id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
+                    </div>
+                    <div class="col-12 col-md-6 px-2">
                         <label for="" class="form-label">Categories:</label>
                         <!-- categories -->
                         <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
@@ -69,15 +84,7 @@
 
                     </div>
 
-                    <div class="col-12 col-md-4 px-2 my-2">
-                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                      <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
-                    </div>
-
-                    <div class="col-12 col-md-4 px-2 my-2">
-                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                      <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
-                    </div>
+                    
 
                   </div>
 
@@ -92,7 +99,7 @@
                   <h3 class="pl-1">Upload Files:</h3>
                 </div>
 
-                <div class="row mt-1 d-flex flex-row justify-content-between">
+                <div class="row mt-1 d-flex flex-row justify-content-around">
                   <div class="col-12 col-md-5 mb-3 border rounded shadow-sm p-3 bg-light">
                     <label for="datasheetUpload" class="form-label">Upload Datasheet:</label>
                     <input class="form-control" type="file" id="datasheetUpload" name="pdfs[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
@@ -105,7 +112,7 @@
                 </div>
 
 
-                <div class="" style="text-align: end">
+                <div class="mt-3" style="text-align: end">
                   <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
                 </div>
                 </div>

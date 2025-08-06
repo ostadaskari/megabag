@@ -1,7 +1,17 @@
-<div class="container">
-    <h2 class="mb-4">Ban List</h2>
-    <p class="mb-4"><a href="../auth/dashboard.php" class="btn btn-secondary">← Back to Dashboard</a></p>
-
+ <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">       
+    <h2 class="d-flex align-items-center">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-ban mx-1 me-2" viewBox="0 0 16 16">
+        <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
+    </svg>
+    Ban List</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
+</div>
+<div class="container px-0">
     <!-- band list -->
     <div class="tab-content" id="BandList">
         <!-- Table View -->

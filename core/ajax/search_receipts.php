@@ -98,3 +98,4 @@ echo json_encode([
     'html' => $html ?: '<tr><td colspan="7" class="text-center">No receipts found.</td></tr>',
     'pagination' => $pagination
 ]);
+

@@ -1,7 +1,18 @@
+<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">      
+    <h2 class="d-flex align-items-center">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 1 0 3.5v9A1.5 1.5 0 0 1 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+    </svg>
+    Withdraw Items</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
+</div>
 <div class="container">
-    <h2 class="mb-4">Withdraw (Grouped)</h2>
-    <p class="mb-4"><a href="../auth/dashboard.php" class="btn btn-secondary">← Back to Dashboard</a></p>
-
     <form method="POST" action="" id="groupIssueForm">
         <div id="issueRows">
             <!-- Dynamic rows will be added here by JavaScript -->
@@ -34,6 +45,34 @@ Swal.fire({
 </script>
 <?php endif; ?>
 
+<style>
+    /* Styles for autocomplete dropdown */
+    .autocomplete-dropdown {
+        position: absolute;
+        border: 1px solid #ddd;
+        background-color: white;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000; /* Ensure it's above other content */
+        width: calc(100% - 2px); /* Match input width */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-radius: 5px;
+        left: 1px; /* Align with input */
+        top: 100%; /* Position below the input */
+    }
+    .autocomplete-item {
+        padding: 8px 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+    }
+    .autocomplete-item:hover {
+        background-color: #f0f0f0;
+    }
+    .autocomplete-item:last-child {
+        border-bottom: none;
+    }
+</style>
+
 <!-- JavaScript for Dynamic Rows + AJAX Search -->
 <script>
 // Keep a global counter for row indices
@@ -44,26 +83,26 @@ function createRowHtml(index) {
     return `
         <div class="stock-row border p-3 rounded mb-3 bg-light">
             <div class="row g-2 align-items-end">
-                <div class="col-12 col-md-3 position-relative">
-                    <label>Product</label>
+                <div class="col-6 col-md-2 px-1 position-relative"> <!-- Added position-relative -->
+                    <label for="productInput" class="form-label">Product:</label>
                     <input type="text" name="products[${index}][product_search]" class="form-control product-search" placeholder="Search name/tag/part" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][product_id]" class="product-id">
                 </div>
-                <div class="col-12 col-md-2">
-                    <label>QTY <span class="text-muted small current-qty">(Available: <span class="qty-value" style="color: green;">--</span>)</span></label>
+                <div class="col-6 col-md-3 px-1">
+                    <label for="quantityInput" class="form-label">QTY: <span class="text-muted small current-qty">(Available: <span class="qty-value" style="color: green;">--</span>)</span></label>
                     <input type="number" name="products[${index}][qty_issued]" class="form-control qty-input" min="1" required>
                 </div>
-                <div class="col-12 col-md-3 position-relative">
-                    <label>Issued To</label>
+                <div class="col-6 col-md-2 px-1 position-relative"> <!-- Added position-relative -->
+                    <label for="Issued-ToInput" class="form-label">Issued To:</label>
                     <input type="text" name="products[${index}][issued_to_search]" class="form-control user-search" placeholder="Name, Family, Nickname" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][issued_to_id]" class="user-id">
                 </div>
-                <div class="col-12 col-md-3">
-                    <label>Remarks (optional)</label>
+                <div class="col-10 col-md-4 px-1">
+                    <label for="commentInputOut" class="form-label">Remarks (optional)</label>
                     <textarea name="products[${index}][remarks]" class="form-control" rows="1"></textarea>
                 </div>
                 <div class="col-1 d-flex justify-content-end align-items-end">
-                    <a href="#" class="btn-remove-row" title="Remove">
+                    <a href="#" class="btn-remove-row aButton btnSvg" title="Remove">
                         <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
@@ -140,7 +179,7 @@ document.addEventListener('input', function(e) {
             hiddenInput.value = '';
             qtyInput.max = '';
             qtyEl.textContent = '--';
-            dropdown.remove();
+            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
             return;
         }
 
@@ -151,7 +190,7 @@ document.addEventListener('input', function(e) {
                     showDropdown(data, input, dropdown, 'product-id', 'id', 'name', 'part_number', true);
                 });
         } else {
-            dropdown.remove();
+            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
         }
     }
 
@@ -172,7 +211,7 @@ document.addEventListener('input', function(e) {
         // Reset if input is cleared
         if (keyword.length === 0) {
             hiddenInput.value = '';
-            dropdown.remove();
+            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
             return;
         }
         
@@ -183,7 +222,7 @@ document.addEventListener('input', function(e) {
                     showDropdown(data, input, dropdown, 'user-id', 'id', 'name', 'nickname', false);
                 });
         } else {
-            dropdown.remove();
+            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
         }
     }
 });
@@ -191,8 +230,9 @@ document.addEventListener('input', function(e) {
 // Hide dropdown on outside click
 document.addEventListener('click', function (e) {
     document.querySelectorAll('.autocomplete-dropdown').forEach(dropdown => {
-        if (!e.target.closest('.autocomplete-dropdown') && !e.target.classList.contains('form-control')) {
-            dropdown.remove();
+        // Check if the click target is not inside the current dropdown and not the input itself
+        if (!dropdown.contains(e.target) && !e.target.classList.contains('form-control')) {
+            dropdown.innerHTML = ''; // Clear dropdown content instead of removing the element
         }
     });
 });
@@ -212,7 +252,7 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
                 const hiddenInput = input.closest('.stock-row').querySelector(`.${hiddenInputClass}`);
                 if (hiddenInput) hiddenInput.value = item[idKey];
 
-                dropdown.remove(); // Clear dropdown after selection
+                dropdown.innerHTML = ''; // Clear dropdown after selection
 
                 // Fetch and display product quantity
                 if (isProduct) {

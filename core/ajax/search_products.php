@@ -75,10 +75,10 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['date_code']) . "</td>
         <td>" . htmlspecialchars($row['recieve_code']) . "</td>
         <td>
-            <button onclick=\"editProduct({$row['id']})\" title=\"Edit\">
+            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
                 ✏️
             </button>
-            <button onclick=\"deleteProduct({$row['id']})\" title=\"Delete\">
+            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"deleteProduct({$row['id']})\" title=\"Delete\">
                 🗑️
             </button>
         </td>

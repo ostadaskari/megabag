@@ -749,7 +749,6 @@ position: relative !important;
   background-color:#e6eef77a;
     backdrop-filter: blur(3.4px);
   -webkit-backdrop-filter: blur(3.4px);
-
 }
 .shadow-sm {
   box-shadow: 0 1px 5px #05a2e073;

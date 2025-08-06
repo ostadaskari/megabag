@@ -1,25 +1,32 @@
+ <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">       
+    <h2 class="d-flex align-items-center">
+    <svg width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-right  mx-1 me-2" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+    </svg>
+    
+    Receive Items</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
+</div>
 <div id="Insert-Items" class="tab-content">
     <div class="container px-0 mt-1">
-        <h3 class="card-title mb-3 d-flex align-items-center">
-            <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-box-arrow-in-left mx-1" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"></path>
-                <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"></path>
-            </svg>
-            Insert Product
-        </h3>
-
         <form method="POST" action="" id="groupStockForm">
             <div id="stockRows">
                 <div class="stock-row border p-3 rounded mb-3 bg-light position-relative">
                     <div class="row d-flex align-items-end justify-content-between">
-                        <div class="col-6 col-md-3 px-1 position-relative">
+                        <div class="col-6 col-md-5 px-1 position-relative">
                             <label for="productInput" class="form-label">Product:</label>
                             <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
                             <input type="hidden" name="products[0][product_id]" class="product-id">
                             <div class="autocomplete-box" style="display: none;"></div>
                         </div>
 
-                        <div class="col-6 col-md-2 px-1">
+                        <div class="col-6 col-md-1 px-1">
                             <label for="quantityInput" class="form-label">QTY:</label>
                             <input type="number" name="products[0][qty_received]" class="form-control" min="1" required>
                         </div>

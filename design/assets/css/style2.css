@@ -182,10 +182,10 @@
         }
 
         /* Color-coding for tree levels */
-        .tree-display li.level-0:before, .tree-display li.level-0:after { border-color: #0d6efd; }
-        .tree-display li.level-1:before, .tree-display li.level-1:after { border-color: #6c757d; }
-        .tree-display li.level-2:before, .tree-display li.level-2:after { border-color: #ffc107; }
-        .tree-display li.level-3:before, .tree-display li.level-3:after { border-color: #20c997; }
+        .tree-display li.level-0:before, .tree-display li.level-0:after { border-color: #0d6efd;border-width: 3px; }
+        .tree-display li.level-1:before, .tree-display li.level-1:after { border-color: #6c757d;border-width: 3px; }
+        .tree-display li.level-2:before, .tree-display li.level-2:after { border-color: #ffc107;border-width: 3px; }
+        .tree-display li.level-3:before, .tree-display li.level-3:after { border-color: #20c997;border-width: 3px; }
 
         /* Fixed height and scroll for the display tree */
         .fixed-height-scroll {
@@ -211,3 +211,22 @@
             transform: scale(1.2);
         }
         /* design\views\manager\manage_categories_view.php end Styling for the category tree and form */
+
+
+
+            /* Styles for active sidebar menu items */
+    .menu-item.active > .menu-link {
+        background-color: var(--main-hover-color); /* Or any distinct background color */
+        color: var(--main-bg1-color); /* Text color for active link */
+        border-radius: 5px;
+    }
+    .menu-item.active > .menu-link svg {
+        fill: var(--main-bg1-color); /* Icon color for active link */
+    }
+    .menu-item.active .submenu {
+        display: block !important; /* Ensure submenu is visible when parent is active */
+    }
+    /* Hide submenus by default */
+    .submenu {
+        display: none;
+    }

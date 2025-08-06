@@ -50,6 +50,7 @@ $result = $stmt->get_result();
 // ---------------------------
 // Export to CSV (Excel style)
 // ---------------------------
+
 if ($format === 'excel') {
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment;filename=receipts_export.csv');

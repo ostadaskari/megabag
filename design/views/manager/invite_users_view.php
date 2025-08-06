@@ -1,6 +1,17 @@
+   <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+        <h2 class="d-flex align-items-center">
+        <svg width="22" height="22" fill="currentColor" class="bi bi-envelope-paper mx-1 me-2" viewBox="0 0 16 16">
+            <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267zm13 .566v5.734l-4.778-2.867zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083zM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
+        </svg>  
+        Invite Users</h2>
+        <a href="../auth/dashboard.php?page=home" class="backBtn">
+        <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+        </svg>
+        <span>Back</span>
+        </a>
+    </div>
   <div class="container px-0">
-
-
         <!-- Error and Success messages using SweetAlert2 -->
         <?php foreach ($errors as $e): ?>
             <script>Swal.fire('Error', '<?php echo addslashes($e); ?>', 'error');</script>
@@ -46,7 +57,7 @@
                 </div>
 
                 <!-- Generated Invite Codes Table -->
-                <div class="col-12 mt-4">
+                <div class="col-12 mt-2">
                     <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:75vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                             <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
