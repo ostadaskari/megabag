@@ -141,6 +141,26 @@ CREATE TABLE uploaded_csvs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+ -- adding some specific features to each category
+CREATE TABLE features (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    data_type ENUM('text', 'number', 'date', 'boolean') DEFAULT 'text',
+    is_required BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+-- each product could have feature values that is belonging to their feature
+CREATE TABLE product_feature_values (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    feature_id INT NOT NULL,
+    value TEXT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE
+);
+
+
 
 
 
