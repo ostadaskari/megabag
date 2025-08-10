@@ -185,6 +185,23 @@
               </a>
             </li>
 
+            <!-- Features -->
+             <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="22" height="22" fill="var(--main-hover-color)" class="bi bi-bezier" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                  <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.52 6.52 0 0 0 1.814 9H2.5q.186 0 .358.043a5.52 5.52 0 0 1 3.185-3.185A1.5 1.5 0 0 1 6 5.5zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.52 6.52 0 0 1 2.72 3.5H13.5q-.185 0-.358.043a5.52 5.52 0 0 0-3.185-3.185"/>
+                </svg>
+                <span>Features</span>
+              </a>
+
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="#" data-content="AddFeature">Add Feature</a></li>
+                <li><a href="#" data-content="ProductFeature">Product Feature</a></li>
+              </ul>
+            </li>
+
             <!-- Search-Inventory -->
             <li class="menu-item" data-content="Search-Inventory">
               <a href="#" class="menu-link">
@@ -1867,6 +1884,140 @@
             </div>
           </div>
           </div>
+
+          <!-- Add Feature -->
+           <div class="tab-content" id="AddFeature">
+             <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+                <h2 class="d-flex align-items-center">
+                 <svg width="26" height="26" fill="currentColor" class="bi bi-node-plus mx-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                  </svg>
+                Add Feature To Categories</h2>
+                <a href="../auth/dashboard.php?page=home" class="backBtn">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                </svg>
+                <span>Back</span>
+                </a>
+            </div>
+            <div class="container px-0">
+              <div class="row">
+                <div class="col-12 col-md-3">
+                  <label for="searchCategories" class="form-label">Search in categories:</label>
+                <div class="input-box" style="width: 100%; margin:0 0 10px 0;">
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                  </svg>
+                  <input type="text" name="searchCategories" placeholder="Search here...">
+                </div>
+                </div>
+              </div>
+                <form>
+                 <div class="row d-flex align-items-end justify-content-between bg-light rounded border my-1 p-2">
+                     <!-- Name Input -->
+                     <div class="col-6 col-md-4 px-1">
+                      <label for="NameInput" class="form-label">Name:</label>
+                      <input type="text" class="form-control" id="NameInput" name="NameInput" required="">
+                    </div>
+          
+                    <!-- Data Type selector -->
+                    <div class="col-6 col-md-2 px-1">
+                      <label for="Data TypeInput" class="form-label">Data Type</label>
+                     <select class="form-control ml-1" id="">
+                        <option value="text">Text</option>
+                        <option value="number">Number</option>
+                        <option value="Boolean">Boolean</option>
+                      </select>
+                    </div>
+          
+                    <!-- length Input -->
+                    <div class="col-6 col-md-2 px-1">
+                      <label for="lengthInput" class="form-label">length:</label>
+                      <input class="form-control"  name="lengthInput"></input>
+                    </div>
+          
+                    <!-- Unit Input -->
+                    <div class="col-6 col-md-2">
+                     <label for="UnitInput" class="form-label">Unit:</label>
+                      <input class="form-control"  name="UnitInput"></input>
+                    </div>
+                 </div>
+                    
+                    <div class="d-flex flex-row justify-content-between align-items-center w-100 px-1 mt-3">
+                      <button class="btnSvg" title="Add Row">
+                        <svg width="28" height="28" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
+                          <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"></path>
+                        </svg>
+                      </button>
+      
+                      <div class="">
+                        <button class="btn" title="Submit">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                </form>
+                
+              </div>
+           </div>
+
+           <!-- Product Feature -->
+           <div class="tab-content" id="ProductFeature">
+             <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+                <h2 class="d-flex align-items-center">
+                 <svg width="26" height="26" fill="currentColor" class="bi bi-node-plus mx-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                  </svg>
+                Product Feature</h2>
+                <a href="../auth/dashboard.php?page=home" class="backBtn">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                </svg>
+                <span>Back</span>
+                </a>
+            </div>
+            <div class="container px-0">
+              <div class="row">
+                <div class="col-12 col-md-3">
+                  <label for="searchProduct" class="form-label">Search in Product:</label>
+                <div class="input-box" style="width: 100%; margin:0 0 10px 0;">
+                  <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                  </svg>
+                  <input type="text" name="searchProduct" placeholder="Search here...">
+                </div>
+                </div>
+              </div>
+                <form>
+                 <div class="row d-flex align-items-end bg-light rounded border my-1 p-2">
+                     <!-- Input -->
+                     <div class="col-6 col-md-4 px-1 d-flex flex-row">
+                      <label for="" class="form-label">Feature:</label>
+                      <input type="text" class="form-control" id="" name="" placeholder="Value" required="">
+                    </div>
+          
+                    <!-- selector -->
+                    <div class="col-6 col-md-2 px-1 d-flex flex-row">
+                      <label for="" class="form-label">Unit:</label>
+                     <select class="form-control ml-1" id="">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                      </select>
+                    </div>
+                 </div>
+                    
+                    <div class="d-flex flex-row justify-content-end align-items-center w-100 px-1 mt-3">      
+                      <div class="">
+                        <button class="btn" title="Submit">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                </form>
+                
+              </div>
+           </div>
 
           <!-- search -->
            <div id="Search-Inventory" class="tab-content">

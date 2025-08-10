@@ -1306,3 +1306,12 @@ fill:var(--main-text-color);
   transform: scale(1.1);
   cursor: pointer;
 }
+.titleTop{
+  background-color:#0069928c;
+  padding:10px;
+  color: #f0f0f0;
+  border-radius: 5px;
+}
+.fontS{
+  font-size: 14px;
+}
