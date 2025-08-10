@@ -9,8 +9,8 @@
                 </div>
                 <div class="gadget p-3 border rounded shadow-sm">
                   <div class="d-flex flex-column w-100">
-                    <h4 class="">All parts</h4>
-                    <div class="value-box">14000</div>
+                    <h4 class="">All Products</h4>
+                    <div class="value-box"><?php echo $totalProducts; ?></div>
                   </div>
                 </div>
               </div>
@@ -23,7 +23,7 @@
                 <div class="gadget p-3 border rounded shadow-sm">
                   <div class="d-flex flex-column w-100">
                     <h4 class="">categories</h4>
-                    <div class="value-box">14000</div>
+                    <div class="value-box"><?php echo $totalCategories; ?></div>
                   </div>
                 </div>
               </div>
