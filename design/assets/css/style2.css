@@ -231,24 +231,80 @@
         display: none;
     }
 
-    /* features style  */
-        .search-container {
-            position: relative;
-            width: 300px;
-        }
+
+    /*  add category feature   */
+        .search-container { position: relative; }
         .category-results {
             position: absolute;
-            background: #fff;
-            border: 1px solid #ccc;
-            z-index: 1000;
             width: 100%;
+            border: 1px solid #ccc;
+            background: white;
             max-height: 200px;
             overflow-y: auto;
+            z-index: 100;
         }
         .category-item {
             padding: 8px;
             cursor: pointer;
         }
-        .category-item:hover {
-            background: #f0f0f0;
+        .category-item:hover { background-color: #f0f0f0; }
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
         }
+        .feature-row input, .feature-row select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .feature-row .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .feature-row .action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .feature-row .delete-btn svg { fill: #d9534f; }
+        .feature-row .update-btn svg { fill: #337ab7; }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .add-row-btn {
+            background-color: #5cb85c;
+            color: white;
+        }
+        .add-features-btn {
+            background-color: #337ab7;
+            color: white;
+        }
+        .add-row-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        .existing-features {
+            margin-top: 20px;
+        }
+           /* end add category feature   */

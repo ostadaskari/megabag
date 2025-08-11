@@ -12,9 +12,8 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
     exit;
 }
 
-// Handle POST request
+// Handle POST request for NEW features
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Set content type to JSON
     header('Content-Type: application/json');
 
     try {
@@ -23,50 +22,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $category_id = $_POST['category_id'] ?? null;
-        $name = trim($_POST['name'] ?? '');
-        $data_type = $_POST['data_type'] ?? 'varchar(50)';
-        $unit = trim($_POST['unit'] ?? '');
-        $is_required = isset($_POST['is_required']) ? 1 : 0;
-
+        $features = $_POST['features'] ?? [];
         $valid_data_types = ['varchar(50)', 'decimal(12,3)', 'TEXT', 'boolean'];
 
-        // Validation
-        if (!$category_id || !$name) {
-            echo json_encode(['status' => 'error', 'message' => 'Category and Feature Name are required.']);
-            exit;
-        }
-        if (!in_array($data_type, $valid_data_types)) {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid data type.']);
+        if (!$category_id) {
+            echo json_encode(['status' => 'error', 'message' => 'A category must be selected.']);
             exit;
         }
 
-        // Insert
-        $stmt = $conn->prepare("INSERT INTO features (category_id, name, data_type, unit, is_required) VALUES (?, ?, ?, ?, ?)");
-        if ($stmt === false) {
-            throw new Exception('Database prepare failed: ' . $conn->error);
+        if (empty($features)) {
+            echo json_encode(['status' => 'error', 'message' => 'No features to add.']);
+            exit;
         }
 
-        $stmt->bind_param("isssi", $category_id, $name, $data_type, $unit, $is_required);
+        $all_success = true;
+        foreach ($features as $feature) {
+            $name = trim($feature['name'] ?? '');
+            $data_type = $feature['data_type'] ?? 'varchar(50)';
+            $unit = trim($feature['unit'] ?? '');
+            $is_required = isset($feature['is_required']) ? 1 : 0;
 
-        if ($stmt->execute()) {
-            echo json_encode(['status' => 'success', 'message' => 'Feature added successfully.']);
-        } else {
-            throw new Exception('Database error: ' . $stmt->error);
+            if (!$name) {
+                continue;
+            }
+            if (!in_array($data_type, $valid_data_types)) {
+                $all_success = false;
+                break;
+            }
+
+            $stmt = $conn->prepare("INSERT INTO features (category_id, name, data_type, unit, is_required) VALUES (?, ?, ?, ?, ?)");
+            if ($stmt === false) {
+                throw new Exception('Database prepare failed: ' . $conn->error);
+            }
+
+            $stmt->bind_param("isssi", $category_id, $name, $data_type, $unit, $is_required);
+
+            if (!$stmt->execute()) {
+                $all_success = false;
+                break;
+            }
+
+            $stmt->close();
         }
-
-        $stmt->close();
+        
         $conn->close();
 
+        if ($all_success) {
+            echo json_encode(['status' => 'success', 'message' => 'New features added successfully.']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => 'An internal server error occurred while adding features.']);
+        }
+
     } catch (Exception $e) {
-        // Catch any unhandled exceptions and return a JSON error
         http_response_code(500);
         echo json_encode(['status' => 'error', 'message' => 'An internal server error occurred: ' . $e->getMessage()]);
-        // It's good practice to close the connection even in a catch block
         if (isset($conn) && is_object($conn)) {
             $conn->close();
         }
     }
-    exit; // Exit here to prevent the view from being included in the POST request
+    exit;
 }
 
 // Show the view only if it's a GET request
