@@ -62,15 +62,14 @@ function selectProduct(id, name) {
         .then(features => {
             featuresContainer.innerHTML = '';
             if (features.status === 'error') {
-                 Swal.fire('Error', features.message, 'error');
-                 return;
+                Swal.fire('Error', features.message, 'error');
+                return;
             }
             if (features.length === 0) {
                 Swal.fire('No Features', 'This product category has no features assigned.', 'info');
                 return;
             }
             
-            // This is the updated code block inside the selectProduct function.
             features.forEach(f => {
                 const formGroup = document.createElement('div');
                 formGroup.classList.add('form-group');
@@ -157,14 +156,14 @@ featureForm.addEventListener('submit', e => {
         method: 'POST',
         body: new FormData(featureForm)
     }).then(res => res.text())
-      .then(html => {
-          // The server sends back a script tag with a SweetAlert call
-          document.body.insertAdjacentHTML('beforeend', html);
-      })
-      .catch(error => {
-          console.error('Error saving features:', error);
-          Swal.fire('Error', 'Failed to save features. Please try again.', 'error');
-      });
+        .then(html => {
+            // The server sends back a script tag with a SweetAlert call
+            document.body.insertAdjacentHTML('beforeend', html);
+        })
+        .catch(error => {
+            console.error('Error saving features:', error);
+            Swal.fire('Error', 'Failed to save features. Please try again.', 'error');
+        });
 });
 
 </script>

@@ -272,10 +272,7 @@
             align-items: center;
             justify-content: center;
         }
-        .feature-row .action-btn svg {
-            width: 16px;
-            height: 16px;
-        }
+    
         .feature-row .delete-btn svg { fill: #d9534f; }
         .feature-row .update-btn svg { fill: #337ab7; }
         .button-group {
@@ -299,6 +296,7 @@
             background-color: #337ab7;
             color: white;
         }
+<<<<<<< HEAD
         .add-row-btn svg {
             width: 20px;
             height: 20px;
@@ -312,3 +310,8 @@
 
            /*   */
 
+=======
+
+        
+           /* end add category feature   */
+>>>>>>> 79560a1d1ee272d2f269170ed804fa9b68aed887
