@@ -1,11 +1,13 @@
 <?php
+// File: core/manager/product_feature_values.php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once("../db/db.php");
 
 // (ACL) Restrict access to admin/manager
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin','manager'])) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'manager'])) {
     header("Location: ../auth/login.php");
     exit;
 }
@@ -29,7 +31,7 @@ if (isset($_GET['search_product'])) {
 
 // AJAX: get features for product
 if (isset($_GET['product_id'])) {
-    $product_id = (int) $_GET['product_id'];
+    $product_id = (int)$_GET['product_id'];
 
     // Get category of product
     $sql = "SELECT category_id FROM products WHERE id = ?";
@@ -47,16 +49,17 @@ if (isset($_GET['product_id'])) {
     }
 
     // Recursive get all parent categories
-    function getCategoryTree($conn, $category_id, &$categories) {
+    function getCategoryTree($conn, $category_id, &$categories)
+    {
         $categories[] = $category_id;
         $sql = "SELECT parent_id FROM categories WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $category_id);
         $stmt->execute();
         $stmt->bind_result($parent_id);
-        
+
         $has_parent = $stmt->fetch() && $parent_id;
-        
+
         // Corrected: Close the statement immediately after use
         $stmt->close();
 
@@ -72,9 +75,9 @@ if (isset($_GET['product_id'])) {
     $placeholders = implode(',', array_fill(0, count($categories), '?'));
     $types = str_repeat('i', count($categories));
 
-    $sql = "SELECT id, name, data_type, unit, is_required
-            FROM features
-            WHERE category_id IN ($placeholders)";
+    // NOTE: The table name in your view is `product_features`, but in your core script it's `features`.
+    // I'm using `features` to match the provided PHP code. Please ensure this is the correct table.
+    $sql = "SELECT id, name, data_type, unit, is_required FROM features WHERE category_id IN ($placeholders)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param($types, ...$categories);
     $stmt->execute();
@@ -83,22 +86,102 @@ if (isset($_GET['product_id'])) {
     while ($row = $result->fetch_assoc()) {
         $features[] = $row;
     }
+    $stmt->close();
+
+    // Also get existing feature values for the product to pre-fill the form
+    $sql = "SELECT feature_id, value, unit FROM product_feature_values WHERE product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $existing_values = [];
+    while ($row = $result->fetch_assoc()) {
+        $existing_values[$row['feature_id']] = ['value' => $row['value'], 'unit' => $row['unit']];
+    }
+    $stmt->close();
+
+    // Merge features with existing values
+    $features_with_values = [];
+    foreach ($features as $feature) {
+        $feature['value'] = $existing_values[$feature['id']]['value'] ?? '';
+        $feature['unit_value'] = $existing_values[$feature['id']]['unit'] ?? '';
+        $features_with_values[] = $feature;
+    }
 
     header('Content-Type: application/json');
-    echo json_encode($features);
+    echo json_encode($features_with_values);
     exit;
 }
 
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = (int) $_POST['product_id'];
-    $features_data = $_POST['features'] ?? [];
+    // Basic product ID validation
+    $product_id = (int)$_POST['product_id'];
+    if (!$product_id) {
+        echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Invalid product ID.'});</script>";
+        exit;
+    }
 
+    $features_data = $_POST['features'] ?? [];
+    
+    // Authorization Check: Does the user have permission to modify this product?
+    // For now, the page-level ACL is sufficient.
+    
     foreach ($features_data as $feature_id => $value_data) {
         $value = trim($value_data['value'] ?? '');
         $unit = trim($value_data['unit'] ?? '');
+
+        // Server-side validation for required fields
+        $sql_check = "SELECT is_required, data_type FROM features WHERE id = ?";
+        $stmt_check = $conn->prepare($sql_check);
+        $stmt_check->bind_param("i", $feature_id);
+        $stmt_check->execute();
+        $stmt_check->bind_result($is_required, $data_type);
+        $stmt_check->fetch();
+        $stmt_check->close();
+
+        // Check if a required field is empty
+        if ($is_required && empty($value)) {
+            // For boolean types, empty value is valid if it's not checked
+            if ($data_type !== 'boolean' || $value !== '0') {
+                echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'A required field was left empty.'});</script>";
+                exit;
+            }
+        }
+
+        // Server-side data type validation and sanitization
+        $value_to_save = $value;
+        switch ($data_type) {
+            case 'decimal(12,3)':
+                // Sanitize and validate for a float number
+                $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($value_to_save === false || !is_numeric($value_to_save)) {
+                    echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Value for a decimal field is not a valid number.'});</script>";
+                    exit;
+                }
+                break;
+            case 'TEXT':
+                // For TEXT, just sanitize the string
+                $value_to_save = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                break;
+            case 'boolean':
+                // We expect '1' or '0' for a checkbox.
+                if ($value !== '1' && $value !== '0') {
+                    echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Value for a boolean field is not valid.'});</script>";
+                    exit;
+                }
+                break;
+            case 'varchar(50)':
+            default:
+                // For varchar(50), sanitize and truncate to 50 characters.
+                $value_to_save = substr(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), 0, 50);
+                break;
+        }
+        
+        // Save the validated data using REPLACE INTO
+        // This will insert a new row or replace an existing one based on the primary key (product_id, feature_id)
         $stmt = $conn->prepare("REPLACE INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiss", $product_id, $feature_id, $value, $unit);
+        $stmt->bind_param("iiss", $product_id, $feature_id, $value_to_save, $unit);
         $stmt->execute();
         $stmt->close();
     }
@@ -115,4 +198,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+// This line should be at the end, so it only runs if no other AJAX call or POST has exited
 include("../../design/views/manager/product_feature_values_view.php");
