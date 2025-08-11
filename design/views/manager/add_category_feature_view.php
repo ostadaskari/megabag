@@ -1,26 +1,43 @@
-<h2>Manage Features for Category</h2>
-<form id="featureForm" method="POST" action="">
-    <div class="search-container">
-        <label for="categorySearch">Category</label><br>
-        <input type="text" id="categorySearch" placeholder="Search categories..." autocomplete="off">
-        <input type="hidden" name="category_id" id="category_id">
-        <div id="categoryResults" class="category-results" style="display:none;"></div>
+<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+    <h2 class="d-flex align-items-center">
+        <svg width="26" height="26" fill="currentColor" class="bi bi-node-plus mx-1" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+        </svg>
+    Add Feature To Categories</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
+</div>
+
+<form id="featureForm" method="POST" action="" style="padding-bottom: 50px;">
+    <div class="col-12 col-md-3 search-container">
+        <label for="categorySearch" class="form-label">Search in categories:</label>
+        <div class="input-box" style="width: 100%; margin:0 0 10px 0;">
+            <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+            </svg>
+            <input type="text" id="categorySearch" placeholder="Search categories..." autocomplete="off">
+            <input type="hidden" name="category_id" id="category_id">
+            <div id="categoryResults" class="category-results" style="display:none;"></div>
+        </div>
     </div>
-    <br>
 
     <!-- Container for existing feature rows -->
     <div id="existingFeaturesContainer" class="existing-features" style="display:none;">
         <label>Existing Features:</label>
-        <div id="existingFeatureRows"></div>
+        <div class="mt-2 border rounded shadow-sm bg-light" id="existingFeatureRows"></div>
     </div>
     
     <!-- Container for new dynamic feature rows -->
-    <div id="newFeaturesContainer" style="display:none;">
+    <div class="mt-2" id="newFeaturesContainer" style="display:none;">
         <label>New Features:</label>
-        <div id="newFeatureRows"></div>
+        <div class="mt-2 border rounded shadow-sm bg-light" id="newFeatureRows"></div>
         <div class="button-group">
-            <button type="button" id="addRowBtn" class="add-row-btn">
-                <svg  viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+            <button type="button" id="addRowBtn" class="add-row-btn btnSvg">
+             <svg width="28" height="28" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16"><path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"></path></svg>
             </button>
             <button type="submit" id="addFeaturesBtn" class="add-features-btn">Add New Features</button>
         </div>
@@ -120,19 +137,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
         row.innerHTML = `
             <input type="hidden" name="feature_id" value="${feature.id}">
-            <input type="text" name="name" value="${feature.name}" required autocomplete="off">
-            <select name="data_type" autocomplete="off">${optionsHtml}</select>
-            <input type="text" name="unit" value="${feature.unit}" placeholder="Unit (optional)" autocomplete="off">
-            <label>
-                <!-- This line is key. The checked attribute is dynamically added or removed. -->
-                <input type="checkbox" name="is_required" ${isRequiredChecked}> Required
-            </label>
-            <button type="button" class="action-btn update-btn" onclick="updateFeature(this)">
-                <svg viewBox="0 0 512 512"><path fill="blue" d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.5-30.5c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-26.6 80.1c-15.5 46.5-1.9 96.8 39.5 138.2C241.9 444.6 307.7 465.1 370.9 459.7l-97.9-97.9 97.9-97.9-97.9-97.9-97.9 97.9zM208 144a144 144 0 1 1 0 288 144 144 0 1 1 0-288z"/></svg>
-            </button>
-            <button type="button" class="action-btn delete-btn" onclick="deleteFeature(this)">
-                <svg viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
-            </button>
+           <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" class="form-control" name="name" value="${feature.name}" required autocomplete="off">
+            </div>
+
+            <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                <label for="Data TypeInput" class="form-label">Data Type:</label>
+                <select class="form-control ml-1" name="data_type" autocomplete="off">${optionsHtml}</select>
+            </div>
+
+            <div class="col-6 col-md-2 d-flex flex-row align-items-center">
+                <label for="UnitInput" class="form-label">Unit:</label>
+                <input class="form-control"  type="text" name="unit" value="${feature.unit}" placeholder="Unit (optional)" autocomplete="off">
+            </div>
+
+            <div class="col-6 col-md-2 d-flex align-items-end justify-content-center">
+                <label>
+                    <!-- This line is key. The checked attribute is dynamically added or removed. -->
+                    <input type="checkbox" name="is_required" ${isRequiredChecked}> Required
+                </label>
+            </div>
+
+            <div class="col-6 col-md-1 d-flex align-items-end justify-content-between">
+                <button type="button" class="action-btn update-btn p-2" title="Edit" onclick="updateFeature(this)">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>
+                </button>
+                <button type="button" class="action-btn delete-btn p-2" title="delete" onclick="deleteFeature(this)">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>
+                </button>
+            </div>    
         `;
         existingFeatureRowsContainer.appendChild(row);
     }
@@ -240,20 +274,37 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = document.createElement("div");
         row.classList.add("feature-row");
         row.innerHTML = `
-            <input type="text" name="features[${featureCounter}][name]" placeholder="Feature Name" required autocomplete="off">
+        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+            <label for="Feature Name" class="form-label">Name:</label>
+            <input class="form-control" type="text" name="features[${featureCounter}][name]" placeholder="Feature Name" required autocomplete="off">
+        </div>
+
+        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+            <label for="Data Type" class="form-label">Data Type:</label>
             <select name="features[${featureCounter}][data_type]" autocomplete="off">
                 <option value="varchar(50)"> (under 50char)</option>
                 <option value="decimal(12,3)">Decimal</option>
                 <option value="TEXT">Long Text</option>
                 <option value="boolean">Boolean</option>
             </select>
+        </div>
+        
+         <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+            <label for="Unit" class="form-label">Unit:</label>
             <input type="text" name="features[${featureCounter}][unit]" placeholder="Unit (optional)" autocomplete="off">
+         </div>
+
+        <div class="col-6 col-md-2 px-1 d-flex flex-row align-items-center">
             <label>
                 <input type="checkbox" name="features[${featureCounter}][is_required]"> Required
             </label>
+        </div>  
+
+        <div class="col-6 col-md-1 px-1 d-flex flex-row align-items-center">
             <button type="button" class="action-btn delete-btn" onclick="this.closest('.feature-row').remove();">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>
             </button>
+        </div>    
         `;
         newFeatureRowsContainer.appendChild(row);
         featureCounter++;
