@@ -14,5 +14,9 @@
     <!-- link CSS -->
     <link rel="stylesheet" href="../../design/assets/css/style.css" />
     <link rel="stylesheet" href="../../design/assets/css/style2.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 CDN -->
+
   </head>
   <body>

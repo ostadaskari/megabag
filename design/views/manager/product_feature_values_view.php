@@ -19,7 +19,7 @@
         <div class="col-12 mb-3">
             <div class="form-group border rounded shadow-sm bg-light p-4 position-relative">
                 <label for="productSearch" class="form-label">Search Product:</label>
-                <input type="text" id="productSearch" placeholder="Type to search..." class="form-control">
+                <input type="text" id="productSearch" placeholder="Type to search by name P/N or Tag..." class="form-control">
                 <div id="productResults"></div>
             </div>
         </div>
@@ -65,7 +65,7 @@ productSearch.addEventListener('input', () => {
             if (data.length > 0) {
                 data.forEach(p => {
                     const div = document.createElement('div');
-                    div.textContent = `${p.name} (ID: ${p.id})`;
+                    div.textContent = `${p.name} (PN: ${p.part_number})`;
                     div.style.cursor = 'pointer';
                     div.onclick = () => selectProduct(p.id, p.name);
                     productResults.appendChild(div);
