@@ -1,6 +1,4 @@
 <?php
-// File: core/manager/product_feature_values.php
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -56,6 +54,9 @@ if (isset($_GET['product_id'])) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $category_id);
         $stmt->execute();
+
+        // Fix: Initialize the variable to null to prevent the "unassigned variable" warning
+        $parent_id = null;
         $stmt->bind_result($parent_id);
 
         $has_parent = $stmt->fetch() && $parent_id;
@@ -115,10 +116,12 @@ if (isset($_GET['product_id'])) {
 
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json'); // Set header for JSON response
+
     // Basic product ID validation
     $product_id = (int)$_POST['product_id'];
     if (!$product_id) {
-        echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Invalid product ID.'});</script>";
+        echo json_encode(['status' => 'error', 'message' => 'Invalid product ID.']);
         exit;
     }
 
@@ -144,20 +147,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($is_required && empty($value)) {
             // For boolean types, empty value is valid if it's not checked
             if ($data_type !== 'boolean' || $value !== '0') {
-                echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'A required field was left empty.'});</script>";
+                echo json_encode(['status' => 'error', 'message' => 'A required field was left empty.']);
                 exit;
             }
+        }
+        
+        // If the value is empty and not required, we should delete any existing entry
+        // and move to the next feature. This correctly "clears" the value.
+        if (!$is_required && empty($value)) {
+             $stmt = $conn->prepare("DELETE FROM product_feature_values WHERE product_id = ? AND feature_id = ?");
+             $stmt->bind_param("ii", $product_id, $feature_id);
+             $stmt->execute();
+             $stmt->close();
+             continue; // Move to the next feature in the loop
         }
 
         // Server-side data type validation and sanitization
         $value_to_save = $value;
         switch ($data_type) {
             case 'decimal(12,3)':
-                // Sanitize and validate for a float number
-                $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                if ($value_to_save === false || !is_numeric($value_to_save)) {
-                    echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Value for a decimal field is not a valid number.'});</script>";
-                    exit;
+                // Sanitize and validate for a float number, but only if not empty
+                if (!empty($value)) {
+                    $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    // The core issue was here: is_numeric('') is false. We now handle the empty case above.
+                    if ($value_to_save === false || !is_numeric($value_to_save)) {
+                        echo json_encode(['status' => 'error', 'message' => 'Value for a decimal field is not a valid number.']);
+                        exit;
+                    }
                 }
                 break;
             case 'TEXT':
@@ -167,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'boolean':
                 // We expect '1' or '0' for a checkbox.
                 if ($value !== '1' && $value !== '0') {
-                    echo "<script>Swal.fire({icon: 'error', title: 'Error', text: 'Value for a boolean field is not valid.'});</script>";
+                    echo json_encode(['status' => 'error', 'message' => 'Value for a boolean field is not valid.']);
                     exit;
                 }
                 break;
@@ -177,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $value_to_save = substr(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), 0, 50);
                 break;
         }
-        
+
         // Save the validated data using REPLACE INTO
         // This will insert a new row or replace an existing one based on the primary key (product_id, feature_id)
         $stmt = $conn->prepare("REPLACE INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
@@ -186,15 +202,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
-    echo "<script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Saved!',
-            text: 'Product features saved successfully',
-            timer: 1500,
-            showConfirmButton: false
-        }).then(() => { window.location.href = 'product_feature_values.php'; });
-    </script>";
+    // On success, send a success JSON response
+    echo json_encode(['status' => 'success', 'message' => 'Product features saved successfully']);
     exit;
 }
 

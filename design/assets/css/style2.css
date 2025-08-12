@@ -312,8 +312,50 @@
            /* end add category feature   */
 
 
-           /*  add category feature  */
+           /*  add product feature  */
 
+        .titleTop {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .backBtn {
+            text-decoration: none;
+            color: #6c757d;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .backBtn:hover {
+            color: #495057;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 1.5rem;
+        }
+        #productResults {
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-top: none;
+            width: calc(100% - 3rem); /* Adjust width to match parent padding */
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #productResults div {
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        #productResults div:hover {
+            background-color: #f8f9fa;
+        }
+
+           /*        */
 
 
 

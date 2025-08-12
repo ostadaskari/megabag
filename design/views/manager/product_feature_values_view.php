@@ -1,26 +1,56 @@
-<div class="container">
-    <h2>Assign Feature Values to Product</h2>
 
-    <div class="form-group">
-        <label for="productSearch">Search Product:</label>
-        <input type="text" id="productSearch" placeholder="Type to search...">
-        <div id="productResults"></div>
-    </div>
-
-    <form method="POST" action="" id="featureForm">
-        <input type="hidden" name="product_id" id="product_id">
-        <div id="featuresContainer"></div>
-        <button type="submit">Save Features</button>
-    </form>
+    <!-- Header section, kept mostly the same as it already uses flexbox -->
+<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+    <h2 class="d-flex align-items-center">
+        <svg width="26" height="26" fill="currentColor" class="bi bi-node-plus mx-1" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+        </svg>
+    Assign Feature Values to Product</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
 </div>
 
+    <div class="row">
+        <!-- Product Search Section -->
+        <div class="col-12 mb-3">
+            <div class="form-group border rounded shadow-sm bg-light p-4 position-relative">
+                <label for="productSearch" class="form-label">Search Product:</label>
+                <input type="text" id="productSearch" placeholder="Type to search..." class="form-control">
+                <div id="productResults"></div>
+            </div>
+        </div>
+
+        <!-- Dynamic Features Form -->
+        <div class="col-12">
+            <form method="POST" action="" id="featureForm" class="border rounded shadow-sm bg-light p-4" style="display: none;">
+                <input type="hidden" name="product_id" id="product_id">
+                <div id="featuresContainer" class="d-flex flex-column gap-3">
+                    <!-- Dynamic features will be inserted here -->
+                </div>
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary">Save Features</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 <script>
+// This script handles the dynamic loading and saving of product feature values.
+// It includes an AJAX search for products, a dynamic form generator for features,
+// and client-side form submission.
+
 const productSearch = document.getElementById('productSearch');
 const productResults = document.getElementById('productResults');
 const featuresContainer = document.getElementById('featuresContainer');
 const featureForm = document.getElementById('featureForm');
 const productIdInput = document.getElementById('product_id');
 
+// Event listener for the product search input.
 productSearch.addEventListener('input', () => {
     const q = productSearch.value.trim();
     if (q.length < 2) {
@@ -48,14 +78,15 @@ productSearch.addEventListener('input', () => {
         });
 });
 
+// Function to handle the selection of a product from the search results.
 function selectProduct(id, name) {
     productIdInput.value = id;
     productSearch.value = name;
     productResults.style.display = 'none';
-    
+
     // Hide the form and show a loading spinner or message
     featureForm.style.display = 'none';
-    featuresContainer.innerHTML = '<div>Loading features...</div>';
+    featuresContainer.innerHTML = '<div class="text-center text-muted">Loading features...</div>';
 
     fetch(`../manager/product_feature_values.php?product_id=${id}`)
         .then(res => res.json())
@@ -69,46 +100,64 @@ function selectProduct(id, name) {
                 Swal.fire('No Features', 'This product category has no features assigned.', 'info');
                 return;
             }
-            
+
             features.forEach(f => {
                 const formGroup = document.createElement('div');
                 formGroup.classList.add('form-group');
 
                 let inputHtml = '';
+                let inputColClass = 'col'; // Default column class
+                let unitColClass = 'col-auto'; // Default column class for unit
+                const requiredAttr = f.is_required ? 'required' : '';
+                
                 // Render different input types based on data_type
                 switch (f.data_type) {
                     case 'decimal(12,3)':
-                        inputHtml = `<input type="number" name="features[${f.id}][value]" value="${f.value}" placeholder="Enter a number">`;
+                        // Added required attribute and min value for better user experience
+                        inputHtml = `<input type="text" class="form-control" name="features[${f.id}][value]" value="${f.value}" placeholder="e.g. 12.345" pattern="[0-9]+(\\.[0-9]{1,3})?" title="Please enter a number with up to 3 decimal places (e.g., 123.456)." ${requiredAttr}>`;
+                        // Using a reasonable default of 4 columns, since not specified
+                        inputColClass = 'col-4';
+                        unitColClass = 'col-2';
                         break;
                     case 'boolean':
-                        // Checkbox requires special handling for its value
                         const isChecked = f.value === '1';
+                        // Using a Bootstrap switch for a cleaner look
                         inputHtml = `
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="features[${f.id}][value]" value="1" ${isChecked ? 'checked' : ''}>
-                                ${f.name} ${f.is_required ? '*' : ''}
-                            </label>
-                            <!-- Hidden input to ensure a value of '0' is sent if unchecked -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="feature-${f.id}" name="features[${f.id}][value]" value="1" ${isChecked ? 'checked' : ''}>
+                                <label class="form-check-label" for="feature-${f.id}">${f.name} ${f.is_required ? '*' : ''}</label>
+                            </div>
                             <input type="hidden" name="features[${f.id}][value]" value="${isChecked ? '1' : '0'}">
                         `;
+                        // Boolean is a special case, so it takes the full row
+                        inputColClass = 'col-12';
                         break;
                     case 'varchar(50)':
-                        inputHtml = `<input type="text" name="features[${f.id}][value]" value="${f.value}" placeholder="Enter text (max 50 characters)">`;
+                        inputHtml = `<input type="text" class="form-control" name="features[${f.id}][value]" value="${f.value}" placeholder="Enter text (max 50 characters)" ${requiredAttr}>`;
+                        inputColClass = 'col-4';
+                        unitColClass = 'col-1';
                         break;
                     case 'TEXT':
-                        inputHtml = `<textarea name="features[${f.id}][value]" placeholder="Enter a long description">${f.value}</textarea>`;
+                        inputHtml = `<textarea class="form-control" name="features[${f.id}][value]" placeholder="Enter a long description" ${requiredAttr}>${f.value}</textarea>`;
+                        inputColClass = 'col-8';
+                        unitColClass = 'col-1';
                         break;
                     default:
                         // Fallback for any other data types not explicitly handled
-                        inputHtml = `<input type="text" name="features[${f.id}][value]" value="${f.value}" placeholder="Enter text">`;
+                        inputHtml = `<input type="text" class="form-control" name="features[${f.id}][value]" value="${f.value}" placeholder="Enter text" ${requiredAttr}>`;
+                        inputColClass = 'col';
+                        unitColClass = 'col-auto';
                         break;
                 }
+                
+                const unitHtml = f.unit ? unitSelect(f.unit, f.unit_value, f.id) : '';
 
+                // Use the new row and col structure
                 formGroup.innerHTML = `
-                    ${f.data_type !== 'boolean' ? `<label>${f.name} ${f.is_required ? '*' : ''}</label>` : ''}
-                    <div style="display:flex; align-items:center;">
-                        ${inputHtml}
-                        ${f.unit ? unitSelect(f.unit, f.unit_value, f.id) : ''}
+                    ${f.data_type !== 'boolean' ? `<label class="form-label">${f.name} ${f.is_required ? '*' : ''}</label>` : ''}
+                    <div class="row g-2 align-items-center">
+                        <div class="${inputColClass}">${inputHtml}</div>
+                        ${f.unit ? `<div class="ml-2 ${unitColClass}">${unitHtml}</div>` : ''}
                     </div>
                 `;
                 featuresContainer.appendChild(formGroup);
@@ -123,18 +172,17 @@ function selectProduct(id, name) {
 
 function unitSelect(unitString, selectedUnit, featureId) {
     const units = unitString.split(',').map(u => u.trim());
-    let html = `<select name="features[${featureId}][unit]" style="margin-left: 10px;">`;
-    units.forEach(u => {
+    const optionsHtml = units.map(u => {
         const isSelected = u === selectedUnit ? 'selected' : '';
-        html += `<option value="${u}" ${isSelected}>${u}</option>`;
-    });
-    html += '</select>';
-    return html;
+        return `<option value="${u}" ${isSelected}>${u}</option>`;
+    }).join('');
+    
+    return `<select class="form-select" name="features[${featureId}][unit]">${optionsHtml}</select>`;
 }
 
 featureForm.addEventListener('submit', e => {
     e.preventDefault();
-    
+
     // Client-side validation for required fields
     const requiredInputs = document.querySelectorAll('#featuresContainer [required]');
     let hasEmptyRequired = false;
@@ -143,7 +191,7 @@ featureForm.addEventListener('submit', e => {
             hasEmptyRequired = true;
             input.style.border = '1px solid red';
         } else {
-            input.style.border = '1px solid #ccc';
+            input.style.border = '1px solid #dee2e6';
         }
     });
 
@@ -152,13 +200,55 @@ featureForm.addEventListener('submit', e => {
         return;
     }
 
+    // Client-side validation for the decimal field, now allowing empty values
+    const decimalInputs = document.querySelectorAll('input[name*="[value]"][pattern]');
+    let hasInvalidDecimal = false;
+    decimalInputs.forEach(input => {
+        const value = input.value.trim();
+        // Only validate if the value is not empty
+        if (value !== '') {
+            const pattern = new RegExp(input.pattern);
+            if (!pattern.test(value)) {
+                hasInvalidDecimal = true;
+                input.style.border = '1px solid red';
+            } else {
+                input.style.border = '1px solid #dee2e6';
+            }
+        } else {
+            // If the value is empty, clear the error styling
+            input.style.border = '1px solid #dee2e6';
+        }
+    });
+
+    if (hasInvalidDecimal) {
+        Swal.fire('Validation Error', 'Please correct the format of the decimal fields.', 'warning');
+        return;
+    }
+
     fetch('../manager/product_feature_values.php', {
         method: 'POST',
         body: new FormData(featureForm)
-    }).then(res => res.text())
-        .then(html => {
-            // The server sends back a script tag with a SweetAlert call
-            document.body.insertAdjacentHTML('beforeend', html);
+    })
+        .then(res => res.json()) // Expect JSON response
+        .then(response => {
+            // Manually trigger SweetAlert based on the JSON response
+            if (response.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Saved!',
+                    text: response.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = 'dashboard.php?page=product_feature_values';
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message
+                });
+            }
         })
         .catch(error => {
             console.error('Error saving features:', error);
