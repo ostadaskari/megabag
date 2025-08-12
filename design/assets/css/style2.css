@@ -252,10 +252,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ffffff;
+
             padding: 10px;
-            border-radius: 5px;
+
         }
         .feature-row input, .feature-row select {
             flex: 1;
@@ -288,19 +288,23 @@
             cursor: pointer;
             font-weight: bold;
         }
+        /* Specific styles for the plus button and its SVG to ensure the color is correct */
         .add-row-btn {
-            background-color: #5cb85c;
-            color: white;
+            border: none;
+            background: none;
+            padding: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
         }
-        .add-features-btn {
-            background-color: #337ab7;
-            color: white;
-        }
-<<<<<<< HEAD
+
         .add-row-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
+            fill: var(--primary-color) !important; /* Forces the color to be green */
+            transition: fill 0.2s ease-in-out;
+        }
+
+        .add-row-btn:hover svg {
+            transform: scale(1.1); /* Adds a nice little animation on hover */
+            fill: #388E3C;
         }
         .existing-features {
             margin-top: 20px;
@@ -308,10 +312,9 @@
            /* end add category feature   */
 
 
-           /*   */
+           /*  add category feature  */
 
-=======
 
-        
-           /* end add category feature   */
->>>>>>> 79560a1d1ee272d2f269170ed804fa9b68aed887
+
+
+
