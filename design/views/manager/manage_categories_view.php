@@ -37,7 +37,7 @@
     <div class="container px-0 mt-2">
         <div class="row">
             <div class="col-12" style="z-index: 10;">
-                <div class="container border rounded bg-light shadow-sm p-4 mb-4">
+                <div class="container border rounded bg-light shadow-sm p-2 mb-2">
                     <!-- Category Form -->
                     <form class="row d-flex align-items-center justify-content-between" method="post" action="" id="category-form">
                         <div class="col-12 col-md-4 mb-3">
@@ -66,7 +66,7 @@
         <div class="row">
             <div class="col-12">
                 <!-- Category Tree Display -->
-                <div class="card border rounded bg-light shadow-sm shadow-sm p-4">
+                <div class="card border rounded bg-light shadow-sm shadow-sm p-2">
                     <h3 class="mb-3">Category Tree</h3>
                     <div class="tree-display fixed-height-scroll root-tree">
                         <?php

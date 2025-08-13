@@ -189,7 +189,7 @@
 
         /* Fixed height and scroll for the display tree */
         .fixed-height-scroll {
-            max-height:380px;
+            max-height:55vh;
             overflow-y: auto;
         }
 
