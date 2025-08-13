@@ -12,7 +12,7 @@
     <span>Back</span>
     </a>
 </div>
-<div class="container">
+<div class="container p-0">
     <form method="POST" action="" id="groupIssueForm">
         <div id="issueRows">
             <!-- Dynamic rows will be added here by JavaScript -->
