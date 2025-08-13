@@ -1,17 +1,16 @@
-
 <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
-        <h2 class="d-flex align-items-center">
-        <svg width="24" height="24" fill="currentColor" class="bi bi-filetype-exe mx-1 me-2" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM2.575 15.202H.785v-1.073H2.47v-.606H.785v-1.025h1.79v-.648H0v3.999h2.575zM6.31 11.85h-.893l-.823 1.439h-.036l-.832-1.439h-.931l1.227 1.983-1.239 2.016h.861l.853-1.415h.035l.85 1.415h.908l-1.254-1.992zm1.025 3.352h1.79v.647H6.548V11.85h2.576v.648h-1.79v1.025h1.684v.606H7.334v1.073Z"/>
+    <h2 class="d-flex align-items-center">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-filetype-exe mx-1 me-2" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM2.575 15.202H.785v-1.073H2.47v-.606H.785v-1.025h1.79v-.648H0v3.999h2.575zM6.31 11.85h-.893l-.823 1.439h-.036l-.832-1.439h-.931l1.227 1.983-1.239 2.016h.861l.853-1.415h.035l.85 1.415h.908l-1.254-1.992zm1.025 3.352h1.79v.647H6.548V11.85h2.576v.648h-1.79v1.025h1.684v.606H7.334v1.073Z"/>
+    </svg>
+    Insert By Excel</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+        <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
         </svg>
-        Insert By Excel</h2>
-        <a href="../auth/dashboard.php?page=home" class="backBtn">
-            <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
-            </svg>
-            <span>Back</span>
-       </a>
-    </div>
+        <span>Back</span>
+    </a>
+</div>
 <div class="tab-content" id="Insert-By-CSV">
     <div class="container px-0">
         <div class="row d-flex justify-content-between border rounded shadow-sm bg-light p-2">
@@ -44,6 +43,7 @@
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" id="csvTable">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
+                                <th>#</th>
                                 <th>Filename</th>
                                 <th>File Size</th>
                                 <th>Status</th>
@@ -72,8 +72,9 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    const rows = data.csvs.map(csv => `
+                    const rows = data.csvs.map((csv, index) => `
                         <tr>
+                            <td>${index + 1}</td>
                             <td>${csv.original_name}</td>
                             <td>${csv.file_size_readable}</td>
                             <td>${csv.status}</td>
@@ -159,6 +160,7 @@
 
                 return `
                     <tr class="${rowClass}">
+                        <td>${idx + 1}</td>
                         <td>${row.name}</td>
                         <td>${row.part_number}</td>
                         <td>${row.tag}</td>
@@ -174,6 +176,7 @@
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
+                                <th>#</th>
                                 <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
                             </tr>
                         </thead>
@@ -198,11 +201,12 @@
             const tds = tr.querySelectorAll('td');
             const isNew = tr.classList.contains('highlight-new');
 
-            const name = tds[0].textContent.trim();
-            const part_number = tds[1].textContent.trim();
-            const tag = tds[2].textContent.trim();
-            const qty = parseInt(tds[3].textContent.trim());
-            const remark = tds[4].textContent.trim();
+            // Note: The index column is now tds[0], so the others shift
+            const name = tds[1].textContent.trim();
+            const part_number = tds[2].textContent.trim();
+            const tag = tds[3].textContent.trim();
+            const qty = parseInt(tds[4].textContent.trim());
+            const remark = tds[5].textContent.trim();
 
             let category_id = null;
 
