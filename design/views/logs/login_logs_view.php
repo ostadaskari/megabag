@@ -53,7 +53,7 @@
                                                     }
                                                 ?>
                                             </td>
-                                            <td><?= $log['created_at'] ?></td>
+                                            <td><?= date('Y/n/d ,G:i',strtotime($log['created_at'])) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

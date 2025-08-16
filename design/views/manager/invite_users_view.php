@@ -93,8 +93,8 @@
                                             </td>
                                             <td><?php echo htmlspecialchars($invite['created_by_nickname'] ?: '-'); ?></td>
                                             <td><?php echo htmlspecialchars($invite['used_by_nickname'] ?: '-'); ?></td>
-                                            <td><?php echo htmlspecialchars($invite['generated_at']); ?></td>
-                                            <td><?php echo htmlspecialchars($invite['used_at'] ?: '-'); ?></td>
+                                            <td><?php echo htmlspecialchars(date('Y/n/d, G:i', strtotime($invite['generated_at'])));  ?></td>
+                                            <td><?php echo htmlspecialchars(date('Y/n/d, G:i', strtotime($invite['used_at'])));  ?></td>
                                             <td>
                                                 <form method="POST" id="delete-form-<?php echo $invite['id']; ?>" style="display:inline;">
                                                     <input type="hidden" name="delete_code_id" value="<?php echo $invite['id']; ?>">
