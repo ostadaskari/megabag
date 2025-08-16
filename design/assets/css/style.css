@@ -315,17 +315,10 @@ li.active > a {
 .main{
     height: 95vh;
 }
-
-.content {
-  width: calc(100vw - 17vw) !important;
-  position: relative;
-  z-index: 10;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.content::before {
+.main::before {
+  margin: auto;
+  max-width: 1280px;
+  overflow: hidden;
   content: "";
   position: absolute;
   top: 0;
@@ -339,6 +332,16 @@ li.active > a {
   z-index: -1;
   pointer-events: none;
 }
+.content {
+  width: calc(100vw - 17vw) !important;
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
 
 /* content container */
 
