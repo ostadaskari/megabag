@@ -20,8 +20,8 @@
     <div class="row d-flex flex-column justify-content-center" style="max-width: 800px; margin:0 auto;">
         <!-- Search Product --> 
         <label for="productSearch" class="form-label" style="margin:0 auto;">Search in Product:</label>
-        <div class="col-12 col-md-5" style="margin:10px auto;">
-            <div class="input-box" style="width: 100%; margin:0 0 10px 0;">
+        <div class="col-12 col-md-5" style="margin:3px auto;">
+            <div class="input-box" style="width: 100%; margin:0 0 5px 0;">
                 <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                 </svg>
@@ -30,18 +30,19 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Dynamic Features Form -->
     <form method="POST" action="" id="featureForm" style="display:none;">
         <input type="hidden" name="product_id" id="product_id">
 
         <!-- Features Container (dynamic rows will be injected here) -->
-        <div id="featuresContainer" class="container border shadow-sm rounded bg-light p-2" style="max-width: 800px;">
+        <div id="featuresContainer" class="container border shadow-sm rounded bg-light p-2" style="max-width: 800px;height: 62vh;overflow-y: auto;">
             <!-- JS will insert feature fields here -->
         </div>
 
         <!-- Submit Button -->
-        <div class="d-flex flex-row justify-content-end align-items-center px-1" style="max-width: 800px; margin:15px auto;">
+        <div class="d-flex flex-row justify-content-end align-items-center px-1" style="max-width: 800px; margin:5px auto;">
             <button type="submit" class="btn btn-primary" title="Submit">Submit</button>
         </div>
     </form>
@@ -171,7 +172,7 @@ function selectProduct(id, name) {
 
                 // Use the new row and col structure
                 formGroup.innerHTML = `
-                    ${f.data_type !== 'boolean' ? `<div class="col-12 mb-1"><label class="form-label">${f.name}: ${f.is_required ? '*' : ''}</label></div>` : ''}
+                    ${f.data_type !== 'boolean' ? `<div class="col-12"><label class="form-label">${f.name}: ${f.is_required ? '*' : ''}</label></div>` : ''}
                     <div class="${inputColClass}">${inputHtml}</div>
                     ${f.unit ? `<div class="ml-2 ${unitColClass}">${unitHtml}</div>` : ''}
 `;
