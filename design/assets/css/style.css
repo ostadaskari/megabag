@@ -69,7 +69,7 @@ table {
 
 .table-hover tbody tr:hover {
   background-color: #e2e6ea;
-  cursor: pointer;
+  cursor:context-menu;
 }
 .table-responsive {
   width: 100%;
