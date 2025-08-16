@@ -67,10 +67,10 @@
                                     <th scope="col">Role</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Invite Code</th>
-                                    <th scope="col">Created By</th>
+                                    <th scope="col">Creator</th>
                                     <th scope="col">Used By</th>
-                                    <th scope="col">Generated At</th>
-                                    <th scope="col">User Created At</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Registered At</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
