@@ -355,7 +355,63 @@
             background-color: #f8f9fa;
         }
 
-           /*        */
+           /*     CSV   */
+
+           /* Custom styles for the receive_stock_csv_view.php page */
+
+/* Highlight newly added rows from the uploaded CSV */
+.highlight-new {
+    background-color: #e6ffe6 !important; /* A mild green background */
+    border-left: 3px solid #28a745; /* A green border on the left to stand out */
+    font-weight: 500; /* Slightly bolder text */
+    transition: background-color 0.3s ease; /* Smooth transition for background changes */
+}
+
+/* Style for the category autocomplete container */
+.category-autocomplete-container {
+    position: relative;
+}
+
+/* Style for the category search input field */
+.category-autocomplete {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    width: 100%;
+}
+
+/* Style for the category suggestions dropdown */
+.category-suggestions {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 4px 4px;
+}
+
+/* Style for individual suggestion items */
+.category-suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.category-suggestion-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Add a visual cue to the hoverable SVG icons */
+.hoverSvg:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+   /*   end  CSV   */
 
 
 

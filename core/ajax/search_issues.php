@@ -87,7 +87,7 @@ while ($row = $res->fetch_assoc()) {
         <td>{$row['qty_issued']}</td>
         <td>" . htmlspecialchars($row['issued_by']) . "</td>
         <td>" . htmlspecialchars($row['issued_to']) . "</td>
-        <td>{$row['created_at']}</td>
+        <td>". date('Y/n/d ,G:i',strtotime($row['created_at'])) ."</td>
         <td><span{$tooltip}>{$short}</span></td>
     </tr>";
     $i++;

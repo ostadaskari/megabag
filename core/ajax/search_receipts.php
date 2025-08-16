@@ -76,7 +76,7 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>{$row['qty_received']}</td>
         <td>" . htmlspecialchars($row['nickname']) . "</td>
-        <td>{$row['created_at']}</td>
+        <td>". date('Y/n/d ,G:i',strtotime($row['created_at'])) . "</td> 
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>
     </tr>";
     $i++;
