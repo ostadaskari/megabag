@@ -560,7 +560,7 @@ h3{
  fill:  #8b000d!important;
 }
 .itemImg{
-  width: 130px;
+  width: 100px;
 }
 .backBtn{
   display: flex;
@@ -1321,7 +1321,7 @@ fill:var(--main-text-color);
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
   width: 90%;
-  max-width: 900px;
+  max-width: 950px;
   padding: 20px;
   color: rgb(8, 55, 126);
   display: none;
@@ -1373,7 +1373,7 @@ font-size: 16px;
   align-content:center;
 }
 .imgCover{
-  width:100%;
+  width:75%;
   border:2px double #63727c;
   margin: auto;
   border-radius:8px;
