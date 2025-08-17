@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
  <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
+=======
+<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">      
+>>>>>>> main
     <h2 class="d-flex align-items-center">
     <svg width="22" height="22" fill="currentColor" class="bi bi-card-list mx-1 me-2" viewBox="0 0 16 16">
         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
@@ -17,6 +21,7 @@
 <div id="List-Product" class="tab-content" >
 <div class="container px-0">
     <!-- searchbar -->
+<<<<<<< HEAD
     <div class="d-flex flex-row align-items-center justify-content-between" >
             <div class="input-box w-50 position-relative" style="margin: 0!important;">
                 <div class="svgSearch">
@@ -33,6 +38,22 @@
                     <option value="available">Available</option>
                 </select>
             </div>
+=======
+    <div class="d-flex flex-row align-items-start justify-content-between" >
+        <div class="input-box w-50" style="margin: 0!important;">
+            <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." />
+        </div>
+
+        <div class="w-25">
+            <select id="statusFilter" class="form-select">
+                <option value="">All Statuses</option>
+                <option value="available">Available</option>
+            </select>
+        </div>
+>>>>>>> main
     </div>
 
     <!-- table list product -->
@@ -71,13 +92,14 @@
     <!-- Pagination -->
     <div class="row my-2">
     <div class="col-12 d-flex justify-content-center">
-            <div id="pagination" class="pagination-container"></div>
+        <div id="pagination" class="pagination-container"></div>
     </div>
     </div>
 </div>
 </div>
 <!-- end List Product -->
 
+<<<<<<< HEAD
 <!-- modal for show details -->
 <div id="modalOverlay" class="modal-overlay"></div>
 
@@ -209,6 +231,31 @@ document.getElementById('modalOverlay').addEventListener('click', closeModal);
 </script>
 <!-- end modal for show details -->
 
+=======
+<!-- Modal for Product Details -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalProductDetailsBody">
+                <!-- Content will be loaded here via AJAX -->
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+>>>>>>> main
 
 
 
@@ -248,6 +295,40 @@ document.addEventListener('click', function (e) {
     }
 });
 
+
+/**
+ * Shows a modal with detailed information for a specific product.
+ * @param {number} productId The ID of the product to show.
+ */
+function showProductDetails(productId) {
+    // Show a loading spinner while the content is being fetched
+    const modalBody = document.getElementById('modalProductDetailsBody');
+    modalBody.innerHTML = `
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    `;
+
+    // Fetch the product details via AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `../ajax/get_product_details.php?id=${productId}`, true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Update the modal body with the fetched HTML
+            modalBody.innerHTML = xhr.responseText;
+        } else {
+            // Handle errors
+            modalBody.innerHTML = `<p class="text-danger text-center">Failed to load product details.</p>`;
+        }
+    };
+    xhr.send();
+
+    // Use Bootstrap's JavaScript to show the modal
+    const modal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+    modal.show();
+}
 </script>
 
             <!-- end fetchProducts -->
@@ -289,6 +370,5 @@ function editProduct(productId) {
     window.location.href = "../auth/dashboard.php?page=edit_product&id=" + productId;
 }
 </script>
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" xintegrity="sha384-I7E8Vz4x-d-A3Gq55T5z4o8B5Z8Z2Nq4a7U8U9uA1l1r4fP1yL0" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" xintegrity="sha384-0p4V4m6zQ7z6S0h4e4S4r2D4a1k5t5a4l3S3d2e2o1e3k4n5f6g7g8h9i0j0k1l2m3n4o5p6q7r8s9t" crossorigin="anonymous"></script>

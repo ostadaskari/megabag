@@ -37,7 +37,7 @@
                       <!-- Clock -->
                       <div class="d-flex clock-container">
                         <span id="clock" class="px-1"><?= date("Y/n/d"); ?></span> |
-                        <span id="date" class="px-1"><?= date("G:i a"); ?></span>
+                        <span id="date" class="px-1"><?= date("G:i "); ?></span>
                       </div>
                       <!-- Hamburger Button (mobile only) -->
                       <button class="btn d-md-none" type="button" id="toggleBtn">
