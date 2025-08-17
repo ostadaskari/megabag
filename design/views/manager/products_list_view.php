@@ -18,7 +18,6 @@
 <div id="List-Product" class="tab-content" >
 <div class="container px-0">
     <!-- searchbar -->
-<<<<<<< HEAD
     <div class="d-flex flex-row align-items-center justify-content-between" >
             <div class="input-box w-50 position-relative" style="margin: 0!important;">
                 <div class="svgSearch">
@@ -80,7 +79,6 @@
 </div>
 <!-- end List Product -->
 
-<<<<<<< HEAD
 <!-- modal for show details -->
 <div id="modalOverlay" class="modal-overlay"></div>
 
@@ -202,32 +200,6 @@ document.getElementById('closeModal').addEventListener('click', closeModal);
 document.getElementById('modalOverlay').addEventListener('click', closeModal);
 </script>
 <!-- end modal for show details -->
-
-=======
-<!-- Modal for Product Details -->
-<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalProductDetailsBody">
-                <!-- Content will be loaded here via AJAX -->
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Modal -->
->>>>>>> main
 
 
 
