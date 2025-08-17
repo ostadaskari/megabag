@@ -1,5 +1,5 @@
 
- <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">       
+ <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
     <h2 class="d-flex align-items-center">
    <svg width="24" height="24" fill="currentColor" class="bi bi-person-square mx-1 me-2" viewBox="0 0 16 16">
   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>

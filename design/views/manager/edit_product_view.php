@@ -4,7 +4,7 @@
 
           <!-- Edit product -->
            <div class="tab-content" id="edit-product">
-            <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+            <div class="d-flex flex-row align-items-center justify-content-between titleTop">
               <h2>Edit Product</h2>
 
               <a href="../auth/dashboard.php?page=products_list" class="backBtn">

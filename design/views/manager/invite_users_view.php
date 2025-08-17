@@ -1,4 +1,4 @@
-   <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+   <div class="d-flex flex-row align-items-center justify-content-between titleTop">
         <h2 class="d-flex align-items-center">
         <svg width="22" height="22" fill="currentColor" class="bi bi-envelope-paper mx-1 me-2" viewBox="0 0 16 16">
             <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267zm13 .566v5.734l-4.778-2.867zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083zM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
@@ -25,7 +25,7 @@
         <div id="Invait-User" class="tab-content">
             <div class="row">
                 <div class="col-12 px-0">
-                    <div class="form-box border rounded shadow-sm bg-light p-3">
+                    <div class="form-box border rounded shadow-sm bg-light p-2">
                         <form method="POST" id="inviteForm">
                             <!-- All form elements are now in a single row -->
                             <div class="d-flex flex-row align-items-center gap-2">
@@ -57,10 +57,10 @@
                 </div>
 
                 <!-- Generated Invite Codes Table -->
-                <div class="col-12 mt-2">
-                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:75vh;">
+                <div class="col-12 mt-1">
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:70vh;">
                         <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
-                            <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                            <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nickname</th>
