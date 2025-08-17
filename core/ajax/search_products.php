@@ -60,7 +60,9 @@ $result = $stmt->get_result();
 $html = "";
 $count = $offset + 1;
 while ($row = $result->fetch_assoc()) {
-    $html .= "<tr>
+    // Add data-id to the row for the frontend JavaScript to easily identify the product
+    // The previous HTML file used this attribute to find the product ID
+    $html .= "<tr data-id=\"{$row['id']}\">
         <td>{$count}</td>
         <td>" . htmlspecialchars($row['name']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
@@ -74,7 +76,14 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['tag']) . "</td>
         <td>" . htmlspecialchars($row['date_code']) . "</td>
         <td>" . htmlspecialchars($row['recieve_code']) . "</td>
-        <td>
+        <td class=\"flex justify-center space-x-2\">
+            <!-- New 'View' button with an SVG eye icon -->
+            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"showProductDetails({$row['id']})\" title=\"View\">
+                <svg width=\"16\" height=\"16\" fill=\"green\" class=\"bi bi-eye-fill\" viewBox=\"0 0 16 16\">
+                    <path d=\"M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0\"/>
+                    <path d=\"M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7\"/>
+                </svg>
+            </button>
             <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
                 ✏️
             </button>
@@ -136,7 +145,7 @@ if ($totalPages > 1) {
 
 // Final JSON response
 echo json_encode([
-    'html' => $html ?: '<tr><td colspan="14" class="text-center">No products found.</td></tr>', // Adjusted colspan for 14 columns
+    'html' => $html ?: '<tr><td colspan="14" class="text-center">No products found.</td></tr>',
     'pagination' => $paginationHtml,
     'totalPages' => $totalPages,
     'currentPage' => $page

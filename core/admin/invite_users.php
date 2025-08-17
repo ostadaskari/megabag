@@ -11,6 +11,16 @@ $errors = [];
 $success = '';
 $invites = [];
 
+// --- Pagination settings ---
+$itemsPerPage = 7;
+$currentPage = isset($_GET['p']) ? intval($_GET['p']) : 1;
+if ($currentPage < 1) {
+    $currentPage = 1;
+}
+
+// Calculate the offset for the SQL query
+$offset = ($currentPage - 1) * $itemsPerPage;
+
 // --- Handle DELETE Invite Code ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_code_id'])) {
     $delete_id = intval($_POST['delete_code_id']);
@@ -85,7 +95,7 @@ $success = $_GET['success'] ?? '';
 $inviteLink = $_GET['link'] ?? '';
 $errors = isset($_GET['error']) ? explode(' | ', $_GET['error']) : [];
 
-// --- Fetch all invite codes ---
+// --- Fetch all invite codes for the current page ---
 $sql = "
     SELECT 
         ic.*,
@@ -95,14 +105,26 @@ $sql = "
     LEFT JOIN users used_by_user ON ic.used_by = used_by_user.id
     LEFT JOIN users creator ON ic.created_by = creator.id
     ORDER BY ic.generated_at DESC
+    LIMIT ? OFFSET ?
 ";
 
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $itemsPerPage, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         $invites[] = $row;
     }
 }
+$stmt->close();
+
+// --- Get total number of invites for pagination ---
+$countSql = "SELECT COUNT(*) FROM invite_codes";
+$countResult = $conn->query($countSql);
+$totalInvites = $countResult->fetch_row()[0];
+$totalPages = ceil($totalInvites / $itemsPerPage);
 
 // --- Render view ---
-include('../../design/views/manager/invite_users_view.php');
+include('../../design/views/admin/invite_users_view.php');

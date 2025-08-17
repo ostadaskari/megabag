@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS bans;
 
 CREATE TABLE bans (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
     user_id INT DEFAULT NULL,
     is_active TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -60,7 +60,7 @@ CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
     tag VARCHAR(60),
-    part_number VARCHAR(80) NOT NULL,        -- Renamed "p-n" to "part_number"
+    part_number VARCHAR(80) NOT NULL UNIQUE,        -- Renamed "p-n" to "part_number"
     mfg VARCHAR(80),                         -- Manufacturer
     qty MEDIUMINT UNSIGNED DEFAULT 0,        -- 0 to 16777215
     company_cmt TEXT,                        --  company comment                                                                                                                                                                  

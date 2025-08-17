@@ -72,24 +72,20 @@
                 <!-- Category Dropdown Section -->
                 <div class="container mt-1 px-1">
                   <div class="row d-flex flex-row justify-content-between">
+
                     <div class="col-12 col-md-6 px-2">
-                      <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
-                      <textarea class="form-control"  id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
+                        <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
+                        <textarea class="form-control" id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
                     </div>
                     <div class="col-12 col-md-6 px-2">
                         <label for="" class="form-label">Categories:</label>
-                        <!-- categories -->
                         <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
                         <input type="hidden" name="category_id" id="category_id">
                         <ul id="category-dropdown" style="z-index:1000; border:1px solid #ccc; max-height:150px; overflow-y:auto; list-style:none; padding:5px 10px; background-color:white;"></ul>
-
                     </div>
-
-                    
-
-                  </div>
-
                 </div>
+            </div>
+
 
                 <!-- inputs files -->
                 <div class="d-flex flex-row align-items-center my-3">
@@ -125,64 +121,77 @@
                       <input class="form-control" type="file" id="imageUpload" name="images[]" multiple accept="image/*" >
                     </div>
                   </div>
+
                 </div>
+            </div>
 
-
-                <div class="mt-3" style="text-align: end">
-                  <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
-                </div>
-                </div>
-              </form>
-          </div>
-
-
+            <div class="mt-3" style="text-align: end">
+                <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 <script>
-let categories = [];
+    let categories = [];
 
-async function fetchCategories() {
-    const response = await fetch('../ajax/fetch_leaf_categories.php');
-    categories = await response.json();
-    renderDropdown('');
-}
-
-function renderDropdown(searchText) {
-    const dropdown = document.getElementById('category-dropdown');
-    dropdown.innerHTML = '';
-
-    const filtered = categories.filter(cat => 
-        cat.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    if (filtered.length === 0) {
-        dropdown.innerHTML = '<li>No results found</li>';
-        return;
+    async function fetchCategories() {
+        const response = await fetch('../ajax/fetch_leaf_categories.php');
+        categories = await response.json();
+        renderDropdown('');
     }
 
-    filtered.forEach(cat => {
-        const li = document.createElement('li');
-        li.textContent = cat.name;
-        li.onclick = () => {
-            document.getElementById('category_search').value = cat.name;
-            document.getElementById('category_id').value = cat.id;
-            dropdown.innerHTML = ''; // Clear dropdown after selection
-        };
-        dropdown.appendChild(li);
+    function renderDropdown(searchText) {
+        const dropdown = document.getElementById('category-dropdown');
+        dropdown.innerHTML = '';
+
+        const filtered = categories.filter(cat =>
+            cat.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        // Hide the dropdown if no search text or no results
+        if (searchText === '' || filtered.length === 0) {
+             dropdown.style.display = 'none'; // Hide the box
+             if (filtered.length === 0 && searchText !== '') {
+                 dropdown.innerHTML = '<li>No results found</li>';
+                 dropdown.style.display = 'block'; // Show "No results" message
+             }
+             return;
+         }
+        
+        dropdown.style.display = 'block'; // Show the box when there are results
+
+        filtered.forEach(cat => {
+            const li = document.createElement('li');
+            li.textContent = cat.name;
+            li.onclick = () => {
+                document.getElementById('category_search').value = cat.name;
+                document.getElementById('category_id').value = cat.id;
+                dropdown.innerHTML = ''; 
+                dropdown.style.display = 'none'; // Hide the box after selection
+            };
+            dropdown.appendChild(li);
+        });
+    }
+
+    // Reload suggestions when user types
+    document.getElementById('category_search').addEventListener('input', function () {
+        const searchText = this.value;
+        renderDropdown(searchText);
     });
-}
+    
+    // Hide the dropdown when the input field loses focus
+    document.getElementById('category_search').addEventListener('blur', function () {
+        setTimeout(() => {
+            document.getElementById('category-dropdown').style.display = 'none';
+        }, 200); // A small delay to allow for click event to register
+    });
 
-// Reload suggestions when user types
-document.getElementById('category_search').addEventListener('input', function () {
-    const searchText = this.value;
-    renderDropdown(searchText);
-});
-
-// Load categories on page load
-fetchCategories();
+    // Load categories on page load
+    fetchCategories();
 </script>
 
-   <!-- sweet alerts -->
 <?php if (!empty($success)): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -208,6 +217,3 @@ fetchCategories();
         });
     </script>
 <?php endif; ?>
-
-  <!-- end sweet alert -->
-

@@ -8,7 +8,7 @@ $role = $_SESSION['role'] ?? 'guest';
               </svg>
                  <div class="d-flex flex-column">
                   <span class="my-2" style="color: var(--main-bg0-color);"><?= htmlspecialchars($_SESSION['nickname'] ?? '') ?></span>
-                  <span class="mb-1" style="font-size: 12px;color:rgb(219, 234, 255);"><?= htmlspecialchars($_SESSION['email'] ?? '') ?></span>
+                  <span class="mb-1 text-center" style="font-size: 12px;color:rgb(219, 234, 255);"><?= htmlspecialchars($_SESSION['role'] ?? '') ?></span>
                  </div> 
             </div>
           <ul class="list-unstyled px-2">
