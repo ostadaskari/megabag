@@ -373,7 +373,7 @@ position: relative !important;
   display: block;
   width: 100%;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
-  font-size: 1rem;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
@@ -461,6 +461,39 @@ position: relative !important;
 .btn-primary{
   background-color: #007bff;
 }
+.btn-success {
+  color: #fff;               
+  background-color: #198754!important;  
+  border-color: #198754!important;      
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #157347!important; 
+  border-color: #146c43!important;
+}
+
+.btn-success:focus {
+  box-shadow: 0 0 0 .25rem rgba(25,135,84,.5)!important; 
+}
+
+.btn-danger {
+  color: #fff;               
+  background-color: #dc3545!important; 
+  border-color: #dc3545!important;      
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bb2d3b!important;  
+  border-color: #b02a37!important;
+}
+
+.btn-danger:focus {
+  box-shadow: 0 0 0 .25rem rgba(220,53,69,.5)!important; 
+}
+
+
 /* end btn */
 
 /* modal */

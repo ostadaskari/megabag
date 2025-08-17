@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-filetype-exe mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM2.575 15.202H.785v-1.073H2.47v-.606H.785v-1.025h1.79v-.648H0v3.999h2.575zM6.31 11.85h-.893l-.823 1.439h-.036l-.832-1.439h-.931l1.227 1.983-1.239 2.016h.861l.853-1.415h.035l.85 1.415h.908l-1.254-1.992zm1.025 3.352h1.79v.647H6.548V11.85h2.576v.648h-1.79v1.025h1.684v.606H7.334v1.073Z"/>
@@ -41,7 +41,7 @@
                 <h5 class="p-2 titleTop" style="border-radius: 5px 5px 0 0;">Uploaded Excel Files This Session:</h5>
                 <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light" style="max-height: 16vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" id="csvTable">
-                        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                        <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                             <tr>
                                 <th>#</th>
                                 <th>Filename</th>
@@ -172,9 +172,15 @@
             }).join('');
 
             document.getElementById('checkedData').innerHTML = `
+<<<<<<< HEAD
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 60vh;">
+                    <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                        <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
+=======
                 <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 60vh; ">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-17px; z-index: 1;">
+>>>>>>> edc74decd4c521aa0a79eff6e0017d67c28c48fc
                             <tr>
                                 <th>#</th>
                                 <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>

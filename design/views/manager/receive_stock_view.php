@@ -1,4 +1,4 @@
- <div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">       
+ <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
     <h2 class="d-flex align-items-center">
     <svg width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-right  mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
@@ -17,7 +17,7 @@
     <div class="container px-0 mt-1">
         <form method="POST" action="" id="groupStockForm">
             <div id="stockRows">
-                <div class="stock-row border p-3 rounded mb-3 bg-light position-relative">
+                <div class="stock-row border p-2 rounded mb-3 bg-light position-relative">
                     <div class="row d-flex align-items-end justify-content-between">
                         <div class="col-6 col-md-5 px-1 position-relative">
                             <label for="productInput" class="form-label">Product:</label>

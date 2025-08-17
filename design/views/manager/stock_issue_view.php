@@ -1,4 +1,5 @@
-<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
+
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 1 0 3.5v9A1.5 1.5 0 0 1 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
