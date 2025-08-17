@@ -76,30 +76,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
 }
 
 
-try {
-    $stmt = $conn->prepare("
-        SELECT 
-            p.*, 
-            c.name AS category_name,
-            u.nickname AS submitted_by
-        FROM products p
-        LEFT JOIN categories c ON p.category_id = c.id
-        LEFT JOIN users u ON p.user_id = u.id
-        ORDER BY p.created_at DESC
-    ");
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $products = $result->fetch_all(MYSQLI_ASSOC);
 
-    // Handle delete action
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
-        $deleteStmt = $conn->prepare("DELETE FROM products WHERE id = ?");
-        $deleteStmt->bind_param("i", $_POST['product_id']);
-        $deleteStmt->execute();
-        header("Location: ../auth/dashboard.php?page=products_list");
-        exit;
-    }
-} catch (Exception $e) {
-    $products = [];
-}
 require_once '../../design/views/manager/products_list_view.php';
