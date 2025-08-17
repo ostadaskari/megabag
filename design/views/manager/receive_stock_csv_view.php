@@ -172,9 +172,15 @@
             }).join('');
 
             document.getElementById('checkedData').innerHTML = `
+<<<<<<< HEAD
                 <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 60vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
+=======
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 60vh; ">
+                    <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+                        <thead class="table-invitionLink sticky-top" style="top:-17px; z-index: 1;">
+>>>>>>> edc74decd4c521aa0a79eff6e0017d67c28c48fc
                             <tr>
                                 <th>#</th>
                                 <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>

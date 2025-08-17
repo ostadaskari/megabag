@@ -38,8 +38,8 @@
                                             <td>
                                                 <?= $ban['is_active'] ? '<span class="badge bg-danger">Active</span>' : '<span class="badge bg-secondary">Expired</span>' ?>
                                             </td>
-                                            <td><?= $ban['created_at'] ?></td>
-                                            <td><?= $ban['expires_at'] ?></td>
+                                            <td><?= date('Y/n/d ,G:i',strtotime($ban['created_at'])) ?></td>
+                                            <td><?= date('Y/n/d ,G:i',strtotime($ban['expires_at'])) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

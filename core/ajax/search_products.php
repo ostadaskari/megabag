@@ -68,7 +68,7 @@ while ($row = $result->fetch_assoc()) {
         <td>{$row['qty']}</td>
         <td>" . htmlspecialchars($row['submitter']) . "</td>
         <td>" . htmlspecialchars($row['category_name']) . "</td>
-        <td>" . date("Y-m-d", strtotime($row['created_at'])) . "</td>
+        <td>" . date("Y/n/d", strtotime($row['created_at'])) . "</td>
         <td>" . htmlspecialchars($row['location']) . "</td>
         <td>" . htmlspecialchars($row['status']) . "</td>
         <td>" . htmlspecialchars($row['tag']) . "</td>

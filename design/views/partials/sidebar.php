@@ -25,21 +25,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 <span>Dashboard</span>
               </a>
             </li>
-             <!-- Manage users -->
-            <li class="menu-item">
-              <a href="#" class="menu-link">
-                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
-                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
-                </svg>
-                <span>Manage users</span>
-              </a>
-              <!-- subMenu-->
-              <ul class="submenu list-unstyled">
-                <li><a href="?page=invite_users" >Invite User</a></li>
-                <li><a href="?page=manage_users" >Users List</a></li>
-              </ul>
-            </li>
+
             <?php endif; ?>
 
             <?php if ($role === 'admin' || $role === 'manager'): ?>
@@ -135,6 +121,23 @@ $role = $_SESSION['role'] ?? 'guest';
             </li>
             
             <?php endif; ?>
+            <?php if ($role === 'admin'): ?>
+                             <!-- Manage users -->
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
+                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                </svg>
+                <span>Manage users</span>
+              </a>
+              <!-- subMenu-->
+              <ul class="submenu list-unstyled">
+                <li><a href="?page=invite_users" >Invite User</a></li>
+                <li><a href="?page=manage_users" >Users List</a></li>
+              </ul>
+            </li>
+              <?php endif; ?>
 
             <?php if (in_array($role, ['user', 'manager', 'admin'])): ?>
             <!-- Search-Inventory -->
@@ -182,21 +185,8 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
               </li>
             <?php if ($role === 'admin'): ?>
-             <!-- Manage users -->
-                <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
-                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                    <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
-                    </svg>
-                    <span>Manage users</span>
-                </a>
-                <!-- subMenu-->
-                <ul class="submenu list-unstyled">
-                    <li><a href="../manager/invite_users.php" >Invite User</a></li>
-                    <li><a href="../admin/manage_users.php" >User List</a></li>
-                </ul>
-                </li>
+
+
             <?php endif; ?>
 
             <?php if ($role === 'admin' || $role === 'manager'): ?>
@@ -277,6 +267,23 @@ $role = $_SESSION['role'] ?? 'guest';
               </a>
             </li>
             <?php endif; ?>
+            <?php if ($role === 'admin'): ?>
+              <!-- Manage users -->
+                <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-person-add" viewBox="0 0 16 16">
+                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                    <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                    </svg>
+                    <span>Manage users</span>
+                </a>
+                <!-- subMenu-->
+                <ul class="submenu list-unstyled">
+                    <li><a href="../manager/invite_users.php" >Invite User</a></li>
+                    <li><a href="../admin/manage_users.php" >User List</a></li>
+                </ul>
+                </li>
+              <?php endif; ?>
 
             <?php if (in_array($role, ['user', 'manager', 'admin'])): ?>
             <!-- Search-Inventory -->

@@ -561,7 +561,6 @@ h3{
 }
 .itemImg{
   width: 130px;
-  height: 130px;
 }
 .backBtn{
   display: flex;
@@ -1371,8 +1370,7 @@ font-size: 16px;
   align-content:center;
 }
 .imgCover{
-  width: 250px;
-  height: 250px;
+  width:100%;
   border:2px double #63727c;
   margin: auto;
   border-radius:8px;
