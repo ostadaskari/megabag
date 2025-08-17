@@ -138,11 +138,10 @@
 
 <div class="col-12 col-md-6">
     <div>
-        <label class="form-label">Images:</label>
         <div class="imgCover mb-2">
           <img src="../../design/assets/img/img14.jpg" class="img-fluid w-100">
         </div>   
-    <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;">
+    <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
         <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
             <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
         </li>
