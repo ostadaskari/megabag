@@ -1,9 +1,6 @@
-<<<<<<< HEAD
+
 
  <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
-=======
-<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">      
->>>>>>> main
     <h2 class="d-flex align-items-center">
     <svg width="22" height="22" fill="currentColor" class="bi bi-card-list mx-1 me-2" viewBox="0 0 16 16">
         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
@@ -38,22 +35,6 @@
                     <option value="available">Available</option>
                 </select>
             </div>
-=======
-    <div class="d-flex flex-row align-items-start justify-content-between" >
-        <div class="input-box w-50" style="margin: 0!important;">
-            <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-            </svg>
-            <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." />
-        </div>
-
-        <div class="w-25">
-            <select id="statusFilter" class="form-select">
-                <option value="">All Statuses</option>
-                <option value="available">Available</option>
-            </select>
-        </div>
->>>>>>> main
     </div>
 
     <!-- table list product -->
