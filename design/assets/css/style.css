@@ -1336,7 +1336,10 @@ fill:var(--main-text-color);
   fill:#9c2313;
   cursor:pointer;
 }
-.modalDetails strong,label,h3,svg{
+.modalDetails strong,
+.modalDetails label,
+.modalDetails h3,
+.modalDetails svg{
   color:rgb(13, 13, 14);
   font-size: 15px;
 }
