@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">      
+<div class="d-flex flex-row align-items-center justify-content-between mb-3 titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 1 0 3.5v9A1.5 1.5 0 0 1 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
@@ -15,8 +15,7 @@
 <div class="container p-0">
     <form method="POST" action="" id="groupIssueForm">
         <div id="issueRows">
-            <!-- Dynamic rows will be added here by JavaScript -->
-        </div>
+            </div>
 
         <div class="d-flex flex-row justify-content-between align-items-center w-100 px-1 mt-3">
             <div id="addRowBtn" class="add-row-btn" title="Add Row">
@@ -59,6 +58,7 @@ Swal.fire({
         border-radius: 5px;
         left: 1px; /* Align with input */
         top: 100%; /* Position below the input */
+        display: none; /* Add this line to hide it by default */
     }
     .autocomplete-item {
         padding: 8px 10px;
@@ -73,7 +73,6 @@ Swal.fire({
     }
 </style>
 
-<!-- JavaScript for Dynamic Rows + AJAX Search -->
 <script>
 // Keep a global counter for row indices
 let rowCounter = 0;
@@ -83,7 +82,7 @@ function createRowHtml(index) {
     return `
         <div class="stock-row border p-3 rounded mb-3 bg-light">
             <div class="row g-2 align-items-end">
-                <div class="col-6 col-md-2 px-1 position-relative"> <!-- Added position-relative -->
+                <div class="col-6 col-md-2 px-1 position-relative">
                     <label for="productInput" class="form-label">Product:</label>
                     <input type="text" name="products[${index}][product_search]" class="form-control product-search" placeholder="Search name/tag/part" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][product_id]" class="product-id">
@@ -92,7 +91,7 @@ function createRowHtml(index) {
                     <label for="quantityInput" class="form-label">QTY: <span class="text-muted small current-qty">(Available: <span class="qty-value" style="color: green;">--</span>)</span></label>
                     <input type="number" name="products[${index}][qty_issued]" class="form-control qty-input" min="1" required>
                 </div>
-                <div class="col-6 col-md-2 px-1 position-relative"> <!-- Added position-relative -->
+                <div class="col-6 col-md-2 px-1 position-relative">
                     <label for="Issued-ToInput" class="form-label">Issued To:</label>
                     <input type="text" name="products[${index}][issued_to_search]" class="form-control user-search" placeholder="Name, Family, Nickname" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][issued_to_id]" class="user-id">
@@ -169,7 +168,7 @@ document.addEventListener('input', function(e) {
             dropdown.classList.add('autocomplete-dropdown');
             parentCol.appendChild(dropdown);
         }
-        
+
         const hiddenInput = input.closest('.stock-row').querySelector('.product-id');
         const qtyInput = input.closest('.stock-row').querySelector('.qty-input');
         const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
@@ -179,7 +178,7 @@ document.addEventListener('input', function(e) {
             hiddenInput.value = '';
             qtyInput.max = '';
             qtyEl.textContent = '--';
-            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
+            if (dropdown) dropdown.style.display = 'none';
             return;
         }
 
@@ -190,7 +189,7 @@ document.addEventListener('input', function(e) {
                     showDropdown(data, input, dropdown, 'product-id', 'id', 'name', 'part_number', true);
                 });
         } else {
-            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
+            if (dropdown) dropdown.style.display = 'none';
         }
     }
 
@@ -211,7 +210,7 @@ document.addEventListener('input', function(e) {
         // Reset if input is cleared
         if (keyword.length === 0) {
             hiddenInput.value = '';
-            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
+            if (dropdown) dropdown.style.display = 'none';
             return;
         }
         
@@ -222,7 +221,7 @@ document.addEventListener('input', function(e) {
                     showDropdown(data, input, dropdown, 'user-id', 'id', 'name', 'nickname', false);
                 });
         } else {
-            if (dropdown) dropdown.innerHTML = ''; // Clear dropdown content
+            if (dropdown) dropdown.style.display = 'none';
         }
     }
 });
@@ -231,8 +230,8 @@ document.addEventListener('input', function(e) {
 document.addEventListener('click', function (e) {
     document.querySelectorAll('.autocomplete-dropdown').forEach(dropdown => {
         // Check if the click target is not inside the current dropdown and not the input itself
-        if (!dropdown.contains(e.target) && !e.target.classList.contains('form-control')) {
-            dropdown.innerHTML = ''; // Clear dropdown content instead of removing the element
+        if (!dropdown.contains(e.target) && !e.target.closest('.position-relative')) {
+            dropdown.style.display = 'none';
         }
     });
 });
@@ -240,7 +239,7 @@ document.addEventListener('click', function (e) {
 // Show dropdown
 function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, secondaryKey, isProduct = false) {
     dropdown.innerHTML = '';
-
+    
     if (data.length > 0) {
         data.forEach(item => {
             const div = document.createElement('div');
@@ -252,7 +251,8 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
                 const hiddenInput = input.closest('.stock-row').querySelector(`.${hiddenInputClass}`);
                 if (hiddenInput) hiddenInput.value = item[idKey];
 
-                dropdown.innerHTML = ''; // Clear dropdown after selection
+                dropdown.innerHTML = ''; // Clear dropdown content
+                dropdown.style.display = 'none'; // Hide the dropdown
 
                 // Fetch and display product quantity
                 if (isProduct) {
@@ -278,8 +278,10 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
             });
             dropdown.appendChild(div);
         });
+        dropdown.style.display = 'block';
     } else {
         dropdown.innerHTML = '<div class="autocomplete-item text-muted">No results found.</div>';
+        dropdown.style.display = 'block';
     }
 }
 
