@@ -67,15 +67,14 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['name']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
+        <td>" . htmlspecialchars($row['tag']) . "</td>
         <td>{$row['qty']}</td>
         <td>" . htmlspecialchars($row['submitter']) . "</td>
         <td>" . htmlspecialchars($row['category_name']) . "</td>
-        <td>" . date("Y/n/d", strtotime($row['created_at'])) . "</td>
         <td>" . htmlspecialchars($row['location']) . "</td>
         <td>" . htmlspecialchars($row['status']) . "</td>
-        <td>" . htmlspecialchars($row['tag']) . "</td>
-        <td>" . htmlspecialchars($row['date_code']) . "</td>
-        <td>" . htmlspecialchars($row['recieve_code']) . "</td>
+
+
         <td class=\"flex justify-center space-x-2\">
             <!-- New 'View' button with an SVG eye icon -->
             <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"showProductDetails({$row['id']})\" title=\"View\">

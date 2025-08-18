@@ -1,69 +1,99 @@
 <?php
-/**
- * Fetches and displays detailed information for a single product.
- * This script is called via an AJAX request from the frontend to populate a modal.
- */
+// get_product_details.php
+// This file fetches and returns a single product's details and associated images and PDFs as a JSON object.
+// It includes robust error handling to prevent non-JSON output on failure.
+
+header('Content-Type: application/json');
+
+// Include database connection and session handling.
+// This line might be the source of your error if the path is incorrect.
 require_once '../db/db.php';
+session_start();
 
-// Get the product ID from the URL query parameter.
-$productId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$response = [
+    'success' => false,
+    'message' => 'An unexpected error occurred.',
+    'product' => null,
+    'images' => [],
+    'pdfs' => []
+];
 
-if ($productId > 0) {
-    // Prepare a secure SQL query to prevent SQL injection.
-    // It joins the 'users' and 'categories' tables to get related names.
-    $query = "SELECT products.*, users.nickname AS submitter, categories.name AS category_name 
-              FROM products 
-              LEFT JOIN users ON users.id = products.user_id 
-              LEFT JOIN categories ON categories.id = products.category_id 
-              WHERE products.id = ?";
-              
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $productId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $product = $result->fetch_assoc();
-    $stmt->close();
-    
-    // Check if a product was found.
-    if ($product) {
-        // Generate the HTML to display the product details in a formatted way.
-        // Using htmlspecialchars to prevent XSS attacks.
-        $html = "<div class='container-fluid p-0'>
-            <div class='row'>
-                <div class='col-sm-6 mb-2'><strong>Name:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['name']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Part Number:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['part_number']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Manufacturer:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['mfg']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Quantity:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['qty']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Location:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['location']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Status:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['status']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Submitter:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['submitter']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Category:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['category_name']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Submit Date:</strong></div>
-                <div class='col-sm-6 mb-2'>" . date("Y/m/d H:i:s", strtotime($product['created_at'])) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Tag:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['tag']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Date Code:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['date_code']) . "</div>
-                <div class='col-sm-6 mb-2'><strong>Recieve Code:</strong></div>
-                <div class='col-sm-6 mb-2'>" . htmlspecialchars($product['recieve_code']) . "</div>
-            </div>
-        </div>";
-        echo $html;
-    } else {
-        echo "<p class='text-center text-danger'>Product not found.</p>";
+try {
+    // Check if the database connection is valid.
+    if (!$conn) {
+        throw new Exception("Database connection failed.");
     }
-} else {
-    echo "<p class='text-center text-danger'>Invalid product ID.</p>";
+    
+    if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $productId = (int)$_GET['id'];
+        
+        // Fetch product details
+        $query = "SELECT products.*, users.nickname AS submitter, categories.name AS category_name
+                  FROM products
+                  LEFT JOIN users ON users.id = products.user_id
+                  LEFT JOIN categories ON categories.id = products.category_id
+                  WHERE products.id = ?
+                  LIMIT 1";
+
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Failed to prepare product details query: " . $conn->error);
+        }
+
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $product = $result->fetch_assoc();
+            $response['success'] = true;
+            $response['message'] = 'Product details retrieved successfully.';
+            $response['product'] = $product;
+            
+            // Fetch associated images
+            $images_query = "SELECT file_path, file_name FROM images WHERE product_id = ?";
+            $images_stmt = $conn->prepare($images_query);
+            if (!$images_stmt) {
+                throw new Exception("Failed to prepare images query: " . $conn->error);
+            }
+            $images_stmt->bind_param("i", $productId);
+            $images_stmt->execute();
+            $images_result = $images_stmt->get_result();
+            while ($image = $images_result->fetch_assoc()) {
+                $response['images'][] = $image;
+            }
+            $images_stmt->close();
+
+            // Fetch associated PDFs
+            $pdfs_query = "SELECT file_path, file_name FROM pdfs WHERE product_id = ?";
+            $pdfs_stmt = $conn->prepare($pdfs_query);
+            if (!$pdfs_stmt) {
+                 throw new Exception("Failed to prepare PDFs query: " . $conn->error);
+            }
+            $pdfs_stmt->bind_param("i", $productId);
+            $pdfs_stmt->execute();
+            $pdfs_result = $pdfs_stmt->get_result();
+            while ($pdf = $pdfs_result->fetch_assoc()) {
+                $response['pdfs'][] = $pdf;
+            }
+            $pdfs_stmt->close();
+
+        } else {
+            $response['message'] = 'Product not found.';
+        }
+        $stmt->close();
+    } else {
+        $response['message'] = 'Invalid product ID.';
+    }
+} catch (Exception $e) {
+    // Catch any exceptions and provide a detailed error message in the JSON response.
+    $response['success'] = false;
+    $response['message'] = 'Server Error: ' . $e->getMessage();
 }
 
-// Close the database connection.
-$conn->close();
+echo json_encode($response);
+if (isset($conn) && $conn) {
+    $conn->close();
+}
+exit; // Ensure no other HTML is outputted after the JSON
 ?>
