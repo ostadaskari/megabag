@@ -182,36 +182,6 @@
 
 </div>
 
-<!-- Example button to open modal -->
-<!-- <button onclick="openModal()" class="btn btn-primary">Show Part Details</button> -->
-<!-- js for modal -->
-<script>
-function openModal() {
-  document.getElementById('modalOverlay').style.display = 'block';
-  document.querySelector('.modalDetails').style.display = 'block';
-
-  document.querySelectorAll('.sidebar, .sidebar-Mobile').forEach(el => {
-    el.style.zIndex = '10';
-  });
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').style.display = 'none';
-  document.querySelector('.modalDetails').style.display = 'none';
-
-  document.querySelectorAll('.sidebar, .sidebar-Mobile').forEach(el => {
-    el.style.zIndex = '1000';
-  });
-}
-
-// Close button
-document.getElementById('closeModal').addEventListener('click', closeModal);
-
-// Click outside modal
-document.getElementById('modalOverlay').addEventListener('click', closeModal);
-</script>
-
-<!-- end modal for show details -->
 
 <script>
 let currentPage = 1;

@@ -209,7 +209,7 @@ table {
     background-repeat: repeat;
     background-size: auto; 
     opacity: 0.35; 
-    z-index: -1;
+    z-index: 1;
     pointer-events: none;
     }
 
@@ -217,7 +217,6 @@ table {
         width: 215px !important;
         min-height: 100%!important;
         background-color: var(--main-bg1-color) !important;
-        z-index: 1000;
     }
 
     .sidebar-Mobile .list-unstyled {
@@ -258,7 +257,7 @@ table {
     opacity: 0;
     transform: translateX(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1200;
+    z-index: 100;
 }
     .sidebar-Mobile .dropdown-toggle{
         display: flex!important;
@@ -325,7 +324,7 @@ li.active > a {
 } */
 .content {
   position: relative;
-  z-index: 10;
+  z-index:5;
   height:100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1305,7 +1304,7 @@ fill:var(--main-text-color);
   height: 100%;
   background: rgba(0, 0, 0, 0.582);
   display: none;
-  z-index: 1140!important;
+  z-index:20;
 }
 
 .modalDetails {
@@ -1320,7 +1319,7 @@ fill:var(--main-text-color);
   padding: 20px;
   color: rgb(8, 55, 126);
   display: none;
-  z-index: 1150;
+  z-index: 1000;
   background-color: #fff;
 }
 #closeModal{
