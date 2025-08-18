@@ -40,12 +40,12 @@
                 <div class="container border rounded bg-light shadow-sm p-2 mb-2">
                     <!-- Category Form -->
                     <form class="row d-flex align-items-center justify-content-between" method="post" action="" id="category-form">
-                        <div class="col-12 col-md-4 mb-3">
+                        <div class="col-12 col-md-4">
                             <label for="name" class="form-label">Category Name:</label>
                             <input type="text" name="name" id="name" class="form-control" placeholder="Enter category name" autocomplete="off" required>
                         </div>
 
-                        <div class="col-12 col-md-4 mb-3 position-relative">
+                        <div class="col-12 col-md-4 position-relative">
                             <label for="search-category" class="form-label">Parent Category:</label>
                             <input type="text" id="search-category" class="form-control" autocomplete="off" placeholder="Search and select parent category">
                             <div id="category-tree" class="border rounded mt-2 p-2"></div>
@@ -55,9 +55,9 @@
                         <input type="hidden" name="action" id="action" value="add">
                         <input type="hidden" name="category_id" id="category_id" value="">
                         
-                        <div class="col-12 col-md-3 mt-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" onclick="clearCategory()" class="btn btn-secondary">Clear</button>
+                        <div class="col-12 col-md-3 mt-4 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary mx-1">Submit</button>
+                            <button type="button" onclick="clearCategory()" class="btn btn-secondary mx-1">Clear</button>
                         </div>
                     </form>
                 </div>

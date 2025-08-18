@@ -1,7 +1,3 @@
-
-   
-
-
           <!-- Edit product -->
            <div class="tab-content" id="edit-product">
             <div class="d-flex flex-row align-items-center justify-content-between titleTop">
@@ -17,6 +13,9 @@
 
             <form id="EditPartForm" class="d-flex flex-column partForm" action="" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
+                 
+                <div class="container border rounded shadow-sm bg-light p-3">
+                  <!-- part number and Manufacturer inputs -->
                   <div class="d-flex flex-row align-items-center mb-3">
                     <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -24,9 +23,6 @@
                   </svg>
                     <h3 class="pl-1">Part Details :</h3>
                 </div>
-                <div class="container border rounded shadow-sm bg-light p-3">
-                  <!-- part number and Manufacturer inputs -->
-                
                   <div class="row">
                     
                     <div class="col-12 col-md-4 px-2 my-2">
@@ -71,14 +67,14 @@
 
 
                 <!-- Category Dropdown Section -->
-                <div class="container mt-1 Category border rounded shadow-sm bg-light p-3">
+                <div class="container mt-1 Category">
                   <div class="row d-flex flex-row justify-content-between">
-                    <div class="col-12 col-md-6 px-2">
+                    <div class="col-12 col-md-6 pr-2">
                       <label for="editDescription" title="Company Comment">Company CMT:</label>
                       <textarea id="editDescription" class="mt-2" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
                     </div>
 
-                    <div class="col-12 col-md-6 px-2">
+                    <div class="col-12 col-md-6 pl-2">
                         <label for="" class="form-label">Categories:</label>
                         <input type="text" id="category_search" placeholder="Search category..." autocomplete="off" style="padding: 8px;" class="form-select">
                         <input type="hidden" name="category_id" id="category_id" value="<?= htmlspecialchars($product['category_id']) ?>">
@@ -96,55 +92,59 @@
                   <h3 class="pl-1">Upload Files:</h3>
                 </div>
 
-                <div class="row mt-1 d-flex flex-row justify-content-around">
-                    <!-- Datasheet Upload -->
-                    <div class="col-12 col-md-5 mb-3 border rounded shadow-sm bg-light p-3" >
-                      <label for="editDatasheetUpload" class="form-label">Upload Datasheet:</label>
-                      <input class="form-control" type="file" id="editDatasheetUpload" name="pdfs[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
-                        <?php if (!empty($pdfs)): ?>
-                      <ul id="editDatasheetList" class="mt-3 list-group small" style="max-height: 180px;overflow-y:scroll;">
-                        <?php foreach ($pdfs as $pdf): ?>
-                        <li class="d-flex flex-row align-items-center justify-content-between itemfile">
-                            <a style="color:#101010;" href="<?= htmlspecialchars($pdf['file_path']) ?>" target="_blank">
-                                <span><?= htmlspecialchars($pdf['file_name']) ?></span>  
-                            </a>
-                            <button class="btnSvg" type="button" onclick="deleteFile('pdf', <?= $pdf['id'] ?>)">
-                                <svg width="18" height="18" fill="" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </button>
-                        </li>
-                        <?php endforeach; ?>
-                      </ul>
-                          <?php else: ?>
-                            <p>No PDFs uploaded.</p>
-                        <?php endif; ?>
+                <div class="row mt-1">
+                    <div class="col-12 col-md-6 mb-3">
+                      <!-- Datasheet Upload -->
+                      <div class="mx-1 border rounded shadow-sm bg-light p-3" >
+                        <label for="editDatasheetUpload" class="form-label">Upload Datasheet:</label>
+                        <input class="form-control" type="file" id="editDatasheetUpload" name="pdfs[]" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+                          <?php if (!empty($pdfs)): ?>
+                        <ul id="editDatasheetList" class="mt-3 list-group small" style="max-height: 180px;overflow-y:scroll;">
+                          <?php foreach ($pdfs as $pdf): ?>
+                          <li class="d-flex flex-row align-items-center justify-content-between itemfile">
+                              <a style="color:#101010;" href="<?= htmlspecialchars($pdf['file_path']) ?>" target="_blank">
+                                  <span><?= htmlspecialchars($pdf['file_name']) ?></span>  
+                              </a>
+                              <button class="btnSvg" type="button" onclick="deleteFile('pdf', <?= $pdf['id'] ?>)">
+                                  <svg width="18" height="18" fill="" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
+                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                  </svg>
+                              </button>
+                          </li>
+                          <?php endforeach; ?>
+                        </ul>
+                            <?php else: ?>
+                              <p>No PDFs uploaded.</p>
+                          <?php endif; ?>
+                      </div>
                     </div>
 
                     <!-- Image Upload -->
-                    <div class="col-12 col-md-5 mb-3 border rounded shadow-sm bg-light p-3" >
-                      <label for="editImageUpload" class="form-label">Uploadd Images:</label>
-                      <input class="form-control" type="file" id="editImageUpload" name="images[]" multiple accept="image/*">
-                      <?php if (!empty($images)): ?>
-                      <ul id="editImageList" class="mt-3 list-group small" style="max-height: 180px;overflow-y:scroll;">
-                        <?php foreach ($images as $img): ?>
-                        <li class="d-flex flex-row align-items-center justify-content-between itemfile">
-                          <span><img src="<?= htmlspecialchars($img['file_path']) ?>" width="40"></span>  
-                          
-                            <button class="btnSvg" type="button" onclick="deleteFile('image', <?= $img['id'] ?>)">
-                                <svg width="18" height="18" fill="" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </button>
-                         
-                        </li>
-                        <?php endforeach; ?>
-                      </ul>
-                      <?php else: ?>
-                        <p>No images uploaded.</p>
-                    <?php endif; ?>
+                    <div class="col-12 col-md-6 mb-3" >
+                        <div class="mx-1 border rounded shadow-sm bg-light p-3">
+                          <label for="editImageUpload" class="form-label">Uploadd Images:</label>
+                          <input class="form-control" type="file" id="editImageUpload" name="images[]" multiple accept="image/*">
+                          <?php if (!empty($images)): ?>
+                          <ul id="editImageList" class="mt-3 list-group small" style="max-height: 180px;overflow-y:scroll;">
+                            <?php foreach ($images as $img): ?>
+                            <li class="d-flex flex-row align-items-center justify-content-between itemfile">
+                              <span><img src="<?= htmlspecialchars($img['file_path']) ?>" width="40"></span>  
+                              
+                                <button class="btnSvg" type="button" onclick="deleteFile('image', <?= $img['id'] ?>)">
+                                    <svg width="18" height="18" fill="" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </button>
+                            
+                            </li>
+                            <?php endforeach; ?>
+                          </ul>
+                          <?php else: ?>
+                            <p>No images uploaded.</p>
+                        <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 

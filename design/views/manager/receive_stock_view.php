@@ -17,7 +17,7 @@
     <div class="container px-0 mt-1">
         <form method="POST" action="" id="groupStockForm">
             <div id="stockRows">
-                <div class="stock-row border p-2 rounded mb-3 bg-light position-relative">
+                <div class="stock-row border p-1 rounded mb-1 bg-light position-relative">
                     <div class="row d-flex align-items-end justify-content-between">
                         <div class="col-6 col-md-5 px-1 position-relative">
                             <label for="productInput" class="form-label">Product:</label>

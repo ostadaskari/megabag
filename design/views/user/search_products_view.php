@@ -11,16 +11,16 @@
     <span>Back</span>
     </a>
 </div>
-<div class="input-box mb-3">
+<div class="input-box mb-2">
     <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
     </svg>
     <input type="text" id="searchInput" class="form-control" placeholder="Search by name, part number or tag" autocomplete="off">
 </div>
 
-<div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 65vh;">
+<div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:70vh;overflow-y: auto;">
     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
-        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+        <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
             <tr>
                 <th>#</th>
                 <th>Name</th>
