@@ -18,7 +18,7 @@
     <input type="text" id="searchInput" class="form-control" placeholder="Search by name, part number or tag" autocomplete="off">
 </div>
 
-<div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 65vh;">
+<div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:70vh;overflow-y: auto;">
     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
             <tr>

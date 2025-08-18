@@ -18,7 +18,7 @@
         <div class="row" id="tableRow">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height:80vh;">
+                    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:80vh;overflow-y: auto;">
                         <table class="table table-bordered table-hover mb-0 text-center table-striped">
                             <thead class="table-light position-sticky top-0" style="z-index: 1;">
                                 <tr>
