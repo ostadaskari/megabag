@@ -87,6 +87,7 @@ CREATE TABLE images (
     file_path VARCHAR(255) NOT NULL,       -- location on disk/server
     file_size INT UNSIGNED,                -- file weight in bytes
     file_extension VARCHAR(10),            -- helpful to enforce type (e.g., "jpg", "png", "pdf")
+    is_cover TINYINT(1) DEFAULT 0,
     mime_type VARCHAR(50),                 -- useful for validation (image/png, application/pdf)
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- when the file was uploaded
  
