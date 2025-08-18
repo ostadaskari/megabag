@@ -183,9 +183,7 @@ table {
 }
     /* end mobile */
     /* sidebar */
-     .div-navbar{
-        /* height: 5vh; */
-    }
+  
     .userNameTop{
       width: 83%;
       height:60px;
@@ -1310,7 +1308,7 @@ fill:var(--main-text-color);
   height: 100%;
   background: rgba(0, 0, 0, 0.582);
   display: none;
-  z-index: 1040;
+  z-index: 1140;
 }
 
 .modalDetails {
@@ -1325,7 +1323,7 @@ fill:var(--main-text-color);
   padding: 20px;
   color: rgb(8, 55, 126);
   display: none;
-  z-index: 1050;
+  z-index: 1150;
   background-color: #fff;
 }
 #closeModal{
@@ -1338,8 +1336,7 @@ fill:var(--main-text-color);
 }
 .modalDetails strong,
 .modalDetails label,
-.modalDetails h3,
-.modalDetails svg{
+.modalDetails h3 {
   color:rgb(13, 13, 14);
   font-size: 15px;
 }
