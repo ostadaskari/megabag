@@ -81,7 +81,7 @@
 <div id="modalOverlay" class="modal-overlay"></div>
 
 <div id="productDetailsModal" class="container bg-light border rounded shadow-sm mb-4 modalDetails" style="display: none;">
-    <div class="mb-3 modal-header d-flex justify-content-between align-items-center">
+    <div class="mb-2 modal-header d-flex justify-content-between align-items-center" style="padding: 8px 16px;">
         <div class="d-flex align-items-center ">
             <svg width="20" height="20" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
             <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/>
@@ -94,170 +94,13 @@
         </svg>
     </div>
 
-<<<<<<< HEAD
-<div class="col-12 col-md-6">
-    <div>
-        <div class="imgCover mb-2">
-          <img src="../../design/assets/img/img14.jpg" class="img-fluid w-100">
-        </div>   
-        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
-            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-                <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
-            </li>
-            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-                <span><img class="img-fluid" src="../../design/assets/img/img12.jpg"></span>                             
-            </li>
-            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-                <span><img class="img-fluid" src="../../design/assets/img/img13.jpg"></span>                             
-            </li>
-            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-                <span><img class="img-fluid" src="../../design/assets/img/img14.jpg"></span>                             
-            </li>
-            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-                <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
-            </li>
-        </ul>
-    </div>      
-=======
     <div id="productDetailsContent">
         <!-- Dynamic content will be loaded here -->
     </div>
->>>>>>> main
 </div>
 <!-- end modal for show details -->
 
-<<<<<<< HEAD
-    <script>
-        const imgCover = document.querySelector('.imgCover'); 
-        const items = document.querySelectorAll('.itemfile span img'); 
 
-        items.forEach(img => {
-            img.addEventListener('click', () => {
-            imgCover.innerHTML = `<img src="${img.src}" class="img-fluid w-100">`;
-            });
-        });
-    </script>
-
-   
-    
-  </div>   
-
-</div>
-
-
-<script>
-let currentPage = 1;
-
-function fetchProducts(page = 1) {
-    currentPage = page;
-    const keyword = document.getElementById("searchInput").value;
-    const status = document.getElementById("statusFilter").value;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `../ajax/search_products.php?keyword=${encodeURIComponent(keyword)}&status=${status}&page=${page}`, true);
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const result = JSON.parse(xhr.responseText);
-            document.getElementById("productsTableBody").innerHTML = result.html;
-            document.getElementById("pagination").innerHTML = result.pagination;
-        }
-    };
-    xhr.send();
-}
-
-// Handle typing and filter change
-document.getElementById("searchInput").addEventListener("input", () => fetchProducts(1));
-document.getElementById("statusFilter").addEventListener("change", () => fetchProducts(1));
-
-// Initial load
-fetchProducts();
-//pagination
-document.addEventListener('click', function (e) {
-    if (e.target.matches('.pagination a')) {
-        e.preventDefault();
-        const page = parseInt(e.target.getAttribute('data-page'));
-        if (!isNaN(page)) fetchProducts(page);
-    }
-});
-
-
-/**
- * Shows a modal with detailed information for a specific product.
- * @param {number} productId The ID of the product to show.
- */
-function showProductDetails(productId) {
-    // Show a loading spinner while the content is being fetched
-    const modalBody = document.getElementById('modalProductDetailsBody');
-    modalBody.innerHTML = `
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    `;
-
-    // Fetch the product details via AJAX
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `../ajax/get_product_details.php?id=${productId}`, true);
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Update the modal body with the fetched HTML
-            modalBody.innerHTML = xhr.responseText;
-        } else {
-            // Handle errors
-            modalBody.innerHTML = `<p class="text-danger text-center">Failed to load product details.</p>`;
-        }
-    };
-    xhr.send();
-
-    // Use Bootstrap's JavaScript to show the modal
-    const modal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
-    modal.show();
-}
-</script>
-
-            <!-- end fetchProducts -->
-
-<script>
-function deleteProduct(productId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'This will permanently delete the product.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '';
-
-            const actionInput = document.createElement('input');
-            actionInput.type = 'hidden';
-            actionInput.name = 'action';
-            actionInput.value = 'delete';
-
-            const idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'product_id';
-            idInput.value = productId;
-
-            form.appendChild(actionInput);
-            form.appendChild(idInput);
-            document.body.appendChild(form);
-            form.submit();
-        }
-    });
-}
-
-
-function editProduct(productId) {
-    window.location.href = "../auth/dashboard.php?page=edit_product&id=" + productId;
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" xintegrity="sha384-I7E8Vz4x-d-A3Gq55T5z4o8B5Z8Z2Nq4a7U8U9uA1l1r4fP1yL0" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" xintegrity="sha384-0p4V4m6zQ7z6S0h4e4S4r2D4a1k5t5a4l3S3d2e2o1e3k4n5f6g7g8h9i0j0k1l2m3n4o5p6q7r8s9t" crossorigin="anonymous"></script>
-=======
 
 
 <script>
@@ -310,7 +153,7 @@ function editProduct(productId) {
                         let pdfListHtml = '';
                         if (pdfs && pdfs.length > 0) {
                             pdfs.forEach(pdf => {
-                                pdfListHtml += `<p><strong>Datasheet:</strong> <a style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><span>${pdf.file_name}</span></a></p>`;
+                                pdfListHtml += ` <a class="mx-2 bg-light p-2" style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><svg width="16" height="16" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/></svg><span>${pdf.file_name}</span></a> `;
                             });
                         }
 
@@ -325,22 +168,22 @@ function editProduct(productId) {
                         
                         productDetailsContent.innerHTML = `
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-8">
                                     <div class="container">
-                                        <div class="row mt-4">
-                                            <div class="col-12 my-2">
+                                        <div class="row">
+                                            <div class="col-6 my-2">
                                                 <strong>Name:</strong> ${product.name}
                                             </div>
-                                            <div class="col-6 col-md-4 my-3">
+                                            <div class="col-6 my-1">
                                                 <strong>P/N:</strong> ${product.part_number}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>MFG:</strong> ${product.mfg}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>Tag:</strong> ${product.tag}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>Qty:</strong> ${product.qty}
                                             </div>
                                             <div class="col-12 my-2">
@@ -366,17 +209,17 @@ function editProduct(productId) {
                                             </div>
 
                                             <div class="col-12 my-2 d-flex flex-row">
-                                                ${pdfListHtml}
+                                               <p><strong>Datasheet:</strong> ${pdfListHtml} </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div>
+                                <div class="col-12 col-md-4">
+                                    <div class="d-flex flex-column align-items-end">
                                         <div class="imgCover mb-2">
                                             <img src="${mainImageSrc}" class="img-fluid w-100">
                                         </div>
-                                        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
+                                        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
                                             ${imageListHtml}
                                         </ul>
                                     </div>
@@ -481,4 +324,3 @@ function editProduct(productId) {
         };
     });
 </script>
->>>>>>> main

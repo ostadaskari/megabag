@@ -426,56 +426,6 @@
 }
 
 
-
-    /* Custom CSS for the modal */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        z-index: 999;
-    }
-    .modalDetails {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-        display: none;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 800px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-    .imgCover img, .itemfile img {
-        display: block;
-        width: 100%;
-        height: auto;
-        border-radius: 4px;
-    }
-    .itemfile {
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 5px;
-        margin: 5px;
-        max-width: 100px;
-    }
-    .itemfile span {
-        display: block;
-    }
-    .list-group {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
     /* Spinner animation */
     @keyframes spin {
         0% { transform: rotate(0deg); }

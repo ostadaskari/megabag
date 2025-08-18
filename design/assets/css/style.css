@@ -555,6 +555,7 @@ h3{
 }
 .itemImg{
   width: 100px;
+  height: 60px;
 }
 .backBtn{
   display: flex;
@@ -1309,14 +1310,13 @@ fill:var(--main-text-color);
 
 .modalDetails {
   position:absolute;
-  top: 45vh;
+  top: 42vh;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
   width: 90%;
-  max-width: 950px;
-  padding: 20px;
+  padding: 10px;
   color: rgb(8, 55, 126);
   display: none;
   z-index: 1000;
@@ -1366,8 +1366,11 @@ font-size: 16px;
   align-content:center;
 }
 .imgCover{
-  width:75%;
+  width:100%;
+  height: 250px;
   border:2px double #63727c;
-  margin: auto;
   border-radius:8px;
+  display: flex;
+  align-content:center;
+  justify-content: center;
 }
