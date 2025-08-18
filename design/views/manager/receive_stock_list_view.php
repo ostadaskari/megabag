@@ -13,10 +13,10 @@
        </a>
     </div>
 <div class="tab-content" id="List-Of-Receives">
-    <div class="container px-0 mt-3">
+    <div class="container px-0">
         <div class="row align-items-center">
             <div class="col-12 col-md-11 px-1">
-                <form class="row d-flex align-items-end justify-content-between mb-3 border rounded bg-light shadow-sm p-2">
+                <form class="row d-flex align-items-end justify-content-between mb-1 border rounded bg-light shadow-sm p-1">
 
                 <div class="col-12 col-md-4">
                     <label for="" class="form-label">Product:</label>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-3 mb-1 mt-md-0 mt-2">
+                <div class="col-12 col-md-3 mt-md-0 mt-2">
                     <div class="d-flex justify-content-end">
                     <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" onclick="fetchReceipts()" title="Search">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-search mx-1" viewBox="0 0 16 16">
@@ -60,7 +60,7 @@
                 </form> 
             </div>
             <div class="col-12 col-md-1">
-                <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn mb-3 border rounded bg-light shadow-sm p-2">
+                <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn mb-1 border rounded bg-light shadow-sm p-1">
                     <div class="d-flex flex-row align-items-center justify-content-between my-1">
                         <p class="py-1 fontS">EXE:</p>
                         <button class="btnSvg" type="button" class="btn p-1 mx-1" title="Excel File" onclick="exportReceipts('excel')">
@@ -81,7 +81,7 @@
             </div>
         </div>
         
-        <div class="row d-flex justify-content-center align-items-center">
+        <div class="row d-flex justify-content-center align-items-center mt-1">
             <div class="col-12">
                 <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 85vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
