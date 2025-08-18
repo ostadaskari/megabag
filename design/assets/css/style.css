@@ -217,11 +217,9 @@ table {
         width: 215px !important;
         min-height: 100%!important;
         background-color: var(--main-bg1-color) !important;
-        z-index: 1100;
+        z-index: 1000;
     }
-   .sidebar-Mobile {
-        z-index: 1200;
-    }
+
     .sidebar-Mobile .list-unstyled {
         margin-top:40px;
     }
@@ -260,6 +258,7 @@ table {
     opacity: 0;
     transform: translateX(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1200;
 }
     .sidebar-Mobile .dropdown-toggle{
         display: flex!important;
@@ -327,12 +326,10 @@ li.active > a {
 .content {
   position: relative;
   z-index: 10;
-  height: 100%;
+  height:100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-
 
 /* content container */
 
@@ -639,11 +636,11 @@ td {
 }
 @media (max-width: 768px) {
     .main {
-        height:91vh;
+        height:100vh;
     }
-    .div-navbar{
+    /* .div-navbar{
         height: 9vh;
-    }
+    } */
     .logo{
         width: 40px!important;
         height: 40px!important;
@@ -869,8 +866,8 @@ color: #212529;
   top: 5px;
   left: 0px;
   color: white;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   box-shadow: 2px 2px 16px rgba(0, 0, 0, .15);
   align-items: center;
   justify-content: center;
@@ -1308,7 +1305,7 @@ fill:var(--main-text-color);
   height: 100%;
   background: rgba(0, 0, 0, 0.582);
   display: none;
-  z-index: 1140;
+  z-index: 1140!important;
 }
 
 .modalDetails {

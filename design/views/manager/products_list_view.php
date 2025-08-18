@@ -39,7 +39,7 @@
     <!-- table list product -->
     <div class="row mt-2">
     <div class="col-12">
-        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 60vh;">
+        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 59vh;">
             <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
             <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                 <tr>
@@ -70,7 +70,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="row my-2">
+    <div class="row mt-2">
     <div class="col-12 d-flex justify-content-center">
         <div id="pagination" class="pagination-container"></div>
     </div>
@@ -183,17 +183,25 @@
 </div>
 
 <!-- Example button to open modal -->
-<button onclick="openModal()" class="btn btn-primary">Show Part Details</button>
+<!-- <button onclick="openModal()" class="btn btn-primary">Show Part Details</button> -->
 <!-- js for modal -->
 <script>
 function openModal() {
   document.getElementById('modalOverlay').style.display = 'block';
   document.querySelector('.modalDetails').style.display = 'block';
+
+  document.querySelectorAll('.sidebar, .sidebar-Mobile').forEach(el => {
+    el.style.zIndex = '10';
+  });
 }
 
 function closeModal() {
   document.getElementById('modalOverlay').style.display = 'none';
   document.querySelector('.modalDetails').style.display = 'none';
+
+  document.querySelectorAll('.sidebar, .sidebar-Mobile').forEach(el => {
+    el.style.zIndex = '1000';
+  });
 }
 
 // Close button
@@ -202,11 +210,9 @@ document.getElementById('closeModal').addEventListener('click', closeModal);
 // Click outside modal
 document.getElementById('modalOverlay').addEventListener('click', closeModal);
 </script>
+
 <!-- end modal for show details -->
 
-
-
- <!-- fetchProducts -->
 <script>
 let currentPage = 1;
 
