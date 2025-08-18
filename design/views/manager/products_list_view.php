@@ -145,35 +145,35 @@
         <div class="imgCover mb-2">
           <img src="../../design/assets/img/img14.jpg" class="img-fluid w-100">
         </div>   
-    <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
-        <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-            <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
-        </li>
-        <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-            <span><img class="img-fluid" src="../../design/assets/img/img12.jpg"></span>                             
-        </li>
-        <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-            <span><img class="img-fluid" src="../../design/assets/img/img13.jpg"></span>                             
-        </li>
-        <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-            <span><img class="img-fluid" src="../../design/assets/img/img14.jpg"></span>                             
-        </li>
-        <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
-            <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
-        </li>
-    </ul>
-  </div>      
+        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
+            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
+                <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
+            </li>
+            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
+                <span><img class="img-fluid" src="../../design/assets/img/img12.jpg"></span>                             
+            </li>
+            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
+                <span><img class="img-fluid" src="../../design/assets/img/img13.jpg"></span>                             
+            </li>
+            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
+                <span><img class="img-fluid" src="../../design/assets/img/img14.jpg"></span>                             
+            </li>
+            <li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm">
+                <span><img class="img-fluid" src="../../design/assets/img/img11.jpg"></span>                             
+            </li>
+        </ul>
+    </div>      
 </div>
 
     <script>
-    const imgCover = document.querySelector('.imgCover'); 
-    const items = document.querySelectorAll('.itemfile span img'); 
+        const imgCover = document.querySelector('.imgCover'); 
+        const items = document.querySelectorAll('.itemfile span img'); 
 
-    items.forEach(img => {
-        img.addEventListener('click', () => {
-        imgCover.innerHTML = `<img src="${img.src}" class="img-fluid w-100">`;
+        items.forEach(img => {
+            img.addEventListener('click', () => {
+            imgCover.innerHTML = `<img src="${img.src}" class="img-fluid w-100">`;
+            });
         });
-    });
     </script>
 
    
