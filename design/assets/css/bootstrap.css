@@ -372,7 +372,7 @@ position: relative !important;
 .form-select {
   display: block;
   width: 100%;
-  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  padding:0.375rem 1.25rem 0.375rem 0.75rem;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.5;
@@ -385,6 +385,7 @@ position: relative !important;
   border: 1px solid #ced4da;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  font-family: myFont;
 }
 
 .form-select:focus {
@@ -774,7 +775,31 @@ position: relative !important;
 .h-100{
   height: 100%!important;
 }
+/*  */
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
 
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-success {
+  background-color: #198754 !important;
+}
 .rounded {
   border-radius: 0.375rem;
 }
@@ -783,6 +808,10 @@ position: relative !important;
     backdrop-filter: blur(3.4px);
   -webkit-backdrop-filter: blur(3.4px);
 }
+.bg-secondary {
+  background-color: #6c757d !important;
+}
+
 .shadow-sm {
   box-shadow: 0 1px 5px #05a2e073;
 }

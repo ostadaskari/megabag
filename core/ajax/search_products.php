@@ -76,9 +76,6 @@ while ($row = $result->fetch_assoc()) {
 
 
         <td class=\"flex justify-center space-x-2\">
-            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"showProductDetails({$row['id']})\" title=\"View\">
-                💭
-            </button>
             <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
                 ✏️
             </button>
