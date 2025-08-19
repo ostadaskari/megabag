@@ -35,8 +35,10 @@
 
                 <!--  The dynamic include block -->
                 </div>
+                
       </div>
     </div>
+
 
 <?php include(__DIR__ . '/../partials/footer.php'); ?>
 

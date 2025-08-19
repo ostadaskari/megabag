@@ -17,14 +17,16 @@
 
 <!-- Main Container -->
 <div class="container px-0">
-    <div class="row d-flex flex-column justify-content-center" style="max-width: 800px; margin:0 auto;">
+    <div class="row d-flex flex-column justify-content-center" style="width: 100%;">
         <!-- Search Product --> 
-        <label for="productSearch" class="form-label" style="margin:0 auto;">Search in Product:</label>
-        <div class="col-12 col-md-5" style="margin:3px auto;">
+        <label for="productSearch" class="form-label" style="width:100%;text-align: center;">Search in Product:</label>
+        <div class="col-12 col-md-6" style="margin: auto;">
             <div class="input-box" style="width: 100%; margin:0 0 5px 0;">
-                <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                </svg>
+                <div class="svgSearch">
+                    <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                    </svg>
+                </div>
                 <input type="text" id="productSearch" name="searchProduct" placeholder="Type to search by name P/N or Tag...">
                 <div id="productResults"></div>
             </div>
@@ -37,12 +39,14 @@
         <input type="hidden" name="product_id" id="product_id">
 
         <!-- Features Container (dynamic rows will be injected here) -->
-        <div id="featuresContainer" class="container border shadow-sm rounded bg-light p-2" style="max-width: 800px;height: 62vh;overflow-y: auto;">
-            <!-- JS will insert feature fields here -->
+        <div class="container border shadow-sm rounded bg-light p-2" style="width:100%;height: 62vh;overflow-y: auto;">
+            <div class="row" id="featuresContainer">
+               <!-- JS will insert feature fields here -->
+            </div> 
         </div>
 
         <!-- Submit Button -->
-        <div class="d-flex flex-row justify-content-end align-items-center px-1" style="max-width: 800px; margin:5px auto;">
+        <div class="d-flex flex-row justify-content-end align-items-center" style="margin:10px auto;">
             <button type="submit" class="btn btn-primary" title="Submit">Submit</button>
         </div>
     </form>
@@ -115,7 +119,7 @@ function selectProduct(id, name) {
             features.forEach(f => {
                 const formGroup = document.createElement('div');
                 formGroup.classList.add(
-                    'row',
+                    'col-6',
                     'd-flex',
                     'align-items-end',
                     'p-2'
@@ -157,7 +161,7 @@ function selectProduct(id, name) {
                         break;
                     case 'TEXT':
                         inputHtml = `<textarea class="form-control" name="features[${f.id}][value]" placeholder="Enter a long description" ${requiredAttr}>${f.value}</textarea>`;
-                        inputColClass = 'col-6 col-md-8 px-1 d-flex flex-row';
+                        inputColClass = 'col-6 col-md-5 px-1 d-flex flex-row';
                         unitColClass = 'col-6 col-md-3 px-1 d-flex flex-row';
                         break;
                     default:
@@ -172,7 +176,7 @@ function selectProduct(id, name) {
 
                 // Use the new row and col structure
                 formGroup.innerHTML = `
-                    ${f.data_type !== 'boolean' ? `<div class="col-12"><label class="form-label">${f.name}: ${f.is_required ? '*' : ''}</label></div>` : ''}
+                    ${f.data_type !== 'boolean' ? `<label class="form-label" style="width: 100px;max-width: 120px;">${f.name}: ${f.is_required ? '*' : ''}</label>` : ''}
                     <div class="${inputColClass}">${inputHtml}</div>
                     ${f.unit ? `<div class="ml-2 ${unitColClass}">${unitHtml}</div>` : ''}
 `;

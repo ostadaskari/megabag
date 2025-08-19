@@ -11,35 +11,49 @@
     <span>Back</span>
     </a>
 </div>
-<div class="input-box mb-2">
-    <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-    </svg>
-    <input type="text" id="searchInput" class="form-control" placeholder="Search by name, part number or tag" autocomplete="off">
+<div class="container px-0">
+    <div class="row d-flex flex-column justify-content-center" style="width: 100%;">
+        <!-- Search Product --> 
+        <div class="col-12 col-md-6" style="margin: auto;">
+             <div class="input-box my-0" style="width:100%;">
+                <div class="svgSearch">
+                    <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                    </svg>
+                </div>
+                <input type="text" id="searchInput" class="form-control"  placeholder="Search by name, part number or tag" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:70vh;overflow-y: auto;">
+        <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
+            <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Tag</th>
+                    <th>P/N</th>
+                    <th>MFG</th>
+                    <th>Availability</th> <!-- Renamed QTY to Availability and removed Status TH -->
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Submitter</th>
+                    <th>Submit Date</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody">
+                <!-- Adjusted colspan to 10 as per the new header count -->
+                <tr><td colspan="10" class="text-muted">Start typing to search...(more than 3 characters)</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height:70vh;overflow-y: auto;">
-    <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
-        <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Tag</th>
-                <th>P/N</th>
-                <th>MFG</th>
-                <th>Availability</th> <!-- Renamed QTY to Availability and removed Status TH -->
-                <th>Location</th>
-                <th>Category</th>
-                <th>Submitter</th>
-                <th>Submit Date</th>
-            </tr>
-        </thead>
-        <tbody id="resultsBody">
-            <!-- Adjusted colspan to 10 as per the new header count -->
-            <tr><td colspan="10" class="text-muted">Start typing to search...(more than 3 characters)</td></tr>
-        </tbody>
-    </table>
-</div>
+
+
+
 
 <script>
     const searchInput = document.getElementById('searchInput');

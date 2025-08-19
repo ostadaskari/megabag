@@ -8,7 +8,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, (int)($_GET['page'] ?? 1));
-$limit = 7;
+$limit = 17;
 $offset = ($page - 1) * $limit;
 
 $conditions = [];

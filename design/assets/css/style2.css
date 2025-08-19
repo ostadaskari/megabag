@@ -189,7 +189,7 @@
 
         /* Fixed height and scroll for the display tree */
         .fixed-height-scroll {
-            max-height:55vh;
+            height:100%;
             overflow-y: auto;
         }
 
@@ -233,7 +233,11 @@
 
 
     /*  add category feature   */
-        .search-container { position: relative; }
+        .search-container { position: relative;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+     }
         .category-results {
             position: absolute;
             width: 100%;
@@ -288,34 +292,9 @@
             cursor: pointer;
             font-weight: bold;
         }
-        /* Specific styles for the plus button and its SVG to ensure the color is correct */
-        .add-row-btn {
-            border: none;
-            background: none;
-            padding: 0;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
 
-        .add-row-btn svg {
-            fill: var(--primary-color) !important; /* Forces the color to be green */
-            transition: fill 0.2s ease-in-out;
-        }
-
-        .add-row-btn:hover svg {
-            transform: scale(1.1); /* Adds a nice little animation on hover */
-            fill: #388E3C;
-        }
-        .existing-features {
-            margin-top: 20px;
-        }
            /* end add category feature   */
 
-
-           /*  add product feature  */
-
-        
-    
       
         .form-container {
             max-width: 800px;

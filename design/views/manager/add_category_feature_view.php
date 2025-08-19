@@ -13,12 +13,14 @@
 </div>
 
 <form id="featureForm" method="POST" action="" style="padding-bottom: 50px;">
-    <div class="col-12 col-md-3 search-container">
-        <label for="categorySearch" class="form-label">Search in categories:</label>
-        <div class="input-box" style="width: 100%; margin:0 0 10px 0;">
-            <svg width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-            </svg>
+    <div class="col-12 col-md-6 search-container" style="margin: auto;">
+        <label for="categorySearch" class="form-label" style="width:100%;text-align: center;">Search in categories:</label>
+        <div class="input-box" style="width: 100%; margin:0 0 5px 0;" >
+             <div class="svgSearch">
+                <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                </svg>
+             </div>
             <input type="text" id="categorySearch" placeholder="Search categories..." autocomplete="off">
             <input type="hidden" name="category_id" id="category_id">
             <div id="categoryResults" class="category-results" style="display:none;"></div>

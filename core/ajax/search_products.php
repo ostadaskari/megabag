@@ -6,7 +6,7 @@ $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
 $status = isset($_GET['status']) ? trim($_GET['status']) : '';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 //limit per page
-$limit = 8;
+$limit = 17;
 $offset = ($page - 1) * $limit;
 
 $where = "WHERE 1";

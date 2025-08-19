@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
 try {
     //pagination 
     //set page number and limit items per page 
-    $limit = 10;
+    $limit = 14;
     // We now use 'pg' for pagination to avoid conflict with the 'page' view parameter
     $page = isset($_GET['pg']) && is_numeric($_GET['pg']) ? (int) $_GET['pg'] : 1;
     $offset = ($page - 1) * $limit;

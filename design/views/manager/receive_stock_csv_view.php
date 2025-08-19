@@ -14,7 +14,7 @@
 <div class="tab-content" id="Insert-By-CSV">
     <div class="container px-0">
         <div class="row d-flex justify-content-between border rounded shadow-sm bg-light p-2">
-            <div class="col-12 col-md-6 d-flex flex-column align-items-center px-2">
+            <div class="col-12 col-md-6 d-flex flex-column align-items-center pr-2">
                 <h5 class="p-2 titleTop w-100" style="border-radius: 5px 5px 0 0;">Files:</h5>
                 <div class="d-flex flex-row justify-content-between align-items-center border rounded shadow-sm px-3 py-2 w-100 bg-light" style="border-radius:0 0 5px 5px;">
                     <svg width="30" height="30" fill="rgb(43, 100, 150)" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
@@ -58,7 +58,7 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <div id="checkedData" class="mt-4">
+                <div id="checkedData" class="mt-2">
                     </div>
             </div>
         </div>
@@ -146,13 +146,13 @@
 
                 if (isNew) {
                     catCell = `
-                                <div class="category-autocomplete-container">
-                                    <input type="text" class="form-control form-control-sm category-autocomplete" 
-                                        placeholder="Search category..." 
-                                        data-index="${idx}" 
-                                        data-category-id="" />
-                                    <div class="category-suggestions d-none" data-index="${idx}"></div>
-                                </div>
+                        <div class="category-autocomplete-container">
+                            <input type="text" class="form-control form-control-sm category-autocomplete" 
+                                placeholder="Search category..." 
+                                data-index="${idx}" 
+                                data-category-id="" />
+                            <div class="category-suggestions d-none" data-index="${idx}"></div>
+                        </div>
                             `;
                 } else {
                     catCell = row.matched_category;
@@ -172,15 +172,10 @@
             }).join('');
 
             document.getElementById('checkedData').innerHTML = `
-<<<<<<< HEAD
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 60vh;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 58vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
-=======
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-3" style="max-height: 60vh; ">
-                    <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
-                        <thead class="table-invitionLink sticky-top" style="top:-17px; z-index: 1;">
->>>>>>> edc74decd4c521aa0a79eff6e0017d67c28c48fc
+
                             <tr>
                                 <th>#</th>
                                 <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
