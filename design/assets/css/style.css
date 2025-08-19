@@ -549,9 +549,6 @@ h3{
   top: 42px;
 }
 
-#edit-product svg{
-    fill:var(--main-bg0-color);
-}
 .itemfile{
   background-color:#e3e9f17a;
   padding: 8px;
