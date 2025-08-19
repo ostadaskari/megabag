@@ -1,4 +1,12 @@
 <?php
+
+require '../../vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+
 require_once '../db/db.php';
 
 
@@ -8,7 +16,7 @@ $from_date = $_GET['from_date'] ?? '';
 $to_date = $_GET['to_date'] ?? '';
 
 // Base query
-$query = "SELECT s.*, u.nickname, p.name, p.part_number, p.tag 
+$query = "SELECT s.*, u.nickname, p.name, p.mfg, p.part_number, p.tag 
           FROM stock_receipts s
           JOIN users u ON s.user_id = u.id
           JOIN products p ON s.product_id = p.id
@@ -48,44 +56,79 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // ---------------------------
-// Export to CSV (Excel style)
+// Export to Excel (using PhpSpreadsheet)
 // ---------------------------
 
-if ($format === 'excel') {
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment;filename=receipts_export.csv');
-    header('Pragma: no-cache');
-    header('Expires: 0');
+if ($format === 'excel' || $format === 'xlsx') {
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
 
-    $output = fopen('php://output', 'w');
+    // Set the column headers
+    $header = [ 'Part Number', 'MFG', 'Tag', 'Qty', 'User', 'Date', 'P-Name', 'Comment'];
+    $sheet->fromArray($header, NULL, 'A1');
 
-    // Set UTF-8 BOM for Excel compatibility
-    fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+    // Define an array of pastel colors (ARGB format)
+    $pastelColors = [
+        'FFDED1E7', // 
+        'FFD9EAD3', // Light Green
+        'FFF9D4BB', // Light Peach
+        'FFD0E0F6', // Light Blue
+        'FFFCE4D6', // Light Orange
+        'FFD5D8DC', // Light Gray
+        'FFFBE5F0', // Light Pink
+        'FFC9CCC7'  // Pastel Gray
+    ];
 
-    // CSV Header row
-    fputcsv($output, ['Product Name', 'Part Number', 'Tag', 'Qty', 'User', 'Date', 'Remarks']);
+    // Apply styling to each header cell individually with a different color
+    $column_index = 0;
+    foreach (range('A', 'H') as $columnID) {
+        $color = $pastelColors[$column_index % count($pastelColors)];
+        $sheet->getStyle($columnID . '1')
+            ->getFill()
+            ->setFillType(Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB($color);
+        $sheet->getStyle($columnID . '1')->getFont()->setBold(true);
+        $column_index++;
+    }
 
+    // Get the data and add it to the spreadsheet
+    $row_index = 2;
     while ($row = $result->fetch_assoc()) {
-        $formattedDate = date('Y-n-d H:i', strtotime($row['created_at'])); // Ensure readable format
+        $formattedDate = date('Y-m-d H:i', strtotime($row['created_at']));
+        $data = [
 
-        fputcsv($output, [
-            $row['name'],
             $row['part_number'],
+            $row['mfg'],
             $row['tag'],
             $row['qty_received'],
             $row['nickname'],
             $formattedDate,
+            $row['name'],
             $row['remarks']
-        ]);
+        ];
+        $sheet->fromArray($data, NULL, 'A' . $row_index);
+        $row_index++;
     }
 
-    fclose($output);
+    // Auto-size columns for better readability
+    foreach (range('A', 'G') as $columnID) {
+        $sheet->getColumnDimension($columnID)->setAutoSize(true);
+    }
+    
+    // Set HTTP headers for download
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="receipts_export.xlsx"');
+    header('Cache-Control: max-age=0');
+    
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+    
     exit;
 }
 
-
 // ---------------------------
-// Export to PDF (optional)
+// Export to PDF
 // ---------------------------
 elseif ($format === 'pdf') {
     require_once '../../tcpdf/tcpdf.php'; // TCPDF must be installed without composer
@@ -95,20 +138,21 @@ elseif ($format === 'pdf') {
     $pdf->AddPage();
     $pdf->SetFont('helvetica', '', 10);
 
-    $html = '<h3>Stock Receipt Report</h3><table border="1" cellpadding="4"><thead><tr>
-            <th>Product Name</th><th>Part No.</th><th>Tag</th><th>Qty</th>
-            <th>User</th><th>Date</th><th>Remarks</th></tr></thead><tbody>';
+    $html = '<h3>Stock In Report</h3><table border="1" cellpadding="4"><thead><tr>
+             <th>Part No.</th><th>MFG</th><th>Tag</th><th>Qty</th>
+             <th>User</th><th>Date</th><th>P-Name</th><th>Remarks</th></tr></thead><tbody>';
 
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>
-            <td>' . htmlspecialchars($row['name']) . '</td>
-            <td>' . htmlspecialchars($row['part_number']) . '</td>
-            <td>' . htmlspecialchars($row['tag']) . '</td>
-            <td>' . $row['qty_received'] . '</td>
-            <td>' . htmlspecialchars($row['nickname']) . '</td>
-            <td>' . $row['created_at'] . '</td>
-            <td>' . htmlspecialchars($row['remarks']) . '</td>
-        </tr>';
+             <td>' . htmlspecialchars($row['part_number']) . '</td>
+             <td>' . htmlspecialchars($row['mfg']) . '</td>
+             <td>' . htmlspecialchars($row['tag']) . '</td>
+             <td>' . $row['qty_received'] . '</td>
+             <td>' . htmlspecialchars($row['nickname']) . '</td>
+             <td>' . $row['created_at'] . '</td>
+             <td>' . htmlspecialchars($row['name']) . '</td>
+             <td>' . htmlspecialchars($row['remarks']) . '</td>
+         </tr>';
     }
 
     $html .= '</tbody></table>';
@@ -118,3 +162,4 @@ elseif ($format === 'pdf') {
 }
 
 echo "Invalid export format.";
+?>

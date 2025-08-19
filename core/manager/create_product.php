@@ -41,40 +41,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $product_id = $stmt->insert_id;
 
-            // Upload Images
-            if (!empty($_FILES['images']['tmp_name'])) {
+           // Handle Cover Image
+            if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['cover_image'];
+                $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $newName = $pn . "-cover." . $fileExt;
+                $target = "../../uploads/images/" . $newName;
+
+                if (move_uploaded_file($file['tmp_name'], $target)) {
+                    $stmtCover = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension, is_cover) VALUES (?, ?, ?, ?, ?, 1)");
+                    $stmtCover->bind_param("issis", $product_id, $newName, $target, $file['size'], $fileExt);
+                    $stmtCover->execute();
+                    $stmtCover->close();
+                }
+            }
+
+            // Handle Additional Images
+            if (!empty($_FILES['images']['tmp_name'][0])) {
                 foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
+                    // Skip if no file uploaded for this index
                     if (empty($tmpName)) continue;
+
                     $fileName = $_FILES['images']['name'][$index];
                     $fileSize = $_FILES['images']['size'][$index];
                     $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
 
                     if ($fileSize > 20 * 1024 * 1024) continue; // Skip files > 20MB
 
-                    $target = "../../uploads/images/" . uniqid() . "_" . basename($fileName);
+                    $newName = $pn . "-img-" . ($index + 1) . "." . $fileExt;
+                    $target = "../../uploads/images/" . $newName;
+
                     if (move_uploaded_file($tmpName, $target)) {
                         $stmtImg = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                        $stmtImg->bind_param("issis", $product_id, $fileName, $target, $fileSize, $fileExt);
+                        $stmtImg->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
                         $stmtImg->execute();
                         $stmtImg->close();
                     }
                 }
             }
 
-            // Upload PDFs
-            if (!empty($_FILES['pdfs']['tmp_name'])) {
+            // Handle PDFs
+            if (!empty($_FILES['pdfs']['tmp_name'][0])) {
                 foreach ($_FILES['pdfs']['tmp_name'] as $index => $tmpName) {
+                    // Skip if no file uploaded for this index
                     if (empty($tmpName)) continue;
+
                     $fileName = $_FILES['pdfs']['name'][$index];
                     $fileSize = $_FILES['pdfs']['size'][$index];
                     $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
 
                     if ($fileSize > 20 * 1024 * 1024) continue; // Skip files > 20MB
 
-                    $target = "../../uploads/pdfs/" . uniqid() . "_" . basename($fileName);
+                    $newName = $pn . "-pdf-" . ($index + 1) . "." . $fileExt;
+                    $target = "../../uploads/pdfs/" . $newName;
+
                     if (move_uploaded_file($tmpName, $target)) {
                         $stmtPdf = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                        $stmtPdf->bind_param("issis", $product_id, $fileName, $target, $fileSize, $fileExt);
+                        $stmtPdf->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
                         $stmtPdf->execute();
                         $stmtPdf->close();
                     }
