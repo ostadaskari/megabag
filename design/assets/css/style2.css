@@ -491,3 +491,7 @@
         margin: auto;
     }
 
+        /* Add this CSS to make the cursor a pointer on hover */
+    #productsTableBody tr:hover {
+        cursor: pointer;
+    }

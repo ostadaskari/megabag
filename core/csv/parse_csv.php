@@ -45,8 +45,17 @@ try {
     exit;
 }
 
-// Get headers from first row
-$headers = array_map('strtolower', $data[1]); // normalize keys
+// Get headers from first row and map to a standardized format
+$headers = array_map('strtolower', $data[1]);
+$columnMapping = [
+    'part nomber' => 'part_number',
+    'mfg' => 'mfg',
+    'tag' => 'tag',
+    'qty' => 'qty',
+    'p-name' => 'name',
+    'comment' => 'remark'
+];
+
 $rows = [];
 
 for ($i = 2; $i <= count($data); $i++) {
@@ -54,7 +63,8 @@ for ($i = 2; $i <= count($data); $i++) {
     $row = [];
 
     foreach ($headers as $col => $key) {
-        $row[$key] = trim($rowData[$col] ?? '');
+        $standardKey = $columnMapping[$key] ?? $key;
+        $row[$standardKey] = trim($rowData[$col] ?? '');
     }
 
     $part = $row['part_number'] ?? '';

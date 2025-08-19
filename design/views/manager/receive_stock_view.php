@@ -1,10 +1,9 @@
- <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
-    <svg width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-right  mx-1 me-2" viewBox="0 0 16 16">
+    <svg width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-right mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
         <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
     </svg>
-    
     Receive Items</h2>
     <a href="../auth/dashboard.php?page=home" class="backBtn">
     <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -37,7 +36,8 @@
                         </div>
                         
                         <div class="col d-flex justify-content-end align-items-end">
-                            <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove" style="display:none;">
+                            <!-- Removed the inline style="display:none;" to be handled by JavaScript -->
+                            <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
                                 <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
@@ -67,7 +67,6 @@
     </div>
 </div>
 
-
 <?php if (!empty($success)): ?>
     <script>
         Swal.fire({ 
@@ -87,8 +86,33 @@
 <?php endif; ?>
 
 
+<!-- Updated JavaScript to manage the remove button visibility -->
 <script>
     let rowIndex = 1;
+
+    // Function to update the visibility of remove buttons based on the number of rows
+    const updateRemoveButtons = () => {
+        const rows = document.querySelectorAll('.stock-row');
+        // Hide the remove button if there is only one row, show it otherwise
+        rows.forEach((row, index) => {
+            const removeButton = row.querySelector('.btn-remove-row');
+            if (removeButton) {
+                removeButton.style.display = rows.length > 1 ? 'block' : 'none';
+            }
+            // Re-index form fields after adding/removing a row to ensure correct submission
+            row.querySelectorAll('input, textarea').forEach(el => {
+                const name = el.getAttribute('name');
+                if (name) {
+                    el.setAttribute('name', name.replace(/\[\d+\]/, `[${index}]`));
+                }
+            });
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Run on initial page load
+        updateRemoveButtons();
+    });
 
     document.getElementById('addRowBtn').addEventListener('click', () => {
         const stockRowsContainer = document.getElementById('stockRows');
@@ -100,22 +124,9 @@
             el.value = '';
         });
 
-        // Update name attributes to new index
-        newRow.querySelectorAll('input, textarea').forEach(el => {
-            const name = el.getAttribute('name');
-            if (name) {
-                el.setAttribute('name', name.replace(/\[\d+\]/, `[${rowIndex}]`));
-            }
-        });
-
-        // Show the remove button for the new row
-        const removeButton = newRow.querySelector('.btn-remove-row');
-        if (removeButton) {
-            removeButton.style.display = 'block';
-        }
-
         stockRowsContainer.appendChild(newRow);
-        rowIndex++;
+        // Update the visibility of all remove buttons after adding a new row
+        updateRemoveButtons();
     });
 
     // Remove row functionality
@@ -125,6 +136,8 @@
             const rows = document.querySelectorAll('.stock-row');
             if (rows.length > 1) {
                 rowToRemove.remove();
+                // Update the visibility of all remove buttons after removing a row
+                updateRemoveButtons();
             }
         }
     });
@@ -178,20 +191,3 @@
     });
 </script>
 
-<style>
-/* This is a slight modification to ensure the autocomplete box is positioned correctly relative to the input */
-.autocomplete-box {
-    position: absolute;
-    z-index: 9999;
-    background: #fff;
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-    width: 100%;
-    left: 0;
-    top: 100%;
-}
-.autocomplete-box div:hover {
-    background: #f0f0f0;
-}
-</style>
