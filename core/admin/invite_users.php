@@ -12,7 +12,7 @@ $success = '';
 $invites = [];
 
 // --- Pagination settings ---
-$itemsPerPage = 7;
+$itemsPerPage = 10;
 $currentPage = isset($_GET['p']) ? intval($_GET['p']) : 1;
 if ($currentPage < 1) {
     $currentPage = 1;
