@@ -21,6 +21,7 @@ try {
         $part = trim($row['part_number'] ?? '');
         $qty = isset($row['qty']) ? (int) $row['qty'] : 0;
         $name = trim($row['name'] ?? '');
+        $mfg = trim($row['mfg'] ?? ''); // Correctly pull the MFG value
         $tag = trim($row['tag'] ?? '');
         $remark = trim($row['remark'] ?? '');
         $category_id = isset($row['category_id']) ? (int) $row['category_id'] : null;
@@ -55,9 +56,9 @@ try {
                 throw new Exception("Missing category for new product: $part (row " . ($index + 1) . ")");
             }
 
-            // Insert new product
-            $stmt = $conn->prepare("INSERT INTO products (name, user_id, part_number, tag, qty, category_id) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sissii", $name, $user_id, $part, $tag, $qty, $category_id);
+            // Insert new product, including MFG
+            $stmt = $conn->prepare("INSERT INTO products (name, mfg, user_id, part_number, tag, qty, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssissii", $name, $mfg, $user_id, $part, $tag, $qty, $category_id);
             $stmt->execute();
             $new_product_id = $stmt->insert_id;
             $stmt->close();

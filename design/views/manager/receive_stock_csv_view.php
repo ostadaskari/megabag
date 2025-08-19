@@ -60,6 +60,7 @@
             <div class="col-12">
                 <div id="checkedData" class="mt-2">
                     </div>
+
             </div>
         </div>
     </div>
@@ -160,11 +161,12 @@
 
                 return `
                     <tr class="${rowClass}">
-                        <td>${idx + 1}</td>
-                        <td>${row.name}</td>
+                        <td>${idx + 1}</td>      
                         <td>${row.part_number}</td>
+                        <td>${row.mfg}</td>
                         <td>${row.tag}</td>
                         <td>${row.qty}</td>
+                        <td>${row.name}</td>
                         <td>${row.remark}</td>
                         <td>${catCell}</td>
                     </tr>
@@ -180,7 +182,7 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Name</th><th>Part #</th><th>Tag</th><th>Qty</th><th>Remark</th><th>Category</th>
+                                <th>Part Number</th><th>MFG</th><th>Tag</th><th>Qty</th><th>P-Name</th><th>Remark</th><th>Category</th>
                             </tr>
                         </thead>
                         <tbody>${rowsHtml}</tbody>
@@ -204,12 +206,13 @@
             const tds = tr.querySelectorAll('td');
             const isNew = tr.classList.contains('highlight-new');
 
-            // Note: The index column is now tds[0], so the others shift
-            const name = tds[1].textContent.trim();
-            const part_number = tds[2].textContent.trim();
+            // Corrected variable assignment based on the new table column order
+            const part_number = tds[1].textContent.trim();
+            const mfg = tds[2].textContent.trim();
             const tag = tds[3].textContent.trim();
             const qty = parseInt(tds[4].textContent.trim());
-            const remark = tds[5].textContent.trim();
+            const name = tds[5].textContent.trim();
+            const remark = tds[6].textContent.trim();
 
             let category_id = null;
 
@@ -222,7 +225,7 @@
                 }
             }
 
-            rows.push({ name, part_number, tag, qty, remark, category_id });
+            rows.push({ name, part_number, mfg, tag, qty, remark, category_id });
         }
 
         fetch('../csv/insert_csv_stock.php', {
