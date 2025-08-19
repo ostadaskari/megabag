@@ -7,17 +7,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once('../db/db.php');
 
-// Check for authorization. If the request is AJAX, return a JSON error. Otherwise, redirect.
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
         header('Content-Type: application/json');
         echo json_encode([
-           'success' => false,
-           'error' => 'Access denied. You must be an administrator.'
+            'success' => false,
+            'error' => 'Access denied. You must be an administrator.'
         ]);
         exit;
     } else {
-         header("Location: ../auth/login.php");
+        header("Location: ../auth/login.php");
         exit;
     }
 }
@@ -66,7 +65,7 @@ if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
         'users' => $users,
         'totalPages' => $totalPages,
         'currentPage' => $page,
-        'itemsPerPage' => $limit // Add this line
+        'itemsPerPage' => $limit
    ]);
    exit;
 }

@@ -44,7 +44,7 @@ $countStmt->execute();
 $count = $countStmt->get_result()->fetch_row()[0];
 $totalPages = ceil($count / $limit);
 
-$query = "SELECT stock_receipts.*, products.name AS product_name, products.part_number, products.tag, users.nickname 
+$query = "SELECT stock_receipts.*, products.name AS product_name, products.part_number, products.tag, products.mfg, users.nickname 
           FROM stock_receipts 
           JOIN products ON stock_receipts.product_id = products.id
           JOIN users ON stock_receipts.user_id = users.id 
@@ -71,10 +71,11 @@ while ($row = $result->fetch_assoc()) {
 
     $html .= "<tr>
         <td>{$i}</td>
-        <td>" . htmlspecialchars($row['product_name']) . "</td>
-        <td>" . htmlspecialchars($row['tag']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
+         <td>" . htmlspecialchars($row['mfg']) . "</td>
+        <td>" . htmlspecialchars($row['tag']) . "</td>
         <td>{$row['qty_received']}</td>
+        <td>" . htmlspecialchars($row['product_name']) . "</td>
         <td>" . htmlspecialchars($row['nickname']) . "</td>
         <td>". date('Y/n/d ,G:i',strtotime($row['created_at'])) . "</td> 
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>

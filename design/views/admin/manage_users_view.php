@@ -1,21 +1,21 @@
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
-        <h2 class="d-flex align-items-center">
-        <svg width="26" height="26" fill="#fff" class="bi bi-people me-2 mx-1" viewBox="0 0 16 16">
-        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-        </svg>  
-        Manage Users</h2>
-        <a href="../auth/dashboard.php?page=home" class="backBtn">
-        <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
-        </svg>
-        <span>Back</span>
-        </a>
-    </div>
+    <h2 class="d-flex align-items-center">
+    <svg width="26" height="26" fill="#fff" class="bi bi-people me-2 mx-1" viewBox="0 0 16 16">
+    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+    </svg> 
+    Manage Users</h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+    </svg>
+    <span>Back</span>
+    </a>
+</div>
 <div class="container px-0">
 
     <div class="row">
       <div class="col-12 col-md-6" style="margin: auto;">
-             <div class="input-box my-0" style="width:100%;">
+            <div class="input-box my-0" style="width:100%;">
                 <div class="svgSearch">
                     <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
@@ -24,13 +24,13 @@
                 <input type="text" id="searchInput" class="form-control mb-2 border shadow-sm" placeholder="Search by name, family, or nickname">
             </div>
         </div>
-    </div>   
+    </div>  
     
     <div class="row mt-2">
         <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" id="userTableContainer" style="height: 58vh;">
             <!-- AJAX content will be loaded here -->
         </div>
-    </div>   
+    </div>  
 
     <div id="pagination" class="mt-3 d-flex justify-content-center"></div>
 
@@ -41,8 +41,16 @@
     function fetchUsers(page = 1) {
         const search = document.getElementById('searchInput').value;
         fetch(`../admin/manage_users.php?ajax=1&page=${page}&search=${encodeURIComponent(search)}`)
-            .then(res => res.json())
+            .then(res => {
+                // First, check if the network request was successful
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                // Then, parse the JSON
+                return res.json();
+            })
             .then(data => {
+                // Now, check the server-side success flag
                 if (data.success) {
                     let i = (data.currentPage - 1) * data.itemsPerPage + 1;
                     const rows = data.users.map(user => `
@@ -84,21 +92,21 @@
                         }
                         
                         const firstBtn = `<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${data.currentPage === 1 ? 'disabled' : ''}" ${data.currentPage === 1 ? '' : 'onclick="fetchUsers(1)"'}>
-                                                 <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path></svg>
-                                                 First
-                                            </a>`;
+                                                   <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path></svg>
+                                                   First
+                                               </a>`;
                         const prevBtn = `<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${data.currentPage === 1 ? 'disabled' : ''}" ${data.currentPage === 1 ? '' : `onclick="fetchUsers(${data.currentPage - 1})"`} id="prevBtn">
-                                                 <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path></svg>
-                                                 Prev
-                                            </a>`;
+                                                   <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path></svg>
+                                                   Prev
+                                               </a>`;
                         const nextBtn = `<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${data.currentPage === data.totalPages ? 'disabled' : ''}" ${data.currentPage === data.totalPages ? '' : `onclick="fetchUsers(${data.currentPage + 1})"`} id="nextBtn">
-                                                 Next
-                                                 <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path></svg>
-                                            </a>`;
+                                                   Next
+                                                   <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path></svg>
+                                               </a>`;
                         const lastBtn = `<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${data.currentPage === data.totalPages ? 'disabled' : ''}" ${data.currentPage === data.totalPages ? '' : `onclick="fetchUsers(${data.totalPages})"`}>
-                                                 Last
-                                                 <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"></path></svg>
-                                            </a>`;
+                                                   Last
+                                                   <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"></path></svg>
+                                               </a>`;
 
                         paginationHtml = `
                             <div class="row my-2">
@@ -124,12 +132,17 @@
                         </table>
                     `;
 
-                    document.getElementById('paginationContainer').innerHTML = paginationHtml;
+                    // Corrected: use 'pagination' ID instead of 'paginationContainer'
+                    document.getElementById('pagination').innerHTML = paginationHtml;
+                } else {
+                    // Handle cases where the server-side logic was unsuccessful
+                    Swal.fire('Error', data.message || 'Failed to load user data.', 'error');
                 }
             })
             .catch(error => {
+                // This block will now only handle network or parsing errors.
                 console.error('Error fetching users:', error);
-                Swal.fire('Error', 'Failed to load user data.', 'error');
+                Swal.fire('Error', 'Failed to load user data due to a network or parsing error.', 'error');
             });
     }
 

@@ -87,10 +87,11 @@
                         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                             <tr>
                                 <th>#</th>
-                                <th>Product</th>
+                                <th>P/N</th>      
+                                <th>MFG</th>                          
                                 <th>Tag</th>
-                                <th>P/N</th>
                                 <th>QTY</th>
+                                <th>P-Name</th>
                                 <th>User</th>
                                 <th>Date</th>
                                 <th style="width: 10%;">Comment</th>

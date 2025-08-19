@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
+<div class="d-flex flex-row align-items-center justify-content-between titleTop"> 
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-list-ul mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
@@ -85,9 +85,10 @@
                     <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                         <tr>
                             <th>#</th>
-                            <th>Product</th>
                             <th>P/N</th>
+                            <th>MFG</th>
                             <th>Tag</th>
+                            <th>P-Name</th>
                             <th>Qty</th>
                             <th>Issued By</th>
                             <th>Issued To</th>
@@ -158,26 +159,32 @@ function fetchIssues(page = 1) {
                 const nextBtnClass = data.currentPage === data.totalPages ? 'disabled' : '';
                 const lastBtnClass = data.currentPage === data.totalPages ? 'disabled' : '';
 
+                // Conditional onclick to ensure disabled buttons are not clickable
+                const firstBtnOnclick = data.currentPage === 1 ? '' : `onclick="event.preventDefault(); fetchIssues(1)"`;
+                const prevBtnOnclick = data.currentPage === 1 ? '' : `onclick="event.preventDefault(); fetchIssues(${data.currentPage - 1})"`;
+                const nextBtnOnclick = data.currentPage === data.totalPages ? '' : `onclick="event.preventDefault(); fetchIssues(${data.currentPage + 1})"`;
+                const lastBtnOnclick = data.currentPage === data.totalPages ? '' : `onclick="event.preventDefault(); fetchIssues(${data.totalPages})"`;
+
                 paginationHtml = `
                     <div class="row my-2">
                         <div class="col-12 d-flex justify-content-center">
                             <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
-                                <a href="#" onclick="event.preventDefault(); fetchIssues(1)" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${firstBtnClass}">
+                                <a href="#" ${firstBtnOnclick} class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${firstBtnClass}">
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path></svg>
                                     First
                                 </a>
-                                <a href="#" onclick="event.preventDefault(); fetchIssues(${data.currentPage - 1})" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${prevBtnClass}" id="prevBtn">
+                                <a href="#" ${prevBtnOnclick} class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${prevBtnClass}" id="prevBtn">
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path></svg>
                                     Prev
                                 </a>
                                 <div class="px-4 px-custom">
                                     ${paginationNumbers}
                                 </div>
-                                <a href="#" onclick="event.preventDefault(); fetchIssues(${data.currentPage + 1})" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${nextBtnClass}" id="nextBtn">
+                                <a href="#" ${nextBtnOnclick} class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${nextBtnClass}" id="nextBtn">
                                     Next
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path></svg>
                                 </a>
-                                <a href="#" onclick="event.preventDefault(); fetchIssues(${data.totalPages})" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${lastBtnClass}">
+                                <a href="#" ${lastBtnOnclick} class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ${lastBtnClass}">
                                     Last
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5"></path></svg>
                                 </a>
