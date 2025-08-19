@@ -39,7 +39,7 @@
         <input type="hidden" name="product_id" id="product_id">
 
         <!-- Features Container (dynamic rows will be injected here) -->
-        <div class="container border shadow-sm rounded bg-light p-2" style="width:100%;height: 62vh;overflow-y: auto;">
+        <div class="container border shadow-sm rounded bg-light p-2" style="width:100%;max-height: 62vh;overflow-y: auto;">
             <div class="row" id="featuresContainer">
                <!-- JS will insert feature fields here -->
             </div> 

@@ -347,9 +347,6 @@ li.active > a {
 /* content container */
 
 /* Adding a single part*/
-#Add-Single-part svg{
-  fill:var(--main-bg0-color);
-}
 .partForm {
     display: flex;
     flex-direction: column;
@@ -1080,7 +1077,7 @@ fill:var(--main-text-color);
   background: #fff;
   margin: 10px auto;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 .input-box svg,
 .input-box .button {
@@ -1390,4 +1387,17 @@ font-weight: 300;
   display: flex;
   align-content:center;
   justify-content: center;
+}
+
+.swal2-cancel{
+  margin: 0 10px!important;
+}
+
+.bg-pdf{
+  background-color:#eca4004d;
+  border-radius:8px;
+  text-decoration: underline;
+}
+.bg-pdf:hover{
+  background-color:#eca5009a;
 }
