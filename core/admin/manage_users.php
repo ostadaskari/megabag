@@ -24,7 +24,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 $search = trim($_GET['search'] ?? '');
 $page = max((int)($_GET['page'] ?? 1), 1);
-$limit = 10;
+$limit = 12;
 $offset = ($page - 1) * $limit;
 
 $whereSql = '';
