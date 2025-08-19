@@ -1,7 +1,11 @@
           <!-- Edit product -->
            <div class="tab-content" id="edit-product">
             <div class="d-flex flex-row align-items-center justify-content-between titleTop">
-              <h2>Edit Product</h2>
+            <h2 class="d-flex align-items-center">
+                <svg width="24" height="24" fill="currentColor" class="bi bi-pen mx-1 me-2" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                </svg>
+                Edit Product</h2>
 
               <a href="../auth/dashboard.php?page=products_list" class="backBtn">
                 <svg width="24" height="24"fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -30,8 +34,8 @@
                       <input class="form-control" type="text" name="p_n" value="<?= htmlspecialchars($product['part_number']) ?>" autocomplete="off" placeholder="Part number" required>
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                      <label class="form-label" for="name" title="Name">P-Name:</label>
-                      <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
+                    <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                      <input type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
                     </div>
                      <div class="col-12 col-md-4 px-2 my-2">
                       <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
@@ -39,9 +43,9 @@
                     </div>
                  </div> 
                  <div class="row d-flex flex-row align-items-center justify-content-between">
-                  <div class="col-12 col-md-2 px-2 my-2">
-                      <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                      <input type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
+                   <div class="col-12 col-md-2 px-2 my-2">
+                      <label class="form-label" for="name" title="Name">P-Name:</label>
+                      <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
                     </div>
                     <div class="col-12 col-md-2 px-2 my-2">
                       <label class="form-label" for="Quantity" title="Quantity">QTY:</label>

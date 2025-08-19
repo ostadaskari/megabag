@@ -1,7 +1,7 @@
             <div class="d-flex flex-row align-items-center justify-content-between titleTop">
               
               <h2 class="d-flex align-items-center">
-                <svg  width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
+                <svg width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
                   <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
                 </svg> 
               Add a Single Product</h2>
@@ -33,31 +33,37 @@
                       <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                      <label class="form-label" for="name" title="Name">P-Name:</label>
-                      <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
+                        <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                        <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
                     </div>
                      <div class="col-12 col-md-4 px-2 my-2">
                       <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
                       <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
                     </div>
                 </div>
+
                 <div class="row d-flex justify-content-between">
-                  <div class="col-12 col-md-2 px-2 my-2">
-                      <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                      <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                   <div class="col-12 col-md-2 px-2 my-2">
+                       <label class="form-label" for="name" title="Name">P-Name:</label>
+                      <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
                     </div>
-                    <div class="col-12 col-md-2 px-2 my-2">
-                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                      <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
-                    </div>
-                    <div class="col-12 col-md-2 px-2 my-2">
-                      <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                      <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
-                    </div>
+
                     <div class="col-12 col-md-2 px-2 my-2">
                       <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
                       <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
                     </div>
+
+                    <div class="col-12 col-md-2 px-2 my-2">
+                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                      <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                    </div>
+
+                    <div class="col-12 col-md-2 px-2 my-2">
+                      <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                      <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
+                    </div>
+
+                    
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label for="" class="form-label">Date Code:</label>
                         <select class="form-select" name="date_code">
