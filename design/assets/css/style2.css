@@ -257,7 +257,7 @@
             align-items: center;
             gap: 10px;
             border: 1px solid #ffffff;
-
+            overflow: auto;
             padding: 10px;
 
         }

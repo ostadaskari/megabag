@@ -197,7 +197,7 @@ table {
       justify-content: baseline;
       flex-direction: row;
       background-color:#ffffff3f;
-      
+      z-index: 1;
     }
 
     .sidebar::before {

@@ -7,7 +7,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
               </svg>
                  <div class="d-flex flex-column">
-                  <span class="my-2" style="color: var(--main-bg0-color);"><?= htmlspecialchars($_SESSION['nickname'] ?? '') ?></span>
+                  <span class="my-2" style="color: var(--main-bg0-color);font-weight: 600;"><?= htmlspecialchars($_SESSION['nickname'] ?? '') ?></span>
                   <span class="mb-1 text-center" style="font-size: 12px;color:rgb(219, 234, 255);"><?= htmlspecialchars($_SESSION['role'] ?? '') ?></span>
                  </div> 
             </div>
