@@ -23,7 +23,7 @@ try {
     if (!$conn) {
         throw new Exception("Database connection failed.");
     }
-    
+
     if (isset($_GET['id']) && !empty($_GET['id'])) {
         $productId = (int)$_GET['id'];
         
@@ -50,8 +50,8 @@ try {
             $response['message'] = 'Product details retrieved successfully.';
             $response['product'] = $product;
             
-            // Fetch associated images
-            $images_query = "SELECT file_path, file_name FROM images WHERE product_id = ?";
+            // Fetch associated images and check for cover image
+            $images_query = "SELECT file_path, file_name, is_cover FROM images WHERE product_id = ?";
             $images_stmt = $conn->prepare($images_query);
             if (!$images_stmt) {
                 throw new Exception("Failed to prepare images query: " . $conn->error);
@@ -59,10 +59,23 @@ try {
             $images_stmt->bind_param("i", $productId);
             $images_stmt->execute();
             $images_result = $images_stmt->get_result();
+            
+            $all_images = [];
+            $cover_image = null;
             while ($image = $images_result->fetch_assoc()) {
-                $response['images'][] = $image;
+                if ($image['is_cover'] == 1) {
+                    $cover_image = $image;
+                } else {
+                    $all_images[] = $image;
+                }
             }
             $images_stmt->close();
+            
+            // Prioritize the cover image if one was found
+            if ($cover_image) {
+                array_unshift($all_images, $cover_image);
+            }
+            $response['images'] = $all_images;
 
             // Fetch associated PDFs
             $pdfs_query = "SELECT file_path, file_name FROM pdfs WHERE product_id = ?";

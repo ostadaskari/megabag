@@ -30,7 +30,7 @@
                       <input class="form-control" type="text" name="p_n" value="<?= htmlspecialchars($product['part_number']) ?>" autocomplete="off" placeholder="Part number" required>
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                      <label class="form-label" for="name" title="Name">Name:</label>
+                      <label class="form-label" for="name" title="Name">P-Name:</label>
                       <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
                     </div>
                      <div class="col-12 col-md-4 px-2 my-2">
@@ -70,7 +70,7 @@
                 <div class="container mt-1 Category">
                   <div class="row d-flex flex-row justify-content-between">
                     <div class="col-12 col-md-6 pr-2">
-                      <label for="editDescription" title="Company Comment">Company CMT:</label>
+                      <label for="editDescription" title="Company Comment">Company Comment:</label>
                       <textarea id="editDescription" class="mt-2" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
                     </div>
 

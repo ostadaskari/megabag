@@ -1,4 +1,3 @@
-
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
         <h2 class="d-flex align-items-center">
         <svg width="22" height="22" fill="currentColor" class="bi bi-inboxes mx-1 me-2" viewBox="0 0 16 16">
@@ -63,7 +62,7 @@
                 <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn mb-1 border rounded bg-light shadow-sm p-1">
                     <div class="d-flex flex-row align-items-center justify-content-between my-1">
                         <p class="py-1 fontS">EXE:</p>
-                        <button class="btnSvg" type="button" class="btn p-1 mx-1" title="Excel File" onclick="exportReceipts('excel')">
+                        <button type="button" class="btnSvg" class="btn p-1 mx-1" title="Excel File" onclick="exportReceipts('xlsx')">
                         <svg width="24" height="24" fill="#217346" class="bi bi-filetype-exe" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM2.575 15.202H.785v-1.073H2.47v-.606H.785v-1.025h1.79v-.648H0v3.999h2.575zM6.31 11.85h-.893l-.823 1.439h-.036l-.832-1.439h-.931l1.227 1.983-1.239 2.016h.861l.853-1.415h.035l.85 1.415h.908l-1.254-1.992zm1.025 3.352h1.79v.647H6.548V11.85h2.576v.648h-1.79v1.025h1.684v.606H7.334v1.073Z"/>
                         </svg>
@@ -71,7 +70,7 @@
                     </div>
                     <div class="d-flex flex-row align-items-center justify-content-between my-1">
                         <p class="py-1 fontS">PDF:</p>
-                        <button class="btnSvg" type="button" class="btn p-1 mx-1" title="PDF File" onclick="exportReceipts('pdf')">
+                        <button type="button" class="btnSvg" class="btn p-1 mx-1" title="PDF File" onclick="exportReceipts('pdf')">
                         <svg width="24" height="24" fill="#FF0000" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/>
                         </svg>
@@ -125,7 +124,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function fetchReceipts(page = 1) {
         const keyword = document.getElementById('searchInput').value;
@@ -188,9 +187,4 @@
 
     // Initial load
     document.addEventListener("DOMContentLoaded", () => fetchReceipts());
-
-    // You can remove the onload function as the DOMContentLoaded event listener handles the initial fetch.
-    // window.onload = function() {
-    //     fetchReceipts(1);
-    // }
 </script>

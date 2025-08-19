@@ -73,7 +73,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 <ul class="submenu list-unstyled">
                   <li><a href="?page=receive_stock"  >Insert Items</a></li>
                   <li><a href="?page=list_receipts"  >List Of Receives</a></li>
-                  <li><a href="?page=receive_csv"  >Insert By CSV</a></li>
+                  <li><a href="?page=receive_csv"  >Insert By Excel</a></li>
                 </ul>
               </li>
 
@@ -221,7 +221,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 <ul class="submenu list-unstyled">
                   <li><a href="?page=receive_stock"  >Insert Items</a></li>
                   <li><a href="?page=list_receipts"  >List Of Receives</a></li>
-                  <li><a href="?page=receive_csv"  >Insert By CSV</a></li>
+                  <li><a href="?page=receive_csv"  >Insert By Excel</a></li>
                 </ul>
               </li>
 

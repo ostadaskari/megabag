@@ -33,7 +33,7 @@
                       <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                      <label class="form-label" for="name" title="Name">Name:</label>
+                      <label class="form-label" for="name" title="Name">P-Name:</label>
                       <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
                     </div>
                      <div class="col-12 col-md-4 px-2 my-2">
@@ -74,7 +74,7 @@
                   <div class="row d-flex flex-row justify-content-between">
 
                     <div class="col-12 col-md-6 px-2">
-                        <label class="form-label" for="description" title="Company Comment">Company CMT:</label>
+                        <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
                         <textarea class="form-control" id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
                     </div>
                     <div class="col-12 col-md-6 px-2">
