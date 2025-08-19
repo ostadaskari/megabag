@@ -82,7 +82,7 @@
         
         <div class="row d-flex justify-content-center align-items-center mt-1">
             <div class="col-12">
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 85vh;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 60vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                             <tr>
@@ -96,7 +96,7 @@
                                 <th style="width: 10%;">Comment</th>
                             </tr>
                         </thead>
-                        <tbody id="receiptsTableBody">
+                        <tbody id="receiptsTableBody" style="height:100;">
                             </tbody>
                     </table>
                 </div>

@@ -12,11 +12,28 @@
         </a>
     </div>
 <div class="container px-0">
-    <input type="text" id="searchInput" class="form-control mb-2 border shadow-sm" placeholder="Search by name, family, or nickname">
-    <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" id="userTableContainer" style="max-height: 73vh;">
-        <!-- AJAX content will be loaded here -->
-    </div>
-    <div id="paginationContainer"></div>
+
+    <div class="row">
+      <div class="col-12 col-md-6" style="margin: auto;">
+             <div class="input-box my-0" style="width:100%;">
+                <div class="svgSearch">
+                    <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                    </svg>
+                </div>
+                <input type="text" id="searchInput" class="form-control mb-2 border shadow-sm" placeholder="Search by name, family, or nickname">
+            </div>
+        </div>
+    </div>   
+    
+    <div class="row mt-2">
+        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" id="userTableContainer" style="height: 58vh;">
+            <!-- AJAX content will be loaded here -->
+        </div>
+    </div>   
+
+    <div id="pagination" class="mt-3 d-flex justify-content-center"></div>
+
 </div>
 
 
@@ -102,7 +119,7 @@
 
                     document.getElementById('userTableContainer').innerHTML = `
                         <table class="table table-bordered table-striped table-hover mb-0 text-center">
-                            <thead><tr><th>#</th><th>Name</th><th>Family</th><th>Nickname</th><th>Email</th><th>Role</th><th>Action</th></tr></thead>
+                            <thead><tr><th>#</th><th>Name</th><th>Family</th><th>Nickname</th><th style="width: 200px;">Email</th><th style="width: 120px;">Role</th><th style="width: 120px;">Action</th></tr></thead>
                             <tbody>${rows}</tbody>
                         </table>
                     `;

@@ -37,7 +37,7 @@
     <!-- table list product -->
     <div class="row mt-2">
     <div class="col-12">
-        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="max-height: 60vh;">
+        <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 58vh;">
             <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
             <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                 <tr>
@@ -81,7 +81,7 @@
 <div id="modalOverlay" class="modal-overlay"></div>
 
 <div id="productDetailsModal" class="container bg-light border rounded shadow-sm mb-4 modalDetails" style="display: none;">
-    <div class="mb-3 modal-header d-flex justify-content-between align-items-center">
+    <div class="mb-2 modal-header d-flex justify-content-between align-items-center" style="padding: 8px 16px;">
         <div class="d-flex align-items-center ">
             <svg width="20" height="20" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
             <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/>
@@ -99,6 +99,7 @@
     </div>
 </div>
 <!-- end modal for show details -->
+
 
 
 
@@ -152,7 +153,7 @@
                         let pdfListHtml = '';
                         if (pdfs && pdfs.length > 0) {
                             pdfs.forEach(pdf => {
-                                pdfListHtml += `<p><strong>Datasheet:</strong> <a style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><span>${pdf.file_name}</span></a></p>`;
+                                pdfListHtml += ` <a class="mx-2 bg-light p-2" style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><svg width="16" height="16" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/></svg><span>${pdf.file_name}</span></a> `;
                             });
                         }
 
@@ -167,22 +168,22 @@
                         
                         productDetailsContent.innerHTML = `
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-8">
                                     <div class="container">
-                                        <div class="row mt-4">
-                                            <div class="col-12 my-2">
+                                        <div class="row">
+                                            <div class="col-6 my-2">
                                                 <strong>Name:</strong> ${product.name}
                                             </div>
-                                            <div class="col-6 col-md-4 my-3">
+                                            <div class="col-6 my-1">
                                                 <strong>P/N:</strong> ${product.part_number}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>MFG:</strong> ${product.mfg}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>Tag:</strong> ${product.tag}
                                             </div>
-                                            <div class="col-12 my-2">
+                                            <div class="col-6 my-2">
                                                 <strong>Qty:</strong> ${product.qty}
                                             </div>
                                             <div class="col-12 my-2">
@@ -208,17 +209,17 @@
                                             </div>
 
                                             <div class="col-12 my-2 d-flex flex-row">
-                                                ${pdfListHtml}
+                                               <p><strong>Datasheet:</strong> ${pdfListHtml} </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div>
+                                <div class="col-12 col-md-4">
+                                    <div class="d-flex flex-column align-items-end">
                                         <div class="imgCover mb-2">
                                             <img src="${mainImageSrc}" class="img-fluid w-100">
                                         </div>
-                                        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 75%;margin: auto;">
+                                        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
                                             ${imageListHtml}
                                         </ul>
                                     </div>

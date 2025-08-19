@@ -6,7 +6,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, intval($_GET['page'] ?? 1));
-$limit = 10; //per page
+$limit = 17; //per page
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -66,7 +66,7 @@ $html = '';
 $i = $offset + 1;
 while ($row = $result->fetch_assoc()) {
     $remarks = htmlspecialchars($row['remarks']);
-    $shortRemarks = mb_strlen($remarks) > 35 ? htmlspecialchars(mb_substr($remarks, 0, 35)) . '...' : $remarks;
+    $shortRemarks = mb_strlen($remarks) > 10 ? htmlspecialchars(mb_substr($remarks, 0, 10)) . '...' : $remarks;
     $tooltip = $remarks ? "title=\"$remarks\"" : '';
 
     $html .= "<tr>
@@ -81,6 +81,10 @@ while ($row = $result->fetch_assoc()) {
     </tr>";
     $i++;
 }
+
+
+
+
 
 // Frontend Pagination HTML Generation
 $paginationHtml = '';

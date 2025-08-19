@@ -35,6 +35,8 @@ body {
     --main-bg2-color:#b5d4e0;
     --main-hover-color:#ECA400;
     --main-bgTitle-color:#eca50079;
+    --swal2-confirm-button-background-color: #10a034!important;
+    --swal2-cancel-button-background-color: #db2d2d!important;
 }
 li{
     list-style: none;
@@ -111,7 +113,7 @@ table {
     z-index: 100;
     background-color: var(--main-bg0-color);
     color:var(--main-text-color);
-    z-index: 1101;
+    z-index: 20;
 }
 .navbar-title{
     font-size: 18px;
@@ -209,7 +211,6 @@ table {
     background-repeat: repeat;
     background-size: auto; 
     opacity: 0.35; 
-    z-index: 1;
     pointer-events: none;
     }
 
@@ -294,6 +295,20 @@ table {
     color: #f8f8f8!important;
     z-index: 1000;
 }
+
+.menu-item.has-submenu > a::after {
+  content: "\276F"; 
+  font-size: 14px;
+  margin-left: auto; 
+  transition: transform 0.3s ease;
+  color: var(--main-text-color);
+}
+
+.menu-item.has-submenu:hover > a::after {
+  transform: translateX(5px);
+  color: var(--main-hover-color);
+}
+
 /* end sidebar */
 
 /* main */
@@ -324,8 +339,7 @@ li.active > a {
 } */
 .content {
   position: relative;
-  z-index:5;
-  height:100%;
+  height:99%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -555,6 +569,7 @@ h3{
 }
 .itemImg{
   width: 100px;
+  height: 60px;
 }
 .backBtn{
   display: flex;
@@ -957,7 +972,7 @@ background-color: var(--main-hover-color);
   
   .fixed-table-container table thead {
     position: sticky;
-    top: 0; 
+    top: -6px; 
     z-index: 10; 
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
     font-weight: normal;
@@ -1309,14 +1324,13 @@ fill:var(--main-text-color);
 
 .modalDetails {
   position:absolute;
-  top: 45vh;
+  top: 47vh;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
   width: 90%;
-  max-width: 950px;
-  padding: 20px;
+  padding: 10px;
   color: rgb(8, 55, 126);
   display: none;
   z-index: 1000;
@@ -1342,15 +1356,18 @@ fill:var(--main-text-color);
   cursor: pointer;
 }
 
-.titleTop{
-  background-color:#0069928c;
-  padding:3px;
-  margin-bottom:8px;
+.titleTop {
+  background-color: #0069928c;
+  padding: 3px;
+  margin-bottom: 8px;
   color: #f0f0f0;
   border-radius: 5px;
+  font-weight: normal;
+  font-size: 14px;
 }
 .titleTop h2{
 font-size: 16px;
+font-weight: 300;
 }
 .fontS{
   font-size: 14px;
@@ -1366,8 +1383,11 @@ font-size: 16px;
   align-content:center;
 }
 .imgCover{
-  width:75%;
+  width:100%;
+  height: 250px;
   border:2px double #63727c;
-  margin: auto;
   border-radius:8px;
+  display: flex;
+  align-content:center;
+  justify-content: center;
 }
