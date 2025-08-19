@@ -1,5 +1,5 @@
 <?php
-require_once('../db/db.php'); // Adjust as needed
+require_once('../db/db.php'); 
 
 $term = $_GET['term'] ?? '';
 $term = trim($term);
