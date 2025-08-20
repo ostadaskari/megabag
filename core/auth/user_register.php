@@ -73,4 +73,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['username'])) {
 }
 
 include("design/views/auth/user_register_form.php");
->>>>>>> 2092598147e7fe93551e6a9726a8eadd25dd0105
+
