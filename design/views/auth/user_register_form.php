@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,9 @@
     <title>Registration</title>
 
     <!-- link CSS -->
-    <link rel="stylesheet" href="../../design/assets/css/style.css" />
-    <link rel="stylesheet" href="../../design/assets/css/register.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="design/assets/css/style.css" />
+    <link rel="stylesheet" href="design/assets/css/register.css" />
+    <script src="design/assets/js/sweetalert2.js"></script>
 </head>
 <body>
  <div class="container" id="containerReg">
@@ -189,7 +190,7 @@
     </script>
 
     <!-- script for taggle eye -->
-    <script src="../../design/assets/js/log-reg.js"></script>
+    <script src="design/assets/js/log-reg.js"></script>
     <!-- end script for taggle eye -->
 </body>
 </html>
