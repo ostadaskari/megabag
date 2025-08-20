@@ -320,7 +320,7 @@ li.active > a {
 .main{
     height: 95vh;
 }
-/* .main::before {
+ .main::before {
   margin: auto;
   max-width: 1280px;
   overflow: hidden;
@@ -336,7 +336,7 @@ li.active > a {
   opacity: 0.25;
   z-index: -1;
   pointer-events: none;
-} */
+} 
 .content {
   position: relative;
   height:99%;

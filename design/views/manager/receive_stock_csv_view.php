@@ -58,7 +58,7 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <div id="checkedData" class="mt-2">
+                <div id="checkedData" class="">
                     </div>
 
             </div>
