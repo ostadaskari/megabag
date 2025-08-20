@@ -65,11 +65,11 @@
                                 <th scope="col">Nickname</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Invite Code</th>
+                                <th scope="col">Code</th>
                                 <th scope="col">Creator</th>
                                 <th scope="col">Used By</th>
-                                <th scope="col">Created At</th>
-                                <th scope="col">Registered At</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Registered</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
