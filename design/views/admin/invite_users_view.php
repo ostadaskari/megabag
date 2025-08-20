@@ -1,6 +1,3 @@
-
-
-
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="22" height="22" fill="currentColor" class="bi bi-envelope-paper mx-1 me-2" viewBox="0 0 16 16">
@@ -57,7 +54,7 @@
             </div>
 
             <div class="col-12 mt-1">
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:61vh;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:65vh;overflow-y:auto;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
@@ -65,11 +62,11 @@
                                 <th scope="col">Nickname</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Code</th>
+                                <th scope="col">Invite Code</th>
                                 <th scope="col">Creator</th>
                                 <th scope="col">Used By</th>
-                                <th scope="col">Created</th>
-                                <th scope="col">Registered</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Registered At</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -311,4 +308,5 @@ function confirmDelete(id, isUsed) {
         }
     });
 }
+
 </script>

@@ -66,7 +66,7 @@
         <div class="row">
             <div class="col-12">
                 <!-- Category Tree Display -->
-                <div class="card border rounded bg-light shadow-sm shadow-sm p-2"style="height: 68vh;overflow: hidden;" >
+                <div class="card border rounded bg-light shadow-sm shadow-sm p-2"style="height: 70vh;overflow: auto;" >
                     <h3 class="mb-3">Category Tree</h3>
                     <div class="tree-display fixed-height-scroll root-tree">
                         <?php
