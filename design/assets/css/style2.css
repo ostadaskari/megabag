@@ -36,9 +36,7 @@
 .category-autocomplete-container {
     position: relative; /* This is crucial for positioning the suggestion list */
     display: inline-block; /* Prevents the container from taking up the full width of the cell */
-    z-index: 1000;
 }
-
 
 /* Style for the suggestion dropdown list */
 .category-suggestions {
@@ -53,6 +51,17 @@
     overflow-y: auto; /* Adds a scrollbar if the list is too long */
     border-radius: 4px; /* Optional: adds rounded corners */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+}
+
+/* Style for individual items in the suggestion list */
+.category-suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* Hover effect for the suggestion items */
+.category-suggestion-item:hover {
+    background-color: #f0f0f0;
 }
 
 
@@ -248,13 +257,12 @@
             align-items: center;
             gap: 10px;
             border: 1px solid #ffffff;
-
-            padding: 10px;
-
+            overflow: auto;
+            padding: 5px;
         }
         .feature-row input, .feature-row select {
             flex: 1;
-            padding: 8px;
+            padding: 7px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
@@ -324,9 +332,32 @@
     transition: background-color 0.3s ease; /* Smooth transition for background changes */
 }
 
+/* Style for the category autocomplete container */
+.category-autocomplete-container {
+    position: relative;
+}
 
+/* Style for the category search input field */
+.category-autocomplete {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    width: 100%;
+}
 
-
+/* Style for the category suggestions dropdown */
+.category-suggestions {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 4px 4px;
+}
 
 /* Style for individual suggestion items */
 .category-suggestion-item {
@@ -338,7 +369,6 @@
 .category-suggestion-item:hover {
     background-color: #f8f9fa;
 }
-
 
 /* Add a visual cue to the hoverable SVG icons */
 .hoverSvg:hover {
@@ -370,3 +400,4 @@
     #productsTableBody tr:hover {
         cursor: pointer;
     }
+

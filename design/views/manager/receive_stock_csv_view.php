@@ -1,3 +1,4 @@
+
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-filetype-exe mx-1 me-2" viewBox="0 0 16 16">
@@ -175,7 +176,7 @@
 
             document.getElementById('checkedData').innerHTML = `
 
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:43vh;overflow-y:auto;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 40vh;">
 
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
@@ -316,4 +317,5 @@
 
     // Initial load
     fetchCSVList();
+
 </script>
