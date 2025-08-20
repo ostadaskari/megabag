@@ -9,7 +9,7 @@ $captcha_text = substr(str_shuffle($characters),0,4);
 $_SESSION['captcha'] = strtolower($captcha_text);
 
 // Create the image
-$width = 140;
+$width = 120;
 $height = 40;
 
 $image = imagecreatetruecolor($width, $height);

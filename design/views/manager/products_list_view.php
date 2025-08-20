@@ -61,7 +61,7 @@
             <tbody id="productsTableBody">
                 <!-- Filled dynamically via AJAX -->
             </tbody>
-            
+        
             </table>
         </div>
     </div>
@@ -101,8 +101,7 @@
 <!-- end modal for show details -->
 
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const productsTableBody = document.getElementById('productsTableBody');
@@ -302,25 +301,35 @@
             }
         });
         
-        // Function to delete a product without SweetAlert
+        // Function to delete a product using SweetAlert2
         window.deleteProduct = function(productId) {
-            if (confirm('Are you sure you want to delete this product?')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '';
-                const actionInput = document.createElement('input');
-                actionInput.type = 'hidden';
-                actionInput.name = 'action';
-                actionInput.value = 'delete';
-                const idInput = document.createElement('input');
-                idInput.type = 'hidden';
-                idInput.name = 'product_id';
-                idInput.value = productId;
-                form.appendChild(actionInput);
-                form.appendChild(idInput);
-                document.body.appendChild(form);
-                form.submit();
-            }
+            Swal.fire({
+                title: 'Are you sure to delete this product?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '';
+                    const actionInput = document.createElement('input');
+                    actionInput.type = 'hidden';
+                    actionInput.name = 'action';
+                    actionInput.value = 'delete';
+                    const idInput = document.createElement('input');
+                    idInput.type = 'hidden';
+                    idInput.name = 'product_id';
+                    idInput.value = productId;
+                    form.appendChild(actionInput);
+                    form.appendChild(idInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            })
         };
 
         window.editProduct = function(productId) {

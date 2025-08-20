@@ -60,9 +60,8 @@ $result = $stmt->get_result();
 $html = "";
 $count = $offset + 1;
 while ($row = $result->fetch_assoc()) {
-    // Add data-id to the row for the frontend JavaScript to easily identify the product
-    // The previous HTML file used this attribute to find the product ID
-    $html .= "<tr data-id=\"{$row['id']}\">
+    // We've added an onclick event to the row to open the modal
+    $html .= "<tr data-id=\"{$row['id']}\" onclick=\"openModalForProduct({$row['id']})\">
         <td>{$count}</td>
         <td>" . htmlspecialchars($row['name']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
@@ -74,8 +73,8 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['location']) . "</td>
         <td>" . htmlspecialchars($row['status']) . "</td>
 
-
-        <td class=\"flex justify-center space-x-2\">
+        <!-- We've added onclick=\"event.stopPropagation()\" to the <td> to prevent the row's click event from firing -->
+        <td class=\"flex justify-center space-x-2\" onclick=\"event.stopPropagation()\">
             <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
                 ✏️
             </button>
