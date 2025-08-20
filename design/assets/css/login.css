@@ -1,3 +1,4 @@
+
 #containerLogin {
   position: absolute;
   width: 100%;
@@ -128,9 +129,10 @@
       width: 48%;
       height: 40px;
       position: relative;
+      background-color:#fff;
     }
   #containerLogin .imgCaptcha {
-      width: 100%;
+      width: 80%;
       height:100%;
       border:none;
       border-radius:0.25rem;

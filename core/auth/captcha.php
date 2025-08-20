@@ -32,7 +32,7 @@ for ($i = 0; $i < 7; $i++) {
 
 //write captcha in middle of image
 $font= '../fonts/arial.ttf';
-$font_size= 18;
+$font_size= 20;
 // $textbox_width= imagefontwidth($font_size)* strlen($captcha_text);
 $x= 10;
 $y= 30;
