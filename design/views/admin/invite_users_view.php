@@ -70,7 +70,7 @@
             </div>
 
             <div class="col-12 mt-1">
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:61vh;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:65vh;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>

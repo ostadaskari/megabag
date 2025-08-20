@@ -342,7 +342,6 @@ li.active > a {
   height:99%;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color:red;
 }
 
 /* content container */
@@ -1398,4 +1397,9 @@ font-weight: 300;
 }
 .bg-pdf:hover{
   background-color:#eca5009a;
+}
+#existingFeaturesContainer label,
+#newFeaturesContainer label{
+  margin-bottom: 0;
+
 }
