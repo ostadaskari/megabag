@@ -342,6 +342,7 @@ li.active > a {
   height:99%;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color:red;
 }
 
 /* content container */
