@@ -9,7 +9,7 @@ $captcha_text = substr(str_shuffle($characters),0,4);
 $_SESSION['captcha'] = strtolower($captcha_text);
 
 // Create the image
-$width = 140;
+$width = 120;
 $height = 40;
 
 $image = imagecreatetruecolor($width, $height);
@@ -31,7 +31,7 @@ for ($i = 0; $i < 7; $i++) {
 
 //write captcha in middle of image
 $font= '../fonts/arial.ttf';
-$font_size= 18;
+$font_size= 20;
 // $textbox_width= imagefontwidth($font_size)* strlen($captcha_text);
 $x= 10;
 $y= 30;
