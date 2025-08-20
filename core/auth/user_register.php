@@ -1,5 +1,5 @@
 <?php
-require_once("../db/db.php");
+require_once("core/db/db.php");
 
 $code = $_GET['code'] ?? '';
 $errors = [];
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['username'])) {
                 $update->execute();
 
                 echo "<script>
-                    window.location.href = 'login.php?registered=1';
+                    window.location.href = 'core/auth/login.php?registered=1';
                 </script>";
                 exit;
             } else {
@@ -71,4 +71,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['username'])) {
     }
 }
 
-include("../../design/views/auth/user_register_form.php");
+include("design/views/auth/user_register_form.php");
