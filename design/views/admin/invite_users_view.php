@@ -1,19 +1,4 @@
-<?php
-/**
- * admin\invite_users_view.php
- *
- * This view displays the interface for generating and managing user invite codes.
- * It includes a form to create new invites and a table to list existing ones.
- *
- * @var array $errors An array of error messages to display.
- * @var string $success A success message to display.
- * @var string $inviteLink The newly generated invite link.
- * @var array $invites A list of invite code data.
- * @var int $currentPage The current page number for pagination.
- * @var int $totalPages The total number of pages for pagination.
- * @var int $itemsPerPage The number of items to show per page.
- */
-?>
+
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="22" height="22" fill="currentColor" class="bi bi-envelope-paper mx-1 me-2" viewBox="0 0 16 16">
@@ -70,7 +55,7 @@
             </div>
 
             <div class="col-12 mt-1">
-                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:65vh;">
+                <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:65vh;overflow-y:auto;">
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                         <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
                             <tr>
@@ -269,7 +254,7 @@ function copyInviteLinkFromInput() {
  * @param {string} code The invite code to be copied.
  */
 function copyInviteLink(code) {
-    const fullLink = `http://localhost/megabag/core/auth/user_register.php?code=${code}`;
+    const fullLink = `http://localhost/megabag/rgs.php?code=${code}`;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(fullLink).then(() => {
             Swal.fire('Copied!', 'Invite link copied to clipboard.', 'success');
