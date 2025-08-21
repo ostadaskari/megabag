@@ -140,6 +140,15 @@ $role = $_SESSION['role'] ?? 'guest';
               <?php endif; ?>
 
             <?php if (in_array($role, ['user', 'manager', 'admin'])): ?>
+                          <!-- Mouser-Search-Inventory -->
+            <li class="menu-item">
+              <a href="?page=mouser_search" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <span>Mouser Search</span>
+              </a>
+            </li>
             <!-- Search-Inventory -->
             <li class="menu-item">
               <a href="?page=user_search_products" class="menu-link">
@@ -286,7 +295,16 @@ $role = $_SESSION['role'] ?? 'guest';
               <?php endif; ?>
 
             <?php if (in_array($role, ['user', 'manager', 'admin'])): ?>
-            <!-- Search-Inventory -->
+            <!-- Mouser_Search-Inventory -->
+            <li class="menu-item has-submenu">
+              <a href="?page=mouser_search" class="menu-link">
+                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <span>Mouser Search</span>
+              </a>
+            </li>
+              <!-- Search-Inventory -->
             <li class="menu-item has-submenu">
               <a href="?page=user_search_products" class="menu-link">
                 <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">

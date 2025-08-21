@@ -43,7 +43,7 @@
             <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">P-Name</th>
                     <th scope="col">P/N</th>
                     <th scope="col">MFG</th>
                     <th scope="col">Tag</th>
