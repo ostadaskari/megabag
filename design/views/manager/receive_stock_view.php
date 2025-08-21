@@ -22,7 +22,7 @@
                             <label for="productInput" class="form-label">Product:</label>
                             <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
                             <input type="hidden" name="products[0][product_id]" class="product-id">
-                            <div class="autocomplete-box" style="display: none;"></div>
+                            <div class="autocomplete-box category-suggestions" style="display: none;"></div>
                         </div>
 
                         <div class="col-6 col-md-1 px-1">

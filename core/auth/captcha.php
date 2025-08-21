@@ -1,4 +1,3 @@
-
 <?php
 session_start();    
 // Generate a 4-character CAPTCHA (numbers and letters without 0 o 1  )
