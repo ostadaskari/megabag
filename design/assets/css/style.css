@@ -1436,3 +1436,7 @@ font-weight: 300;
   scrollbar-width: thin;  
   scrollbar-color: #6386a388 #f1f1f1; 
 } 
+.mouserSvg{
+  width: 24px;
+  height: 24px;
+}

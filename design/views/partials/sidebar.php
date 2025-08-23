@@ -143,8 +143,8 @@ $role = $_SESSION['role'] ?? 'guest';
                           <!-- Mouser-Search-Inventory -->
             <li class="menu-item">
               <a href="?page=mouser_search" class="menu-link">
-              <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="4.032"> <title>m</title> <path d="M27.232 3.993h-0.799c-0 0-0 0-0.001 0-0.288 0-0.541 0.153-0.681 0.381l-0.002 0.003-9.75 16.058-9.748-16.058c-0.142-0.232-0.395-0.385-0.683-0.385-0 0-0 0-0.001 0h-0.799c-0.442 0-0.8 0.358-0.8 0.8v22.4c0 0.442 0.358 0.8 0.8 0.801h0.928c0.442-0.001 0.8-0.359 0.8-0.801v0-17.587l8.437 13.905c0.142 0.233 0.395 0.387 0.684 0.387h0.736c0.288-0 0.541-0.153 0.682-0.381l0.002-0.003 8.467-13.915v17.595c0.001 0.442 0.359 0.8 0.801 0.801h0.928c0.442-0.001 0.8-0.359 0.801-0.801v-22.4c-0.001-0.442-0.359-0.8-0.801-0.8v0z"></path> </g><g id="SVGRepo_iconCarrier"> <title>m</title> <path d="M27.232 3.993h-0.799c-0 0-0 0-0.001 0-0.288 0-0.541 0.153-0.681 0.381l-0.002 0.003-9.75 16.058-9.748-16.058c-0.142-0.232-0.395-0.385-0.683-0.385-0 0-0 0-0.001 0h-0.799c-0.442 0-0.8 0.358-0.8 0.8v22.4c0 0.442 0.358 0.8 0.8 0.801h0.928c0.442-0.001 0.8-0.359 0.8-0.801v0-17.587l8.437 13.905c0.142 0.233 0.395 0.387 0.684 0.387h0.736c0.288-0 0.541-0.153 0.682-0.381l0.002-0.003 8.467-13.915v17.595c0.001 0.442 0.359 0.8 0.801 0.801h0.928c0.442-0.001 0.8-0.359 0.801-0.801v-22.4c-0.001-0.442-0.359-0.8-0.801-0.8v0z"></path> </g></svg>
-                <span>Mouser Search</span>
+              <img src="../../design/assets/img/mouser.svg" class="mouserSvg" alt="mouser">        
+              <span>Mouser Search</span>
               </a>
             </li>
             <!-- Search-Inventory -->
@@ -293,9 +293,7 @@ $role = $_SESSION['role'] ?? 'guest';
             <!-- Mouser_Search-Inventory -->
             <li class="menu-item has-submenu">
               <a href="?page=mouser_search" class="menu-link">
-                <svg width="24" height="24" fill="var(--main-hover-color)" class="bi bi-search" viewBox="0 0 16 16">
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
+                <img src="../assets/img/mouser.svg" alt="mouser">                
                 <span>Mouser Search</span>
               </a>
             </li>
