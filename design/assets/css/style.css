@@ -296,7 +296,9 @@ table {
     color: #f8f8f8!important;
     z-index: 1000;
 }
-
+.menu-link svg{
+  fill: var(--main-hover-color);
+}
 .menu-item.has-submenu > a::after {
   content: "\276F"; 
   font-size: 14px;
@@ -307,7 +309,13 @@ table {
 
 .menu-item.has-submenu:hover > a::after {
   transform: translateX(5px);
-  color: var(--main-hover-color);
+}
+.menu-item.has-submenu:hover {
+  background-color: var(--main-hover-color);
+  color: #fff; 
+}
+.menu-item.has-submenu:hover svg{
+  fill: #fff;
 }
 
 /* end sidebar */
