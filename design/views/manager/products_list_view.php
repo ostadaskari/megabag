@@ -50,11 +50,8 @@
                     <th scope="col">Qty</th>
                     <th scope="col">Submitter</th>
                     <th scope="col">Category</th>
-
                     <th scope="col">Location</th>
                     <th scope="col">Status</th>
-
-
                     <th scope="col">Actions</th>
                 </tr>
             </thead>

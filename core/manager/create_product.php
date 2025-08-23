@@ -29,53 +29,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tag = trim($_POST['tag'] ?? '');
     $date_code = trim($_POST['date_code'] ?? '');
     $recieve_code = trim($_POST['recieve_code'] ?? '');
+    $rf = trim($_POST['rf'] ?? '');
 
+    // Validate main product fields
     if (!$user_id) {
         $errors[] = "User not logged in.";
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssisiisssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code);
+        // Prepare the product insertion statement
+        $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code, rf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssisiissssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf);
 
         if ($stmt->execute()) {
             $product_id = $stmt->insert_id;
 
-           // Handle Cover Image
+            // Define allowed file types and max size
+            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $allowedDocExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'];
+            $maxFileSize = 20 * 1024 * 1024; // 20 MB
+
+            // Handle Cover Image
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['cover_image'];
-                $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
-                $newName = $pn . "-cover." . $fileExt;
-                $target = "../../uploads/images/" . $newName;
+                $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-                if (move_uploaded_file($file['tmp_name'], $target)) {
-                    $stmtCover = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension, is_cover) VALUES (?, ?, ?, ?, ?, 1)");
-                    $stmtCover->bind_param("issis", $product_id, $newName, $target, $file['size'], $fileExt);
-                    $stmtCover->execute();
-                    $stmtCover->close();
+                if (!in_array($fileExt, $allowedImageExtensions)) {
+                    $errors[] = "Cover image has an invalid file format.";
+                } elseif ($file['size'] > $maxFileSize) {
+                    $errors[] = "Cover image size exceeds the 20MB limit.";
+                } else {
+                    $newName = $pn . "-cover." . $fileExt;
+                    $target = "../../uploads/images/" . $newName;
+
+                    if (move_uploaded_file($file['tmp_name'], $target)) {
+                        $stmtCover = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension, is_cover) VALUES (?, ?, ?, ?, ?, 1)");
+                        $stmtCover->bind_param("issis", $product_id, $newName, $target, $file['size'], $fileExt);
+                        $stmtCover->execute();
+                        $stmtCover->close();
+                    } else {
+                        $errors[] = "Failed to upload cover image.";
+                    }
                 }
             }
 
             // Handle Additional Images
             if (!empty($_FILES['images']['tmp_name'][0])) {
                 foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
-                    // Skip if no file uploaded for this index
-                    if (empty($tmpName)) continue;
+                    if ($_FILES['images']['error'][$index] !== UPLOAD_ERR_OK) continue;
 
                     $fileName = $_FILES['images']['name'][$index];
                     $fileSize = $_FILES['images']['size'][$index];
-                    $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
+                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-                    if ($fileSize > 20 * 1024 * 1024) continue; // Skip files > 20MB
+                    if (!in_array($fileExt, $allowedImageExtensions)) {
+                        $errors[] = "Image file '$fileName' has an invalid file format.";
+                    } elseif ($fileSize > $maxFileSize) {
+                        $errors[] = "Image file '$fileName' size exceeds the 20MB limit.";
+                    } else {
+                        $newName = $pn . "-img-" . ($index + 1) . "." . $fileExt;
+                        $target = "../../uploads/images/" . $newName;
 
-                    $newName = $pn . "-img-" . ($index + 1) . "." . $fileExt;
-                    $target = "../../uploads/images/" . $newName;
-
-                    if (move_uploaded_file($tmpName, $target)) {
-                        $stmtImg = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                        $stmtImg->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
-                        $stmtImg->execute();
-                        $stmtImg->close();
+                        if (move_uploaded_file($tmpName, $target)) {
+                            $stmtImg = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                            $stmtImg->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
+                            $stmtImg->execute();
+                            $stmtImg->close();
+                        } else {
+                            $errors[] = "Failed to upload image '$fileName'.";
+                        }
                     }
                 }
             }
@@ -83,38 +105,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle PDFs
             if (!empty($_FILES['pdfs']['tmp_name'][0])) {
                 foreach ($_FILES['pdfs']['tmp_name'] as $index => $tmpName) {
-                    // Skip if no file uploaded for this index
-                    if (empty($tmpName)) continue;
+                    if ($_FILES['pdfs']['error'][$index] !== UPLOAD_ERR_OK) continue;
 
                     $fileName = $_FILES['pdfs']['name'][$index];
                     $fileSize = $_FILES['pdfs']['size'][$index];
-                    $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
+                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-                    if ($fileSize > 20 * 1024 * 1024) continue; // Skip files > 20MB
+                    if (!in_array($fileExt, $allowedDocExtensions)) {
+                        $errors[] = "Document file '$fileName' has an invalid file format.";
+                    } elseif ($fileSize > $maxFileSize) {
+                        $errors[] = "Document file '$fileName' size exceeds the 20MB limit.";
+                    } else {
+                        $newName = $pn . "-pdf-" . ($index + 1) . "." . $fileExt;
+                        $target = "../../uploads/pdfs/" . $newName;
 
-                    $newName = $pn . "-pdf-" . ($index + 1) . "." . $fileExt;
-                    $target = "../../uploads/pdfs/" . $newName;
-
-                    if (move_uploaded_file($tmpName, $target)) {
-                        $stmtPdf = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
-                        $stmtPdf->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
-                        $stmtPdf->execute();
-                        $stmtPdf->close();
+                        if (move_uploaded_file($tmpName, $target)) {
+                            $stmtPdf = $conn->prepare("INSERT INTO pdfs (product_id, file_name, file_path, file_size, file_extension) VALUES (?, ?, ?, ?, ?)");
+                            $stmtPdf->bind_param("issis", $product_id, $newName, $target, $fileSize, $fileExt);
+                            $stmtPdf->execute();
+                            $stmtPdf->close();
+                        } else {
+                            $errors[] = "Failed to upload document '$fileName'.";
+                        }
                     }
                 }
             }
 
-            // Redirect with success message
-            header("Location: ../auth/dashboard.php?page=create_product&success=" . urlencode("Product created successfully!"));
+            // After all uploads, check for any accumulated errors and redirect
+            if (empty($errors)) {
+                header("Location: ../auth/dashboard.php?page=create_product&success=" . urlencode("Product created successfully!"));
+            } else {
+                header("Location: ../auth/dashboard.php?page=create_product&error=" . urlencode(implode(' | ', $errors)));
+            }
             exit;
+
         } else {
             $errors[] = "Failed to save product.";
+            header("Location: ../auth/dashboard.php?page=create_product&error=" . urlencode(implode(' | ', $errors)));
+            exit;
         }
     }
 
-    // If errors, redirect with error messages
+    // If initial validation fails (e.g., no user ID), redirect with errors
     if (!empty($errors)) {
-        header("Location: ../auth/dashboard.php?page=create_product?error=" . urlencode(implode(' | ', $errors)));
+        header("Location: ../auth/dashboard.php?page=create_product&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }
 }
