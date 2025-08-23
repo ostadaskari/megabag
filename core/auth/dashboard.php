@@ -12,7 +12,7 @@ $page = $_GET['page'] ?? 'home';
 // Allow only specific internal pages
 $allowed_pages = [
     'home' => '../manager/home.php',
-    'product_feature_values' => '../manager/product_feature_values.php',
+    'product_feature_values' => '../manager/product_feature_values.php', 
     'add_category_feature' => '../manager/add_category_feature.php',   
     'invite_users' => '../admin/invite_users.php',
     'manage_users' => '../admin/manage_users.php',
@@ -28,7 +28,8 @@ $allowed_pages = [
     'login_logs' => '../logs/login_logs.php',
     'bans' => '../logs/bans.php',
     'profile' => '../auth/profile.php',
-    'user_search_products' => '../user/user_search_products.php'
+    'user_search_products' => '../user/user_search_products.php',
+    'mouser_search' => '../user/mouser_search.php'
 ];
 
 // Map `?page=...` to the actual core file
