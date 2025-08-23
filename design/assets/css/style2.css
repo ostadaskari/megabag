@@ -374,18 +374,12 @@
         cursor: pointer;
     }
 
-        .container-custom {
-            max-width: 95%;
-        }
-        .shadow-lg {
-            box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-        }
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             border-left-color: #0d6efd; /* Bootstrap primary color */
             border-radius: 50%;
-            width:45px;
-            height:45px;
+            width:50px;
+            height:50px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -394,4 +388,7 @@
         .table-responsive-custom {
             overflow-x: auto;
         }
-   
+   .bg-warning{
+    font-size: 18px;
+    background-color:rgba(255, 174, 0, 0.411);
+   }
