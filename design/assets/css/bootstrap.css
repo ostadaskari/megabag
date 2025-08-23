@@ -840,5 +840,6 @@ position: relative !important;
 
 /* border-bottom */
 .border-bottom {
-  border-bottom: 1.5px solid #05a2e073 !important; 
+  border-bottom: 1.5px solid #8cadbb98 !important; 
+  box-shadow: 0 1px 5px #cdcfcf73;
 }
