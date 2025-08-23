@@ -38,33 +38,6 @@
     display: inline-block; /* Prevents the container from taking up the full width of the cell */
 }
 
-/* Style for the suggestion dropdown list */
-.category-suggestions {
-    position: absolute; /* Takes it out of the normal document flow */
-    top: 100%; /* Positions the list right below the input field */
-    left: 0;
-    right: 0;
-    z-index: 1000; /* Ensures it's on top of other elements */
-    background-color: #fff; /* Sets a white background */
-    border: 1px solid #ccc; /* Adds a border for visibility */
-    max-height: 150px; /* Limits the height of the dropdown */
-    overflow-y: auto; /* Adds a scrollbar if the list is too long */
-    border-radius: 4px; /* Optional: adds rounded corners */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
-}
-
-/* Style for individual items in the suggestion list */
-.category-suggestion-item {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-/* Hover effect for the suggestion items */
-.category-suggestion-item:hover {
-    background-color: #f0f0f0;
-}
-
-
 
 /* design\views\manager\stock_issue_view.php Autocomplete dropdown styling */
 .autocomplete-dropdown {

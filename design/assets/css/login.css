@@ -130,6 +130,8 @@
       height: 40px;
       position: relative;
       background-color:#fff;
+      border-radius:5px;
+      border: 1px solid #ccc;
     }
   #containerLogin .imgCaptcha {
       width: 80%;
@@ -137,11 +139,17 @@
       border:none;
       border-radius:0.25rem;
       position: relative;
+      
     }
-   #containerLogin .divCaptcha svg{
+    #containerLogin .divCaptcha svg {
       position: absolute;
-      top: 24%;
-      right:5%;
+      top: 1%;
+      right: 0%;
+      height: 38px;
+      width: 34px;
+      padding: 5px;
+      background-color: #e8f0fe;
+      border-radius:0 3px 3px 0 ;
     }
    #containerLogin .divInput{
       position: relative;

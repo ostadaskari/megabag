@@ -296,7 +296,9 @@ table {
     color: #f8f8f8!important;
     z-index: 1000;
 }
-
+.menu-link svg{
+  fill: var(--main-hover-color);
+}
 .menu-item.has-submenu > a::after {
   content: "\276F"; 
   font-size: 14px;
@@ -307,7 +309,13 @@ table {
 
 .menu-item.has-submenu:hover > a::after {
   transform: translateX(5px);
-  color: var(--main-hover-color);
+}
+.menu-item.has-submenu:hover {
+  background-color: var(--main-hover-color);
+  color: #fff; 
+}
+.menu-item.has-submenu:hover svg{
+  fill: #fff;
 }
 
 /* end sidebar */
@@ -321,7 +329,7 @@ li.active > a {
 .main{
     height: 95vh;
 }
-/* .main::before {
+ /* .main::before {
   margin: auto;
   max-width: 1280px;
   overflow: hidden;
@@ -337,7 +345,7 @@ li.active > a {
   opacity: 0.25;
   z-index: -1;
   pointer-events: none;
-} */
+}  */
 .content {
   position: relative;
   height:99%;
@@ -431,7 +439,6 @@ padding: 0 !important;
 
 /* Textarea */
 .partForm textarea {
-    height: 183px;
     resize: none;
 }
 
@@ -1404,3 +1411,28 @@ font-weight: 300;
   margin-bottom: 0;
 
 }
+
+
+/* scroll style */
+::-webkit-scrollbar {
+  width:5px;  
+  height:5px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background:#6386a388;
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6386a388; 
+}
+ 
+* {
+  scrollbar-width: thin;  
+  scrollbar-color: #6386a388 #f1f1f1; 
+} 
