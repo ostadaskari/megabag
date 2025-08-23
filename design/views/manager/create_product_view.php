@@ -83,13 +83,19 @@
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
-                        <label for="" class="form-label">Date Code:</label>
-                        <select class="form-select" name="date_code">
-                        <option value="2024+">2024+</option>
-                            <option value="2024">2024</option>
+                        <label for="date-code" class="form-label">Date Code:</label>
+                        <select id="date-code" name="date_code" class="form-select">
+                            <!-- Years will be populated here by JavaScript -->
                         </select>
                     </div>
-                    
+
+                    <div class="col-12 col-md-1 px-2 mb-3 form-check d-flex align-items-end">
+                        <label class="form-check-label" for="rfCheckbox">
+                            RF:
+                        </label>
+                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">      
+                    </div>
+
                     <div class="col-12 px-2">
                         <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
                         <textarea class="form-control" id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
@@ -250,14 +256,14 @@
 
         // Hide the dropdown if no search text or no results
         if (searchText === '' || filtered.length === 0) {
-             dropdown.style.display = 'none'; // Hide the box
-             if (filtered.length === 0 && searchText !== '') {
-                 dropdown.innerHTML = '<li>No results found</li>';
-                 dropdown.style.display = 'block'; // Show "No results" message
-             }
-             return;
-         }
-        
+            dropdown.style.display = 'none'; // Hide the box
+            if (filtered.length === 0 && searchText !== '') {
+                dropdown.innerHTML = '<li>No results found</li>';
+                dropdown.style.display = 'block'; // Show "No results" message
+            }
+            return;
+        }
+
         dropdown.style.display = 'block'; // Show the box when there are results
 
         filtered.forEach(cat => {
@@ -268,7 +274,7 @@
             li.onclick = () => {
                 document.getElementById('category_search').value = cat.name;
                 document.getElementById('category_id').value = cat.id;
-                dropdown.innerHTML = ''; 
+                dropdown.innerHTML = '';
                 dropdown.style.display = 'none'; // Hide the box after selection
             };
             dropdown.appendChild(li);
@@ -281,7 +287,7 @@
         const searchText = this.value;
         renderDropdown(searchText);
     });
-    
+
     // Hide the dropdown when the input field loses focus
     document.getElementById('category_search').addEventListener('blur', function () {
         setTimeout(() => {
@@ -291,6 +297,34 @@
 
     // Load categories on page load
     fetchCategories();
+
+    // Wait for the DOM to be fully loaded before running the script
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get a reference to the select element
+        const dateCodeSelect = document.getElementById('date-code');
+
+        // Define the starting year
+        const startYear = 2017;
+
+        // Get the current year
+        const currentYear = new Date().getFullYear();
+
+        // Loop from the current year down to the start year
+        for (let year = currentYear; year >= startYear; year--) {
+            // Create a new option element for each year
+            const option = document.createElement('option');
+
+            // Set the value and display text of the option
+            option.value = year;
+            option.textContent = year;
+
+            // Append the option to the select element
+            dateCodeSelect.appendChild(option);
+        }
+
+        // Optional: You can set the currently selected year to the current year
+        dateCodeSelect.value = currentYear;
+    });
 </script>
 
 <?php if (!empty($success)): ?>
