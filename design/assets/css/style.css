@@ -188,7 +188,7 @@ table {
     /* sidebar */
   
     .userNameTop{
-      width: 83%;
+      width: 89%;
       height:60px;
       margin: 8px auto;
       font-size: 14px;
@@ -1150,51 +1150,71 @@ fill:var(--main-text-color);
     background-color: #fff;
   }
 
-  .category-tree li {
-    cursor: pointer;
-    padding: 10px 8px;
-    border-radius: 4px;
-    position: relative;
-    font-size: 14px;
-  }
+  .tree {
+  background: #fff;
+  padding: 20px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: .9rem;
+  color: #212529;
+}
 
-  .category-tree li:hover {
-    background-color: #d6e3ec;
-  }
+.tree span {
+  font-size: 15px;
+  font-style: italic;
+  margin: 0 5px 0 0;
+}
 
-  .category-tree li.selected {
-    background-color: #e9f5fa88;
-    font-weight: bold;
-  }
+.tree .fa-folder,
+.tree .fa-folder-open {
+  color: #007bff;
+}
 
-  .category-tree ul {
-    display: none;
-    padding-left: 1rem;
-  }
+.tree .fa-file {
+  color: #555;
+}
 
-  .category-tree li.open > ul {
-    display: block;
-  }
+.tree ul {
+  padding-left: 15px;
+  list-style: none;
+}
 
-  .category-tree li.has-children::before {
-    content: "▶";
-    position: absolute;
-    left: -10px;
-    top: 10px;
-    font-size: 0.7rem;
-    transition: transform 0.2s ease;
-  }
+.tree li {
+  position: relative;
+  padding: 5px 0 5px 15px;
+}
 
-  .category-tree li.open.has-children::before {
-    transform: rotate(90deg);
-  }
-  #category-dropdown li{
-    padding: 5px 3px;
-  }
-  #category-dropdown li:hover{
-    background-color:#cccccc3f;
-    cursor:pointer;
-  }
+.tree li:before {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 10px;
+  height: 1px;
+  content: '';
+  background-color: #666;
+}
+
+.tree li:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  content: '';
+  background-color: #666;
+}
+
+.tree li:last-child:after {
+  height: 15px;
+}
+
+.tree details summary {
+  cursor: pointer;
+  outline: none;
+}
+.tree details summary::-webkit-details-marker {
+  display: none;
+}
+
 /* ##################### end Categories ################## */
 
 /* ##################### stock in // List-Of-Receives ################## */
@@ -1436,3 +1456,7 @@ font-weight: 300;
   scrollbar-width: thin;  
   scrollbar-color: #6386a388 #f1f1f1; 
 } 
+.mouserSvg{
+  width: 24px;
+  height: 24px;
+}

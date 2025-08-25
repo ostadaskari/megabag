@@ -48,12 +48,14 @@
             
                 <div class="row">
                     <div class="col-12 col-md-4 px-2 my-2">
-                        <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
-                            <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
+
+                    <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                        <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                            <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off" />
+                            <label class="form-label" for="manufacturer" title="Manufacturer">MFR:</label>
+                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
+
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>

@@ -13,10 +13,10 @@
 </div>
 <div class="container px-0">
     <div class="row align-items-center">
-        <div class="col-12 col-md-11 px-1">
-        <form class="row d-flex align-items-end justify-content-between mb-3 border rounded bg-light shadow-sm p-2">
+        <div class="col-12 col-md-11 pr-1">
+        <form class="row d-flex align-items-end justify-content-between mb-2 border rounded bg-light shadow-sm p-2">
                 <div class="col-12 col-md-4">
-                    <label for="" class="form-label">Product:</label>
+                    <label for="" class="form-label">Part:</label>
                     <div class="input-box m-0" style="width: 100%;">
                     <div class="svgSearch">
                         <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -30,27 +30,27 @@
                 <div class="col-5 col-md-2 mt-md-0 mt-2">
                     <div class="mx-0" style="width: 100%;">
                     <label for="fromDate" class="form-label">From:</label>
-                        <input type="date" id="fromDate"  class="form-control">
+                        <input type="date" id="fromDate"  class="form-control" style="font-size: 14px;">
                     </div>
                 </div>
 
                 <div class="col-5 col-md-2 mt-md-0 mt-2">
                     <div class="mx-0" style="width: 100%;">
                     <label for="toDate" class="form-label">To:</label>
-                    <input type="date" id="toDate" class="form-control">
+                    <input type="date" id="toDate" class="form-control" style="font-size: 14px;">
                     </div>
                 </div>
 
-                <div class="col-12 col-md-3 mb-1 mt-md-0 mt-2">
-                    <div class="d-flex justify-content-end">
-                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" onclick="fetchIssues(1)" title="Search">
+                <div class="col-12 col-md-3 d-flex justify-content-end align-items-end">
+                    <div class="d-flex justify-content-end align-items-end">
+                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="fetchIssues(1)" title="Search">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-search mx-1" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                         </svg>
                         Search
                     </button>
 
-                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" onclick="clearSearch()" title="Clear Search">
+                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="clearSearch()" title="Clear Search">
                         <svg width="20" height="20" fill="currentColor" class="bi bi-eraser mx-1" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
                         </svg>
@@ -61,7 +61,7 @@
         </form> 
         </div>
         <div class="col-12 col-md-1">
-        <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn mb-3 border rounded bg-light shadow-sm p-2">
+        <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn mb-2 border rounded bg-light shadow-sm p-2">
             <div class="d-flex flex-row align-items-center justify-content-between my-1">
                 <p class="py-1 fontS">EXE:</p>
                 <button class="btn p-1 mx-1 btnSvg" title="Excel File" onclick="exportIssues('excel')">
@@ -74,7 +74,7 @@
                 <p class="py-1 fontS">PDF:</p>
                 <button class="btn p-1 mx-1 btnSvg" title="PDF File" onclick="exportIssues('pdf')" >
                 
-                <svg width="24" height="24" fill="#FF0000" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                <svg width="24" height="24" fill="rgb(207, 44, 16)" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"></path>
                 </svg>
                 </button>
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    <div id="pagination" class="mt-3"></div>
+    <div id="pagination" class="my-2"></div>
 </div>
 
 <!-- Modal for displaying comment -->
@@ -171,7 +171,7 @@ function fetchIssues(page = 1) {
                 const lastBtnOnclick = data.currentPage === data.totalPages ? '' : `onclick="event.preventDefault(); fetchIssues(${data.totalPages})"`;
 
                 paginationHtml = `
-                    <div class="row my-2">
+                    <div class="row ">
                         <div class="col-12 d-flex justify-content-center">
                             <div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">
                                 <a href="#" ${firstBtnOnclick} class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ${firstBtnClass}">
