@@ -60,25 +60,25 @@ CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
     tag VARCHAR(60),
-    part_number VARCHAR(80) NOT NULL UNIQUE,        -- Renamed "p-n" to "part_number"
-    mfg VARCHAR(80),                         -- Manufacturer
-    qty MEDIUMINT UNSIGNED DEFAULT 0,        -- 0 to 16777215
-    company_cmt TEXT,                        --  company comment                                                                                                                                                                  
-    location VARCHAR(100),                   -- location adrress in stock 
-    status VARCHAR(80),                      -- You can later restrict this via ENUM or validation logic
-
-    user_id INT ,                    -- Submitter's user ID
-    category_id INT ,                -- Connects to the last child of categories
-
-    date_code ENUM('2024', '2024+'),         -- Extend as needed
+    part_number VARCHAR(80) NOT NULL UNIQUE,      -- Renamed "p-n" to "part_number"
+    mfg VARCHAR(80),                            -- Manufacturer
+    qty MEDIUMINT UNSIGNED DEFAULT 0,              -- 0 to 16777215
+    used_qty MEDIUMINT UNSIGNED DEFAULT 0,         -- 0 to 16777215
+    company_cmt TEXT,                            -- company comment
+    location VARCHAR(100),                         -- location address in stock 
+    rf BOOLEAN DEFAULT FALSE,                      -- RF column with boolean type, default 0 (False), and nullable
+    status ENUM('available', 'unavailable') DEFAULT 'available',
+    user_id INT,                               -- Submitter's user ID
+    category_id INT,                           -- Connects to the last child of categories
+    date_code YEAR,                               -- Use the YEAR data type for year values
     recieve_code VARCHAR(80),
-
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- Foreign Key Constraints
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
+
 
 CREATE TABLE images (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

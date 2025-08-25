@@ -1,7 +1,7 @@
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     
     <h2 class="d-flex align-items-center">
-    <svg width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
+    <svg width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
     </svg> 
     Add a Single Product</h2>
@@ -15,28 +15,28 @@
 
 <!-- add single part -->
     <div id="Add-Single-part" class="tab-content mb-2 pb-3">
-        <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
+        <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
             <!-- Category Dropdown Section -->
             <div class="container bg-light border rounded shadow-sm p-2 mb-2" style="z-index:1000;">
               <div class="row">
                 <!-- Category Dropdown Section -->
-                 <div class="col-12 d-flex flex-row">
-                    <div class="d-flex flex-row align-items-center">
-                        <svg width="20" height="20" fill="currentColor" class="bi bi-substack" viewBox="0 0 16 16">
-                        <path d="M15 3.604H1v1.891h14v-1.89ZM1 7.208V16l7-3.926L15 16V7.208zM15 0H1v1.89h14z"/>
-                        </svg>
-                        <h3 class="pl-1">Categories :</h3>
-                     </div>
-                    <div style="width:40%;">
-                         <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select" >
-                        <input type="hidden" name="category_id" id="category_id">
-                        <ul class="category-suggestions" id="category-dropdown" style="width:40%;"></ul>
-                    </div>   
-                  </div>
+                    <div class="col-12 d-flex flex-row">
+                        <div class="d-flex flex-row align-items-center">
+                            <svg width="20" height="20" fill="currentColor" class="bi bi-substack" viewBox="0 0 16 16">
+                            <path d="M15 3.604H1v1.891h14v-1.89ZM1 7.208V16l7-3.926L15 16V7.208zM15 0H1v1.89h14z"/>
+                            </svg>
+                            <h3 class="pl-1">Category :</h3>
+                          </div>
+                        <div style="width:40%;">
+                            <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select" >
+                            <input type="hidden" name="category_id" id="category_id">
+                            <ul class="category-suggestions" id="category-dropdown" style="width:40%;"></ul>
+                        </div>  
+                    </div>
                 </div>
             </div>
 
-           <!-- part number and Manufacturer inputs -->
+            <!-- part number and Manufacturer inputs -->
             <div class="container bg-light border rounded shadow-sm p-2 mb-2">
                 <div class="d-flex flex-row align-items-center mb-2">
                 <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -47,18 +47,18 @@
                 </div>
             
                 <div class="row">
-                        <div class="col-12 col-md-4 px-2 my-2">
+                    <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
                             <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
-                        </div>
-                        <div class="col-12 col-md-4 px-2 my-2">
-                                <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                                <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
-                        </div>
-                        <div class="col-12 col-md-4 px-2 my-2">
-                            <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
-                            <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
-                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                            <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
+                    </div>
+                    <div class="col-12 col-md-4 px-2 my-2">
+                        <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
+                        <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
+                    </div>
                 </div>
 
                 <div class="row d-flex justify-content-between">
@@ -69,7 +69,7 @@
 
                     <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                    <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
+                    <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -93,7 +93,7 @@
                         <label class="form-check-label" for="rfCheckbox">
                             RF:
                         </label>
-                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">      
+                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">      
                     </div>
 
                     <div class="col-12 px-2">
@@ -114,69 +114,8 @@
                     </div>
 
                     <div class="row" id="featuresContainer">
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">weight: *</label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                                <input type="text" class="form-control" name="features[1][value]" value="12" placeholder="e.g. 12.345" pattern="[0-9]+(\.[0-9]{1,3})?" title="Please enter a number with up to 3 decimal places (e.g., 123.456)." required="">
-                            </div>
-                            <div class="ml-2 col-6 col-md-3 px-1 d-flex flex-row"><select class="form-select" name="features[1][unit]">
-                                <option value="kg" selected="">kg</option><option value="g">g</option></select>
-                            </div>
-                        </div>
-
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">speed: </label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                                <input type="text" class="form-control" name="features[2][value]" value="52.5" placeholder="Enter text (max 50 characters)">
-                            </div>  
-                        </div>
-
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">heightww: </label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row"><input type="text" class="form-control" name="features[3][value]" value="15" placeholder="e.g. 12.345" pattern="[0-9]+(\.[0-9]{1,3})?" title="Please enter a number with up to 3 decimal places (e.g., 123.456).">
-                            </div>
-                            <div class="ml-2 col-6 col-md-3 px-1 d-flex flex-row">
-                                <select class="form-select" name="features[3][unit]">
-                                <option value="m">m</option><option value="cm" selected="">cm</option>
-                                <option value="um">um</option></select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">widthd: *</label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                                <input type="text" class="form-control" name="features[4][value]" value="16" placeholder="Enter text (max 50 characters)" required="">
-                            </div>
-                            <div class="ml-2 col-6 col-md-3 px-1 d-flex flex-row">
-                                <select class="form-select" name="features[4][unit]">
-                                <option value="m">m</option>
-                                <option value="cm" selected="">cm</option>
-                            </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">ffff: </label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                                <input type="text" class="form-control" name="features[9][value]" value="sdag d" placeholder="Enter text (max 50 characters)">
-                        </div>  
-                        </div>
-
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">adafh: </label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                                <input type="text" class="form-control" name="features[10][value]" value="df" placeholder="Enter text (max 50 characters)">
-                            </div> 
-                        </div>
-
-                        <div class="col-6 d-flex align-items-end p-2">
-                            <label class="form-label" style="width: 100px;max-width: 120px;">aggva: </label>
-                            <div class="col-6 col-md-5 px-1 d-flex flex-row">
-                            <input type="text" class="form-control" name="features[11][value]" value="dsf" placeholder="Enter text (max 50 characters)"> 
-                            </div>
-                        </div> 
                     </div>
-                </div>   
+                </div>  
             </div>
 
             <!-- Attach Files -->
@@ -229,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>  
 
             <div class="" style="text-align: end">
                 <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
@@ -239,6 +178,8 @@
 
 <script>
     let categories = [];
+    const featuresContainer = document.getElementById('featuresContainer');
+    const categoryIdInput = document.getElementById('category_id');
 
     async function fetchCategories() {
         const response = await fetch('../ajax/fetch_leaf_categories.php');
@@ -273,14 +214,99 @@
             
             li.onclick = () => {
                 document.getElementById('category_search').value = cat.name;
-                document.getElementById('category_id').value = cat.id;
+                categoryIdInput.value = cat.id;
                 dropdown.innerHTML = '';
                 dropdown.style.display = 'none'; // Hide the box after selection
+                
+                // Call the function to load features for the selected category
+                loadFeatures(cat.id);
             };
             dropdown.appendChild(li);
         });
 
     }
+
+    // New function to fetch and display features
+    async function loadFeatures(categoryId) {
+        // Clear previous features
+        featuresContainer.innerHTML = '';
+        
+        if (!categoryId) {
+            return; // Exit if no category is selected
+        }
+
+        try {
+            const response = await fetch(`../ajax/fetch_features.php?category_id=${categoryId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const features = await response.json();
+
+            if (features.length === 0) {
+                featuresContainer.innerHTML = '<div class="col-12"><p class="text-muted">No specifications found for this category or its parents.</p></div>';
+            } else {
+                features.forEach(feature => {
+                    const featureElement = document.createElement('div');
+                    featureElement.classList.add('col-12', 'col-md-4', 'px-2', 'my-2');
+
+                    let inputHtml = '';
+                    let unitHtml = '';
+                    
+                    // Check if the feature has units
+                    if (feature.unit && feature.unit.trim() !== '') {
+                        const units = feature.unit.split(',').map(unit => unit.trim());
+                        unitHtml = `
+                            <select class="form-select" name="feature_unit[${feature.id}]">
+                                ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
+                            </select>
+                        `;
+
+                        // Add the input field next to the unit select
+                        inputHtml = `
+                            <div class="input-group">
+                                <input class="form-control" type="${feature.input_type}" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
+                                ${unitHtml}
+                            </div>
+                        `;
+                    } else {
+                        // If no units, just use the input field
+                        switch (feature.input_type) {
+                            case 'text':
+                                inputHtml = `<input class="form-control" type="text" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
+                                break;
+                            case 'number':
+                                inputHtml = `<input class="form-control" type="number" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
+                                break;
+                                case 'checkbox':
+                                inputHtml = `
+                                      <input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">
+                                `;
+                                
+                                featureElement.innerHTML = inputHtml;
+                                break;
+                            case 'textarea':
+                                inputHtml = `<textarea class="form-control" name="feature[${feature.id}]" placeholder="${feature.name}" rows="3"></textarea>`;
+                                break;
+                            default:
+                                inputHtml = `<input class="form-control" type="text" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
+                                break;
+                        }
+                    }
+                    
+                    featureElement.innerHTML = `
+                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                        ${inputHtml}
+                    `;
+                    featuresContainer.appendChild(featureElement);
+                });
+            }
+
+        } catch (error) {
+            console.error('Error fetching features:', error);
+            featuresContainer.innerHTML = '<div class="col-12"><p class="text-danger">Failed to load specifications.</p></div>';
+        }
+    }
+
 
     // Reload suggestions when user types
     document.getElementById('category_search').addEventListener('input', function () {
@@ -293,6 +319,11 @@
         setTimeout(() => {
             document.getElementById('category-dropdown').style.display = 'none';
         }, 200); // A small delay to allow for click event to register
+    });
+
+    // Add an event listener to the hidden input to trigger feature loading
+    categoryIdInput.addEventListener('change', (event) => {
+        loadFeatures(event.target.value);
     });
 
     // Load categories on page load
