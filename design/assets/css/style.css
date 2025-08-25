@@ -188,7 +188,7 @@ table {
     /* sidebar */
   
     .userNameTop{
-      width: 83%;
+      width: 89%;
       height:60px;
       margin: 8px auto;
       font-size: 14px;
@@ -1150,53 +1150,6 @@ fill:var(--main-text-color);
     background-color: #fff;
   }
 
-  .category-tree li {
-    cursor: pointer;
-    padding: 10px 8px;
-    border-radius: 4px;
-    position: relative;
-    font-size: 14px;
-  }
-
-  .category-tree li:hover {
-    background-color: #d6e3ec;
-  }
-
-  .category-tree li.selected {
-    background-color: #e9f5fa88;
-    font-weight: bold;
-  }
-
-  .category-tree ul {
-    display: none;
-    padding-left: 1rem;
-  }
-
-  .category-tree li.open > ul {
-    display: block;
-  }
-
-  .category-tree li.has-children::before {
-    content: "▶";
-    position: absolute;
-    left: -10px;
-    top: 10px;
-    font-size: 0.7rem;
-    transition: transform 0.2s ease;
-  }
-
-  .category-tree li.open.has-children::before {
-    transform: rotate(90deg);
-  }
-  #category-dropdown li{
-    padding: 5px 3px;
-  }
-  #category-dropdown li:hover{
-    background-color:#cccccc3f;
-    cursor:pointer;
-  }
-
-  /* new.. */
   .tree {
   background: #fff;
   padding: 20px;
@@ -1206,7 +1159,7 @@ fill:var(--main-text-color);
 }
 
 .tree span {
-  font-size: 14px;
+  font-size: 15px;
   font-style: italic;
   margin: 0 5px 0 0;
 }
