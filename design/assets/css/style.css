@@ -1195,6 +1195,73 @@ fill:var(--main-text-color);
     background-color:#cccccc3f;
     cursor:pointer;
   }
+
+  /* new.. */
+  .tree {
+  background: #fff;
+  padding: 20px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: .9rem;
+  color: #212529;
+}
+
+.tree span {
+  font-size: 14px;
+  font-style: italic;
+  margin: 0 5px 0 0;
+}
+
+.tree .fa-folder,
+.tree .fa-folder-open {
+  color: #007bff;
+}
+
+.tree .fa-file {
+  color: #555;
+}
+
+.tree ul {
+  padding-left: 15px;
+  list-style: none;
+}
+
+.tree li {
+  position: relative;
+  padding: 5px 0 5px 15px;
+}
+
+.tree li:before {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 10px;
+  height: 1px;
+  content: '';
+  background-color: #666;
+}
+
+.tree li:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  content: '';
+  background-color: #666;
+}
+
+.tree li:last-child:after {
+  height: 15px;
+}
+
+.tree details summary {
+  cursor: pointer;
+  outline: none;
+}
+.tree details summary::-webkit-details-marker {
+  display: none;
+}
+
 /* ##################### end Categories ################## */
 
 /* ##################### stock in // List-Of-Receives ################## */
