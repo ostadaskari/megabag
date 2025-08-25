@@ -1,6 +1,5 @@
 <?php
-// Check if a session has already been started before starting a new one.
-// This prevents the "Ignoring session_start()" notice.
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,6 +16,10 @@ $success = '';
 
 // Handle POST submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if we are creating or updating
+    $product_id = (int) ($_POST['product_id'] ?? 0);
+    $is_update = $product_id > 0;
+
     $name = trim($_POST['name'] ?? '');
     $pn = trim($_POST['pn'] ?? '');
     $mfg = trim($_POST['mfg'] ?? '');
@@ -30,15 +33,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_code = trim($_POST['date_code'] ?? '');
     $recieve_code = trim($_POST['recieve_code'] ?? '');
     $rf = trim($_POST['rf'] ?? '');
-
-
+    
+    $features_values = $_POST['feature'] ?? [];
+    $features_units = $_POST['feature_unit'] ?? [];
+    
     if (empty($errors)) {
-        // Prepare the product insertion statement
-        $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code, rf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssisiissssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf);
+        if ($is_update) {
+            // It's an update. Prepare the UPDATE statement.
+            $stmt = $conn->prepare("UPDATE products SET name = ?, part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ?, tag = ?, date_code = ?, recieve_code = ?, rf = ? WHERE id = ?");
+            $stmt->bind_param("sssisiissssssi", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf, $product_id);
+        } else {
+            // It's a new product. Prepare the INSERT statement.
+            $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code, rf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssisiissssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf);
+        }
 
         if ($stmt->execute()) {
-            $product_id = $stmt->insert_id;
+            // Get the product_id for feature and file insertions
+            if (!$is_update) {
+                $product_id = $stmt->insert_id;
+            }
 
             // Define allowed file types and max size
             $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -57,6 +71,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $newName = $pn . "-cover." . $fileExt;
                     $target = "../../uploads/images/" . $newName;
+
+                    // On update, delete old cover image if it exists
+                    if ($is_update) {
+                        $oldCoverQuery = $conn->prepare("SELECT file_path FROM images WHERE product_id = ? AND is_cover = 1");
+                        $oldCoverQuery->bind_param("i", $product_id);
+                        $oldCoverQuery->execute();
+                        $oldCoverResult = $oldCoverQuery->get_result();
+                        if ($oldCoverResult->num_rows > 0) {
+                            $oldCoverPath = $oldCoverResult->fetch_assoc()['file_path'];
+                            if (file_exists($oldCoverPath)) {
+                                unlink($oldCoverPath);
+                            }
+                            // Delete the database entry for the old cover
+                            $conn->query("DELETE FROM images WHERE product_id = $product_id AND is_cover = 1");
+                        }
+                    }
 
                     if (move_uploaded_file($file['tmp_name'], $target)) {
                         $stmtCover = $conn->prepare("INSERT INTO images (product_id, file_name, file_path, file_size, file_extension, is_cover) VALUES (?, ?, ?, ?, ?, 1)");
@@ -126,10 +156,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+            
+            // --- UPDATED CODE FOR FEATURES ---
+            if (!empty($features_values)) {
+                // Fetch feature data types for validation
+                $feature_ids_in = implode(',', array_map('intval', array_keys($features_values)));
+                $feature_types_query = $conn->query("SELECT id, data_type FROM product_features WHERE id IN ($feature_ids_in)");
+                $feature_types = [];
+                while ($row = $feature_types_query->fetch_assoc()) {
+                    $feature_types[$row['id']] = $row['data_type'];
+                }
+                
+                // If this is an update, delete all old feature values first
+                if ($is_update) {
+                    $conn->query("DELETE FROM product_feature_values WHERE product_id = $product_id");
+                }
+                
+                // Prepare statement once outside the loop
+                $stmt_features = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
+                
+                if ($stmt_features === false) {
+                    $errors[] = "Failed to prepare feature insertion statement: " . $conn->error;
+                } else {
+                    foreach ($features_values as $feature_id => $value) {
+                        $unit = $features_units[$feature_id] ?? null;
+                        $data_type = $feature_types[$feature_id] ?? null;
+                        
+                        $value_to_save = $value;
+                        switch ($data_type) {
+                            case 'decimal(12,3)':
+                                if (!empty($value)) {
+                                    $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                    if ($value_to_save === false || !is_numeric($value_to_save)) {
+                                        $errors[] = "Value for a decimal field is not a valid number.";
+                                    }
+                                }
+                                break;
+                            case 'TEXT':
+                                $value_to_save = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                                break;
+                            case 'boolean':
+                                if ($value !== '1' && $value !== '0') {
+                                    $errors[] = "Value for a boolean field is not valid.";
+                                }
+                                break;
+                            case 'varchar(50)':
+                            default:
+                                $value_to_save = substr(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), 0, 50);
+                                break;
+                        }
 
-            // After all uploads, check for any accumulated errors and redirect
+                        $unit_to_save = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8') ?? '';
+
+                        if (empty($errors)) {
+                            $stmt_features->bind_param("iiss", $product_id, $feature_id, $value_to_save, $unit_to_save);
+                            if (!$stmt_features->execute()) {
+                                $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmt_features->error;
+                            }
+                        }
+                    }
+                    $stmt_features->close();
+                }
+            }
+            // --- END OF UPDATED CODE ---
+
+            $message = $is_update ? "Product updated successfully!" : "Product created successfully!";
             if (empty($errors)) {
-                header("Location: ../auth/dashboard.php?page=create_product&success=" . urlencode("Product created successfully!"));
+                header("Location: ../auth/dashboard.php?page=create_product&success=" . urlencode($message));
             } else {
                 header("Location: ../auth/dashboard.php?page=create_product&error=" . urlencode(implode(' | ', $errors)));
             }
@@ -142,7 +235,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // If initial validation fails (e.g., no user ID), redirect with errors
     if (!empty($errors)) {
         header("Location: ../auth/dashboard.php?page=create_product&error=" . urlencode(implode(' | ', $errors)));
         exit;

@@ -15,7 +15,11 @@
 
 <!-- add single part -->
     <div id="Add-Single-part" class="tab-content mb-2 pb-3">
-        <form  method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
+        <form method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
+            <!-- hidden for updating after existed partnumber -->
+        <input type="hidden" id="product_id" name="product_id" value="">
+
+
             <!-- Category Dropdown Section -->
             <div class="container bg-light border rounded shadow-sm p-2 mb-2" style="z-index:1000;">
               <div class="row">
@@ -50,38 +54,38 @@
                     <div class="col-12 col-md-4 px-2 my-2">
 
                     <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
-                        <input class="form-control" type="text" name="pn" placeholder="Part number" autocomplete="off" required />
+                        <input class="form-control" type="text" name="pn" id="pn" placeholder="Part number" autocomplete="off" required />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                            <label class="form-label" for="manufacturer" title="Manufacturer">MFR:</label>
-                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
+                        <label class="form-label" for="manufacturer" title="Manufacturer">MFR:</label>
+                        <input class="form-control" type="text" name="mfg" id="mfg" placeholder="Manufacturer" autocomplete="off"  />
 
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
-                        <input class="form-control" type="text" name="tag" placeholder="Tag Name" autocomplete="off" required />
+                        <input class="form-control" type="text" name="tag" id="tag" placeholder="Tag Name" autocomplete="off" required />
                     </div>
                 </div>
 
                 <div class="row d-flex justify-content-between">
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="name" title="Name">Project Name:</label>
-                    <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
+                    <input class="form-control" type="text" name="name" id="name" placeholder="Name" autocomplete="off" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                    <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
+                    <input class="form-control" type="number" name="qty" id="qty" placeholder="Quantity" autocomplete="off" min="0" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                    <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                    <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off"  />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
                     <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                    <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
+                    <input class="form-control" type="text" name="recieve_code" id="recieve_code" placeholder="Received Code" autocomplete="off"  />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -99,7 +103,7 @@
 
                     <div class="col-12 px-2">
                         <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
-                        <textarea class="form-control" id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
+                        <textarea class="form-control" id="company_cmt" class="mt-2" name="company_cmt" rows="3"></textarea>
                     </div>
                 </div>
 
@@ -227,7 +231,10 @@
 
     }
 
-    // New function to fetch and display features
+    /**
+     * Fetches and displays dynamic features (specifications) for a given category.
+     * @param {number} categoryId The ID of the selected category.
+     */
     async function loadFeatures(categoryId) {
         // Clear previous features
         featuresContainer.innerHTML = '';
@@ -251,42 +258,36 @@
                     featureElement.classList.add('col-12', 'col-md-4', 'px-2', 'my-2');
 
                     let inputHtml = '';
-                    let unitHtml = '';
                     
-                    // Check if the feature has units
+                    // Logic to build the correct input HTML based on feature type
                     if (feature.unit && feature.unit.trim() !== '') {
                         const units = feature.unit.split(',').map(unit => unit.trim());
-                        unitHtml = `
-                            <select class="form-select" name="feature_unit[${feature.id}]">
-                                ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
-                            </select>
-                        `;
-
-                        // Add the input field next to the unit select
+                        const unitOptions = units.map(unit => `<option value="${unit}">${unit}</option>`).join('');
+                        
                         inputHtml = `
                             <div class="input-group">
                                 <input class="form-control" type="${feature.input_type}" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
-                                ${unitHtml}
+                                <select class="form-select" name="feature_unit[${feature.id}]">
+                                    ${unitOptions}
+                                </select>
                             </div>
                         `;
                     } else {
-                        // If no units, just use the input field
+                        // Handle different input types without units
                         switch (feature.input_type) {
                             case 'text':
-                                inputHtml = `<input class="form-control" type="text" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
-                                break;
                             case 'number':
-                                inputHtml = `<input class="form-control" type="number" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
-                                break;
-                                case 'checkbox':
-                                inputHtml = `
-                                      <input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">
-                                `;
-                                
-                                featureElement.innerHTML = inputHtml;
+                                // For number inputs, set the step to allow for decimals
+                                const stepAttribute = feature.input_type === 'number' ? 'step="any"' : '';
+                                inputHtml = `<input class="form-control" type="${feature.input_type}" ${stepAttribute} name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
                                 break;
                             case 'textarea':
                                 inputHtml = `<textarea class="form-control" name="feature[${feature.id}]" placeholder="${feature.name}" rows="3"></textarea>`;
+                                break;
+                            case 'checkbox':
+                                // Corrected logic to handle checkboxes
+                                // The label will be rendered with the input. The value is "1" if checked.
+                                inputHtml = `<input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">`;
                                 break;
                             default:
                                 inputHtml = `<input class="form-control" type="text" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
@@ -294,8 +295,10 @@
                         }
                     }
                     
+                    // Build the complete element HTML and append to the container
+                    const labelTitle = feature.input_type === 'checkbox' ? `${feature.name}:` : feature.name;
                     featureElement.innerHTML = `
-                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${labelTitle}</label>
                         ${inputHtml}
                     `;
                     featuresContainer.appendChild(featureElement);
@@ -359,6 +362,12 @@
     });
 </script>
 
+
+
+
+
+
+
 <?php if (!empty($success)): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -384,3 +393,128 @@
         });
     </script>
 <?php endif; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to all the elements you'll need
+        const pnInput = document.getElementById('pn');
+        const form = document.querySelector('form');
+        const productIdInput = document.getElementById('product_id');
+        const submitBtn = document.getElementById('Addpart');
+
+        let timeoutId;
+
+        // Listen for user input on the part number field
+        pnInput.addEventListener('input', function() {
+            clearTimeout(timeoutId); // Clear any previous timeout
+
+            const pn = pnInput.value.trim();
+
+            // If the input is empty, reset the form and stop.
+            if (pn.length === 0) {
+                resetFormForCreation();
+                return;
+            }
+
+            // Wait for a short delay after the user stops typing
+            timeoutId = setTimeout(() => {
+                fetchProductData(pn);
+            }, 500); // 500ms debounce
+        });
+        
+        // Also listen for a paste event to trigger the search immediately
+        pnInput.addEventListener('paste', function() {
+            setTimeout(() => {
+                const pn = pnInput.value.trim();
+                if (pn.length > 0) {
+                    fetchProductData(pn);
+                }
+            }, 10);
+        });
+
+        async function fetchProductData(pn) {
+            try {
+                const response = await fetch(`../ajax/get_product_data.php?pn=${encodeURIComponent(pn)}`);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const data = result.data;
+                    populateForm(data);
+                    submitBtn.textContent = 'Update Product';
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-warning');
+                    // Changed alert() to a simple console.log to avoid blocking
+                    console.log('Product found! Populating form for update.'); 
+                } else {
+                    resetFormForCreation();
+                    // Changed alert() to a simple console.log to avoid blocking
+                    console.log('Part number not found. You can create a new product.');
+                }
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+                // Changed alert() to a simple console.log to avoid blocking
+                console.log('An error occurred while fetching product data.');
+                resetFormForCreation();
+            }
+        }
+
+        function populateForm(data) {
+            // Set the hidden product ID
+            productIdInput.value = data.id;
+
+            // Populate main product fields
+            document.getElementById('name').value = data.name;
+            document.getElementById('mfg').value = data.mfg;
+            document.getElementById('qty').value = data.qty;
+            document.getElementById('category_id').value = data.category_id;
+            document.getElementById('location').value = data.location;
+            // document.getElementById('status').value = data.status; // No 'status' id in your HTML
+            document.getElementById('tag').value = data.tag;
+            document.getElementById('date-code').value = data.date_code;
+            document.getElementById('recieve_code').value = data.recieve_code;
+            document.getElementById('company_cmt').value = data.company_cmt;
+            // document.getElementById('rf').value = data.rf; // Checkbox, needs special handling
+
+            // Populate dynamic feature inputs
+            document.querySelectorAll('.feature-input').forEach(input => input.value = '');
+            document.querySelectorAll('.feature-unit').forEach(select => select.value = '');
+
+            if (data.features && data.features.length > 0) {
+                data.features.forEach(feature => {
+                    const featureInput = document.querySelector(`[name="feature[${feature.feature_id}]"]`);
+                    const unitSelect = document.querySelector(`[name="feature_unit[${feature.feature_id}]"]`);
+
+                    if (featureInput) {
+                         // Check if it's a checkbox and set 'checked' property
+                        if (featureInput.type === 'checkbox') {
+                            featureInput.checked = feature.value === '1';
+                        } else {
+                             featureInput.value = feature.value;
+                        }
+                    }
+                    if (unitSelect) {
+                        unitSelect.value = feature.unit;
+                    }
+                });
+            }
+
+            // Correctly set the value of the RF checkbox
+            const rfCheckbox = document.getElementById('rfCheckbox');
+            if (rfCheckbox && data.rf) {
+                rfCheckbox.checked = (data.rf === "1" || data.rf === 1);
+            }
+        }
+
+        function resetFormForCreation() {
+            productIdInput.value = '';
+            // Don't use form.reset() as it will clear the PN input too.
+            const currentPn = pnInput.value.trim();
+            form.reset();
+            pnInput.value = currentPn; // Keep the PN value
+            
+            submitBtn.textContent = 'Add part';
+            submitBtn.classList.remove('btn-warning');
+            submitBtn.classList.add('btn-primary');
+        }
+    });
+</script>
