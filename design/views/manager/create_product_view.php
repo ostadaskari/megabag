@@ -1,7 +1,7 @@
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     
     <h2 class="d-flex align-items-center">
-    <svg width="24" height="24" fill="currentColor"  fill="currentColor" class="bi bi-patch-plus-fill  mx-1 me-2" viewBox="0 0 16 16">
+    <svg width="24" height="24" fill="currentColor" fill="currentColor" class="bi bi-patch-plus-fill mx-1 me-2" viewBox="0 0 16 16">
         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
     </svg> 
     Add a Single Product</h2>
@@ -31,7 +31,7 @@
                             <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select" >
                             <input type="hidden" name="category_id" id="category_id">
                             <ul class="category-suggestions" id="category-dropdown" style="width:40%;"></ul>
-                        </div>  
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                             <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off"  />
+                            <input class="form-control" type="text" name="mfg" placeholder="Manufacturer" autocomplete="off" />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
@@ -93,8 +93,7 @@
                         <label class="form-check-label" for="rfCheckbox">
                             RF:
                         </label>
-                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">      
-                    </div>
+                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">
 
                     <div class="col-12 px-2">
                         <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
@@ -115,7 +114,7 @@
 
                     <div class="row" id="featuresContainer">
                     </div>
-                </div>  
+                </div>
             </div>
 
             <!-- Attach Files -->
@@ -168,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
 
             <div class="" style="text-align: end">
                 <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>

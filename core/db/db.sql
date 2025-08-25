@@ -165,6 +165,34 @@ CREATE TABLE product_feature_values (
     FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE
 );
 
+-- each project has many products a
+CREATE TABLE projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,  -- New column to link to the users table
+    project_name VARCHAR(40),
+    date_code VARCHAR(50),
+    employer VARCHAR(60),
+    purchase_code VARCHAR(70),
+    designators TEXT,
+    status ENUM('pending', 'finished') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+--
+-- The product-project relationship table remains unchanged
+-- as it correctly links projects and products.
+--
+CREATE TABLE project_products (
+    project_id INT NOT NULL,
+    product_id INT NOT NULL,
+    used_qty INT UNSIGNED NOT NULL,
+    remarks TEXT,
+    PRIMARY KEY (project_id, product_id),
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
 
 
 

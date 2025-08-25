@@ -1,44 +1,49 @@
 <div class="container mt-5">
     <div class="d-flex flex-row align-items-center justify-content-between titleTop">
         <h2 class="d-flex align-items-center">
-    <svg width="24" height="24" fill="currentColor" fill="currentColor" class="bi bi-patch-plus-fill mx-1 me-2" viewBox="0 0 16 16">
-        <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
-    </svg> 
-            Create New Project
+            <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square mx-1 me-2" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+            </svg>
+            Edit Project
         </h2>
         <a href="../auth/dashboard.php?page=home" class="btn btn-link backBtn text-decoration-none">
-    <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
-    </svg>
+            <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+            </svg>
             <span>Back</span>
         </a>
     </div>
 
-    <div id="createProject" class="tab-content">
+    <div id="editProject" class="tab-content">
         <div class="container px-0 mt-3">
-            <form method="POST" action="" >
+            <!-- Form action points to the controller itself -->
+            <form method="POST" action="">
+                <!-- Hidden input to store the project ID -->
+                <input type="hidden" name="project_id" value="<?= htmlspecialchars($project['id']) ?>">
+
                 <!-- Project Details Section -->
                 <div class="row mb-3 border p-3 rounded bg-light">
                     <h5 class="mb-3">Project Details</h5>
                     <div class="col-md-6 mb-3">
                         <label for="projectName" class="form-label">Project Name:</label>
-                        <input type="text" name="project_name" id="projectName" class="form-control" required>
+                        <input type="text" name="project_name" id="projectName" class="form-control" required value="<?= htmlspecialchars($project['project_name']) ?>">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="dateCode" class="form-label">Date Code:</label>
-                        <input type="text" name="date_code" id="dateCode" class="form-control">
+                        <input type="text" name="date_code" id="dateCode" class="form-control" value="<?= htmlspecialchars($project['date_code']) ?>">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="employer" class="form-label">Employer:</label>
-                        <input type="text" name="employer" id="employer" class="form-control">
+                        <input type="text" name="employer" id="employer" class="form-control" value="<?= htmlspecialchars($project['employer']) ?>">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="purchaseCode" class="form-label">Purchase Code(s):</label>
-                        <input type="text" name="purchase_code" id="purchaseCode" class="form-control" placeholder="e.g., code1, code2">
+                        <input type="text" name="purchase_code" id="purchaseCode" class="form-control" placeholder="e.g., code1, code2" value="<?= htmlspecialchars($project['purchase_code']) ?>">
                     </div>
                     <div class="col-12">
                         <label for="designators" class="form-label">Designators:</label>
-                        <textarea name="designators" id="designators" class="form-control"></textarea>
+                        <textarea name="designators" id="designators" class="form-control"><?= htmlspecialchars($project['designators']) ?></textarea>
                     </div>
                 </div>
 
@@ -46,36 +51,65 @@
                 <div class="row mb-3 mt-4">
                     <h5 class="mb-3">Products Used in Project</h5>
                     <div id="stockRows">
-                        <!-- Initial product row template -->
-                        <div class="stock-row border p-3 rounded mb-2 bg-light position-relative">
-                            <div class="row d-flex align-items-end justify-content-between">
-                                <div class="col-12 col-md-5 px-1 position-relative mb-2">
-                                    <label for="productInput" class="form-label">Product:</label>
-                                    <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
-                                    <input type="hidden" name="products[0][product_id]" class="product-id">
-                                    <div class="autocomplete-box" style="display: none;"></div>
-                                </div>
-
-                                <div class="col-4 col-md-2 px-1 mb-2">
-                                    <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
-                                    <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
-                                </div>
-                                
-                                <div class="col-8 col-md-4 px-1 mb-2">
-                                    <label for="commentInput" class="form-label">Remarks:</label>
-                                    <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
-                                </div>
-                                
-                                <div class="col d-flex justify-content-end align-items-end mb-2">
-                                    <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
-                                        <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
-                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
-                                        </svg>
-                                    </button>
+                        <?php if (empty($projectProducts)): ?>
+                            <!-- Initial product row template if no products are found -->
+                            <div class="stock-row border p-3 rounded mb-2 bg-light position-relative">
+                                <div class="row d-flex align-items-end justify-content-between">
+                                    <div class="col-12 col-md-5 px-1 position-relative mb-2">
+                                        <label for="productInput" class="form-label">Product:</label>
+                                        <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
+                                        <input type="hidden" name="products[0][product_id]" class="product-id">
+                                        <div class="autocomplete-box" style="display: none;"></div>
+                                    </div>
+                                    <div class="col-4 col-md-2 px-1 mb-2">
+                                        <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
+                                        <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
+                                    </div>
+                                    <div class="col-8 col-md-4 px-1 mb-2">
+                                        <label for="commentInput" class="form-label">Remarks:</label>
+                                        <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
+                                    </div>
+                                    <div class="col d-flex justify-content-end align-items-end mb-2">
+                                        <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
+                                            <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php else: ?>
+                            <!-- Loop through existing project products and display them -->
+                            <?php foreach ($projectProducts as $key => $product): ?>
+                                <div class="stock-row border p-3 rounded mb-2 bg-light position-relative">
+                                    <div class="row d-flex align-items-end justify-content-between">
+                                        <div class="col-12 col-md-5 px-1 position-relative mb-2">
+                                            <label for="productInput" class="form-label">Product:</label>
+                                            <input type="text" name="products[<?= $key ?>][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required value="<?= htmlspecialchars($product['part_number'] . ' (' . $product['product_name'] . ')') ?>">
+                                            <input type="hidden" name="products[<?= $key ?>][product_id]" class="product-id" value="<?= htmlspecialchars($product['product_id']) ?>">
+                                            <div class="autocomplete-box" style="display: none;"></div>
+                                        </div>
+                                        <div class="col-4 col-md-2 px-1 mb-2">
+                                            <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"> (Available: <?= htmlspecialchars($product['current_qty']) ?>)</span></label>
+                                            <input type="number" name="products[<?= $key ?>][used_qty]" class="form-control" min="1" required value="<?= htmlspecialchars($product['used_qty']) ?>">
+                                        </div>
+                                        <div class="col-8 col-md-4 px-1 mb-2">
+                                            <label for="commentInput" class="form-label">Remarks:</label>
+                                            <textarea class="form-control" name="products[<?= $key ?>][remarks]" rows="1"><?= htmlspecialchars($product['remarks']) ?></textarea>
+                                        </div>
+                                        <div class="col d-flex justify-content-end align-items-end mb-2">
+                                            <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
+                                                <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
+                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
                     <div class="d-flex flex-row justify-content-between align-items-center w-100 px-1 mt-3">
@@ -88,8 +122,8 @@
                         </div>
 
                         <div class="">
-                            <button type="submit" class="btn btn-primary" title="Submit">
-                                Save Project
+                            <button type="submit" class="btn btn-primary" title="Update">
+                                Update Project
                             </button>
                         </div>
                     </div>
@@ -101,10 +135,10 @@
 
 <?php if (!empty($success)): ?>
     <script>
-        Swal.fire({ 
-            icon: 'success', 
-            title: 'Success', 
-            text: <?= json_encode($success) ?> 
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: <?= json_encode($success) ?>
         });
     </script>
 <?php elseif (!empty($errors)): ?>
@@ -139,10 +173,8 @@
         });
     };
 
-    document.addEventListener('DOMContentLoaded', updateRows);
-
     // Add a new row
-    document.getElementById('addRowBtn').addEventListener('click', () => {
+    const addRow = () => {
         const stockRowsContainer = document.getElementById('stockRows');
         const firstRow = stockRowsContainer.querySelector('.stock-row');
         if (firstRow) {
@@ -160,7 +192,10 @@
             stockRowsContainer.appendChild(newRow);
             updateRows();
         }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', updateRows);
+    document.getElementById('addRowBtn').addEventListener('click', addRow);
 
     // Remove a row
     document.addEventListener('click', (e) => {
