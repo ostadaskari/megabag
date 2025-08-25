@@ -60,25 +60,25 @@ CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
     tag VARCHAR(60),
-    part_number VARCHAR(80) NOT NULL UNIQUE,        -- Renamed "p-n" to "part_number"
-    mfg VARCHAR(80),                         -- Manufacturer
-    qty MEDIUMINT UNSIGNED DEFAULT 0,        -- 0 to 16777215
-    company_cmt TEXT,                        --  company comment                                                                                                                                                                  
-    location VARCHAR(100),                   -- location adrress in stock 
-    status VARCHAR(80),                      -- You can later restrict this via ENUM or validation logic
-
-    user_id INT ,                    -- Submitter's user ID
-    category_id INT ,                -- Connects to the last child of categories
-
-    date_code ENUM('2024', '2024+'),         -- Extend as needed
+    part_number VARCHAR(80) NOT NULL UNIQUE,      -- Renamed "p-n" to "part_number"
+    mfg VARCHAR(80),                            -- Manufacturer
+    qty MEDIUMINT UNSIGNED DEFAULT 0,              -- 0 to 16777215
+    used_qty MEDIUMINT UNSIGNED DEFAULT 0,         -- 0 to 16777215
+    company_cmt TEXT,                            -- company comment
+    location VARCHAR(100),                         -- location address in stock 
+    rf BOOLEAN DEFAULT FALSE,                      -- RF column with boolean type, default 0 (False), and nullable
+    status ENUM('available', 'unavailable') DEFAULT 'available',
+    user_id INT,                               -- Submitter's user ID
+    category_id INT,                           -- Connects to the last child of categories
+    date_code YEAR,                               -- Use the YEAR data type for year values
     recieve_code VARCHAR(80),
-
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- Foreign Key Constraints
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
+
 
 CREATE TABLE images (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -165,6 +165,34 @@ CREATE TABLE product_feature_values (
     FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE
 );
 
+-- each project has many products a
+CREATE TABLE projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,  -- New column to link to the users table
+    project_name VARCHAR(40),
+    date_code VARCHAR(50),
+    employer VARCHAR(60),
+    purchase_code VARCHAR(70),
+    designators TEXT,
+    status ENUM('pending', 'finished') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+--
+-- The product-project relationship table remains unchanged
+-- as it correctly links projects and products.
+--
+CREATE TABLE project_products (
+    project_id INT NOT NULL,
+    product_id INT NOT NULL,
+    used_qty INT UNSIGNED NOT NULL,
+    remarks TEXT,
+    PRIMARY KEY (project_id, product_id),
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
 
 
 

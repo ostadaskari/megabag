@@ -25,16 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'] ?? null;
     $category_id = (int) ($_POST['category_id'] ?? 0);
     $location = trim($_POST['location'] ?? '');
-    $status = trim($_POST['status'] ?? '');
+    $status = trim($_POST['status'] ?? 'available');
     $tag = trim($_POST['tag'] ?? '');
     $date_code = trim($_POST['date_code'] ?? '');
     $recieve_code = trim($_POST['recieve_code'] ?? '');
     $rf = trim($_POST['rf'] ?? '');
 
-    // Validate main product fields
-    if (!$user_id) {
-        $errors[] = "User not logged in.";
-    }
 
     if (empty($errors)) {
         // Prepare the product insertion statement
