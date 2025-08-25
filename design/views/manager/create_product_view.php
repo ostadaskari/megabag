@@ -64,24 +64,24 @@
                 </div>
 
                 <div class="row d-flex justify-content-between">
-                <div class="col-12 col-md-2 px-2 my-2">
-                    <label class="form-label" for="name" title="Name">Project Name:</label>
-                    <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
+                    <div class="col-12 col-md-2 px-2 my-2">
+                        <label class="form-label" for="name" title="Name">Project Name:</label>
+                        <input class="form-control" type="text" name="name" placeholder="Name" autocomplete="off" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
-                    <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                    <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
+                        <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
+                        <input class="form-control" type="number" name="qty" placeholder="Quantity" autocomplete="off"  min="0" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
-                    <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                    <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
+                        <label for="location" class="form-label" title="location in Inventory">Location:</label>
+                        <input class="form-control" type="text" name="location" placeholder="Enter Location" autocomplete="off" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
-                    <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                    <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
+                        <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
+                        <input class="form-control" type="text" name="recieve_code" placeholder="Received Code" autocomplete="off" required />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -91,12 +91,13 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-1 px-2 mb-3 form-check d-flex align-items-end">
+                    <div class="col-12 col-md-1 py-2 px-2 form-check d-flex align-items-center justify-content-around flex-column">
                         <label class="form-check-label" for="rfCheckbox">
                             RF:
                         </label>
-                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">
-
+                        <input class="form-check-input" type="checkbox" style="height: 18px;" value="1" id="rfCheckbox" name="rf">
+                    </div>
+                    
                     <div class="col-12 px-2">
                         <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
                         <textarea class="form-control" id="description" class="mt-2" name="company_cmt" rows="3"></textarea>
