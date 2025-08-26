@@ -976,19 +976,22 @@ background-color: var(--main-hover-color);
     top: -6px; 
     z-index: 10; 
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
-    font-weight: normal;
 }
 .fixed-table-container table thead th {
   z-index: 11; 
+  font-weight: normal!important;
+
 }
 
   .fixed-table-container table td ,th {
     text-align: center;
   }
-  .fixed-table-container table tr td:first-child {
-    color: #858484;
+  .fixed-table-container table tr td:first-child{
+    color: #858484!important;
 }
-
+.tdColor{
+  color: #858484!important;
+}
 @media (max-width:768px) {
  .form-box {
     flex-direction: column;

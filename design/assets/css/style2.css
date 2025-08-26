@@ -110,7 +110,7 @@
         }
 
         #category-tree li:hover {
-            background-color: #eef;
+            background-color: #b7d8e267;
         }
 
         #category-tree li.selected {
@@ -324,7 +324,6 @@
     z-index: 1000;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ced4da;
     border-top: none;
     max-height: 150px;
     overflow-y: auto;
@@ -340,7 +339,7 @@
 }
 
 .category-suggestion-item:hover {
-    background-color: #f8f9fa;
+    background-color: #b7d8e27e;
 }
 
 /* Add a visual cue to the hoverable SVG icons */
@@ -495,3 +494,4 @@
 .text-gray-500 {
     color: #6b7280;
 }
+

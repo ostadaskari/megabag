@@ -32,15 +32,14 @@
             <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Tag</th>
                     <th>P/N</th>
-                    <th>MFG</th>
+                    <th>MFR</th>
+                    <th>Tag</th>
+                    <th>Name</th>
                     <th>Availability</th> <!-- Renamed QTY to Availability and removed Status TH -->
-                    <th>Location</th>
+                    <th>Description</th>
                     <th>Category</th>
-                    <th>Submitter</th>
-                    <th>Submit Date</th>
+               
                 </tr>
             </thead>
             <tbody id="resultsBody">
@@ -73,19 +72,18 @@
                     resultsBody.innerHTML = data.products.map((p, index) => `
                         <tr>
                             <td>${index + 1}</td>
+                             <td>${p.part_number}</td>
+                             <td>${p.mfg}</td>
+                             <td>${p.tag}</td>
                             <td>${p.name}</td>
-                            <td>${p.tag}</td>
-                            <td>${p.part_number}</td>
-                            <td>-</td> <!-- MFG -->
                             <td> <!-- This is the Availability column -->
                                 ${p.qty > 0
                                     ? '<span class="badge bg-success">Available</span>'
                                     : '<span class="badge bg-danger">Unavailable</span>'}
                             </td>
-                            <td>-</td> <!-- Location -->
+                            <td>${p.company_cmt}</td>
                             <td>${p.category_name || '-'}</td>
-                            <td>-</td> <!-- Submitter -->
-                            <td>-</td> <!-- Submit Date -->
+                           
                         </tr>
                     `).join('');
                 }

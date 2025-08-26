@@ -17,7 +17,7 @@ if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
     
 
     $stmt = $conn->prepare("
-        SELECT p.id, p.name, p.part_number, p.tag, p.mfg, p.qty, c.name AS category_name 
+        SELECT p.id, p.name, p.part_number, p.company_cmt, p.tag, p.mfg, p.qty, c.name AS category_name 
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
         WHERE p.name LIKE ? OR p.part_number LIKE ? OR p.tag LIKE ?
