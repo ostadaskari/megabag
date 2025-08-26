@@ -61,14 +61,22 @@ $result = $stmt->get_result();
 $html = '';
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $html .= '<tr data-id="' . htmlspecialchars($row['id']) . '">';
+        $html .= '<tr class="tdColor" data-id="' . htmlspecialchars($row['id']) . '">';
         $html .= '<th scope="row">' . htmlspecialchars($row['id']) . '</th>';
         $html .= '<td>' . htmlspecialchars($row['project_name']) . '</td>';
         $html .= '<td>' . htmlspecialchars($row['date_code']) . '</td>';
         $html .= '<td>' . htmlspecialchars($row['employer']) . '</td>';
         $html .= '<td>' . htmlspecialchars($row['purchase_code']) . '</td>';
         $html .= '<td><span class="badge ' . ($row['status'] === 'finished' ? 'bg-success' : 'bg-secondary') . '">' . htmlspecialchars($row['status']) . '</span></td>';
-        $html .= '<td>' . htmlspecialchars($row['created_at']) . '</td>';
+        $html .= '<td>
+                    <div title="' . htmlspecialchars($row['created_at']) . '">
+                        <svg width="24" height="24" fill="mediumblue" class="bi bi-clock hoverSvg" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"></path>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"></path>
+                        </svg>
+                    </div>
+                </td>';
+
         $html .= '<td class="actions-cell">
             <div class="d-flex justify-content-center">
                 <a href="../auth/dashboard.php?page=edit_project&project_id=' . htmlspecialchars($row['id']) . '" class="btn btn-sm btn-primary btnSvg mx-1">

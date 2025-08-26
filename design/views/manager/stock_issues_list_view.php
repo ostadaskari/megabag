@@ -23,7 +23,7 @@
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput" class="form-control px-5" placeholder="Search by product/user...">
+                    <input type="text" id="searchInput" class="form-control px-5" autocomplete="off" placeholder="Search by product/user...">
                     </div>
                 </div>
 
@@ -85,7 +85,7 @@
 
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12"> 
-            <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 58vh;">
+            <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 60vh;">
                 <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                     <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                         <tr>

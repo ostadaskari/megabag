@@ -6,7 +6,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, intval($_GET['page'] ?? 1));
-$limit = 17; //per page
+$limit = 13; //per page
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -77,8 +77,15 @@ while ($row = $result->fetch_assoc()) {
         <td>{$row['qty_received']}</td>
         <td>" . htmlspecialchars($row['product_name']) . "</td>
         <td>" . htmlspecialchars($row['nickname']) . "</td>
-        <td>". date('Y/n/d ,G:i',strtotime($row['created_at'])) . "</td> 
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>
+        <td>
+            <div title=\"" . date('Y/n/d ,G:i', strtotime($row['created_at'])) . "\">
+                <svg width=\"24\" height=\"24\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
+                    <path d=\"M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z\"></path>
+                    <path d=\"M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0\"></path>
+                </svg>
+             </div>
+        </td>
     </tr>";
     $i++;
 }

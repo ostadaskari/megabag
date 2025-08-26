@@ -24,7 +24,7 @@
                     </svg>
                 </div>
            
-                <input type="text" id="keyword" name="keyword" placeholder="e.g., 1N4148, PIC16F84A" class="form-control rounded-2" required>
+                <input type="text" id="keyword" name="keyword" placeholder="e.g., 1N4148, PIC16F84A" class="form-control rounded-2" autocomplete="off" required>
 
               </div>              
             <button type="submit" class="btn">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-   <div class="row my-2">
+   <div class="row my-2 d-flex justify-content-center">
     
 
     <!-- Results Table -->
@@ -42,21 +42,21 @@
         <table class="table table-bordered table-striped table-hover mb-0 text-center" >
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Img</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Part Number</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">MFR</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Mouser Part Number</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Category</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Description</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Price (1)</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Availability</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Factory Stock</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Lead Time</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">ROHS Status</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Suggested Replacement</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Product Attributes</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Alternate Packagings</th>
-                    <th scope="col" class="py-2 px-2 text-nowrap">Datasheet</th>
+                    <th scope="col" class="p-2 text-nowrap">Img</th>
+                    <th scope="col" class="p-2 text-nowrap">Part Number</th>
+                    <th scope="col" class="p-2 text-nowrap">MFR</th>
+                    <th scope="col" class="p-2 text-nowrap">Mouser Part Number</th>
+                    <th scope="col" class="p-2 text-nowrap">Category</th>
+                    <th scope="col" class="p-2 text-nowrap">Description</th>
+                    <th scope="col" class="p-2 text-nowrap">Price (1)</th>
+                    <th scope="col" class="p-2 text-nowrap">Availability</th>
+                    <th scope="col" class="p-2 text-nowrap">Factory Stock</th>
+                    <th scope="col" class="p-2 text-nowrap">Lead Time</th>
+                    <th scope="col" class="p-2 text-nowrap">ROHS Status</th>
+                    <th scope="col" class="p-2 text-nowrap">Suggested Replacement</th>
+                    <th scope="col" class="p-2 text-nowrap">Product Attributes</th>
+                    <th scope="col" class="p-2 text-nowrap">Alternate Packagings</th>
+                    <th scope="col" class="p-2 text-nowrap">Datasheet</th>
                 </tr>
             </thead>
             <tbody id="resultsTableBody">
@@ -72,7 +72,7 @@
     </div>
 
     <!-- Loading Indicator -->
-    <div id="loading" class="text-center py-4 d-none" style="position: absolute;top: 30%;left: 46%;">
+    <div id="loading" class="text-center py-4 d-none" style="position: absolute;top: 37%;left: 46%;">
         <div class="loading-spinner" style="margin: 0 auto;"></div>
         <span class="ms-3 text-secondary">Searching...</span>
     </div>
