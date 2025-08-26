@@ -76,10 +76,10 @@ while ($row = $result->fetch_assoc()) {
 
         <!-- We've added onclick=\"event.stopPropagation()\" to the <td> to prevent the row's click event from firing -->
         <td class=\"flex justify-center space-x-2\" onclick=\"event.stopPropagation()\">
-            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
+            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"editProduct({$row['id']})\" title=\"Edit\">
                 ✏️
             </button>
-            <button class=\"btnSvg\" style=\"font-size:15px;\" onclick=\"deleteProduct({$row['id']})\" title=\"Delete\">
+            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"deleteProduct({$row['id']})\" title=\"Delete\">
                 🗑️
             </button>
         </td>

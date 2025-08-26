@@ -81,7 +81,7 @@ let rowCounter = 0;
 // Template for a new row
 function createRowHtml(index) {
     return `
-        <div class="stock-row border p-1 rounded mb-3 bg-light">
+        <div class="stock-row border p-1 rounded mb-1 bg-light">
             <div class="row g-2 align-items-end">
                 <div class="col-6 col-md-2 px-1 position-relative">
                     <label for="productInput" class="form-label">Product:</label>

@@ -68,6 +68,7 @@
                 </div>
 
                 <div class="row d-flex justify-content-between">
+
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="name" title="Name">Project Name:</label>
                     <input class="form-control" type="text" name="name" id="name" placeholder="Name" autocomplete="off" required />
@@ -86,6 +87,7 @@
                     <div class="col-12 col-md-2 px-2 my-2">
                     <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
                     <input class="form-control" type="text" name="recieve_code" id="recieve_code" placeholder="Received Code" autocomplete="off"  />
+
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -95,12 +97,13 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-1 px-2 mb-3 form-check d-flex align-items-end">
+                    <div class="col-12 col-md-1 py-2 px-2 form-check d-flex align-items-center justify-content-around flex-column">
                         <label class="form-check-label" for="rfCheckbox">
                             RF:
                         </label>
-                        <input class="form-check-input" type="checkbox" style="height: 17px;" value="1" id="rfCheckbox" name="rf">
-
+                        <input class="form-check-input" type="checkbox" style="height: 18px;" value="1" id="rfCheckbox" name="rf">
+                    </div>
+                    
                     <div class="col-12 px-2">
                         <label class="form-label" for="description" title="Company Comment">Company Comment:</label>
                         <textarea class="form-control" id="company_cmt" class="mt-2" name="company_cmt" rows="3"></textarea>
