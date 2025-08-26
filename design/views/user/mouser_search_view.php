@@ -24,7 +24,7 @@
                     </svg>
                 </div>
            
-                <input type="text" id="keyword" name="keyword" placeholder="e.g., 1N4148, PIC16F84A" class="form-control rounded-2" required>
+                <input type="text" id="keyword" name="keyword" placeholder="e.g., 1N4148, PIC16F84A" class="form-control rounded-2" autocomplete="off" required>
 
               </div>              
             <button type="submit" class="btn">
