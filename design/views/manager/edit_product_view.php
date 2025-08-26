@@ -67,10 +67,11 @@
                     </select>
                 </div>
                 <!-- Added RF checkbox -->
-                <div class="col-12 col-md-2 px-2 my-2 form-check">
-                    <input type="checkbox" class="form-check-input" id="rfCheckbox" name="rf" value="1" <?= $product['rf'] ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="rfCheckbox">RF</label>
+                <div class="col-12 col-md-1 py-2 px-2 form-check d-flex align-items-center justify-content-around flex-column">
+                   <label class="form-check-label mb-3" for="rfCheckbox">RF:</label>
+                   <input type="checkbox" class="form-check-input" style="height: 18px;" id="rfCheckbox" name="rf" value="1" <?= $product['rf'] ? 'checked' : '' ?>>
                 </div>
+
             </div>
 
 
@@ -86,7 +87,7 @@
                         <label for="" class="form-label">Categories:</label>
                         <input type="text" id="category_search" placeholder="Search category..." autocomplete="off" style="padding: 8px;" class="form-select">
                         <input type="hidden" name="category_id" id="category_id" value="<?= htmlspecialchars($product['category_id']) ?>">
-                        <div id="category_dropdown" style="border: 1px solid #ccc; max-height: 200px; overflow-y: auto; display: none; background: #f9f9f9;"></div>
+                        <div id="category_dropdown" class="category-suggestions" ></div>
                     </div>
                 </div>
             </div>
@@ -282,6 +283,8 @@
                             item.dataset.id = cat.id;
                             item.style.padding = '5px';
                             item.style.cursor = 'pointer';
+                            item.classList.add('category-suggestion-item');
+
 
                             item.addEventListener('click', () => {
                                 document.getElementById('category_id').value = cat.id;
@@ -327,7 +330,7 @@
 
         <!-- end search category  -->
 
-        <!-- sweet alerts  -->
+     <!-- sweet alerts  -->
     <?php if (!empty($success)): ?>
         <script>
             Swal.fire({

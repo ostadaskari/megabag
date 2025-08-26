@@ -110,7 +110,7 @@
         }
 
         #category-tree li:hover {
-            background-color: #eef;
+            background-color: #b7d8e267;
         }
 
         #category-tree li.selected {
@@ -324,7 +324,6 @@
     z-index: 1000;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ced4da;
     border-top: none;
     max-height: 150px;
     overflow-y: auto;
@@ -340,7 +339,7 @@
 }
 
 .category-suggestion-item:hover {
-    background-color: #f8f9fa;
+    background-color: #b7d8e27e;
 }
 
 /* Add a visual cue to the hoverable SVG icons */
@@ -389,6 +388,6 @@
             overflow-x: auto;
         }
    .bg-warning{
-    font-size: 18px;
-    background-color:rgba(255, 174, 0, 0.411);
+    font-size: 16px!important;
+    background-color:rgb(255 174 0 / 16%);
    }

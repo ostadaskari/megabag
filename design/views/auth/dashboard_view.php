@@ -21,7 +21,7 @@
                 </script>
                 <?php endif; ?>
 
-                <!-- 🔽 The dynamic include block -->
+                    <!-- 🔽 The dynamic include block -->
 
                 <?php
                     if ($content_file && file_exists( $content_file)) {

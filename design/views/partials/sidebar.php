@@ -18,9 +18,9 @@ $role = $_SESSION['role'] ?? 'guest';
             <!-- Dashboard -->
             <li class="menu-item" data-content="Dashbord">
               <a href="?page=home" class="menu-link">
-                <svg width="22" height="22" fill="" class="bi bi-border-outer" viewBox="0 0 16 16">
-                  <path d="M7.5 1.906v.938h1v-.938zm0 1.875v.938h1V3.78h-1zm0 1.875v.938h1v-.938zM1.906 8.5h.938v-1h-.938zm1.875 0h.938v-1H3.78v1zm1.875 0h.938v-1h-.938zm2.813 0v-.031H8.5V7.53h-.031V7.5H7.53v.031H7.5v.938h.031V8.5zm.937 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zM7.5 9.406v.938h1v-.938zm0 1.875v.938h1v-.938zm0 1.875v.938h1v-.938z"/>
-                  <path d="M0 0v16h16V0zm1 1h14v14H1z"/>
+                <svg width="24" height="24" fill="" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                  <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/>
+                  <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3"/>
                 </svg>
                 <span>Dashboard</span>
               </a>
@@ -29,6 +29,15 @@ $role = $_SESSION['role'] ?? 'guest';
             <?php endif; ?>
 
             <?php if ($role === 'admin' || $role === 'manager'): ?>
+              <!-- Categories -->
+             <li class="menu-item">
+              <a href="?page=manage_categories" class="menu-link">
+                <svg width="22" height="22" fill="" class="bi bi-bricks" viewBox="0 0 16 16">
+                  <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5zM3 4v2h4.5V4zm5.5 0v2H13V4zM3 10v2h4.5v-2zm5.5 0v2H13v-2zM1 1v2h3.5V1zm4.5 0v2h5V1zm6 0v2H15V1zM1 7v2h3.5V7zm4.5 0v2h5V7zm6 0v2H15V7zM1 13v2h3.5v-2zm4.5 0v2h5v-2zm6 0v2H15v-2z"/>
+                </svg>
+                <span>Categories</span>
+              </a>
+            </li>
 
             <!-- Add to Part -->
               <li class="menu-item has-submenu">
@@ -42,11 +51,11 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
                 <ul class="submenu list-unstyled">
 
-                  <li><a href="?page=create_product" >Add a single part</a></li>
+                  <li><a href="?page=create_product" >Defien a Part</a></li>
                   <li><a href="?page=products_list" >Part List</a></li>  
                 </ul>
               </li>
-                          <!-- Projects -->
+              <!-- Projects -->
               <li class="menu-item has-submenu">
                 <a class="menu-link">
                     <svg width="22" height="22" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
@@ -123,18 +132,7 @@ $role = $_SESSION['role'] ?? 'guest';
                   <li><a href="?page=bans" >Ban List</a></li>
                   <li><a href="?page=login_logs" >Login Log</a></li>
                 </ul>
-            </li>
-
-
-             <!-- Categories -->
-             <li class="menu-item">
-              <a href="?page=manage_categories" class="menu-link">
-                <svg width="22" height="22" fill="" class="bi bi-bricks" viewBox="0 0 16 16">
-                  <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5zM3 4v2h4.5V4zm5.5 0v2H13V4zM3 10v2h4.5v-2zm5.5 0v2H13v-2zM1 1v2h3.5V1zm4.5 0v2h5V1zm6 0v2H15V1zM1 7v2h3.5V7zm4.5 0v2h5V7zm6 0v2H15V7zM1 13v2h3.5v-2zm4.5 0v2h5v-2zm6 0v2H15v-2z"/>
-                </svg>
-                <span>Categories</span>
-              </a>
-            </li>
+            </li> 
             
             <?php endif; ?>
             <?php if ($role === 'admin'): ?>
@@ -197,10 +195,10 @@ $role = $_SESSION['role'] ?? 'guest';
               <!-- Dashboard -->
               <li class="menu-item has-submenu">
                 <a  class="menu-link">
-                  <svg width="22" height="22" fill="" class="bi bi-border-outer" viewBox="0 0 16 16">
-                    <path d="M7.5 1.906v.938h1v-.938zm0 1.875v.938h1V3.78h-1zm0 1.875v.938h1v-.938zM1.906 8.5h.938v-1h-.938zm1.875 0h.938v-1H3.78v1zm1.875 0h.938v-1h-.938zm2.813 0v-.031H8.5V7.53h-.031V7.5H7.53v.031H7.5v.938h.031V8.5zm.937 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zm1.875 0h.938v-1h-.938zM7.5 9.406v.938h1v-.938zm0 1.875v.938h1v-.938zm0 1.875v.938h1v-.938z"/>
-                    <path d="M0 0v16h16V0zm1 1h14v14H1z"/>
-                  </svg>
+                <svg width="22" height="22" fill="" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                  <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/>
+                  <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3"/>
+                </svg>
                   <span>Dashboard</span>
                 </a>
               </li>
@@ -213,7 +211,8 @@ $role = $_SESSION['role'] ?? 'guest';
 
               <!-- Add to Product -->
               <li class="menu-item has-submenu">
-                <a  class="menu-link">
+
+                <a class="menu-link">
                   <svg width="22" height="22" fill="" class="bi bi-terminal-plus" viewBox="0 0 16 16">
                       <path d="M2 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v4a.5.5 0 0 1-1 0V4a1 1 0 0 0-1-1z"/>
                       <path d="M3.146 5.146a.5.5 0 0 1 .708 0L5.177 6.47a.75.75 0 0 1 0 1.06L3.854 8.854a.5.5 0 1 1-.708-.708L4.293 7 3.146 5.854a.5.5 0 0 1 0-.708M5.5 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"/>
@@ -222,10 +221,10 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
 
                 <ul class="submenu list-unstyled">
-                  <li><a href="../manager/create_product.php" >Add a single part</a></li>
+                  <li><a href="../manager/create_product.php">Defien a part</a></li>
                   <li><a href="../manager/products_list.php" >List Parts</a></li>
-                 
                 </ul>
+
               </li>
 
               <!-- Insert -->
@@ -309,7 +308,7 @@ $role = $_SESSION['role'] ?? 'guest';
             <!-- Mouser_Search-Inventory -->
             <li class="menu-item has-submenu">
               <a href="?page=mouser_search" class="menu-link">
-                <img src="../assets/img/mouser.svg" alt="mouser">                
+              <img src="../../design/assets/img/mouser.svg" class="mouserSvg" alt="mouser">                        
                 <span>Mouser Search</span>
               </a>
             </li>

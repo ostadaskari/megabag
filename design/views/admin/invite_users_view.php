@@ -57,7 +57,7 @@
                 <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height:65vh;">
 
                     <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
-                        <thead class="table-invitionLink sticky-top" style="top:-3px; z-index: 1;">
+                        <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nickname</th>
