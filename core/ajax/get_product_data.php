@@ -15,8 +15,14 @@ if (!isset($_GET['pn']) || empty($_GET['pn'])) {
 
 $part_number = trim($_GET['pn']);
 
-// Prepare a statement to get product details
-$stmt = $conn->prepare("SELECT * FROM products WHERE part_number = ?");
+// Prepare a statement to get product details, including the category name
+// We join the 'products' table with the 'categories' table on their respective IDs.
+$stmt = $conn->prepare("
+    SELECT p.*, c.name AS category_name 
+    FROM products p
+    INNER JOIN categories c ON p.category_id = c.id
+    WHERE p.part_number = ?
+");
 $stmt->bind_param("s", $part_number);
 $stmt->execute();
 $product_result = $stmt->get_result();

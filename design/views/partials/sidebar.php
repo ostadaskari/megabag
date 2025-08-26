@@ -308,7 +308,9 @@ $role = $_SESSION['role'] ?? 'guest';
             <!-- Mouser_Search-Inventory -->
             <li class="menu-item has-submenu">
               <a href="?page=mouser_search" class="menu-link">
+
               <img src="../../design/assets/img/mouser.svg" class="mouserSvg" alt="mouser">                        
+
                 <span>Mouser Search</span>
               </a>
             </li>

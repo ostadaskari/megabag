@@ -19,7 +19,7 @@
         <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
             
         <div class="container border rounded shadow-sm bg-light p-2">
-            <!-- part number and Manufacturer inputs -->
+            <!-- Part details section -->
             <div class="d-flex flex-row align-items-center mb-1">
                 <svg width="24" height="24" fill="var(--main-bg0-color)" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -28,37 +28,36 @@
                 <h3 class="pl-1">Part Details :</h3>
             </div>
             <div class="row">
-                
                 <div class="col-12 col-md-4 px-2 my-2">
                     <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
                     <input class="form-control" type="text" name="p_n" value="<?= htmlspecialchars($product['part_number']) ?>" autocomplete="off" placeholder="Part number" required>
                 </div>
                 <div class="col-12 col-md-4 px-2 my-2">
                 <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                    <input type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
+                    <input class="form-control" type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
                 </div>
-                    <div class="col-12 col-md-4 px-2 my-2">
+                <div class="col-12 col-md-4 px-2 my-2">
                     <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
-                    <input type="text"name="tag" value="<?= htmlspecialchars($product['tag']) ?>" autocomplete="off" placeholder="Tag Name" >
+                    <input class="form-control" type="text"name="tag" value="<?= htmlspecialchars($product['tag']) ?>" autocomplete="off" placeholder="Tag Name" >
                 </div>
             </div> 
             <div class="row d-flex flex-row align-items-center justify-content-between">
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="name" title="Name">P-Name:</label>
-                    <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
+                    <input class="form-control" type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
                 </div>
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                    <input type="text" name="qty" value="<?= htmlspecialchars($product['qty']) ?>" min="0" autocomplete="off" placeholder="Quantity" required>
+                    <input class="form-control" type="text" name="qty" value="<?= htmlspecialchars($product['qty']) ?>" min="0" autocomplete="off" placeholder="Quantity" required>
                 </div>
                 <div class="col-12 col-md-2 px-2">
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                    <input type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
+                    <input class="form-control" type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
                 </div>
 
                 <div class="col-12 col-md-2 px-2">
                     <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                    <input type="text" name="recieve_code" value="<?= htmlspecialchars($product['recieve_code']) ?>" autocomplete="off" placeholder="Received Code">
+                    <input class="form-control" type="text" name="recieve_code" value="<?= htmlspecialchars($product['recieve_code']) ?>" autocomplete="off" placeholder="Received Code">
                 </div>
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label for="" class="form-label">Date Code:</label>
@@ -74,8 +73,7 @@
 
             </div>
 
-
-            <!-- Category Dropdown Section -->
+            <!-- Category Dropdown Section - Moved to top -->
             <div class="container mt-1 Category">
                 <div class="row d-flex flex-row justify-content-between">
                     <div class="col-12 col-md-6 pr-2">
@@ -91,6 +89,41 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Product Features Section - Newly added -->
+            <div class="d-flex flex-row align-items-center mt-3">
+                        <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg> 
+                <h3 class="pl-1">Specifications:</h3>
+            </div>
+
+
+            <div id="product_features_container" class="container border rounded shadow-sm p-3 mt-1">
+                <!-- Features will be populated here dynamically by JavaScript -->
+                <?php if (!empty($product['features'])): ?>
+                    <?php foreach ($product['features'] as $feature): ?>
+                    <div class="row my-2 align-items-center">
+                        <div class="col-12 col-md-4">
+                            <label class="form-label"><?= htmlspecialchars($feature['name']) ?>:</label>
+                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][name]" value="<?= htmlspecialchars($feature['name']) ?>">
+                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][feature_id]" value="<?= htmlspecialchars($feature['id']) ?>">
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input class="form-control" type="text" name="features[<?= htmlspecialchars($feature['id']) ?>][value]" value="<?= htmlspecialchars($feature['value']) ?>" placeholder="Value" autocomplete="off">
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input class="form-control" type="text" name="features[<?= htmlspecialchars($feature['id']) ?>][unit]" value="<?= htmlspecialchars($feature['unit']) ?>" placeholder="Unit" autocomplete="off">
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-muted small">No features to display. Select a category to see available features.</p>
+                <?php endif; ?>
+            </div>
+            <!-- End Product Features Section -->   
+
 
             <!-- inputs files -->
             <div class="d-flex flex-row align-items-center my-2">
@@ -197,7 +230,6 @@
             <div class="mt-3" style="text-align: end">
                 <button type="submit" class="btn btn-primary" >Edit Part</button>
             </div>
-
             </div>
             </form>
         </div>
@@ -264,73 +296,322 @@
     </script>
     <!-- end Dynamic Date Code Population Script -->
 
-    <!-- search for categories  -->
+    <!-- search for categories and fetch features -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdown = document.getElementById('category_dropdown');
-            const searchInput = document.getElementById('category_search');
 
-            function renderDropdown(search = '') {
-                fetch('../ajax/fetch_leaf_categories.php?search=' + encodeURIComponent(search))
-                    .then(res => res.json())
-                    .then(categories => {
-                        dropdown.innerHTML = '';
-                        dropdown.style.display = categories.length ? 'block' : 'none';
+// This script handles the dynamic loading of product features based on a selected category.
+// It includes a live search with a debouncer for the category dropdown to improve performance.
 
-                        categories.forEach(cat => {
-                            const item = document.createElement('div');
-                            item.textContent = cat.name;
-                            item.dataset.id = cat.id;
-                            item.style.padding = '5px';
-                            item.style.cursor = 'pointer';
-                            item.classList.add('category-suggestion-item');
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM element references
+    const dropdown = document.getElementById('category_dropdown');
+    const searchInput = document.getElementById('category_search');
+    const categoryIdInput = document.getElementById('category_id');
+    const featuresContainer = document.getElementById('product_features_container');
 
+    // Function to debounce a function call, preventing it from being called too frequently.
+    // This is useful for things like live search where you don't want to hit the server on every keystroke.
+    const debounce = (func, delay) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    };
 
-                            item.addEventListener('click', () => {
-                                document.getElementById('category_id').value = cat.id;
-                                searchInput.value = cat.name;
-                                dropdown.style.display = 'none';
-                            });
+    // Function to render the category dropdown
+    function renderCategoryDropdown(search = '') {
+        fetch(`../ajax/fetch_leaf_categories.php?search=${encodeURIComponent(search)}`)
+            .then(res => res.json())
+            .then(categories => {
+                dropdown.innerHTML = '';
+                dropdown.style.display = categories.length ? 'block' : 'none';
 
-                            dropdown.appendChild(item);
-                        });
-                    })
-                    .catch(err => {
-                        dropdown.innerHTML = 'Error loading categories.';
-                        dropdown.style.display = 'block';
+                if (categories.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.textContent = 'No categories found.';
+                    noResults.style.padding = '5px';
+                    noResults.style.color = '#888';
+                    dropdown.appendChild(noResults);
+                }
+
+                categories.forEach(cat => {
+                    const item = document.createElement('div');
+                    item.textContent = cat.name;
+                    item.dataset.id = cat.id;
+                    item.style.padding = '5px';
+                    item.style.cursor = 'pointer';
+                    item.className = 'dropdown-item';
+                    item.classList.add('category-suggestion-item');
+
+                    item.addEventListener('click', () => {
+                        categoryIdInput.value = cat.id;
+                        searchInput.value = cat.name;
+                        dropdown.style.display = 'none';
+                        fetchFeatures(cat.id);
+
                     });
-            }
 
-            searchInput.addEventListener('input', function () {
-                renderDropdown(this.value);
-            });
-            let debounceTimer;
-            searchInput.addEventListener('input', function () {
-                const searchText = this.value;
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                    renderDropdown(searchText);
-                }, 300);
-            });
-
-            // Preload selected category name if editing
-            <?php if (!empty($product['category_id'])): ?>
-            fetch('../ajax/fetch_leaf_categories.php?id=<?= (int)$product['category_id'] ?>')
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        searchInput.value = data[0].name;
-                    }
+                    dropdown.appendChild(item);
                 });
-            <?php endif; ?>
-        });
+            })
+            .catch(err => {
+                dropdown.innerHTML = 'Error loading categories.';
+                dropdown.style.display = 'block';
+                console.error('Error fetching categories:', err);
+            });
+    }
+
+    // Function to fetch and render features based on category ID
+    function fetchFeatures(categoryId) {
+        if (!categoryId) {
+            featuresContainer.innerHTML = '<p class="text-muted small">No features to display. Select a category to see available features.</p>';
+            return;
+        }
+
+        featuresContainer.innerHTML = '<p class="text-muted small">Loading features...</p>';
+
+        fetch(`../ajax/fetch_category_features.php?category_id=${encodeURIComponent(categoryId)}&product_id=<?= (int)$product['id'] ?>`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.success === false) {
+                    throw new Error(data.error || 'Unknown error occurred on the server.');
+                }
+
+                const features = data.features;
+                featuresContainer.innerHTML = '';
+
+                if (!Array.isArray(features) || features.length === 0) {
+                    featuresContainer.innerHTML = '<p class="text-muted small">No features available for this category.</p>';
+                    return;
+                }
+
+                features.forEach(feature => {
+                    const featureElement = createFeatureElement(feature);
+                    featuresContainer.appendChild(featureElement);
+                });
+            })
+            .catch(err => {
+                featuresContainer.innerHTML = `<p class="text-danger small">Error loading features: ${err.message}</p>`;
+                console.error('Error fetching features:', err);
+            });
+    }
+
+    // Function to create and return a single feature element
+    function createFeatureElement(feature) {
+        const featureDiv = document.createElement('div');
+        featureDiv.className = 'row my-2 align-items-center';
+
+        const featureNameContainer = document.createElement('div');
+        featureNameContainer.className = 'col-12 col-md-4';
+
+        const valueCol = document.createElement('div');
+        valueCol.className = 'col-6 col-md-4';
+
+        const unitCol = document.createElement('div');
+        unitCol.className = 'col-6 col-md-4';
+
+        const hasUnit = !!feature.feature_unit;
+        const requiredAttr = feature.is_required ? 'required' : '';
+        const isBoolean = feature.data_type === 'boolean';
+        const featureValue = feature.value || '';
+
+        // Create the label
+        const label = document.createElement('label');
+        label.className = 'form-label';
+        label.textContent = `${feature.feature_name ?? ''}${feature.is_required ? ' *' : ''}:`;
+        if (!isBoolean) {
+            featureNameContainer.appendChild(label);
+        }
+
+        let inputElement;
+        // Determine the type of input to render based on data_type
+        switch (feature.data_type) {
+            case 'decimal(12,3)':
+                inputElement = document.createElement('input');
+                inputElement.type = 'text';
+                inputElement.pattern = '[0-9]+(\\.[0-9]{1,3})?';
+                inputElement.title = 'Please enter a number with up to 3 decimal places.';
+                inputElement.placeholder = 'e.g., 123.456';
+                break;
+            case 'boolean':
+                const isChecked = featureValue === '1';
+
+                // Create a container for the switch
+                const switchContainer = document.createElement('div');
+                switchContainer.className = 'form-check form-switch d-flex align-items-center';
+
+                inputElement = document.createElement('input');
+                inputElement.type = 'checkbox';
+                inputElement.role = 'switch';
+                inputElement.checked = isChecked;
+                inputElement.value = '1';
+                inputElement.id = `feature-${feature.feature_id}`;
+                inputElement.className = 'form-check-input';
+
+                // Create the label for the boolean input
+                const booleanLabel = document.createElement('label');
+                booleanLabel.className = 'form-check-label ms-2';
+                booleanLabel.htmlFor = `feature-${feature.feature_id}`;
+                booleanLabel.textContent = `${feature.feature_name ?? ''}${feature.is_required ? ' *' : ''}`;
+
+                // Create a hidden input to handle unchecked state
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = `features[${feature.feature_id}][value]`;
+                hiddenInput.value = isChecked ? '1' : '0';
+
+                // Append the checkbox and label to the switch container
+                switchContainer.appendChild(inputElement);
+                switchContainer.appendChild(booleanLabel);
+                valueCol.appendChild(switchContainer);
+
+                // Update hidden input when checkbox changes
+                inputElement.addEventListener('change', (e) => {
+                    hiddenInput.value = e.target.checked ? '1' : '0';
+                });
+
+                // Return early to avoid the rest of the switch statement logic
+                break;
+            case 'varchar(50)':
+                inputElement = document.createElement('input');
+                inputElement.type = 'text';
+                inputElement.placeholder = 'Max 50 characters';
+                inputElement.maxLength = 50;
+                break;
+            case 'TEXT':
+                inputElement = document.createElement('textarea');
+                inputElement.placeholder = 'Long description';
+                break;
+            default:
+                // Fallback for any other data types
+                inputElement = document.createElement('input');
+                inputElement.type = 'text';
+                inputElement.placeholder = 'Enter value';
+                break;
+        }
+
+        if (!isBoolean) {
+            inputElement.className = 'form-control';
+            inputElement.name = `features[${feature.feature_id}][value]`;
+            inputElement.autocomplete = 'off';
+            inputElement.value = featureValue;
+            if (requiredAttr) {
+                inputElement.required = true;
+            }
+            valueCol.appendChild(inputElement);
+        }
+
+        // Create the unit select if the feature has units
+        if (hasUnit) {
+            unitCol.innerHTML = unitSelect(feature.feature_unit, feature.unit, feature.feature_id);
+        }
+
+        // Append the created elements to the main div
+        if (!isBoolean) {
+            featureDiv.appendChild(featureNameContainer);
+        }
+        featureDiv.appendChild(valueCol);
+        if (hasUnit) {
+            featureDiv.appendChild(unitCol);
+        }
+
+        // Append hidden inputs for feature id and name
+        const hiddenIdInput = document.createElement('input');
+        hiddenIdInput.type = 'hidden';
+        hiddenIdInput.name = `features[${feature.feature_id}][feature_id]`;
+        hiddenIdInput.value = feature.feature_id;
+        featureDiv.appendChild(hiddenIdInput);
+
+        const hiddenNameInput = document.createElement('input');
+        hiddenNameInput.type = 'hidden';
+        hiddenNameInput.name = `features[${feature.feature_id}][name]`;
+        hiddenNameInput.value = feature.feature_name;
+        featureDiv.appendChild(hiddenNameInput);
+
+        return featureDiv;
+    }
+
+    // Function to generate the unit dropdown select element
+    function unitSelect(unitString, selectedUnit, featureId) {
+        const units = unitString.split(',').map(u => u.trim());
+        const optionsHtml = units.map(u => {
+            const isSelected = u === selectedUnit ? 'selected' : '';
+            return `<option value="${u}" ${isSelected}>${u}</option>`;
+        }).join('');
         
+        return `<select class="form-select" name="features[${featureId}][unit]">${optionsHtml}</select>`;
+    }
+
+    // --- Core Logic ---
+    
+    // Create a debounced version of the dropdown renderer with a 300ms delay
+    const debouncedRender = debounce(renderCategoryDropdown, 300);
+
+    // Event listener for live search on the input field
+    searchInput.addEventListener('input', (e) => {
+        // Only show the dropdown if the input is not empty
+        if (e.target.value.trim() !== '') {
+            debouncedRender(e.target.value);
+        } else {
+            // Hide the dropdown if the input is cleared
+            dropdown.style.display = 'none';
+        }
+    });
+
+    // Event listener to hide the dropdown when the user clicks away
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    // Corrected logic for page load
+    <?php if (!empty($product['category_id'])): ?>
+    fetch('../ajax/fetch_leaf_categories.php?id=<?= (int)$product['category_id'] ?>')
+        .then(res => res.json())
+        .then(data => {
+            if (data.length > 0) {
+                // Category exists, so populate the input and fetch features as normal.
+                searchInput.value = data[0].name;
+                fetchFeatures(data[0].id);
+            } else {
+                // Category does NOT exist, so clear the inputs and load all categories.
+                console.log('Pre-selected category not found. Clearing inputs and loading all categories.');
+                searchInput.value = '';
+                categoryIdInput.value = '';
+                featuresContainer.innerHTML = '<p class="text-muted small">The previous category was deleted. Please select a new one.</p>';
+                // Load all categories for the user to select from.
+                renderCategoryDropdown('');
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching initial category:', err);
+            // In case of an error, also clear inputs and load all categories.
+            searchInput.value = '';
+            categoryIdInput.value = '';
+            featuresContainer.innerHTML = `<p class="text-danger small">Error loading the previous category: ${err.message}</p>`;
+            renderCategoryDropdown('');
+        });
+    <?php else: ?>
+        // If there's no category ID to begin with, just load all categories.
+        renderCategoryDropdown('');
+    <?php endif; ?>
+});
 
     </script>
+    <!-- end search categories and fetch features -->
 
-        <!-- end search category  -->
 
-     <!-- sweet alerts  -->
+    <!-- sweet alerts  -->
+
     <?php if (!empty($success)): ?>
         <script>
             Swal.fire({
@@ -356,5 +637,4 @@
             });
         </script>
     <?php endif; ?>
-
-<!-- end sweet alerts -->
+    <!-- end sweet alerts -->
