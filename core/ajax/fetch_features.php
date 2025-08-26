@@ -29,8 +29,11 @@ try {
     // We will use a loop to traverse up the category tree from the selected category
     // to its root parent, fetching features at each level.
     do {
-        // Prepare and execute the query to get features for the current category
-        $stmtFeatures = $conn->prepare("SELECT id, name, data_type FROM features WHERE category_id = ?");
+        // Prepare and execute the query to get features for the current category,
+        // now including the `unit` column from the features table.
+        $stmtFeatures = $conn->prepare("
+            SELECT id, name, data_type, unit, is_required FROM features WHERE category_id = ?
+        ");
         $stmtFeatures->bind_param('i', $currentCategoryId);
         $stmtFeatures->execute();
         $result = $stmtFeatures->get_result();
@@ -65,7 +68,9 @@ try {
                 $allFeatures[] = [
                     'id' => $feature['id'],
                     'name' => $feature['name'],
-                    'input_type' => $inputType
+                    'input_type' => $inputType,
+                    'unit' => $feature['unit'],
+                    'is_required' => (bool)$feature['is_required']
                 ];
                 $processedFeatureIds[] = $feature['id'];
             }
