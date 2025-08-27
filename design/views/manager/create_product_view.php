@@ -67,16 +67,18 @@
 
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                        <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
+                        <label class="form-label" for="tag name" title="Tag Name">Tag:</label>
                         <input class="form-control" type="text" name="tag" id="tag" placeholder="Tag Name" autocomplete="off" required />
                     </div>
                 </div>
 
                 <div class="row d-flex justify-content-between">
 
-                    <div class="col-12 col-md-2 px-2 my-2">
-                        <label class="form-label" for="name" title="Name">Project Name:</label>
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Name" autocomplete="off" required />
+
+                 <div class="col-12 col-md-2 px-2 my-2">
+                    <label class="form-label" for="name" title="Name">Name:</label>
+                    <input class="form-control" type="text" name="name" id="name" placeholder="Name" autocomplete="off" required />
+
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -277,7 +279,7 @@
                         
                         inputHtml = `
                             <div class="input-group">
-                                <input class="form-control" type="${feature.input_type}" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
+                                <input class="form-control" type="${feature.input_type}" step="any" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
                                 <select class="form-select" name="feature_unit[${feature.id}]">
                                     ${unitOptions}
                                 </select>
@@ -289,8 +291,7 @@
                             case 'text':
                             case 'number':
                                 // For number inputs, set the step to allow for decimals
-                                const stepAttribute = feature.input_type === 'number' ? 'step="any"' : '';
-                                inputHtml = `<input class="form-control" type="${feature.input_type}" ${stepAttribute} name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
+                                inputHtml = `<input class="form-control" type="number" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" step="any" />`;
                                 break;
                             case 'textarea':
                                 inputHtml = `<textarea class="form-control py-1" name="feature[${feature.id}]" placeholder="${feature.name}" rows="1"></textarea>`;
@@ -307,7 +308,7 @@
                     }
                     
                     // Build the complete element HTML and append to the container
-                    const labelTitle = feature.input_type === 'checkbox' ? `${feature.name}:` : feature.name;
+                    const labelTitle = feature.input_type === 'checkbox' ? `${feature.name}` : feature.name;
                     featureElement.innerHTML = `
                         <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${labelTitle}:</label>
                         ${inputHtml}
