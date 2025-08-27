@@ -306,7 +306,7 @@
                     // Build the complete element HTML and append to the container
                     const labelTitle = feature.input_type === 'checkbox' ? `${feature.name}:` : feature.name;
                     featureElement.innerHTML = `
-                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${labelTitle}</label>
+                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${labelTitle}:</label>
                         ${inputHtml}
                     `;
                     featuresContainer.appendChild(featureElement);
