@@ -48,6 +48,9 @@
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                 </svg>
                 <h3 class="pl-1">Part Details :</h3>
+                <div id="editLinkContainer" class="ml-auto" style="display: none;">
+                    <a id="editLink" href="#" class="btn btn-warning btn-sm">Edit Existing Part</a>
+                </div>
                 </div>
             
                 <div class="row">
@@ -55,6 +58,8 @@
 
                     <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
                         <input class="form-control" type="text" name="pn" id="pn" placeholder="Part number" autocomplete="off" required />
+                                        <span id="partNumberExistsMessage" class="error-message text-danger" style="display: none;">This part number already exists.</span>
+
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="manufacturer" title="Manufacturer">MFR:</label>
@@ -240,7 +245,7 @@
      */
     async function loadFeatures(categoryId) {
         // Clear previous features
-        featuresContainer.innerHTML = '';
+        
         
         if (!categoryId) {
             return; // Exit if no category is selected
@@ -397,24 +402,38 @@
     </script>
 <?php endif; ?>
 
-   <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const pnInput = document.getElementById('pn');
             const form = document.querySelector('form');
             const productIdInput = document.getElementById('product_id');
             const submitBtn = document.getElementById('Addpart');
-            const categorySelect = document.getElementById('category_id');
-            const featuresContainer = document.getElementById('features-container');
-            const imagesContainer = document.getElementById('images-container');
-            const pdfsContainer = document.getElementById('pdfs-container');
-            
+            const editLinkContainer = document.getElementById('editLinkContainer');
+            const editLink = document.getElementById('editLink');
+            const categorySearchInput = document.getElementById('category_search');
+            const mfgInput = document.getElementById('mfg');
+            const tagNameInput = document.getElementById('tag');
+            const nameInput = document.getElementById('name');
+            const qtyInput = document.getElementById('qty');
+            const locationInput = document.getElementById('location');
+            const receivedCodeInput = document.getElementById('recieve_code');
+            const dateCodeSelect = document.getElementById('date-code');
+            const rfCheckbox = document.getElementById('rfCheckbox');
+            const companyCmtTextarea = document.getElementById('company_cmt');
+            const featuresContainer = document.getElementById('featuresContainer');
+            const existsMessage = document.getElementById('partNumberExistsMessage');
+
+
             let timeoutId;
 
+            // Reset the button and message when the user starts typing or pastes
             pnInput.addEventListener('input', function() {
                 clearTimeout(timeoutId);
+                submitBtn.disabled = false;
+                existsMessage.style.display = 'none';
                 const pn = pnInput.value.trim();
                 if (pn.length === 0) {
-                    resetFormForCreation();
+                    editLinkContainer.style.display = 'none';
                     return;
                 }
                 timeoutId = setTimeout(() => {
@@ -438,118 +457,31 @@
 
                     if (result.status === 'success') {
                         const data = result.data;
-                        populateForm(data);
-                        displayProductMedia(data); // Call the new function
-                        submitBtn.textContent = 'Update Product';
-                        submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-indigo-500');
-                        submitBtn.classList.add('bg-orange-500', 'hover:bg-orange-600', 'focus:ring-orange-400');
-                        console.log('Product found! Populating form for update.'); 
+                        const editUrl = `../auth/dashboard.php?page=edit_product&id=${data.id}`;
+                        editLink.href = editUrl;
+                        editLinkContainer.style.display = 'block';
+                        
+                        // Disable the button and show the alarm message
+                        submitBtn.disabled = true;
+                        existsMessage.style.display = 'block';
+                        
+                        console.log('Product found! Add part button is disabled and edit link is now visible.'); 
                     } else {
-                        resetFormForCreation();
+                        editLinkContainer.style.display = 'none';
+                        
+                        // Re-enable the button and hide the alarm message
+                        submitBtn.disabled = false;
+                        existsMessage.style.display = 'none';
+
                         console.log('Part number not found. You can create a new product.');
                     }
                 } catch (error) {
                     console.error('Error fetching product data:', error);
                     console.log('An error occurred while fetching product data.');
-                    resetFormForCreation();
+                    editLinkContainer.style.display = 'none';
+                    submitBtn.disabled = false;
+                    existsMessage.style.display = 'none';
                 }
-            }
-
-            function populateForm(data) {
-                productIdInput.value = data.id;
-                document.getElementById('name').value = data.name;
-                document.getElementById('mfg').value = data.mfg;
-                document.getElementById('qty').value = data.qty;
-                
-                // Set the category dropdown value
-                if (data.category_id) {
-                    categorySelect.value = data.category_id;
-                }
-                
-                document.getElementById('location').value = data.location;
-                document.getElementById('tag').value = data.tag;
-                document.getElementById('date-code').value = data.date_code;
-                document.getElementById('recieve_code').value = data.recieve_code;
-                document.getElementById('company_cmt').value = data.company_cmt;
-                
-                const rfCheckbox = document.getElementById('rfCheckbox');
-                if (rfCheckbox && data.rf) {
-                    rfCheckbox.checked = (data.rf === "1" || data.rf === 1);
-                }
-
-                // Populate dynamic feature inputs
-                featuresContainer.innerHTML = ''; // Clear existing features
-                if (data.features && data.features.length > 0) {
-                    data.features.forEach(feature => {
-                        const featureDiv = document.createElement('div');
-                        featureDiv.className = 'flex items-center space-x-2';
-                        featureDiv.innerHTML = `
-                            <p class="font-medium">${feature.feature_id}:</p>
-                            <input type="text" class="w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" name="feature[${feature.feature_id}]" value="${feature.value || ''}" placeholder="Value">
-                            <input type="text" class="w-24 rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" name="feature_unit[${feature.feature_id}]" value="${feature.unit || ''}" placeholder="Unit">
-                        `;
-                        featuresContainer.appendChild(featureDiv);
-                    });
-                } else {
-                    featuresContainer.innerHTML = '<p class="text-gray-500">No features found for this product.</p>';
-                }
-            }
-
-            // New function to handle images and PDFs
-            function displayProductMedia(data) {
-                // Clear containers before populating
-                imagesContainer.innerHTML = '';
-                pdfsContainer.innerHTML = '';
-
-                // Display Images
-                if (data.images && data.images.length > 0) {
-                    data.images.forEach(image => {
-                        const imgDiv = document.createElement('div');
-                        imgDiv.className = 'flex items-center space-x-2';
-                        imgDiv.innerHTML = `
-                            <img src="../uploads/images/${image.file_name}" alt="Product Image" class="w-32 h-32 object-cover rounded-lg">
-                            <span class="text-sm text-gray-600">${image.file_name}</span>
-                        `;
-                        imagesContainer.appendChild(imgDiv);
-                    });
-                } else {
-                    imagesContainer.innerHTML = '<p class="text-gray-500">No images found.</p>';
-                }
-
-                // Display PDFs
-                if (data.pdfs && data.pdfs.length > 0) {
-                    data.pdfs.forEach(pdf => {
-                        const pdfLink = document.createElement('a');
-                        pdfLink.href = `../uploads/pdfs/${pdf.file_name}`;
-                        pdfLink.target = '_blank';
-                        pdfLink.className = 'flex items-center space-x-2 text-indigo-600 hover:text-indigo-800 transition-colors duration-150';
-                        pdfLink.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 2h2v2H6V6z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-sm">${pdf.file_name}</span>
-                        `;
-                        pdfsContainer.appendChild(pdfLink);
-                    });
-                } else {
-                    pdfsContainer.innerHTML = '<p class="text-gray-500">No PDFs found.</p>';
-                }
-            }
-
-            function resetFormForCreation() {
-                productIdInput.value = '';
-                const currentPn = pnInput.value.trim();
-                form.reset();
-                pnInput.value = currentPn;
-                
-                submitBtn.textContent = 'Add part';
-                submitBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600', 'focus:ring-orange-400');
-                submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-indigo-500');
-
-                // Clear dynamic content
-                featuresContainer.innerHTML = '';
-                imagesContainer.innerHTML = '';
-                pdfsContainer.innerHTML = '';
             }
         });
     </script>
