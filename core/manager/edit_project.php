@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $projectName = $_POST['project_name'] ?? '';
     $dateCode = $_POST['date_code'] ?? '';
     $employer = $_POST['employer'] ?? '';
+    $status = $_POST['status'] ?? '';
     $purchaseCode = $_POST['purchase_code'] ?? '';
     $designators = $_POST['designators'] ?? '';
     $products = $_POST['products'] ?? [];
@@ -118,11 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction();
 
         // 1. Update the projects table
-        $stmt_project = $conn->prepare("UPDATE projects SET project_name = ?, date_code = ?, employer = ?, purchase_code = ?, designators = ?, updated_at = ? WHERE id = ?");
+        $stmt_project = $conn->prepare("UPDATE projects SET project_name = ?, date_code = ?, employer = ?, status = ?, purchase_code = ?, designators = ?, updated_at = ? WHERE id = ?");
         if (!$stmt_project) {
             throw new Exception("Prepare statement failed: " . $conn->error);
         }
-        $stmt_project->bind_param("ssssssi", $projectName, $dateCode, $employer, $purchaseCode, $designators, $now, $projectId);
+        $stmt_project->bind_param("sssssssi", $projectName, $dateCode, $employer, $status, $purchaseCode, $designators, $now, $projectId);
         
         if (!$stmt_project->execute()) {
             throw new Exception("Failed to update project: " . $stmt_project->error);

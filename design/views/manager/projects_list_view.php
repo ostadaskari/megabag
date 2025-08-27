@@ -118,7 +118,7 @@
                 confirmButtonText: 'OK'
             }).then(() => {
                 // Remove the URL parameter to prevent the alert from showing on refresh
-                const newUrl = window.location.href.split('?')[0] + '?page=projects_listt';
+                const newUrl = window.location.href.split('?')[0] + '?page=projects_list';
                 history.replaceState({}, document.title, newUrl);
             });
         }

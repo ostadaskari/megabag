@@ -60,9 +60,9 @@
 
                         <div class="col-12 col-md-3 px-2 my-2">
                         <label for="status" class="form-label">Status:</label>
-                        <select name="purchase_code" id="purchaseCode" class="form-select">
-                            <option value="">-- Select Code --</option>
-                            <option value="Pandding">Pandding</option>
+                        <select name="status" id="status" class="form-select">
+                            <option value="<?= htmlspecialchars($project['status']) ?>"><?= htmlspecialchars($project['status']) ?></option>
+                            <option value="Pending">Pending</option>
                             <option value="Finished">Finished</option>
                         </select>
                     </div>
