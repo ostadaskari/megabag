@@ -118,15 +118,15 @@
                             <?php else: ?>
                                 <!-- Loop through existing project products and display them -->
                                 <?php foreach ($projectProducts as $key => $product): ?>
-                                    <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
+                                    <div class="stock-row border p-2 rounded mb-2 bg-light position-relative ">
                                         <div class="row d-flex align-items-end justify-content-between">
-                                            <div class="col-12 col-md-5 position-relative mb-2">
+                                            <div class="col-12 col-md-4 position-relative mb-2">
                                                 <label for="productInput" class="form-label">Part:</label>
                                                 <input type="text" name="products[<?= $key ?>][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required value="<?= htmlspecialchars($product['part_number'] . ' (' . $product['product_name'] . ')') ?>">
                                                 <input type="hidden" name="products[<?= $key ?>][product_id]" class="product-id" value="<?= htmlspecialchars($product['product_id']) ?>">
-                                                <div class="autocomplete-box" style="display: none;"></div>
+                                                <div class="autocomplete-box category-suggestions" style="display: none;"></div>
                                             </div>
-                                            <div class="col-4 col-md-2 mb-2">
+                                            <div class="col-4 col-md-3 mb-2">
                                                 <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"> (Available: <?= htmlspecialchars($product['current_qty']) ?>)</span></label>
                                                 <input type="number" name="products[<?= $key ?>][used_qty]" class="form-control" min="1" required value="<?= htmlspecialchars($product['used_qty']) ?>">
                                             </div>
@@ -192,6 +192,30 @@
 <?php endif; ?>
 
 <script>
+
+    // Select all inputs that trigger suggestions
+    const inputs = document.querySelectorAll('.product-search');
+
+    document.addEventListener('click', (e) => {
+    const clickedRow = e.target.closest('.stock-row');
+
+    // Close other opened rows
+    document.querySelectorAll('.stock-row.is-open').forEach(r => {
+        if (r !== clickedRow) {
+        r.classList.remove('is-open');
+        const box = r.querySelector('.category-suggestions');
+        if (box) box.style.display = 'none';
+        }
+    });
+
+    // If clicked inside a row, open it
+    if (clickedRow) {
+        clickedRow.classList.add('is-open');
+        const box = clickedRow.querySelector('.category-suggestions');
+        if (box) box.style.display = 'block';
+    }
+    });
+    
     // This script dynamically adds and removes product rows and handles product search.
     
     // Function to re-index rows and manage remove button visibility

@@ -84,16 +84,23 @@
                         <!-- Options will be populated by JavaScript -->
                     </select>
                 </div>
-                <!-- Added RF checkbox -->
-                <div class="col-12 col-md-1 py-2 px-2 form-check d-flex align-items-center justify-content-around flex-column">
-                   <label class="form-check-label mb-3" for="rfCheckbox">RF:</label>
-                   <input type="checkbox" class="form-check-input" style="height: 18px;" id="rfCheckbox" name="rf" value="1" <?= $product['rf'] ? 'checked' : '' ?>>
-                </div>
+                
+                <div class="col-12 col-md-2 px-2 my-2">
+                        <label class="form-label" for="statusSelector">
+                            Status:
+                        </label>
+                        <select id="" name="statusSelector" class="form-select">
+                            <option value="Available">Available</option>
+                            <option value="UnAvailable">UnAvailable</option>
+                        </select>
+                    </div>
+                    
 
-                 
                 <div class="col-12 pr-2">
-                    <label for="editDescription" title="Company Comment">Company Comment:</label>
-                    <textarea id="editDescription" class="form-control mt-2" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
+
+                    <label class="form-label" for="editDescription" title="Company Comment">Company Comment:</label>
+                    <textarea id="editDescription" class="form-control" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
+
                 </div>
             </div>
 

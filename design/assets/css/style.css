@@ -1,13 +1,9 @@
-
 @import url('./bootstrap.css');
-
-
 @font-face {
     font-family: myFont;
     src: url("../font/verdana.ttf") format("truetype"),
          url("../font/verdana-bold.ttf") format("truetype");
 }
-
 * {
     margin: 0;
     padding: 0;
@@ -115,7 +111,14 @@ table {
     background-color: var(--main-bg0-color);
     color:var(--main-text-color);
     z-index: 20;
+    background: linear-gradient(
+    to top,
+    var(--main-bg1-color) 0%,
+    var(--main-bg0-color) 70%   
+) !important;
+
 }
+
 .navbar-title{
     font-size: 18px;
     margin-left: 20px;
@@ -214,8 +217,17 @@ table {
     opacity: 0.35; 
     pointer-events: none;
     }
-
-    .sidebar,.sidebar-Mobile {
+    .sidebar {
+      width: 215px !important;
+      min-height: 100% !important;
+      background: linear-gradient(
+          to bottom,
+          var(--main-bg1-color) 0%,
+          var(--main-bg0-color) 100%   
+      ) !important;
+  }
+  
+    .sidebar-Mobile {
         width: 215px !important;
         min-height: 100%!important;
         background-color: var(--main-bg1-color) !important;
@@ -1377,10 +1389,10 @@ fill:var(--main-text-color);
 }
 
 .titleTop {
-  background-color: #0069928c;
+  background: linear-gradient(to top, #006992ab 20%, #001d4a82 100%) !important;
   padding: 3px;
   margin-bottom: 8px;
-  color: #f0f0f0;
+  color:#e9f2f8;
   border-radius: 5px;
   font-weight: normal;
   font-size: 14px;
@@ -1458,6 +1470,17 @@ font-weight: 300;
   width: 24px;
   height: 24px;
 }
+
 .stock-row .text-muted{
  font-size: 12px;
+}
+/* Ensure each row can form a stacking context when opened */
+.stock-row {
+  position: relative; /* keep this */
+  z-index: 1;
+}
+
+/* When a row is active, raise its z-index so its dropdown sits above siblings */
+.stock-row.is-open {
+  z-index: 9999;
 }
