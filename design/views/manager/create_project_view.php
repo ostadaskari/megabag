@@ -74,7 +74,7 @@
                             <!-- Initial product row template -->
                             <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
                                 <div class="row d-flex align-items-end justify-content-between">
-                                    <div class="col-12 col-md-5 px-1 position-relative mb-2">
+                                    <div class="col-12 col-md-4 px-1 position-relative mb-2">
                                         <label for="productInput" class="form-label">Part:</label>
                                         <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
                                         <input type="hidden" name="products[0][product_id]" class="product-id">
@@ -86,7 +86,7 @@
                                         <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
                                     </div>
                                     
-                                    <div class="col-8 col-md-3 px-1 mb-2">
+                                    <div class="col-8 col-md-4 px-1 mb-2">
                                         <label for="commentInput" class="form-label">Remarks:</label>
                                         <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
                                     </div>
@@ -148,6 +148,28 @@
 <?php endif; ?>
 
 <script>
+       // Select all inputs that trigger suggestions
+        const inputs = document.querySelectorAll('.product-search');
+
+        document.addEventListener('click', (e) => {
+        const clickedRow = e.target.closest('.stock-row');
+
+        // Close other opened rows
+        document.querySelectorAll('.stock-row.is-open').forEach(r => {
+            if (r !== clickedRow) {
+            r.classList.remove('is-open');
+            const box = r.querySelector('.category-suggestions');
+            if (box) box.style.display = 'none';
+            }
+        });
+
+        // If clicked inside a row, open it
+        if (clickedRow) {
+            clickedRow.classList.add('is-open');
+            const box = clickedRow.querySelector('.category-suggestions');
+            if (box) box.style.display = 'block';
+        }
+        });
     // This script dynamically adds and removes product rows and handles product search.
     
     // Function to re-index rows and manage remove button visibility
@@ -271,4 +293,8 @@
             });
         }
     });
+
+
+ 
+
 </script>

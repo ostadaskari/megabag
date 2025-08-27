@@ -88,6 +88,32 @@
 
 <!-- Updated JavaScript to manage the remove button visibility -->
 <script>
+    
+    // Select all inputs that trigger suggestions
+    const inputs = document.querySelectorAll('.product-search');
+
+    document.addEventListener('click', (e) => {
+    const clickedRow = e.target.closest('.stock-row');
+
+    // Close other opened rows
+    document.querySelectorAll('.stock-row.is-open').forEach(r => {
+        if (r !== clickedRow) {
+        r.classList.remove('is-open');
+        const box = r.querySelector('.category-suggestions');
+        if (box) box.style.display = 'none';
+        }
+    });
+
+    // If clicked inside a row, open it
+    if (clickedRow) {
+        clickedRow.classList.add('is-open');
+        const box = clickedRow.querySelector('.category-suggestions');
+        if (box) box.style.display = 'block';
+    }
+    });
+// ##################
+
+
     let rowIndex = 1;
 
     // Function to update the visibility of remove buttons based on the number of rows
