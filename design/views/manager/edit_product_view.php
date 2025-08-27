@@ -17,7 +17,26 @@
 
     <form id="EditPartForm" class="d-flex flex-column partForm" action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
-            
+
+        <div class="container bg-light border rounded shadow-sm p-2 mb-2" style="z-index:1000;">
+              <div class="row">
+                <!-- Category Dropdown Section -->
+                    <div class="col-12 d-flex flex-row">
+                        <div class="d-flex flex-row align-items-center">
+                            <svg width="20" height="20" fill="currentColor" class="bi bi-substack" viewBox="0 0 16 16">
+                            <path d="M15 3.604H1v1.891h14v-1.89ZM1 7.208V16l7-3.926L15 16V7.208zM15 0H1v1.89h14z"></path>
+                            </svg>
+                            <h3 class="pl-1">Category :</h3>
+                          </div>
+                        <div style="width:40%;">
+                            <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
+                            <input type="hidden" name="category_id" id="category_id" value="<?= htmlspecialchars($product['category_id']) ?>">
+                            <ul class="category-suggestions" id="category-dropdown" style="width: 40%; display: none;"></ul>
+                        </div> 
+                    </div>
+                </div>
+            </div> 
+        
         <div class="container border rounded shadow-sm bg-light p-2">
             <!-- Part details section -->
             <div class="d-flex flex-row align-items-center mb-1">
@@ -71,62 +90,84 @@
                    <input type="checkbox" class="form-check-input" style="height: 18px;" id="rfCheckbox" name="rf" value="1" <?= $product['rf'] ? 'checked' : '' ?>>
                 </div>
 
-            </div>
-
-            <!-- Category Dropdown Section - Moved to top -->
-            <div class="container mt-1 Category">
-                <div class="row d-flex flex-row justify-content-between">
-                    <div class="col-12 col-md-6 pr-2">
-                        <label for="editDescription" title="Company Comment">Company Comment:</label>
-                        <textarea id="editDescription" class="mt-2" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
-                    </div>
-
-                    <div class="col-12 col-md-6 pl-2">
-                        <label for="" class="form-label">Categories:</label>
-                        <input type="text" id="category_search" placeholder="Search category..." autocomplete="off" style="padding: 8px;" class="form-select">
-                        <input type="hidden" name="category_id" id="category_id" value="<?= htmlspecialchars($product['category_id']) ?>">
-                        <div id="category_dropdown" class="category-suggestions" ></div>
-                    </div>
+                 
+                <div class="col-12 pr-2">
+                    <label for="editDescription" title="Company Comment">Company Comment:</label>
+                    <textarea id="editDescription" class="mt-2" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
                 </div>
             </div>
+
             
             <!-- Product Features Section - Newly added -->
             <div class="d-flex flex-row align-items-center mt-3">
                         <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
                         </svg> 
-                <h3 class="pl-1">Specifications:</h3>
-            </div>
+                        <h3 class="pl-1 mb-0">Specifications :</h3>
+                        <div class="flex-grow-1 ms-2 border-bottom"></div>
+                    </div>
 
 
-            <div id="product_features_container" class="container border rounded shadow-sm p-3 mt-1">
+            <div  class="container p-1">
+               <div class="row my-2 d-flex flex-row align-items-center" id="product_features_container">
+
                 <!-- Features will be populated here dynamically by JavaScript -->
                 <?php if (!empty($product['features'])): ?>
                     <?php foreach ($product['features'] as $feature): ?>
-                    <div class="row my-2 align-items-center">
-                        <div class="col-12 col-md-4">
-                            <label class="form-label"><?= htmlspecialchars($feature['name']) ?>:</label>
-                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][name]" value="<?= htmlspecialchars($feature['name']) ?>">
-                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][feature_id]" value="<?= htmlspecialchars($feature['id']) ?>">
+                    <div class="col-12 col-md-4 px-2 my-2">
+                            <label class="form-label" for="feature_<?= htmlspecialchars($feature['id']) ?>">
+                                <?= htmlspecialchars($feature['name']) ?>:
+                            </label>
+
+                            <?php if (!empty($feature['unit'])): ?>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" 
+                                        id="feature_<?= htmlspecialchars($feature['id']) ?>"
+                                        name="features[<?= htmlspecialchars($feature['id']) ?>][value]" 
+                                        value="<?= htmlspecialchars($feature['value']) ?>" 
+                                        placeholder="Value" autocomplete="off">
+
+                                    <select class="form-select" 
+                                            name="features[<?= htmlspecialchars($feature['id']) ?>][unit]">
+                                        <?php foreach (explode(',', $feature['unit']) as $unit): ?>
+                                            <option value="<?= htmlspecialchars(trim($unit)) ?>" 
+                                                <?= trim($unit) === $feature['unit'] ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars(trim($unit)) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            <?php else: ?>
+                                <input class="form-control" type="text" 
+                                    id="feature_<?= htmlspecialchars($feature['id']) ?>"
+                                    name="features[<?= htmlspecialchars($feature['id']) ?>][value]" 
+                                    value="<?= htmlspecialchars($feature['value']) ?>" 
+                                    placeholder="Value" autocomplete="off">
+                            <?php endif; ?>
+
+                            <!-- Hidden inputs -->
+                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][feature_id]" 
+                                value="<?= htmlspecialchars($feature['id']) ?>">
+                            <input type="hidden" name="features[<?= htmlspecialchars($feature['id']) ?>][name]" 
+                                value="<?= htmlspecialchars($feature['name']) ?>">
                         </div>
-                        <div class="col-6 col-md-4">
-                            <input class="form-control" type="text" name="features[<?= htmlspecialchars($feature['id']) ?>][value]" value="<?= htmlspecialchars($feature['value']) ?>" placeholder="Value" autocomplete="off">
-                        </div>
-                        <div class="col-6 col-md-4">
-                            <input class="form-control" type="text" name="features[<?= htmlspecialchars($feature['id']) ?>][unit]" value="<?= htmlspecialchars($feature['unit']) ?>" placeholder="Unit" autocomplete="off">
-                        </div>
-                    </div>
+
+                        
+                   
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p class="text-muted small">No features to display. Select a category to see available features.</p>
                 <?php endif; ?>
+
+               </div>
             </div>
             <!-- End Product Features Section -->   
+            </div>
 
-
-            <!-- inputs files -->
-            <div class="d-flex flex-row align-items-center my-2">
+            <div class="container border rounded shadow-sm bg-light p-2 mt-2">
+                <!-- inputs files -->
+            <div class="d-flex flex-row align-items-center mb-2">
                 <svg width="24" height="24" fill="var(--main-bg0-color)" class="bi bi-pencil-square hoverSvg" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -134,7 +175,7 @@
                 <h3 class="pl-1">Upload Files:</h3>
             </div>
 
-            <div class="row mt-1 mb-3 d-flex justify-content-between border rounded shadow-sm p-3">
+            <div class="row mb-2 d-flex justify-content-between border rounded shadow-sm p-3">
                 <div class="col-12 col-md-6 d-flex justify-content-start">
                     <div style="width: 90%;">
                         <div class="form-label d-flex align-items-center">
@@ -227,9 +268,10 @@
                 </div>
             </div>
 
+            
+            </div>
             <div class="mt-3" style="text-align: end">
                 <button type="submit" class="btn btn-primary" >Edit Part</button>
-            </div>
             </div>
             </form>
         </div>
@@ -402,142 +444,91 @@ document.addEventListener('DOMContentLoaded', () => {
                 featuresContainer.innerHTML = `<p class="text-danger small">Error loading features: ${err.message}</p>`;
                 console.error('Error fetching features:', err);
             });
-    }
-
-    // Function to create and return a single feature element
-    function createFeatureElement(feature) {
-        const featureDiv = document.createElement('div');
-        featureDiv.className = 'row my-2 align-items-center';
-
-        const featureNameContainer = document.createElement('div');
-        featureNameContainer.className = 'col-12 col-md-4';
-
-        const valueCol = document.createElement('div');
-        valueCol.className = 'col-6 col-md-4';
-
-        const unitCol = document.createElement('div');
-        unitCol.className = 'col-6 col-md-4';
-
-        const hasUnit = !!feature.feature_unit;
-        const requiredAttr = feature.is_required ? 'required' : '';
-        const isBoolean = feature.data_type === 'boolean';
-        const featureValue = feature.value || '';
-
-        // Create the label
-        const label = document.createElement('label');
-        label.className = 'form-label';
-        label.textContent = `${feature.feature_name ?? ''}${feature.is_required ? ' *' : ''}:`;
-        if (!isBoolean) {
-            featureNameContainer.appendChild(label);
-        }
-
-        let inputElement;
-        // Determine the type of input to render based on data_type
-        switch (feature.data_type) {
-            case 'decimal(12,3)':
-                inputElement = document.createElement('input');
-                inputElement.type = 'text';
-                inputElement.pattern = '[0-9]+(\\.[0-9]{1,3})?';
-                inputElement.title = 'Please enter a number with up to 3 decimal places.';
-                inputElement.placeholder = 'e.g., 123.456';
-                break;
-            case 'boolean':
-                const isChecked = featureValue === '1';
-
-                // Create a container for the switch
-                const switchContainer = document.createElement('div');
-                switchContainer.className = 'form-check form-switch d-flex align-items-center';
-
-                inputElement = document.createElement('input');
-                inputElement.type = 'checkbox';
-                inputElement.role = 'switch';
-                inputElement.checked = isChecked;
-                inputElement.value = '1';
-                inputElement.id = `feature-${feature.feature_id}`;
-                inputElement.className = 'form-check-input';
-
-                // Create the label for the boolean input
-                const booleanLabel = document.createElement('label');
-                booleanLabel.className = 'form-check-label ms-2';
-                booleanLabel.htmlFor = `feature-${feature.feature_id}`;
-                booleanLabel.textContent = `${feature.feature_name ?? ''}${feature.is_required ? ' *' : ''}`;
-
-                // Create a hidden input to handle unchecked state
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = `features[${feature.feature_id}][value]`;
-                hiddenInput.value = isChecked ? '1' : '0';
-
-                // Append the checkbox and label to the switch container
-                switchContainer.appendChild(inputElement);
-                switchContainer.appendChild(booleanLabel);
-                valueCol.appendChild(switchContainer);
-
-                // Update hidden input when checkbox changes
-                inputElement.addEventListener('change', (e) => {
-                    hiddenInput.value = e.target.checked ? '1' : '0';
-                });
-
-                // Return early to avoid the rest of the switch statement logic
-                break;
-            case 'varchar(50)':
-                inputElement = document.createElement('input');
-                inputElement.type = 'text';
-                inputElement.placeholder = 'Max 50 characters';
-                inputElement.maxLength = 50;
-                break;
-            case 'TEXT':
-                inputElement = document.createElement('textarea');
-                inputElement.placeholder = 'Long description';
-                break;
-            default:
-                // Fallback for any other data types
-                inputElement = document.createElement('input');
-                inputElement.type = 'text';
-                inputElement.placeholder = 'Enter value';
-                break;
-        }
-
-        if (!isBoolean) {
-            inputElement.className = 'form-control';
-            inputElement.name = `features[${feature.feature_id}][value]`;
-            inputElement.autocomplete = 'off';
-            inputElement.value = featureValue;
-            if (requiredAttr) {
-                inputElement.required = true;
             }
-            valueCol.appendChild(inputElement);
+
+            // Function to create and return a single feature element
+            function createFeatureElement(feature) {
+            const featureElement = document.createElement('div');
+            featureElement.classList.add('col-12', 'col-md-4', 'p-2');
+
+            const hasUnit = !!feature.feature_unit;
+            const requiredAttr = feature.is_required ? 'required' : '';
+            const isBoolean = feature.data_type === 'boolean';
+            const featureValue = feature.value || '';
+
+            let inputHtml = '';
+
+            // Choose input type based on data_type
+            switch (feature.data_type) {
+                case 'decimal(12,3)':
+                    inputHtml = `<input class="form-control" type="number" step="0.001" 
+                                    name="features[${feature.feature_id}][value]" 
+                                    placeholder="${feature.feature_name}" 
+                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
+                    break;
+                case 'boolean':
+                    const checkedAttr = featureValue === '1' ? 'checked' : '';
+                    inputHtml = `
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="feature_${feature.feature_id}" 
+                                name="features[${feature.feature_id}][value]" value="1" ${checkedAttr}>
+                            <label class="form-check-label ms-2" for="feature_${feature.feature_id}">
+                                ${feature.feature_name}${feature.is_required ? ' *' : ''}
+                            </label>
+                        </div>
+                    `;
+                    break;
+                case 'varchar(50)':
+                    inputHtml = `<input class="form-control" type="text" maxlength="50" 
+                                    name="features[${feature.feature_id}][value]" 
+                                    placeholder="${feature.feature_name}" 
+                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
+                    break;
+                case 'TEXT':
+                    inputHtml = `<textarea class="form-control" 
+                                    name="features[${feature.feature_id}][value]" 
+                                    placeholder="${feature.feature_name}" rows="3" 
+                                    ${requiredAttr}>${featureValue}</textarea>`;
+                    break;
+                default:
+                    inputHtml = `<input class="form-control" type="text" 
+                                    name="features[${feature.feature_id}][value]" 
+                                    placeholder="${feature.feature_name}" 
+                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
+                    break;
+            }
+
+            // Wrap input with unit select if feature has units
+            if (hasUnit && !isBoolean) {
+                inputHtml = `
+                    <div class="input-group">
+                        ${inputHtml}
+                        ${unitSelect(feature.feature_unit, feature.unit, feature.feature_id)}
+                    </div>
+                `;
+            }
+
+            // Build the final element
+            if (!isBoolean) {
+                featureElement.innerHTML = `
+                    <label class="form-label" for="feature_${feature.feature_id}">
+                        ${feature.feature_name}:${feature.is_required ? ' *' : ''}
+                    </label>
+                    ${inputHtml}
+                `;
+            } else {
+                featureElement.innerHTML = inputHtml; // for checkbox only
+            }
+
+            // Append hidden inputs
+            featureElement.innerHTML += `
+                <input type="hidden" name="features[${feature.feature_id}][feature_id]" value="${feature.feature_id}">
+                <input type="hidden" name="features[${feature.feature_id}][name]" value="${feature.feature_name}">
+            `;
+
+            return featureElement;
         }
 
-        // Create the unit select if the feature has units
-        if (hasUnit) {
-            unitCol.innerHTML = unitSelect(feature.feature_unit, feature.unit, feature.feature_id);
-        }
-
-        // Append the created elements to the main div
-        if (!isBoolean) {
-            featureDiv.appendChild(featureNameContainer);
-        }
-        featureDiv.appendChild(valueCol);
-        if (hasUnit) {
-            featureDiv.appendChild(unitCol);
-        }
-
-        // Append hidden inputs for feature id and name
-        const hiddenIdInput = document.createElement('input');
-        hiddenIdInput.type = 'hidden';
-        hiddenIdInput.name = `features[${feature.feature_id}][feature_id]`;
-        hiddenIdInput.value = feature.feature_id;
-        featureDiv.appendChild(hiddenIdInput);
-
-        const hiddenNameInput = document.createElement('input');
-        hiddenNameInput.type = 'hidden';
-        hiddenNameInput.name = `features[${feature.feature_id}][name]`;
-        hiddenNameInput.value = feature.feature_name;
-        featureDiv.appendChild(hiddenNameInput);
-
-        return featureDiv;
-    }
 
     // Function to generate the unit dropdown select element
     function unitSelect(unitString, selectedUnit, featureId) {
