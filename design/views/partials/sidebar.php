@@ -51,7 +51,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
                 <ul class="submenu list-unstyled">
 
-                  <li><a href="?page=create_product" >Defien a Part</a></li>
+                  <li><a href="?page=create_product" >Define a New Part</a></li>
                   <li><a href="?page=products_list" >Part List</a></li>  
                 </ul>
               </li>
@@ -66,8 +66,8 @@ $role = $_SESSION['role'] ?? 'guest';
                   
                 </a>
                 <ul class="submenu list-unstyled">
-                  <li><a href="?page=create_project" >Add a project</a></li>
-                  <li><a href="?page=projects_list" >Project List</a></li>  
+                  <li><a href="?page=create_project">Define a New project</a></li>
+                  <li><a href="?page=projects_list">Project List</a></li>  
                 </ul>
               </li>
             <!-- Add feature to category -->
@@ -221,7 +221,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
 
                 <ul class="submenu list-unstyled">
-                  <li><a href="../manager/create_product.php">Defien a part</a></li>
+                  <li><a href="../manager/create_product.php">Define a part</a></li>
                   <li><a href="../manager/products_list.php" >List Parts</a></li>
                 </ul>
 

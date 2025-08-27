@@ -183,7 +183,7 @@
                 </div>
             </div>
 
-            <div class="" style="text-align: end">
+            <div style="text-align: end">
                 <button type="submit" class="btn btn-primary" id="Addpart">Add part</button>
             </div>
         </form>
