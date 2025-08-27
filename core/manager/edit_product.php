@@ -71,13 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $qty = intval($_POST['qty']);
     $company_cmt = trim($_POST['company_cmt']);
     $location = trim($_POST['location']);
-    $status = trim($_POST['status']);
+    $status = trim($_POST['status'] ?? 'available');
     $tag = trim($_POST['tag']);
     $date_code = trim($_POST['date_code']);
     $receive_code = trim($_POST['recieve_code']);
     $category_id = intval($_POST['category_id']);
     // Check if the 'rf' checkbox is set and assign 1 or 0
     $rf = isset($_POST['rf']) ? 1 : 0; 
+    
+    // Get the features data from the form
+    $features = $_POST['features'] ?? [];
+
 
     if (empty($name)) {
         $errors[] = "Product name is required.";
@@ -85,11 +89,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         // Update product details, including the new 'rf' column
-        $stmt = $conn->prepare("UPDATE products SET name=?, part_number=?, MFG=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, recieve_code=?, category_id=?, rf=?, updated_at=NOW() WHERE id=?");
+        $stmt = $conn->prepare("UPDATE products SET name=?, part_number=?, mfg=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, recieve_code=?, category_id=?, rf=?, updated_at=NOW() WHERE id=?");
         $stmt->bind_param("sssissssssiii", $name, $p_n, $MFG, $qty, $company_cmt, $location, $status, $tag, $date_code, $receive_code, $category_id, $rf, $id);
         if ($stmt->execute()) {
             $stmt->close();
             
+            // --- UPDATED LOGIC FOR SAVING FEATURES ---
+            // First, delete all existing features for this product
+            $stmtDelFeatures = $conn->prepare("DELETE FROM product_feature_values WHERE product_id = ?");
+            $stmtDelFeatures->bind_param("i", $id);
+            $stmtDelFeatures->execute();
+            $stmtDelFeatures->close();
+
+            // Then, re-insert the features submitted with the form
+            if (!empty($features)) {
+                // Fetch feature data types for validation
+                $feature_ids_in = implode(',', array_map('intval', array_keys($features)));
+                $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
+                $feature_types = [];
+                if ($feature_types_query) {
+                    while ($row = $feature_types_query->fetch_assoc()) {
+                        $feature_types[$row['id']] = $row['data_type'];
+                    }
+                }
+                
+                // Prepare statement once outside the loop
+                $stmtInsertFeatures = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
+                
+                if ($stmtInsertFeatures === false) {
+                    $errors[] = "Failed to prepare feature insertion statement: " . $conn->error;
+                } else {
+                    foreach ($features as $feature_id => $feature_data) {
+                        $value = trim($feature_data['value'] ?? '');
+                        $unit = trim($feature_data['unit'] ?? '');
+                        $data_type = $feature_types[$feature_id] ?? null;
+
+                        if (!empty($value)) {
+                            $value_to_save = $value;
+                            switch ($data_type) {
+                                case 'decimal(12,3)':
+                                    $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                    if ($value_to_save === false) {
+                                        $errors[] = "Invalid decimal value for feature ID {$feature_id}.";
+                                    }
+                                    break;
+                                case 'boolean':
+                                    $value_to_save = ($value == '1') ? '1' : '0';
+                                    break;
+                                case 'TEXT':
+                                default:
+                                    // For TEXT, varchar, and other types, sanitize the input
+                                    $value_to_save = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                                    break;
+                            }
+                            
+                            $unit_to_save = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8');
+                            
+                            if (empty($errors)) {
+                                $stmtInsertFeatures->bind_param("iiss", $id, $feature_id, $value_to_save, $unit_to_save);
+                                if (!$stmtInsertFeatures->execute()) {
+                                    $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmtInsertFeatures->error;
+                                }
+                            }
+                        }
+                    }
+                    $stmtInsertFeatures->close();
+                }
+            }
+            // --- END OF UPDATED LOGIC ---
+
+
             // --- File Upload Logic ---
             $imageDir = '../../uploads/images/';
             $pdfDir = '../../uploads/pdfs/';

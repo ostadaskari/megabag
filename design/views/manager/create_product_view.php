@@ -397,127 +397,159 @@
     </script>
 <?php endif; ?>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get references to all the elements you'll need
-        const pnInput = document.getElementById('pn');
-        const form = document.querySelector('form');
-        const productIdInput = document.getElementById('product_id');
-        const submitBtn = document.getElementById('Addpart');
-
-        let timeoutId;
-
-        // Listen for user input on the part number field
-        pnInput.addEventListener('input', function() {
-            clearTimeout(timeoutId); // Clear any previous timeout
-
-            const pn = pnInput.value.trim();
-
-            // If the input is empty, reset the form and stop.
-            if (pn.length === 0) {
-                resetFormForCreation();
-                return;
-            }
-
-            // Wait for a short delay after the user stops typing
-            timeoutId = setTimeout(() => {
-                fetchProductData(pn);
-            }, 500); // 500ms debounce
-        });
-        
-        // Also listen for a paste event to trigger the search immediately
-        pnInput.addEventListener('paste', function() {
-            setTimeout(() => {
-                const pn = pnInput.value.trim();
-                if (pn.length > 0) {
-                    fetchProductData(pn);
-                }
-            }, 10);
-        });
-
-        async function fetchProductData(pn) {
-            try {
-                const response = await fetch(`../ajax/get_product_data.php?pn=${encodeURIComponent(pn)}`);
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    const data = result.data;
-                    populateForm(data);
-                    submitBtn.textContent = 'Update Product';
-                    submitBtn.classList.remove('btn-primary');
-                    submitBtn.classList.add('btn-warning');
-                    // Changed alert() to a simple console.log to avoid blocking
-                    console.log('Product found! Populating form for update.'); 
-                } else {
-                    resetFormForCreation();
-                    // Changed alert() to a simple console.log to avoid blocking
-                    console.log('Part number not found. You can create a new product.');
-                }
-            } catch (error) {
-                console.error('Error fetching product data:', error);
-                // Changed alert() to a simple console.log to avoid blocking
-                console.log('An error occurred while fetching product data.');
-                resetFormForCreation();
-            }
-        }
-
-        function populateForm(data) {
-            // Set the hidden product ID
-            productIdInput.value = data.id;
-
-            // Populate main product fields
-            document.getElementById('name').value = data.name;
-            document.getElementById('mfg').value = data.mfg;
-            document.getElementById('qty').value = data.qty;
-            document.getElementById('category_id').value = data.category_id;
-            document.getElementById('location').value = data.location;
-            // document.getElementById('status').value = data.status; // No 'status' id in your HTML
-            document.getElementById('tag').value = data.tag;
-            document.getElementById('date-code').value = data.date_code;
-            document.getElementById('recieve_code').value = data.recieve_code;
-            document.getElementById('company_cmt').value = data.company_cmt;
-            // document.getElementById('rf').value = data.rf; // Checkbox, needs special handling
-
-            // Populate dynamic feature inputs
-            document.querySelectorAll('.feature-input').forEach(input => input.value = '');
-            document.querySelectorAll('.feature-unit').forEach(select => select.value = '');
-
-            if (data.features && data.features.length > 0) {
-                data.features.forEach(feature => {
-                    const featureInput = document.querySelector(`[name="feature[${feature.feature_id}]"]`);
-                    const unitSelect = document.querySelector(`[name="feature_unit[${feature.feature_id}]"]`);
-
-                    if (featureInput) {
-                         // Check if it's a checkbox and set 'checked' property
-                        if (featureInput.type === 'checkbox') {
-                            featureInput.checked = feature.value === '1';
-                        } else {
-                             featureInput.value = feature.value;
-                        }
-                    }
-                    if (unitSelect) {
-                        unitSelect.value = feature.unit;
-                    }
-                });
-            }
-
-            // Correctly set the value of the RF checkbox
-            const rfCheckbox = document.getElementById('rfCheckbox');
-            if (rfCheckbox && data.rf) {
-                rfCheckbox.checked = (data.rf === "1" || data.rf === 1);
-            }
-        }
-
-        function resetFormForCreation() {
-            productIdInput.value = '';
-            // Don't use form.reset() as it will clear the PN input too.
-            const currentPn = pnInput.value.trim();
-            form.reset();
-            pnInput.value = currentPn; // Keep the PN value
+   <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pnInput = document.getElementById('pn');
+            const form = document.querySelector('form');
+            const productIdInput = document.getElementById('product_id');
+            const submitBtn = document.getElementById('Addpart');
+            const categorySelect = document.getElementById('category_id');
+            const featuresContainer = document.getElementById('features-container');
+            const imagesContainer = document.getElementById('images-container');
+            const pdfsContainer = document.getElementById('pdfs-container');
             
-            submitBtn.textContent = 'Add part';
-            submitBtn.classList.remove('btn-warning');
-            submitBtn.classList.add('btn-primary');
-        }
-    });
-</script>
+            let timeoutId;
+
+            pnInput.addEventListener('input', function() {
+                clearTimeout(timeoutId);
+                const pn = pnInput.value.trim();
+                if (pn.length === 0) {
+                    resetFormForCreation();
+                    return;
+                }
+                timeoutId = setTimeout(() => {
+                    fetchProductData(pn);
+                }, 500);
+            });
+            
+            pnInput.addEventListener('paste', function() {
+                setTimeout(() => {
+                    const pn = pnInput.value.trim();
+                    if (pn.length > 0) {
+                        fetchProductData(pn);
+                    }
+                }, 10);
+            });
+
+            async function fetchProductData(pn) {
+                try {
+                    const response = await fetch(`../ajax/get_product_data.php?pn=${encodeURIComponent(pn)}`);
+                    const result = await response.json();
+
+                    if (result.status === 'success') {
+                        const data = result.data;
+                        populateForm(data);
+                        displayProductMedia(data); // Call the new function
+                        submitBtn.textContent = 'Update Product';
+                        submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-indigo-500');
+                        submitBtn.classList.add('bg-orange-500', 'hover:bg-orange-600', 'focus:ring-orange-400');
+                        console.log('Product found! Populating form for update.'); 
+                    } else {
+                        resetFormForCreation();
+                        console.log('Part number not found. You can create a new product.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching product data:', error);
+                    console.log('An error occurred while fetching product data.');
+                    resetFormForCreation();
+                }
+            }
+
+            function populateForm(data) {
+                productIdInput.value = data.id;
+                document.getElementById('name').value = data.name;
+                document.getElementById('mfg').value = data.mfg;
+                document.getElementById('qty').value = data.qty;
+                
+                // Set the category dropdown value
+                if (data.category_id) {
+                    categorySelect.value = data.category_id;
+                }
+                
+                document.getElementById('location').value = data.location;
+                document.getElementById('tag').value = data.tag;
+                document.getElementById('date-code').value = data.date_code;
+                document.getElementById('recieve_code').value = data.recieve_code;
+                document.getElementById('company_cmt').value = data.company_cmt;
+                
+                const rfCheckbox = document.getElementById('rfCheckbox');
+                if (rfCheckbox && data.rf) {
+                    rfCheckbox.checked = (data.rf === "1" || data.rf === 1);
+                }
+
+                // Populate dynamic feature inputs
+                featuresContainer.innerHTML = ''; // Clear existing features
+                if (data.features && data.features.length > 0) {
+                    data.features.forEach(feature => {
+                        const featureDiv = document.createElement('div');
+                        featureDiv.className = 'flex items-center space-x-2';
+                        featureDiv.innerHTML = `
+                            <p class="font-medium">${feature.feature_id}:</p>
+                            <input type="text" class="w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" name="feature[${feature.feature_id}]" value="${feature.value || ''}" placeholder="Value">
+                            <input type="text" class="w-24 rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" name="feature_unit[${feature.feature_id}]" value="${feature.unit || ''}" placeholder="Unit">
+                        `;
+                        featuresContainer.appendChild(featureDiv);
+                    });
+                } else {
+                    featuresContainer.innerHTML = '<p class="text-gray-500">No features found for this product.</p>';
+                }
+            }
+
+            // New function to handle images and PDFs
+            function displayProductMedia(data) {
+                // Clear containers before populating
+                imagesContainer.innerHTML = '';
+                pdfsContainer.innerHTML = '';
+
+                // Display Images
+                if (data.images && data.images.length > 0) {
+                    data.images.forEach(image => {
+                        const imgDiv = document.createElement('div');
+                        imgDiv.className = 'flex items-center space-x-2';
+                        imgDiv.innerHTML = `
+                            <img src="../uploads/images/${image.file_name}" alt="Product Image" class="w-32 h-32 object-cover rounded-lg">
+                            <span class="text-sm text-gray-600">${image.file_name}</span>
+                        `;
+                        imagesContainer.appendChild(imgDiv);
+                    });
+                } else {
+                    imagesContainer.innerHTML = '<p class="text-gray-500">No images found.</p>';
+                }
+
+                // Display PDFs
+                if (data.pdfs && data.pdfs.length > 0) {
+                    data.pdfs.forEach(pdf => {
+                        const pdfLink = document.createElement('a');
+                        pdfLink.href = `../uploads/pdfs/${pdf.file_name}`;
+                        pdfLink.target = '_blank';
+                        pdfLink.className = 'flex items-center space-x-2 text-indigo-600 hover:text-indigo-800 transition-colors duration-150';
+                        pdfLink.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 2h2v2H6V6z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">${pdf.file_name}</span>
+                        `;
+                        pdfsContainer.appendChild(pdfLink);
+                    });
+                } else {
+                    pdfsContainer.innerHTML = '<p class="text-gray-500">No PDFs found.</p>';
+                }
+            }
+
+            function resetFormForCreation() {
+                productIdInput.value = '';
+                const currentPn = pnInput.value.trim();
+                form.reset();
+                pnInput.value = currentPn;
+                
+                submitBtn.textContent = 'Add part';
+                submitBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600', 'focus:ring-orange-400');
+                submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-indigo-500');
+
+                // Clear dynamic content
+                featuresContainer.innerHTML = '';
+                imagesContainer.innerHTML = '';
+                pdfsContainer.innerHTML = '';
+            }
+        });
+    </script>
