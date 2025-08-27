@@ -290,7 +290,7 @@
                                 inputHtml = `<input class="form-control" type="${feature.input_type}" ${stepAttribute} name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
                                 break;
                             case 'textarea':
-                                inputHtml = `<textarea class="form-control" name="feature[${feature.id}]" placeholder="${feature.name}" rows="3"></textarea>`;
+                                inputHtml = `<textarea class="form-control py-1" name="feature[${feature.id}]" placeholder="${feature.name}" rows="1"></textarea>`;
                                 break;
                             case 'checkbox':
                                 // Corrected logic to handle checkboxes

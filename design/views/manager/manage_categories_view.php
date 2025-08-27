@@ -64,10 +64,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 border rounded bg-light shadow-sm p-2">
+            <div class="d-flex flex-row align-items-center mb-2">
+                    <svg width="22" height="22" fill="currentColor" class="bi bi-signpost-split mr-2" viewBox="0 0 16 16">
+                         <path d="M7 7V1.414a1 1 0 0 1 2 0V2h5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.8 5.6a1 1 0 0 1-.8.4H9v10H7v-5H2a1 1 0 0 1-.8-.4L.225 9.3a.5.5 0 0 1 0-.6L1.2 7.4A1 1 0 0 1 2 7zm1 3V8H2l-.75 1L2 10zm0-5h6l.75-1L14 3H8z"/>
+                    </svg>
+                    <h3>Category Tree</h3>
+                </div>
                 <!-- Category Tree Display -->
-                <div class="card border rounded bg-light shadow-sm p-2" style="max-height: 75vh; overflow: auto;">
-                <h3 class="mb-3">Category Tree</h3>
+                <div class="card" style="max-height:60vh; overflow: auto;">
                 <div>
                     <?php
                   function displayTreeFancy($categories, $parentId = null){
@@ -152,8 +157,6 @@
         </div>
     </div>
 
-
-
     <!-- script for open or close folder in tree -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -170,7 +173,7 @@
             });
         });
         });
-        </script>
+    </script>
 
     <!-- JavaScript functions -->  
     <script>

@@ -422,10 +422,6 @@ padding: 0 !important;
 /* Inputs & textarea */
 .partForm input,
 .partForm textarea {
-    width: 100%;
-    padding: 7px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     font-size: 14px!important;
 }
 .part-status select {
