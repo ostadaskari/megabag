@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($features_values)) {
                 // Fetch feature data types for validation
                 $feature_ids_in = implode(',', array_map('intval', array_keys($features_values)));
-                $feature_types_query = $conn->query("SELECT id, data_type FROM product_features WHERE id IN ($feature_ids_in)");
+                $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
                 $feature_types = [];
                 while ($row = $feature_types_query->fetch_assoc()) {
                     $feature_types[$row['id']] = $row['data_type'];
