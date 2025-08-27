@@ -51,6 +51,7 @@
                         <input type="text" name="employer" id="employer" class="form-control" value="<?= htmlspecialchars($project['employer']) ?>">
                     </div>
 
+
                     <div class="col-12 col-md-3 px-2 my-2">
                         <label for="purchaseCode" class="form-label">Purchase Code(s):</label>
                         <input type="text" name="purchase_code" id="purchaseCode" class="form-control" placeholder="e.g., code1, code2" value="<?= htmlspecialchars($project['purchase_code']) ?>">
@@ -62,12 +63,12 @@
                     </div>
 
                     <div class="col-12 col-md-3 px-2 my-2">
-                    <label for="status" class="form-label">Status:</label>
-                    <select name="purchase_code" id="purchaseCode" class="form-select">
-                        <option value="">-- Select Code --</option>
-                        <option value="Pandding">Pandding</option>
-                        <option value="Finished">Finished</option>
-                    </select>
+                     <label for="status" class="form-label">Status:</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="<?= htmlspecialchars($project['status']) ?>"><?= htmlspecialchars($project['status']) ?></option>
+                            <option value="Pending">Pending</option>
+                            <option value="Finished">Finished</option>
+                        </select>
                    </div>
                 </div>
 
