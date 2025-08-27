@@ -47,7 +47,7 @@
                     <th scope="col">MFR</th>
                     <th scope="col">Tag</th>
                     <th scope="col">Qty</th>
-                    <th scope="col">P-Name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Submitter</th>
                     <th scope="col">Category</th>
                     <th scope="col">Location</th>

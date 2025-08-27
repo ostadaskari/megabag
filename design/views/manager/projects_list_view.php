@@ -55,6 +55,8 @@
         
             <tbody id="projectsTableBody">
                 <!-- Filled dynamically via AJAX -->
+                                                 <tr><td colspan="8" class="text-center py-4 text-gray-500">Loading projects...</td></tr>
+
             </tbody>
         
             </table>
@@ -104,6 +106,7 @@
         const projectDetailsModal = document.getElementById('projectDetailsModal');
         const projectDetailsContent = document.getElementById('projectDetailsContent');
         const closeModalButton = document.getElementById('closeModal');
+        const paginationContainer = document.getElementById('pagination');
         
         // Check for success or error messages from the URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -238,44 +241,41 @@
             }
         });
 
-        // Global function to fetch projects
-        window.fetchProjects = function (page = 1) {
+        // Function to fetch projects with pagination and filters
+        window.searchProjects = function (page = 1) {
             const keyword = searchInput.value;
             const status = statusFilter.value;
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", `../ajax/search_projects.php?keyword=${encodeURIComponent(keyword)}&status=${status}&page=${page}`, true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    try {
-                        const result = JSON.parse(xhr.responseText);
-                        projectsTableBody.innerHTML = result.html;
-                        document.getElementById("pagination").innerHTML = result.pagination;
-                    } catch (e) {
-                        console.error("Failed to parse JSON response:", e);
-                        projectsTableBody.innerHTML = '<tr><td colspan="8" class="text-center">Error: Invalid response from server.</td></tr>';
+            
+            // Show loading spinner
+            projectsTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4"><div class="spinner"></div><p class="mt-2 text-gray-500">Loading...</p></td></tr>`;
+
+            // Use the Fetch API for a more modern approach
+            fetch(`../ajax/search_projects.php?keyword=${encodeURIComponent(keyword)}&status=${status}&page=${page}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
-                } else {
-                    projectsTableBody.innerHTML = '<tr><td colspan="8" class="text-center">Failed to fetch projects.</td></tr>';
-                }
-            };
-            xhr.send();
+                    return response.json();
+                })
+                .then(result => {
+                    projectsTableBody.innerHTML = result.html;
+                    paginationContainer.innerHTML = result.pagination;
+                })
+                .catch(error => {
+                    console.error("Failed to fetch projects:", error);
+                    projectsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-red-500">Error: Failed to fetch projects. Check your network or server.</td></tr>';
+                    paginationContainer.innerHTML = '';
+                });
         };
 
         // Handle typing and filter change
-        searchInput.addEventListener("input", () => fetchProjects(1));
-        statusFilter.addEventListener("change", () => fetchProjects(1));
+        searchInput.addEventListener("input", () => searchProjects(1));
+        statusFilter.addEventListener("change", () => searchProjects(1));
         
         // Initial load
-        fetchProjects();
+        searchProjects();
 
-        // Handle pagination link clicks
-        document.addEventListener('click', function (e) {
-            if (e.target.matches('.pagination a')) {
-                e.preventDefault();
-                const page = parseInt(e.target.getAttribute('data-page'));
-                if (!isNaN(page)) fetchProjects(page);
-            }
-        });
+
         
         // Function to delete a product using SweetAlert2
         window.deleteProject = function(projectId) {
