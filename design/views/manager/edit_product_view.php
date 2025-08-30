@@ -97,8 +97,10 @@
                     
 
                 <div class="col-12 pr-2">
+
                     <label class="form-label" for="editDescription" title="Company Comment">Company Comment:</label>
                     <textarea id="editDescription" class="form-control" name="company_cmt" rows="3"><?= htmlspecialchars($product['company_cmt']) ?></textarea>
+
                 </div>
             </div>
 
