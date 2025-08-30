@@ -22,11 +22,11 @@
                         <table class="table table-bordered table-hover mb-0 text-center table-striped">
                             <thead class="table-light position-sticky top-0" style="z-index: 1;">
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width: 3%;">#</th>
                                     <th>Username</th>
-                                    <th>Is Active</th>
-                                    <th>Ban At</th>
-                                    <th>Exp At</th>
+                                    <th style="width: 20%;">Is Active</th>
+                                    <th style="width: 20%;">Ban At</th>
+                                    <th style="width: 20%;">Exp At</th>
                                 </tr>
                             </thead>
                             <tbody>

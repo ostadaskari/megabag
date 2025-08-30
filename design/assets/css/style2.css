@@ -389,22 +389,22 @@
    }
 
 
-       /* New CSS for the red line and link color */
-    .part-number-existed {
-        border-bottom: 2px solid #dc3545;
-        display: inline-block;
-        line-height: 1; /* Aligns the border tightly under the text */
-    }
-    .edit-link {
-        color: #dc3545; /* Red color for the edit link */
-        font-weight: 500;
-        text-decoration: none;
-    }
-    .edit-link:hover {
-        text-decoration: underline;
-    }
-    .space-x-2 > * + * {
-    margin-left: 0.5rem;
+/* New CSS for the red line and link color */
+.part-number-existed {
+    border-bottom: 2px solid #dc3545;
+    display: inline-block;
+    line-height: 1; /* Aligns the border tightly under the text */
+}
+.edit-link {
+    color: #dc3545; /* Red color for the edit link */
+    font-weight: 500;
+    text-decoration: none;
+}
+.edit-link:hover {
+    text-decoration: underline;
+}
+.space-x-2 > * + * {
+margin-left: 0.5rem;
 }
 
 .w-full {
@@ -424,34 +424,6 @@
 }
 .font-medium {
     font-weight: 500;
-}
-/* Specific button colors for add and update states */
-.bg-indigo-600 {
-    background-color: #4f46e5;
-}
-
-.hover\:bg-indigo-700:hover {
-    background-color: #4338ca;
-}
-
-.focus\:ring-indigo-500:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #6366f1;
-}
-
-.bg-orange-500 {
-    background-color: #f97316;
-}
-
-.hover\:bg-orange-600:hover {
-    background-color: #ea580c;
-}
-
-.focus\:ring-orange-400:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #fb923c;
 }
 
 /* Additional utility classes */

@@ -86,7 +86,7 @@
 <?php endif; ?>
 
 
-<!-- Updated JavaScript to manage the remove button visibility -->
+
 <script>
     
     // Select all inputs that trigger suggestions
@@ -113,7 +113,7 @@
     });
 // ##################
 
-
+// <!-- Updated JavaScript to manage the remove button visibility -->
     let rowIndex = 1;
 
     // Function to update the visibility of remove buttons based on the number of rows

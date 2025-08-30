@@ -16,11 +16,11 @@
         <div class="topReg">
             <div class="bottomReg">
                 <div class="centerRegistration shadow-sm">
-                    <h2 class="h2Form">Registration in warehousing system</h2>
+                    <h2 class="h2Form">MegaBag Register Page</h2>
 
                     <?php if (!$inviteValid): ?>
                         <div class="error-message-container">
-                            <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <svg class="error-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.154 4.002v3.743c0 .878.966 1.154 1.258.106l.394-1.353a.5.5 0 0 1 1-.29l-.395 1.353c-.292 1.048-1.259 1.324-1.259.446V4.002z"/>
                             </svg>

@@ -17,7 +17,7 @@
         <div class="topLog">
             <div class="bottomLog">
                 <div class="centerLogin shadow-sm">
-                    <h2 class="h2Form">Login to warehousing system</h2>
+                    <h2 class="h2Form">MegaBag Login Page</h2>
                     <form id="loginForm" class="form-section" method="POST" action="login.php">
                         <div class="w-100 divInput">
                             <svg width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
