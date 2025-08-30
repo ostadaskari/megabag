@@ -8,7 +8,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, (int)($_GET['page'] ?? 1));
-$limit = 17;
+$limit = 14;
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -90,7 +90,14 @@ while ($row = $res->fetch_assoc()) {
 
         <td>" . htmlspecialchars($row['issued_by']) . "</td>
         <td>" . htmlspecialchars($row['issued_to']) . "</td>
-        <td>". date('Y/n/d ,G:i',strtotime($row['created_at'])) ."</td>
+        <td>
+            <div title=\"" . date('Y/n/d ,G:i',strtotime($row['created_at'])) ."\">
+                <svg width=\"24\" height=\"24\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
+                    <path d=\"M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z\"></path>
+                    <path d=\"M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0\"></path>
+                </svg>
+             </div>
+        </td>
         <td><span{$tooltip}>{$short}</span></td>
     </tr>";
     $i++;

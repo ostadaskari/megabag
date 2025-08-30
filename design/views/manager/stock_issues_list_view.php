@@ -89,15 +89,15 @@
                 <table class="table table-bordered table-striped table-hover mb-0 text-center" style="min-width: 800px;">
                     <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                         <tr>
-                            <th>#</th>
+                            <th style="width: 3%">#</th>
                             <th>P/N</th>
                             <th>MFG</th>
                             <th>Tag</th>
 
                             <th>Qty</th>
-                            <th>Issued By</th>
-                            <th>Issued To</th>
-                            <th>Date</th>
+                            <th style="width: 12%;">Issued By</th>
+                            <th style="width: 12%;">Issued To</th>
+                            <th style="width:7%">Date</th>
                             <th style="width: 10%;">Comment</th>
                         </tr>
                     </thead>
