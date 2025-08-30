@@ -75,7 +75,7 @@ while ($row = $result->fetch_assoc()) {
          <td>" . htmlspecialchars($row['mfg']) . "</td>
         <td>" . htmlspecialchars($row['tag']) . "</td>
         <td>{$row['qty_received']}</td>
-        <td>" . htmlspecialchars($row['product_name']) . "</td>
+
         <td>" . htmlspecialchars($row['nickname']) . "</td>
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>
         <td>

@@ -96,7 +96,7 @@
                                 <th>MFR</th>                          
                                 <th>Tag</th>
                                 <th>QTY</th>
-                                <th style="width: 15%;">P-Name</th>
+
                                 <th style="width: 15%;">User</th>
                                 <th style="width: 15%;">Comment</th>
                                 <th style="width: 6%;" >Date</th>

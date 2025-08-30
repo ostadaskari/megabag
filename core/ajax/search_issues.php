@@ -85,7 +85,7 @@ while ($row = $res->fetch_assoc()) {
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
         <td>" . htmlspecialchars($row['tag']) . "</td>
-        <td>" . htmlspecialchars($row['prod_name']) . "</td>
+
         <td>{$row['qty_issued']}</td>
 
         <td>" . htmlspecialchars($row['issued_by']) . "</td>

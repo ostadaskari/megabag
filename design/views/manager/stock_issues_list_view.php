@@ -93,7 +93,7 @@
                             <th>P/N</th>
                             <th>MFG</th>
                             <th>Tag</th>
-                            <th>P-Name</th>
+
                             <th>Qty</th>
                             <th style="width: 12%;">Issued By</th>
                             <th style="width: 12%;">Issued To</th>

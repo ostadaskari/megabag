@@ -62,7 +62,7 @@ $html = "";
 $count = $offset + 1;
 while ($row = $result->fetch_assoc()) {
     // We've added an onclick event to the row to open the modal
-    $html .= "<tr data-id=\"{$row['id']}\" onclick=\"openModalForProduct({$row['id']})\">
+    $html .= "<tr data-id=\"{$row['id']}\" >
         <td>{$count}</td>
          <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>

@@ -75,6 +75,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
     exit;
 }
 
-
-
 require_once '../../design/views/manager/products_list_view.php';
