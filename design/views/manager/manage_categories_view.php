@@ -108,7 +108,7 @@
                                               <path d='M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z'/>
                                             </svg>
                                           </span>";       
-                                  echo htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'>(ID: " . $cat['id'] . ")</span>";
+                                  echo htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'></span>";
                                   echo "</span>";
                   
                                   
@@ -129,7 +129,7 @@
                               } else {
                                   
                                   echo "<li class='d-flex align-items-center'>";
-                                  echo "<i class='fa fa-file me-2'></i> " . htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'>(ID: " . $cat['id'] . ")</span>";
+                                  echo "<i class='fa fa-file me-2'></i> " . htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'></span>";
                                   echo "<span class='d-flex align-items-center ms-2'>";
                                   echo "<button type='button' class='action-icon btnSvg me-1' onclick=\"editCategory(" . $cat['id'] . ", '" . addslashes($cat['name']) . "', " . ($cat['parent_id'] ?? 'null') . ")\">";
                                   echo '<svg width="16" height="16" fill="#0780c7ff" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>';

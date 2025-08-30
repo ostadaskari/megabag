@@ -93,7 +93,7 @@
                             <th>P/N</th>
                             <th>MFG</th>
                             <th>Tag</th>
-                            <th>P-Name</th>
+
                             <th>Qty</th>
                             <th>Issued By</th>
                             <th>Issued To</th>
@@ -111,23 +111,7 @@
     <div id="pagination" class="my-2"></div>
 </div>
 
-<!-- Modal for displaying comment -->
-<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="commentModalLabel">Comment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="commentText"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
 // Function to fetch and display stock issues

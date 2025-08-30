@@ -1,6 +1,6 @@
 <?php
 // get_product_details.php
-// This file fetches and returns a single product's details and associated images and PDFs as a JSON object.
+// This file fetches and returns a single product's details and associated images, PDFs, and features as a JSON object.
 // It includes robust error handling to prevent non-JSON output on failure.
 
 header('Content-Type: application/json');
@@ -15,7 +15,8 @@ $response = [
     'message' => 'An unexpected error occurred.',
     'product' => null,
     'images' => [],
-    'pdfs' => []
+    'pdfs' => [],
+    'features' => [] // Added a new key for features
 ];
 
 try {
@@ -90,6 +91,29 @@ try {
                 $response['pdfs'][] = $pdf;
             }
             $pdfs_stmt->close();
+
+            // This query joins the product_feature_values table with the features table
+            // to get the feature name, value, and unit for a specific product.
+            $features_query = "SELECT 
+                                f.name, 
+                                pfv.value, 
+                                pfv.unit
+                            FROM product_feature_values pfv
+                            JOIN features f ON pfv.feature_id = f.id
+                            WHERE pfv.product_id = ?";
+
+            $features_stmt = $conn->prepare($features_query);
+            if (!$features_stmt) {
+                throw new Exception("Failed to prepare features query: " . $conn->error);
+            }
+            $features_stmt->bind_param("i", $productId);
+            $features_stmt->execute();
+            $features_result = $features_stmt->get_result();
+            
+            while ($feature = $features_result->fetch_assoc()) {
+                $response['features'][] = $feature;
+            }
+            $features_stmt->close();
 
         } else {
             $response['message'] = 'Product not found.';

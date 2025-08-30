@@ -86,10 +86,11 @@
                 </div>
                 
                 <div class="col-12 col-md-2 px-2 my-2">
-                        <label class="form-label" for="statusSelector">
+                        <label class="form-label" for="status">
                             Status:
                         </label>
-                        <select id="" name="statusSelector" class="form-select">
+                        <select id="" name="status" class="form-select" >
+                            <option value="<?= htmlspecialchars($product['status']) ?>"><?= htmlspecialchars($product['status']) ?></option>
                             <option value="Available">Available</option>
                             <option value="UnAvailable">UnAvailable</option>
                         </select>

@@ -107,7 +107,7 @@
             const payload = {
                 "SearchByKeywordRequest": {
                     "keyword": keyword,
-                    "records": 10, // Fetch more records for a better example
+                    "records": 50, // Fetch more records for a better example
                     "startingRecord": 0
                 }
             };
