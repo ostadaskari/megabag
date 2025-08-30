@@ -66,9 +66,9 @@
 
     <!-- Pagination -->
     <div class="row my-2">
-    <div class="col-12 d-flex justify-content-center">
-        <div id="pagination" class="pagination-container"></div>
-    </div>
+        <div class="col-12 d-flex justify-content-center">
+            <div id="pagination" class="pagination-container"></div>
+        </div>
     </div>
 </div>
 </div>
@@ -166,14 +166,14 @@
                         // NEW: Build the HTML for the features list, including value and unit
                         let featuresListHtml = 'N/A';
                         if (features && features.length > 0) {
-                            featuresListHtml = `<ul class="list-unstyled mb-0">`;
+                            featuresListHtml = ``;
                             features.forEach(feature => {
                                 // Updated line to include unit if it exists
-                                featuresListHtml += `<li><strong>-</strong> ${feature.name}: ${feature.value}${feature.unit ? ' ' + feature.unit : ''}</li>`;
+                                featuresListHtml += `<div class="col-6 my-2"><strong>${feature.name}:</strong>  ${feature.value}${feature.unit ? ' ' + feature.unit : ''}</div>`;
                             });
-                            featuresListHtml += `</ul>`;
+                           
                         }
-                        
+                      
                         productDetailsContent.innerHTML = `
                             <div class="row">
                                 <div class="col-12 col-md-8">
@@ -230,16 +230,14 @@
                                                 <div class="flex-grow-1 ms-2 border-bottom"></div>
                                             </div>
 
-                                                                                    
-                                            <div class="col-6 my-2">
-                                                <strong>For example:</strong> ${product.updated_at}
-                                            </div>
+                                              ${featuresListHtml}                                       
+                                            
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="d-flex flex-column align-items-end">
-                                        <div class="imgCover mb-2">
+                                        <div class="imgCover mb-2" id="el">
                                             <img src="${mainImageSrc}" class="img-fluid w-100">
                                         </div>
                                         <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
@@ -250,15 +248,6 @@
                                 
                             </div>
 
-
-                            <!-- NEW: Row for Features -->
-                            <div class="row my-2">
-                                <div class="col-12">
-                                    <h5 class="mb-1"><strong>Features:</strong></h5>
-                                    
-                                </div>
-                            </div>
-                            <!-- END NEW -->
 
                             <div class="row modal-header">
                                 <div class="col-12 my-2 d-flex flex-row">
@@ -285,6 +274,7 @@
                     // This will catch network errors or parsing errors if the server still returns invalid data
                     productDetailsContent.innerHTML = `<p style="color: red;">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
                 });
+                
         };
 
         // Event delegation for table row clicks
@@ -374,4 +364,60 @@
             window.location.href = "../auth/dashboard.php?page=edit_product&id=" + productId;
         };
     });
+</script>
+
+<!-- script for zoomy -->
+ <script>
+    (function ($) {
+    $.fn.zoomy = function(urls, options) {
+        if(!urls) return;
+        if(typeof urls === 'string') urls = [urls];
+        if(!this.hasClass('zoom')) this.addClass('zoom');
+        //OPTIONS
+        if(!options) options = {};
+        if(urls.length<2) options.thumbHide=1;
+        if(options.height || options.width) {
+            var st = (options.height) ? 'height:'+options.height+'px;' : '';
+            if(options.width) st+='width:'+options.width+'px;';
+            this.attr('style',st);
+        }
+        if(options.thumbRight || options.thumbLeft) this.addClass('zoom-right');
+        if(options.thumbLeft) this.addClass('zoom-left');
+        //REND
+        var thumbMode = (typeof urls[0] === 'string') ? 0 : 1;
+        var firstImage = (thumbMode) ? urls[0].image : urls[0];
+        var h = '<div class="zoom-main"><span class="zoom-mousemove" style="background-image: url('+firstImage+')">';
+        h+='<img src="'+firstImage+'" /></span></div>';
+        //THUMBS
+        if(!options.thumbHide) {
+            h+="<div class='zoom-thumb'>";
+            $.each(urls,function(i,url){
+                var image  = (thumbMode) ? url.image : url;
+                var thumb  = (thumbMode) ? url.thumb : url;
+                h+="<a class='zoom-click' data-url='"+image+"' data-index='"+i+"'><img src='"+thumb+"' /></a>";
+            });
+            h+="</div>";
+        }
+        if(options.thumbHide) this.addClass('zoom-thumb-hide');
+        this.html(h);
+        this.find('.zoom-mousemove').on('mousemove',function(e){
+            var zoomer = e.currentTarget;
+            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+            x = offsetX/zoomer.offsetWidth*100
+            y = offsetY/zoomer.offsetHeight*100
+            zoomer.style.backgroundPosition = x + '% ' + y + '%';
+        });
+        var event = (options.thumbHover) ? 'mouseover' : 'click';
+        this.find('.zoom-click').on(event,function(){
+            var main = $(this).parent().parent().find('.zoom-main > span')
+            $(main).attr('style',"background-image: url("+$(this).attr('data-url')+")");
+            $(main).find('img').attr('src',$(this).attr('data-url'));
+        });
+    };
+}(jQuery));
+
+
+
+ $('#el').zoomy(urls,options);
 </script>
