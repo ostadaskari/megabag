@@ -431,3 +431,15 @@ margin-left: 0.5rem;
     color: #6b7280;
 }
 
+.img-magnifier-glass {
+  position: absolute;
+  border: 1px solid #000;
+  border-radius: 50%;
+  cursor: none;
+  width: 100px;
+  height: 100px;
+  z-index: 9999;
+}
+.imgCover {
+  position: relative;
+}

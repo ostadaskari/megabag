@@ -237,7 +237,7 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="d-flex flex-column align-items-end">
-                                        <div class="imgCover mb-2" id="el">
+                                        <div class="imgCover mb-2" id="product-images">
                                             <img src="${mainImageSrc}" class="img-fluid w-100">
                                         </div>
                                         <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
@@ -256,7 +256,29 @@
                                 </div>
                             </div>
                         `;
+                        //################### for zoomy #################
+                            // Activate magnifier on the main image after it is added to the DOM
+                            const mainImageInModal = document.querySelector('#product-images img');
+                            if (mainImageInModal) {
+                                magnify(mainImageInModal, 2);
+                            }
 
+                            // Also, when a thumbnail is clicked, the main image changes
+                            document.querySelectorAll('.itemfile span img').forEach(img => {
+                                img.addEventListener('click', () => {
+                                    const mainImg = document.querySelector('.imgCover img');
+                                    mainImg.src = img.src;
+
+                                    // Remove the previous magnifier
+                                    const oldGlass = document.querySelector('.img-magnifier-glass');
+                                    if (oldGlass) oldGlass.remove();
+
+                                    // Activate magnifier again on the new main image
+                                    magnify(mainImg, 2);
+                                });
+                            });
+
+                        //################### for zoomy #################
                         // Add event listener for image thumbnails
                         document.querySelectorAll('.itemfile span img').forEach(img => {
                             img.addEventListener('click', () => {
@@ -366,58 +388,58 @@
     });
 </script>
 
-<!-- script for zoomy -->
- <script>
-    (function ($) {
-    $.fn.zoomy = function(urls, options) {
-        if(!urls) return;
-        if(typeof urls === 'string') urls = [urls];
-        if(!this.hasClass('zoom')) this.addClass('zoom');
-        //OPTIONS
-        if(!options) options = {};
-        if(urls.length<2) options.thumbHide=1;
-        if(options.height || options.width) {
-            var st = (options.height) ? 'height:'+options.height+'px;' : '';
-            if(options.width) st+='width:'+options.width+'px;';
-            this.attr('style',st);
-        }
-        if(options.thumbRight || options.thumbLeft) this.addClass('zoom-right');
-        if(options.thumbLeft) this.addClass('zoom-left');
-        //REND
-        var thumbMode = (typeof urls[0] === 'string') ? 0 : 1;
-        var firstImage = (thumbMode) ? urls[0].image : urls[0];
-        var h = '<div class="zoom-main"><span class="zoom-mousemove" style="background-image: url('+firstImage+')">';
-        h+='<img src="'+firstImage+'" /></span></div>';
-        //THUMBS
-        if(!options.thumbHide) {
-            h+="<div class='zoom-thumb'>";
-            $.each(urls,function(i,url){
-                var image  = (thumbMode) ? url.image : url;
-                var thumb  = (thumbMode) ? url.thumb : url;
-                h+="<a class='zoom-click' data-url='"+image+"' data-index='"+i+"'><img src='"+thumb+"' /></a>";
-            });
-            h+="</div>";
-        }
-        if(options.thumbHide) this.addClass('zoom-thumb-hide');
-        this.html(h);
-        this.find('.zoom-mousemove').on('mousemove',function(e){
-            var zoomer = e.currentTarget;
-            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-            x = offsetX/zoomer.offsetWidth*100
-            y = offsetY/zoomer.offsetHeight*100
-            zoomer.style.backgroundPosition = x + '% ' + y + '%';
-        });
-        var event = (options.thumbHover) ? 'mouseover' : 'click';
-        this.find('.zoom-click').on(event,function(){
-            var main = $(this).parent().parent().find('.zoom-main > span')
-            $(main).attr('style',"background-image: url("+$(this).attr('data-url')+")");
-            $(main).find('img').attr('src',$(this).attr('data-url'));
-        });
-    };
-}(jQuery));
 
 
+<script>
+function magnify(img, zoom) {
+  let glass = document.createElement("DIV");
+  glass.setAttribute("class", "img-magnifier-glass");
+  glass.style.display = "none"; // initially hidden
 
- $('#el').zoomy(urls,options);
+  img.parentElement.insertBefore(glass, img);
+
+  glass.style.backgroundImage = `url('${img.src}')`;
+  glass.style.backgroundRepeat = "no-repeat";
+  glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+
+  let bw = 3, w = glass.offsetWidth / 2, h = glass.offsetHeight / 2;
+
+  // show magnifier on mouse enter
+  img.addEventListener("mouseenter", () => {
+    glass.style.display = "block";
+  });
+
+  // hide magnifier on mouse leave
+  img.addEventListener("mouseleave", () => {
+    glass.style.display = "none";
+  });
+
+  glass.addEventListener("mousemove", moveMagnifier);
+  img.addEventListener("mousemove", moveMagnifier);
+  glass.addEventListener("touchmove", moveMagnifier);
+  img.addEventListener("touchmove", moveMagnifier);
+
+  function moveMagnifier(e) {
+    e.preventDefault();
+    let pos = getCursorPos(e);
+    let x = pos.x, y = pos.y;
+
+    if (x > img.width - (w / zoom)) x = img.width - (w / zoom);
+    if (x < w / zoom) x = w / zoom;
+    if (y > img.height - (h / zoom)) y = img.height - (h / zoom);
+    if (y < h / zoom) y = h / zoom;
+
+    glass.style.left = (x - w) + "px";
+    glass.style.top = (y - h) + "px";
+    glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
+  }
+
+  function getCursorPos(e) {
+    let a = img.getBoundingClientRect();
+    let x = e.pageX - a.left - window.pageXOffset;
+    let y = e.pageY - a.top - window.pageYOffset;
+    return {x, y};
+  }
+}
+
 </script>
