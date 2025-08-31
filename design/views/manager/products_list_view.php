@@ -391,55 +391,74 @@
 
 
 <script>
-function magnify(img, zoom) {
-  let glass = document.createElement("DIV");
-  glass.setAttribute("class", "img-magnifier-glass");
-  glass.style.display = "none"; // initially hidden
+    function magnify(img, zoom) {
+    // Create magnifier glass
+    let glass = document.createElement("div");
+    glass.className = "img-magnifier-glass";
+    glass.style.display = "none";      // Initially hidden
+    glass.style.opacity = "0";         // Fade effect
 
-  img.parentElement.insertBefore(glass, img);
+    // Insert glass
+    img.parentElement.insertBefore(glass, img);
 
-  glass.style.backgroundImage = `url('${img.src}')`;
-  glass.style.backgroundRepeat = "no-repeat";
-  glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+    // Glass background
+    glass.style.backgroundImage = `url('${img.src}')`;
+    glass.style.backgroundRepeat = "no-repeat";
+    glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
 
-  let bw = 3, w = glass.offsetWidth / 2, h = glass.offsetHeight / 2;
+    let bw = 3;             // border width
+    let w = glass.offsetWidth / 2;
+    let h = glass.offsetHeight / 2;
 
-  // show magnifier on mouse enter
-  img.addEventListener("mouseenter", () => {
-    glass.style.display = "block";
-  });
+    // Mouse enter: show glass with fade
+    img.addEventListener("mouseenter", () => {
+        glass.style.display = "block";
+        glass.style.transition = "opacity 0.3s";
+        glass.style.opacity = "1";
+        img.style.cursor = "none";  // hide cursor
+    });
 
-  // hide magnifier on mouse leave
-  img.addEventListener("mouseleave", () => {
-    glass.style.display = "none";
-  });
+    // Mouse leave: hide glass with fade
+    img.addEventListener("mouseleave", () => {
+        glass.style.opacity = "0";
+        img.style.cursor = "default"; 
+        setTimeout(() => { glass.style.display = "none"; }, 300); // wait for fade
+    });
 
-  glass.addEventListener("mousemove", moveMagnifier);
-  img.addEventListener("mousemove", moveMagnifier);
-  glass.addEventListener("touchmove", moveMagnifier);
-  img.addEventListener("touchmove", moveMagnifier);
+    // Move magnifier
+    glass.addEventListener("mousemove", moveMagnifier);
+    img.addEventListener("mousemove", moveMagnifier);
+    glass.addEventListener("touchmove", moveMagnifier);
+    img.addEventListener("touchmove", moveMagnifier);
 
-  function moveMagnifier(e) {
-    e.preventDefault();
-    let pos = getCursorPos(e);
-    let x = pos.x, y = pos.y;
+    function moveMagnifier(e) {
+        e.preventDefault();
+        let pos = getCursorPos(e);
+        let x = pos.x;
+        let y = pos.y;
 
-    if (x > img.width - (w / zoom)) x = img.width - (w / zoom);
-    if (x < w / zoom) x = w / zoom;
-    if (y > img.height - (h / zoom)) y = img.height - (h / zoom);
-    if (y < h / zoom) y = h / zoom;
+        // Limit x/y so the magnifier stays fully inside the image
+        x = Math.max(w / zoom, Math.min(img.width - w / zoom, x));
+        y = Math.max(h / zoom, Math.min(img.height - h / zoom, y));
 
-    glass.style.left = (x - w) + "px";
-    glass.style.top = (y - h) + "px";
-    glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
-  }
+        glass.style.left = (x - w) + "px";
+        glass.style.top = (y - h) + "px";
+        glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
+    }
 
-  function getCursorPos(e) {
-    let a = img.getBoundingClientRect();
-    let x = e.pageX - a.left - window.pageXOffset;
-    let y = e.pageY - a.top - window.pageYOffset;
-    return {x, y};
-  }
+    function getCursorPos(e) {
+        let a = img.getBoundingClientRect();
+        let x = e.pageX - a.left - window.pageXOffset;
+        let y = e.pageY - a.top - window.pageYOffset;
+        return {x, y};
+    }
 }
+
+// Activate magnifier on main image
+document.addEventListener("DOMContentLoaded", function() {
+    const mainImage = document.querySelector('#product-images img');
+    if (mainImage) magnify(mainImage, 3);
+});
+
 
 </script>

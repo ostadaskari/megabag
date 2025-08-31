@@ -1373,6 +1373,7 @@ fill:var(--main-text-color);
   z-index: 1000;
   background-color: #fff;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
