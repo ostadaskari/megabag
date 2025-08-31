@@ -76,12 +76,12 @@
 <!-- modal for show details -->
 <div id="modalOverlay" class="modal-overlay"></div>
 
-<div id="productDetailsModal" class="container bg-light border rounded shadow-sm mb-4 modalDetails" style="display: none;">
-    <div class="mb-2 modal-header d-flex justify-content-between align-items-center" style="padding: 8px 16px;">
-        <div class="d-flex align-items-center ">
-            <svg width="20" height="20" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
-            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/>
-            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5z"/>
+<div id="productDetailsModal" class="container bg-light border rounded shadow-sm modalDetails p-2" style="display: none;">
+    <div class="mb-2 modal-header d-flex justify-content-between align-items-center" style="padding: 8px 0px;">
+        <div class="d-flex align-items-center">
+            <svg width="24" height="24" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
+                <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/>
+                <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5z"/>
             </svg>
             <h3 class="mx-2 pb-1">Part Details</h3>
         </div>
@@ -90,7 +90,7 @@
         </svg>
     </div>
 
-    <div id="productDetailsContent">
+    <div id="productDetailsContent" class="px-1">
         <!-- Dynamic content will be loaded here -->
     </div>
 </div>
@@ -176,7 +176,7 @@
                         productDetailsContent.innerHTML = `
                             <div class="row">
                                 <div class="col-12 col-md-8">
-                                    <div class="container">
+                                    <div class="container px-0">
                                         <div class="row">
                                             <div class="col-6 my-1">
                                                 <strong>P/N:</strong> ${product.part_number}
@@ -205,7 +205,6 @@
                                             <div class="col-6 my-2">
                                                 <strong>Recieve Code:</strong> ${product.recieve_code}
                                             </div>
-
                                             <div class="col-6 my-2">
                                                 <strong>Created_At:</strong> ${product.created_at}
                                             </div>
@@ -216,6 +215,21 @@
                                                 <strong>Description:</strong> ${product.company_cmt}
                                             </div>
                                         
+                                        </div>
+                                        <div class="row my-2 mr-3 px-0 py-1">
+                                            <div class="col-12 d-flex flex-row align-items-center mb-2">
+                                                <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
+                                                </svg> 
+                                                <h3 class="pl-1 mb-0">Specifications :</h3>
+                                                <div class="flex-grow-1 ms-2 border-bottom"></div>
+                                            </div>
+
+                                                                                    
+                                            <div class="col-6 my-2">
+                                                <strong>For example:</strong> ${product.updated_at}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -232,11 +246,12 @@
                                 
                             </div>
 
+
                             <!-- NEW: Row for Features -->
                             <div class="row my-2">
                                 <div class="col-12">
                                     <h5 class="mb-1"><strong>Features:</strong></h5>
-                                    ${featuresListHtml}
+                                    
                                 </div>
                             </div>
                             <!-- END NEW -->

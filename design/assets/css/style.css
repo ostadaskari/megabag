@@ -193,7 +193,7 @@ table {
     .userNameTop{
       width: 89%;
       height:60px;
-      margin: 8px auto;
+      margin: 4px auto;
       font-size: 14px;
       border-radius:8px;
       display: flex;
@@ -226,7 +226,7 @@ table {
           var(--main-bg0-color) 100%   
       ) !important;
   }
-  
+   
     .sidebar-Mobile {
         width: 215px !important;
         min-height: 100%!important;
@@ -248,16 +248,19 @@ table {
     padding: 10px 0px!important;
     }
     .sidebar a {
-    font-size:16px;
-    text-decoration: none;
-    color:var(--main-text-color);   
-    margin-bottom: 10px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: 0.3s ease-in-out;
-    }
+      font-size: clamp(10px, 1.2vw, 16px); 
+      text-decoration: none;
+      color: var(--main-text-color);   
+      margin-bottom: clamp(4px, 0.8vh, 10px); 
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: clamp(5px, 1vw, 10px);   
+      padding: clamp(3px, 0.8vh, 6px) clamp(5px, 1vw, 10px);
+      transition: 0.3s ease-in-out;
+  }
+  
+ 
    .sidebar-Mobile .submenu {
     position: absolute;
     top: 10px;
@@ -1355,19 +1358,31 @@ fill:var(--main-text-color);
 }
 
 .modalDetails {
-  position:absolute;
-  top: 47vh;
-  left: 50%;
+  position: fixed;              
+  top: 50%;
+  left:55.5%;
   transform: translate(-50%, -50%);
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.5);
-  width: 90%;
-  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+  width: 95%;
+  max-width: 1050px;
+  max-height: 90vh;
+  padding: 20px;
   color: rgb(8, 55, 126);
   display: none;
   z-index: 1000;
   background-color: #fff;
+  overflow-y: auto;
 }
+
+
+@media (min-width: 1024px) {
+.modalDetails {
+  top: 40px;                    
+  transform: translateX(-50%);   
+}
+}
+
 #closeModal{
   fill: rgb(12, 6, 6);
   cursor:pointer;
@@ -1377,10 +1392,13 @@ fill:var(--main-text-color);
   cursor:pointer;
 }
 .modalDetails strong,
-.modalDetails label,
+.modalDetails label{
+  color:rgb(13, 13, 14);
+  font-size: 14px;
+}
 .modalDetails h3 {
   color:rgb(13, 13, 14);
-  font-size: 15px;
+  font-size: 16px;
 }
 /*  */
 .hoverSvg:hover{

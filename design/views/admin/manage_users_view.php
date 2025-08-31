@@ -70,7 +70,7 @@
                                 </select>
                             </td>
                             <td>
-                                <button onclick="toggleBlock(${user.id}, ${user.is_blocked})" class="btn btn-sm ${user.is_blocked ? 'btn-danger' : 'btn-success'}">
+                                <button onclick="toggleBlock(${user.id}, ${user.is_blocked})" class="btn btn-sm ${user.is_blocked ? 'btn-danger' : 'btn-success'} p-2">
                                     ${user.is_blocked ? 'Unblock' : 'Block'}
                                 </button>
                             </td>
@@ -129,7 +129,7 @@
 
                     document.getElementById('userTableContainer').innerHTML = `
                         <table class="table table-bordered table-striped table-hover mb-0 text-center">
-                            <thead><tr><th>#</th><th>Name</th><th>Family</th><th>Nickname</th><th style="width: 200px;">Email</th><th style="width: 120px;">Role</th><th style="width: 120px;">Action</th></tr></thead>
+                            <thead><tr><th style="width:4%;">#</th><th>Name</th><th>Family</th><th>Nickname</th><th style="width:20%;">Email</th><th style="width: 12%;">Role</th><th style="width:9%;">Action</th></tr></thead>
                             <tbody>${rows}</tbody>
                         </table>
                     `;

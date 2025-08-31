@@ -1,7 +1,7 @@
 <?php
 $role = $_SESSION['role'] ?? 'guest';
 ?>
-        <div class="col-1 d-none d-md-flex sidebar flex-column position-relative pt-2">
+        <div class="col-1 d-none d-md-flex sidebar flex-column position-relative">
            <div class="userNameTop">
             <svg width="50" height="50" fill="var(--main-bg1-color)" class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -52,7 +52,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 <ul class="submenu list-unstyled">
 
                   <li><a href="?page=create_product" >Define a New Part</a></li>
-                  <li><a href="?page=products_list" >Part List</a></li>  
+                  <li><a href="?page=products_list" >Parts List</a></li>  
                 </ul>
               </li>
               <!-- Projects -->
@@ -67,7 +67,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
                 <ul class="submenu list-unstyled">
                   <li><a href="?page=create_project">Define a New project</a></li>
-                  <li><a href="?page=projects_list">Project List</a></li>  
+                  <li><a href="?page=projects_list">Projects List</a></li>  
                 </ul>
               </li>
             <!-- Add feature to category -->
