@@ -43,10 +43,9 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">P/N</th>
-                    <th scope="col">MFR</th>
+                    <th scope="col">MFG</th>
                     <th scope="col">Tag</th>
                     <th scope="col">Qty</th>
-                    <th scope="col">Name</th>
                     <th scope="col">Submitter</th>
                     <th scope="col">Category</th>
                     <th scope="col">Location</th>
@@ -169,7 +168,7 @@
                             featuresListHtml = `<ul class="list-unstyled mb-0">`;
                             features.forEach(feature => {
                                 // Updated line to include unit if it exists
-                                featuresListHtml += `<li><strong>-</strong> ${feature.name}: ${feature.value}${feature.unit ? ' ' + feature.unit : ''}</li>`;
+                                featuresListHtml += `<li><strong>${feature.name}</strong> : ${feature.value}${feature.unit ? ' ' + feature.unit : ''}</li>`;
                             });
                             featuresListHtml += `</ul>`;
                         }
@@ -179,9 +178,6 @@
                                 <div class="col-12 col-md-8">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-6 my-2">
-                                                <strong>Name:</strong> ${product.name}
-                                            </div>
                                             <div class="col-6 my-1">
                                                 <strong>P/N:</strong> ${product.part_number}
                                             </div>

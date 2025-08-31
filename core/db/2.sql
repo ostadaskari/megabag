@@ -83,32 +83,20 @@ CREATE TABLE products (
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
--- New Table: suppliers
-CREATE TABLE suppliers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    contact_person VARCHAR(255),
-    phone VARCHAR(50),
-    email VARCHAR(100),
-    address TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
 
--- New Table: product_lots
+
 -- This table tracks individual batches (packs) of products with unique purchase codes and tags.
--- This is the core solution to your problem.
 CREATE TABLE product_lots (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,                  -- Links to the general product
-    purchase_code VARCHAR(70) NOT NULL,       -- The specific purchase code
-    tag VARCHAR(100) NOT NULL UNIQUE,         -- The unique tag for the physical pack
-    supplier_id INT,                          -- New foreign key to track the supplier
+    purchase_code VARCHAR(40) NOT NULL,       -- The specific purchase code
+    x_code VARCHAR(70) NOT NULL UNIQUE,      -- The unique x_code for the physical pack
     qty_received INT UNSIGNED DEFAULT 0,      -- The original quantity in this lot
     qty_available INT UNSIGNED DEFAULT 0,     -- The current quantity left in this lot
-    location VARCHAR(100),                    -- The specific location of this pack
+    location VARCHAR(40),                    -- The specific location of this pack
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE SET NULL
 );
 
 -- Images Table
