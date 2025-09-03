@@ -65,9 +65,9 @@
 
     <!-- Pagination -->
     <div class="row my-2">
-    <div class="col-12 d-flex justify-content-center">
-        <div id="pagination" class="pagination-container"></div>
-    </div>
+        <div class="col-12 d-flex justify-content-center">
+            <div id="pagination" class="pagination-container"></div>
+        </div>
     </div>
 </div>
 </div>
@@ -162,6 +162,7 @@
                                 });
                             }
 
+
                             // Build the HTML for the features list
                             let featuresListHtml = 'N/A';
                             if (features && features.length > 0) {
@@ -179,9 +180,11 @@
                                     else if (Array.isArray(feature.value)) {
                                         // Option A: Simple comma-separated list
                                         // featureDisplayValue = feature.value.join(', ');
+
                                         
                                         // Option B: Nicer looking badges (requires Bootstrap)
                                         featureDisplayValue = feature.value.map(val => `<span class="badge bg-secondary mx-1">${val}</span>`).join(' ');
+
 
                                     } 
                                     // 3. Handle all other types (string, number, etc.)
@@ -259,34 +262,64 @@
                                             <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
                                                 ${imageListHtml}
                                             </ul>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row modal-header">
-                                    <div class="col-12 my-2 d-flex flex-row">
-                                        <svg width="20" height="20" fill="#d42222" class="bi bi-filetype-pdf" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/></svg>
-                                        <p class="mx-2"><strong>Datasheet:</strong> ${pdfListHtml} </p>
-                                    </div>
-                                </div>
-                            `;
 
-                            // Add event listener for image thumbnails
+                                
+                            </div>
+
+
+                            <div class="row modal-header">
+                                <div class="col-12 my-2 d-flex flex-row">
+                                    <svg width="20" height="20" fill="#d42222" class="bi bi-filetype-pdf" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/></svg>
+                                    <p class="mx-2"><strong>Datasheet:</strong> ${pdfListHtml} </p>
+                                </div>
+                            </div>
+                        `;
+                        //################### for zoomy #################
+                            // Activate magnifier on the main image after it is added to the DOM
+                            const mainImageInModal = document.querySelector('#product-images img');
+                            if (mainImageInModal) {
+                                magnify(mainImageInModal, 2);
+                            }
+
+                            // Also, when a thumbnail is clicked, the main image changes
                             document.querySelectorAll('.itemfile span img').forEach(img => {
                                 img.addEventListener('click', () => {
-                                    document.querySelector('.imgCover img').src = img.src;
+                                    const mainImg = document.querySelector('.imgCover img');
+                                    mainImg.src = img.src;
+
+                                    // Remove the previous magnifier
+                                    const oldGlass = document.querySelector('.img-magnifier-glass');
+                                    if (oldGlass) oldGlass.remove();
+
+                                    // Activate magnifier again on the new main image
+                                    magnify(mainImg, 2);
                                 });
                             });
-                            
-                        } else {
-                            // Display the server-side error message to the user
-                            productDetailsContent.innerHTML = `<p style="color: red;">Error: ${data.message}</p>`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching product details:', error);
-                        // This will catch network errors or parsing errors if the server still returns invalid data
-                        productDetailsContent.innerHTML = `<p style="color: red;">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
-                    });
+
+                        //################### for zoomy #################
+                        // Add event listener for image thumbnails
+                        document.querySelectorAll('.itemfile span img').forEach(img => {
+                            img.addEventListener('click', () => {
+                                document.querySelector('.imgCover img').src = img.src;
+                            });
+                        });
+                        
+                    } else {
+                        // Display the server-side error message to the user
+                        productDetailsContent.innerHTML = `<p style="color: red;">Error: ${data.message}</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching product details:', error);
+                    // This will catch network errors or parsing errors if the server still returns invalid data
+                    productDetailsContent.innerHTML = `<p style="color: red;">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
+                });
+                
+
         };
 
 
@@ -377,4 +410,60 @@
             window.location.href = "../auth/dashboard.php?page=edit_product&id=" + productId;
         };
     });
+</script>
+
+
+
+<script>
+function magnify(img, zoom) {
+  let glass = document.createElement("DIV");
+  glass.setAttribute("class", "img-magnifier-glass");
+  glass.style.display = "none"; // initially hidden
+
+  img.parentElement.insertBefore(glass, img);
+
+  glass.style.backgroundImage = `url('${img.src}')`;
+  glass.style.backgroundRepeat = "no-repeat";
+  glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+
+  let bw = 3, w = glass.offsetWidth / 2, h = glass.offsetHeight / 2;
+
+  // show magnifier on mouse enter
+  img.addEventListener("mouseenter", () => {
+    glass.style.display = "block";
+  });
+
+  // hide magnifier on mouse leave
+  img.addEventListener("mouseleave", () => {
+    glass.style.display = "none";
+  });
+
+  glass.addEventListener("mousemove", moveMagnifier);
+  img.addEventListener("mousemove", moveMagnifier);
+  glass.addEventListener("touchmove", moveMagnifier);
+  img.addEventListener("touchmove", moveMagnifier);
+
+  function moveMagnifier(e) {
+    e.preventDefault();
+    let pos = getCursorPos(e);
+    let x = pos.x, y = pos.y;
+
+    if (x > img.width - (w / zoom)) x = img.width - (w / zoom);
+    if (x < w / zoom) x = w / zoom;
+    if (y > img.height - (h / zoom)) y = img.height - (h / zoom);
+    if (y < h / zoom) y = h / zoom;
+
+    glass.style.left = (x - w) + "px";
+    glass.style.top = (y - h) + "px";
+    glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
+  }
+
+  function getCursorPos(e) {
+    let a = img.getBoundingClientRect();
+    let x = e.pageX - a.left - window.pageXOffset;
+    let y = e.pageY - a.top - window.pageYOffset;
+    return {x, y};
+  }
+}
+
 </script>
