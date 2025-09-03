@@ -6,7 +6,6 @@
 header('Content-Type: application/json');
 
 // Include database connection and session handling.
-// This line might be the source of your error if the path is incorrect.
 require_once '../db/db.php';
 session_start();
 
@@ -16,7 +15,7 @@ $response = [
     'product' => null,
     'images' => [],
     'pdfs' => [],
-    'features' => [] // Added a new key for features
+    'features' => []
 ];
 
 try {
@@ -51,7 +50,7 @@ try {
             $response['message'] = 'Product details retrieved successfully.';
             $response['product'] = $product;
             
-            // Fetch associated images and check for cover image
+            // Fetch associated images
             $images_query = "SELECT file_path, file_name, is_cover FROM images WHERE product_id = ?";
             $images_stmt = $conn->prepare($images_query);
             if (!$images_stmt) {
@@ -72,7 +71,6 @@ try {
             }
             $images_stmt->close();
             
-            // Prioritize the cover image if one was found
             if ($cover_image) {
                 array_unshift($all_images, $cover_image);
             }
@@ -82,7 +80,7 @@ try {
             $pdfs_query = "SELECT file_path, file_name FROM pdfs WHERE product_id = ?";
             $pdfs_stmt = $conn->prepare($pdfs_query);
             if (!$pdfs_stmt) {
-                 throw new Exception("Failed to prepare PDFs query: " . $conn->error);
+                throw new Exception("Failed to prepare PDFs query: " . $conn->error);
             }
             $pdfs_stmt->bind_param("i", $productId);
             $pdfs_stmt->execute();
@@ -92,15 +90,14 @@ try {
             }
             $pdfs_stmt->close();
 
-            // This query joins the product_feature_values table with the features table
-            // to get the feature name, value, and unit for a specific product.
+            // Fetch product features
             $features_query = "SELECT 
-                                f.name, 
-                                pfv.value, 
-                                pfv.unit
-                            FROM product_feature_values pfv
-                            JOIN features f ON pfv.feature_id = f.id
-                            WHERE pfv.product_id = ?";
+                                   f.name,
+                                   f.data_type, 
+                                   pfv.value
+                               FROM product_feature_values pfv
+                               JOIN features f ON pfv.feature_id = f.id
+                               WHERE pfv.product_id = ?";
 
             $features_stmt = $conn->prepare($features_query);
             if (!$features_stmt) {
@@ -111,7 +108,52 @@ try {
             $features_result = $features_stmt->get_result();
             
             while ($feature = $features_result->fetch_assoc()) {
-                $response['features'][] = $feature;
+                $decoded_json = json_decode($feature['value'], true);
+                
+                $feature_value = null;
+                $feature_unit = null;
+
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded_json)) {
+                    
+                    // ================= START OF MODIFIED LOGIC =================
+                    
+                    if ($feature['data_type'] === 'range') {
+                        // Handle range type (min/max)
+                        $feature_value = isset($decoded_json['min'], $decoded_json['max']) 
+                                       ? $decoded_json['min'] . ' to ' . $decoded_json['max'] 
+                                       : 'N/A';
+                    } elseif ($feature['data_type'] === 'boolean') {
+                        // NEW: Handle boolean type
+                        // We send a true boolean value for easier handling in JavaScript
+                        $feature_value = isset($decoded_json['value']) ? (bool)$decoded_json['value'] : false;
+                    } elseif ($feature['data_type'] === 'multiselect') {
+                        // NEW: Handle multiselect type
+                        // We look for the 'values' key which contains an array
+                        $feature_value = isset($decoded_json['values']) && is_array($decoded_json['values']) 
+                                       ? $decoded_json['values'] 
+                                       : []; // Return an empty array if not found
+                    } else {
+                        // Default handler for other types (text, number) that use the 'value' key
+                        $feature_value = $decoded_json['value'] ?? null;
+                    }
+
+                    // Universal unit handler
+                    if (isset($decoded_json['unit'])) {
+                        $feature_unit = $decoded_json['unit'];
+                    }
+
+                    // ================= END OF MODIFIED LOGIC =================
+
+                } else {
+                    // Fallback to the original value if JSON decoding fails
+                    $feature_value = $feature['value'];
+                }
+
+                $response['features'][] = [
+                    'name' => $feature['name'],
+                    'value' => $feature_value,
+                    'unit' => $feature_unit
+                ];
             }
             $features_stmt->close();
 
@@ -126,11 +168,14 @@ try {
     // Catch any exceptions and provide a detailed error message in the JSON response.
     $response['success'] = false;
     $response['message'] = 'Server Error: ' . $e->getMessage();
+    // Optional: Log the error to a file for debugging instead of showing it to the user.
+    // error_log($e->getMessage());
 }
 
-echo json_encode($response);
 if (isset($conn) && $conn) {
     $conn->close();
 }
-exit; // Ensure no other HTML is outputted after the JSON
+
+echo json_encode($response);
+exit; // Ensure no other output
 ?>

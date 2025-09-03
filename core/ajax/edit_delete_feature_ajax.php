@@ -22,7 +22,8 @@ try {
     // Handle GET request to fetch existing features
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['category_id'])) {
         $category_id = (int) $_GET['category_id'];
-        $stmt = $conn->prepare("SELECT id, name, data_type, unit, is_required FROM features WHERE category_id = ?");
+        // The query now also selects the 'metadata' column
+        $stmt = $conn->prepare("SELECT id, name, data_type, unit, is_required, metadata FROM features WHERE category_id = ?");
         if ($stmt === false) {
             throw new Exception('Database prepare failed: ' . $conn->error);
         }
@@ -41,20 +42,21 @@ try {
         $name = trim($_POST['name'] ?? '');
         $data_type = $_POST['data_type'] ?? 'varchar(50)';
         $unit = trim($_POST['unit'] ?? '');
-        
-        // This is the key change: Directly use the value sent from the client.
-        // It will be 1 or 0, so we just cast it to an integer.
         $is_required = (int)$_POST['is_required'];
+        // New: Handle metadata. If not provided, default to an empty JSON object.
+        $metadata = $_POST['metadata'] ?? '{}';
         
         if (!$name) {
             throw new Exception('Feature name is required.');
         }
 
-        $stmt = $conn->prepare("UPDATE features SET name=?, data_type=?, unit=?, is_required=? WHERE id=?");
+        // The UPDATE query now includes the 'metadata' column
+        $stmt = $conn->prepare("UPDATE features SET name=?, data_type=?, unit=?, is_required=?, metadata=? WHERE id=?");
         if ($stmt === false) {
             throw new Exception('Database prepare failed: ' . $conn->error);
         }
-        $stmt->bind_param("sssii", $name, $data_type, $unit, $is_required, $feature_id);
+        // Bind the new metadata parameter
+        $stmt->bind_param("sssssi", $name, $data_type, $unit, $is_required, $metadata, $feature_id);
         if ($stmt->execute()) {
              // Check if any rows were affected to give a more accurate message
             if ($stmt->affected_rows > 0) {
