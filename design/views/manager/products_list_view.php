@@ -166,7 +166,7 @@
                             // Build the HTML for the features list
                             let featuresListHtml = 'N/A';
                             if (features && features.length > 0) {
-                                featuresListHtml = `<ul class="list-unstyled mb-0">`;
+                                featuresListHtml = ``;
                                 features.forEach(feature => {
                                     let featureDisplayValue;
 
@@ -192,9 +192,9 @@
                                         featureDisplayValue = `${feature.value ?? 'N/A'}${feature.unit ? ' ' + feature.unit : ''}`;
                                     }
                                     
-                                    featuresListHtml += `<li><strong>${feature.name}:</strong> ${featureDisplayValue}</li>`;
+                                    featuresListHtml += `<div class="col-6 my-2"><strong>${feature.name}:</strong> ${featureDisplayValue}</div>`;
                                 });
-                                featuresListHtml += `</ul>`;
+                                
                             }
                             
                             productDetailsContent.innerHTML = `
@@ -202,7 +202,7 @@
                                     <div class="col-12 col-md-8">
                                         <div class="container px-0">
                                             <div class="row">
-                                                <div class="col-6 my-1">
+                                                <div class="col-6 my-2">
                                                     <strong>P/N:</strong> ${product.part_number}
                                                 </div>
                                                 <div class="col-6 my-2">
@@ -248,9 +248,9 @@
                                                     <h3 class="pl-1 mb-0">Features & Specifications:</h3>
                                                     <div class="flex-grow-1 ms-2 border-bottom"></div>
                                                 </div>
-                                                <div class="col-12 my-2">
+                                               
                                                     ${featuresListHtml}
-                                                </div>
+                                              
                                             </div>
                                         </div>
                                     </div>
