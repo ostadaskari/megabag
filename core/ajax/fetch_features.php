@@ -29,10 +29,10 @@ try {
     // We will use a loop to traverse up the category tree from the selected category
     // to its root parent, fetching features at each level.
     do {
-        // Prepare and execute the query to get features for the current category,
-        // now including the `unit` column from the features table.
+        // Prepare and execute the query to get features for the current category.
+        // Now also selecting the `metadata` column for advanced feature types.
         $stmtFeatures = $conn->prepare("
-            SELECT id, name, data_type, unit, is_required FROM features WHERE category_id = ?
+            SELECT id, name, data_type, unit, is_required, metadata FROM features WHERE category_id = ?
         ");
         $stmtFeatures->bind_param('i', $currentCategoryId);
         $stmtFeatures->execute();
@@ -47,30 +47,15 @@ try {
         foreach ($features as $feature) {
             // Check if we've already added this feature to avoid duplicates
             if (!in_array($feature['id'], $processedFeatureIds)) {
-                // Map the data_type from the database to an appropriate HTML input type
-                $inputType = 'text'; // Default to text
-                switch ($feature['data_type']) {
-                    case 'decimal(12,3)':
-                        $inputType = 'number';
-                        break;
-                    case 'TEXT':
-                        $inputType = 'textarea';
-                        break;
-                    case 'boolean':
-                        $inputType = 'checkbox';
-                        break;
-                    case 'varchar(50)':
-                    default:
-                        $inputType = 'text';
-                        break;
-                }
-                
+                // Return the feature data as-is. The front-end JavaScript will handle
+                // determining the input type based on `data_type`.
                 $allFeatures[] = [
                     'id' => $feature['id'],
                     'name' => $feature['name'],
-                    'input_type' => $inputType,
+                    'data_type' => $feature['data_type'], // Pass the data_type to the client
                     'unit' => $feature['unit'],
-                    'is_required' => (bool)$feature['is_required']
+                    'is_required' => (bool)$feature['is_required'],
+                    'metadata' => $feature['metadata'] // Pass the metadata to the client for parsing
                 ];
                 $processedFeatureIds[] = $feature['id'];
             }

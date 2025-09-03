@@ -93,10 +93,9 @@
                             <tr>
                                 <th style="width: 3%;">#</th>
                                 <th>P/N</th>      
-                                <th>MFR</th>                          
+                                <th>MFG</th>                          
                                 <th>Tag</th>
                                 <th>QTY</th>
-
                                 <th style="width: 15%;">User</th>
                                 <th style="width: 15%;">Comment</th>
                                 <th style="width: 6%;" >Date</th>

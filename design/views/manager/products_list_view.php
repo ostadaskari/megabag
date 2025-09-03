@@ -43,10 +43,9 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">P/N</th>
-                    <th scope="col">MFR</th>
+                    <th scope="col">MFG</th>
                     <th scope="col">Tag</th>
                     <th scope="col">Qty</th>
-                    <th scope="col">Name</th>
                     <th scope="col">Submitter</th>
                     <th scope="col">Category</th>
                     <th scope="col">Location</th>
@@ -133,118 +132,141 @@
             productDetailsModal.style.display = 'block';
 
             // Fetch the product details via AJAX using the Fetch API
-            fetch(`../ajax/get_product_details.php?id=${productId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        const product = data.product;
-                        const images = data.images;
-                        const pdfs = data.pdfs;
-                        const features = data.features; // ASSUMPTION: The 'features' data is now available in the AJAX response
-                        
-                        let pdfListHtml = '';
-                        if (pdfs && pdfs.length > 0) {
-                            pdfs.forEach(pdf => {
-                                pdfListHtml += ` <a class="mx-2 bg-pdf p-2" style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><span>${pdf.file_name}</span></a> `;
-                            });
+                fetch(`../ajax/get_product_details.php?id=${productId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            const product = data.product;
+                            const images = data.images;
+                            const pdfs = data.pdfs;
+                            const features = data.features;
+                            
+                            let pdfListHtml = '';
+                            if (pdfs && pdfs.length > 0) {
+                                pdfs.forEach(pdf => {
+                                    pdfListHtml += `<a class="mx-2 bg-pdf p-2" style="color:rgb(8, 55, 126);" href="${pdf.file_path}" target="_blank"><span>${pdf.file_name}</span></a>`;
+                                });
+                            }
 
-                        let imageListHtml = '';
-                        let mainImageSrc = 'https://placehold.co/600x400/E0E0E0/505050?text=No+Image';
-                        if (images && images.length > 0) {
-                            mainImageSrc = images[0].file_path;
-                            images.forEach(image => {
-                                imageListHtml += `<li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm"><span><img class="img-fluid" src="${image.file_path}"></span></li>`;
-                            });
-                        }
+                            let imageListHtml = '';
+                            let mainImageSrc = 'https://placehold.co/600x400/E0E0E0/505050?text=No+Image';
+                            if (images && images.length > 0) {
+                                mainImageSrc = images[0].file_path;
+                                images.forEach(image => {
+                                    imageListHtml += `<li class="d-flex flex-row align-items-center justify-content-between itemfile itemImg border shadow-sm"><span><img class="img-fluid" src="${image.file_path}"></span></li>`;
+                                });
+                            }
 
-                        // NEW: Build the HTML for the features list, including value and unit
-                        let featuresListHtml = 'N/A';
-                        if (features && features.length > 0) {
-                            featuresListHtml = ``;
-                            features.forEach(feature => {
-                                // Updated line to include unit if it exists
-                                featuresListHtml += `<div class="col-6 my-2"><strong>${feature.name}:</strong>  ${feature.value}${feature.unit ? ' ' + feature.unit : ''}</div>`;
-                            });
-                           
-                        }
-                      
-                        productDetailsContent.innerHTML = `
-                            <div class="row">
-                                <div class="col-12 col-md-8">
-                                    <div class="container px-0">
-                                        <div class="row">
-                                            <div class="col-6 my-2">
-                                                <strong>Name:</strong> ${product.name}
-                                            </div>
-                                            <div class="col-6 my-1">
-                                                <strong>P/N:</strong> ${product.part_number}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>MFG:</strong> ${product.mfg}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Tag:</strong> ${product.tag}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Qty:</strong> ${product.qty}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Category:</strong> ${product.category_name}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Location:</strong> ${product.location}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Status:</strong> ${product.status}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Date Code:</strong> ${product.date_code}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Recieve Code:</strong> ${product.recieve_code}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Created_At:</strong> ${product.created_at}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Updated_At:</strong> ${product.updated_at}
-                                            </div>
-                                            <div class="col-12 my-2">
-                                                <strong>Description:</strong> ${product.company_cmt}
-                                            </div>
+
+                            // Build the HTML for the features list
+                            let featuresListHtml = 'N/A';
+                            if (features && features.length > 0) {
+                                featuresListHtml = `<ul class="list-unstyled mb-0">`;
+                                features.forEach(feature => {
+                                    let featureDisplayValue;
+
+                                    // 1. Check if the value is a boolean (for tick/cross icons)
+                                    if (typeof feature.value === 'boolean') {
+                                        featureDisplayValue = feature.value 
+                                            ? '<span class="text-success fw-bold">✔ Yes</span>' 
+                                            : '<span class="text-danger fw-bold">✖ No</span>';
+                                    } 
+                                    // 2. Check if the value is an array (for multiselect)
+                                    else if (Array.isArray(feature.value)) {
+                                        // Option A: Simple comma-separated list
+                                        // featureDisplayValue = feature.value.join(', ');
+
                                         
-                                        </div>
-                                        <div class="row my-2 mr-3 px-0 py-1">
-                                            <div class="col-12 d-flex flex-row align-items-center mb-2">
-                                                <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
-                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
-                                                </svg> 
-                                                <h3 class="pl-1 mb-0">Specifications :</h3>
-                                                <div class="flex-grow-1 ms-2 border-bottom"></div>
-                                            </div>
+                                        // Option B: Nicer looking badges (requires Bootstrap)
+                                        featureDisplayValue = feature.value.map(val => `<span class="badge bg-secondary mx-1">${val}</span>`).join(' ');
 
-                                              ${featuresListHtml}                                       
-                                            
+
+                                    } 
+                                    // 3. Handle all other types (string, number, etc.)
+                                    else {
+                                        featureDisplayValue = `${feature.value ?? 'N/A'}${feature.unit ? ' ' + feature.unit : ''}`;
+                                    }
+                                    
+                                    featuresListHtml += `<li><strong>${feature.name}:</strong> ${featureDisplayValue}</li>`;
+                                });
+                                featuresListHtml += `</ul>`;
+                            }
+                            
+                            productDetailsContent.innerHTML = `
+                                <div class="row">
+                                    <div class="col-12 col-md-8">
+                                        <div class="container px-0">
+                                            <div class="row">
+                                                <div class="col-6 my-1">
+                                                    <strong>P/N:</strong> ${product.part_number}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>MFG:</strong> ${product.mfg}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Tag:</strong> ${product.tag}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Qty:</strong> ${product.qty}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Category:</strong> ${product.category_name}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Location:</strong> ${product.location}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Status:</strong> ${product.status}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Date Code:</strong> ${product.date_code}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Recieve Code:</strong> ${product.recieve_code}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Created_At:</strong> ${product.created_at}
+                                                </div>
+                                                <div class="col-6 my-2">
+                                                    <strong>Updated_At:</strong> ${product.updated_at}
+                                                </div>
+                                                <div class="col-12 my-2">
+                                                    <strong>Description:</strong> ${product.company_cmt}
+                                                </div>
+                                            </div>
+                                            <div class="row my-2 mr-3 px-0 py-1">
+                                                <div class="col-12 d-flex flex-row align-items-center mb-2">
+                                                    <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
+                                                    </svg> 
+                                                    <h3 class="pl-1 mb-0">Features & Specifications:</h3>
+                                                    <div class="flex-grow-1 ms-2 border-bottom"></div>
+                                                </div>
+                                                <div class="col-12 my-2">
+                                                    ${featuresListHtml}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <div class="imgCover mb-2">
+                                                <img src="${mainImageSrc}" class="img-fluid w-100">
+                                            </div>
+                                            <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
+                                                ${imageListHtml}
+                                            </ul>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="d-flex flex-column align-items-end">
-                                        <div class="imgCover mb-2" id="product-images">
-                                            <img src="${mainImageSrc}" class="img-fluid w-100">
-                                        </div>
-                                        <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
-                                            ${imageListHtml}
-                                        </ul>
-                                    </div>
-                                </div>
+
                                 
                             </div>
 
@@ -297,7 +319,9 @@
                     productDetailsContent.innerHTML = `<p style="color: red;">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
                 });
                 
+
         };
+
 
         // Event delegation for table row clicks
         productsTableBody.addEventListener('click', function (event) {

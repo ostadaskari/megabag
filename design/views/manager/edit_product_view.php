@@ -48,11 +48,11 @@
             </div>
             <div class="row">
                 <div class="col-12 col-md-4 px-2 my-2">
-                    <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                    <label class="form-label" for="p_n" title="Part Number">P/N:</label>
                     <input class="form-control" type="text" name="p_n" value="<?= htmlspecialchars($product['part_number']) ?>" autocomplete="off" placeholder="Part number" required>
                 </div>
                 <div class="col-12 col-md-4 px-2 my-2">
-                <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
+                <label class="form-label" for="MFG" title="Manufacturer">MFG:</label>
                     <input class="form-control" type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
                 </div>
                 <div class="col-12 col-md-4 px-2 my-2">
@@ -62,21 +62,12 @@
             </div> 
             <div class="row d-flex flex-row align-items-center justify-content-between">
                 <div class="col-12 col-md-2 px-2 my-2">
-                    <label class="form-label" for="name" title="Name">P-Name:</label>
-                    <input class="form-control" type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" autocomplete="off" placeholder="Name" required>
-                </div>
-                <div class="col-12 col-md-2 px-2 my-2">
                     <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
                     <input class="form-control" type="text" name="qty" value="<?= htmlspecialchars($product['qty']) ?>" min="0" autocomplete="off" placeholder="Quantity" required>
                 </div>
                 <div class="col-12 col-md-2 px-2">
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
                     <input class="form-control" type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
-                </div>
-
-                <div class="col-12 col-md-2 px-2">
-                    <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                    <input class="form-control" type="text" name="recieve_code" value="<?= htmlspecialchars($product['recieve_code']) ?>" autocomplete="off" placeholder="Received Code">
                 </div>
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label for="" class="form-label">Date Code:</label>
@@ -316,62 +307,36 @@
 
     <!-- Dynamic Date Code Population Script -->
     <script>
-        // Wait for the DOM to be fully loaded before running the script
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get a reference to the select element
-            const dateCodeSelect = document.getElementById('date_code');
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Populate Date Code select
+    const dateCodeSelect = document.getElementById('date_code');
+    const startYear = 2017;
+    const currentYear = new Date().getFullYear();
 
-            // Define the starting year
-            const startYear = 2017;
+    for (let year = currentYear; year >= startYear; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        dateCodeSelect.appendChild(option);
+    }
 
-            // Get the current year
-            const currentYear = new Date().getFullYear();
+    dateCodeSelect.value = "<?= htmlspecialchars($product['date_code']) ?>";
 
-            // Loop from the current year down to the start year
-            for (let year = currentYear; year >= startYear; year--) {
-                // Create a new option element for each year
-                const option = document.createElement('option');
-
-                // Set the value and display text of the option
-                option.value = year;
-                option.textContent = year;
-
-                // Append the option to the select element
-                dateCodeSelect.appendChild(option);
-            }
-
-            // Optional: You can set the currently selected year to the current year
-            dateCodeSelect.value = "<?= htmlspecialchars($product['date_code']) ?>";
-        });
-    </script>
-    <!-- end Dynamic Date Code Population Script -->
-
-    <!-- search for categories and fetch features -->
-    <script>
-
-// This script handles the dynamic loading of product features based on a selected category.
-// It includes a live search with a debouncer for the category dropdown to improve performance.
-
-document.addEventListener('DOMContentLoaded', () => {
-    // DOM element references
+    // --- Category search & feature loading ---
     const dropdown = document.getElementById('category_dropdown');
     const searchInput = document.getElementById('category_search');
     const categoryIdInput = document.getElementById('category_id');
     const featuresContainer = document.getElementById('product_features_container');
 
-    // Function to debounce a function call, preventing it from being called too frequently.
-    // This is useful for things like live search where you don't want to hit the server on every keystroke.
     const debounce = (func, delay) => {
         let timeoutId;
         return (...args) => {
             clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                func.apply(this, args);
-            }, delay);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
         };
     };
 
-    // Function to render the category dropdown
     function renderCategoryDropdown(search = '') {
         fetch(`../ajax/fetch_leaf_categories.php?search=${encodeURIComponent(search)}`)
             .then(res => res.json())
@@ -393,15 +358,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     item.dataset.id = cat.id;
                     item.style.padding = '5px';
                     item.style.cursor = 'pointer';
-                    item.className = 'dropdown-item';
-                    item.classList.add('category-suggestion-item');
+                    item.className = 'dropdown-item category-suggestion-item';
 
                     item.addEventListener('click', () => {
                         categoryIdInput.value = cat.id;
                         searchInput.value = cat.name;
                         dropdown.style.display = 'none';
                         fetchFeatures(cat.id);
-
                     });
 
                     dropdown.appendChild(item);
@@ -414,194 +377,184 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Function to fetch and render features based on category ID
-    function fetchFeatures(categoryId) {
-        if (!categoryId) {
-            featuresContainer.innerHTML = '<p class="text-muted small">No features to display. Select a category to see available features.</p>';
-            return;
-        }
+    async function fetchFeatures(categoryId) {
+        if (!featuresContainer) return;
+        featuresContainer.innerHTML = '';
+        if (!categoryId) return;
 
-        featuresContainer.innerHTML = '<p class="text-muted small">Loading features...</p>';
+        try {
+            const response = await fetch(`../ajax/fetch_category_features.php?category_id=${encodeURIComponent(categoryId)}&product_id=<?= (int)$product['id'] ?>`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            if (!data.success) throw new Error(data.error || 'Unknown server error.');
 
-        fetch(`../ajax/fetch_category_features.php?category_id=${encodeURIComponent(categoryId)}&product_id=<?= (int)$product['id'] ?>`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
+            const features = data.features;
+            if (!Array.isArray(features) || features.length === 0) {
+                featuresContainer.innerHTML = `<div class="col-12"><p class="text-muted">No specifications found.</p></div>`;
+                return;
+            }
+
+            features.forEach(feature => {
+                const featureElement = document.createElement('div');
+                featureElement.classList.add('col-12', 'col-md-4', 'px-2', 'my-2');
+
+                const metadata = feature.metadata || {};
+                let value = '';
+                let selectedUnit = null;
+
+                // Parse JSON value if possible
+                if (feature.value) {
+                    try {
+                        const parsed = JSON.parse(feature.value);
+                        if (parsed.value) value = parsed.value;
+                        if (parsed.unit) selectedUnit = parsed.unit;
+                        if (feature.data_type === 'range' && parsed.min && parsed.max) {
+                            value = [parsed.min, parsed.max];
+                        } else if (feature.data_type === 'multiselect' && parsed.values) {
+                            value = parsed.values;
+                        }
+                    } catch (e) {
+                        value = feature.value;
+                    }
                 }
-                return res.json();
-            })
-            .then(data => {
-                if (data.success === false) {
-                    throw new Error(data.error || 'Unknown error occurred on the server.');
+
+                const units = feature.unit || [];
+                const unitDropdown = units.length ? unitSelect(units, selectedUnit, feature.id) : '';
+
+                let inputHtml = '';
+                switch (feature.data_type) {
+                    case 'range': {
+                        const [valMin, valMax] = Array.isArray(value) ? value : ['', ''];
+                        const min = metadata.min || '';
+                        const max = metadata.max || '';
+                        inputHtml = `
+                            <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
+                            <div class="row gx-1">
+                                <div class="col-3">
+                                    <input class="form-control" type="number" step="any"
+                                        name="features[${feature.id}][min]"
+                                        value="${valMin}" placeholder="from ${min}" />
+                                </div>
+                                <div class="col-3">
+                                    <input class="form-control" type="number" step="any"
+                                        name="features[${feature.id}][max]"
+                                        value="${valMax}" placeholder="to ${max}" />
+                                </div>
+                                ${unitDropdown ? `<div class="col-3">${unitDropdown}</div>` : ''}
+                            </div>
+                        `;
+                        break;
+                    }
+                    case 'multiselect': {
+                        const options = metadata.options || [];
+                        const selectedValues = Array.isArray(value) ? value : [];
+                        inputHtml = `
+                            <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
+                            <select class="form-select" name="features[${feature.id}][]" >
+                                ${options.map(opt => `
+                                    <option value="${opt}" ${selectedValues.includes(opt) ? 'selected' : ''}>
+                                        ${opt}
+                                    </option>
+                                `).join('')}
+                            </select>
+                        `;
+                        break;
+                    }
+                    case 'boolean':
+                        inputHtml = `
+                            <div class="form-check">
+                                <input type="hidden" name="features[${feature.id}][value]" value="0">
+                                <input class="form-check-input" type="checkbox" id="feature_${feature.id}"
+                                    name="features[${feature.id}][value]" value="1"
+                                    ${value === true || value === '1' || value === 1 ? 'checked' : ''}>
+                                <label class="form-check-label" for="feature_${feature.id}">
+                                    ${feature.name}${feature.is_required ? ' *' : ''}
+                                </label>
+                            </div>`;
+                        break;
+                    case 'TEXT':
+                        inputHtml = `
+                            <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
+                            <textarea class="form-control py-1" name="features[${feature.id}]"
+                                placeholder="${feature.name}" rows="2">${value}</textarea>`;
+                        break;
+                    default: {
+                        const inputType = feature.data_type === 'decimal(15,7)' ? 'number' : 'text';
+                        const inputName = feature.data_type === 'decimal(15,7)'
+                            ? `features[${feature.id}][value]`
+                            : `features[${feature.id}]`;
+                        inputHtml = `
+                            <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
+                            <div class="input-group">
+                                <input class="form-control" type="${inputType}" step="any"
+                                    name="${inputName}" value="${value}" placeholder="${feature.name}" />
+                                ${unitDropdown ? unitDropdown : ''}
+                            </div>`;
+                        break;
+                    }
                 }
 
-                const features = data.features;
-                featuresContainer.innerHTML = '';
-
-                if (!Array.isArray(features) || features.length === 0) {
-                    featuresContainer.innerHTML = '<p class="text-muted small">No features available for this category.</p>';
-                    return;
-                }
-
-                features.forEach(feature => {
-                    const featureElement = createFeatureElement(feature);
-                    featuresContainer.appendChild(featureElement);
-                });
-            })
-            .catch(err => {
-                featuresContainer.innerHTML = `<p class="text-danger small">Error loading features: ${err.message}</p>`;
-                console.error('Error fetching features:', err);
+                featureElement.innerHTML = inputHtml;
+                featuresContainer.appendChild(featureElement);
             });
-            }
 
-            // Function to create and return a single feature element
-            function createFeatureElement(feature) {
-            const featureElement = document.createElement('div');
-            featureElement.classList.add('col-12', 'col-md-4', 'p-2');
-
-            const hasUnit = !!feature.feature_unit;
-            const requiredAttr = feature.is_required ? 'required' : '';
-            const isBoolean = feature.data_type === 'boolean';
-            const featureValue = feature.value || '';
-
-            let inputHtml = '';
-
-            // Choose input type based on data_type
-            switch (feature.data_type) {
-                case 'decimal(12,3)':
-                    inputHtml = `<input class="form-control" type="number" step="0.001" 
-                                    name="features[${feature.feature_id}][value]" 
-                                    placeholder="${feature.feature_name}" 
-                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
-                    break;
-                case 'boolean':
-                    const checkedAttr = featureValue === '1' ? 'checked' : '';
-                    inputHtml = `
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="feature_${feature.feature_id}" 
-                                name="features[${feature.feature_id}][value]" value="1" ${checkedAttr}>
-                            <label class="form-check-label ms-2" for="feature_${feature.feature_id}">
-                                ${feature.feature_name}${feature.is_required ? ' *' : ''}
-                            </label>
-                        </div>
-                    `;
-                    break;
-                case 'varchar(50)':
-                    inputHtml = `<input class="form-control" type="text" maxlength="50" 
-                                    name="features[${feature.feature_id}][value]" 
-                                    placeholder="${feature.feature_name}" 
-                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
-                    break;
-                case 'TEXT':
-                    inputHtml = `<textarea class="form-control" 
-                                    name="features[${feature.feature_id}][value]" 
-                                    placeholder="${feature.feature_name}" rows="3" 
-                                    ${requiredAttr}>${featureValue}</textarea>`;
-                    break;
-                default:
-                    inputHtml = `<input class="form-control" type="text" 
-                                    name="features[${feature.feature_id}][value]" 
-                                    placeholder="${feature.feature_name}" 
-                                    value="${featureValue}" ${requiredAttr} autocomplete="off" />`;
-                    break;
-            }
-
-            // Wrap input with unit select if feature has units
-            if (hasUnit && !isBoolean) {
-                inputHtml = `
-                    <div class="input-group">
-                        ${inputHtml}
-                        ${unitSelect(feature.feature_unit, feature.unit, feature.feature_id)}
-                    </div>
-                `;
-            }
-
-            // Build the final element
-            if (!isBoolean) {
-                featureElement.innerHTML = `
-                    <label class="form-label" for="feature_${feature.feature_id}">
-                        ${feature.feature_name}:${feature.is_required ? ' *' : ''}
-                    </label>
-                    ${inputHtml}
-                `;
-            } else {
-                featureElement.innerHTML = inputHtml; // for checkbox only
-            }
-
-            // Append hidden inputs
-            featureElement.innerHTML += `
-                <input type="hidden" name="features[${feature.feature_id}][feature_id]" value="${feature.feature_id}">
-                <input type="hidden" name="features[${feature.feature_id}][name]" value="${feature.feature_name}">
-            `;
-
-            return featureElement;
+        } catch (err) {
+            console.error('Error fetching features:', err);
+            featuresContainer.innerHTML = `<div class="col-12"><p class="text-danger">Failed to load specifications.</p></div>`;
         }
+    }
 
-
-    // Function to generate the unit dropdown select element
-    function unitSelect(unitString, selectedUnit, featureId) {
-        const units = unitString.split(',').map(u => u.trim());
-        const optionsHtml = units.map(u => {
-            const isSelected = u === selectedUnit ? 'selected' : '';
+    function unitSelect(unitsArray, selectedUnit, featureId) {
+        if (!unitsArray || !unitsArray.length) return '';
+        const optionsHtml = unitsArray.map(u => {
+            const isSelected = u.trim() === (selectedUnit || '').trim() ? 'selected' : '';
             return `<option value="${u}" ${isSelected}>${u}</option>`;
         }).join('');
-        
         return `<select class="form-select" name="features[${featureId}][unit]">${optionsHtml}</select>`;
     }
 
-    // --- Core Logic ---
-    
-    // Create a debounced version of the dropdown renderer with a 300ms delay
+
     const debouncedRender = debounce(renderCategoryDropdown, 300);
+    if (searchInput) {
+        searchInput.addEventListener('input', e => {
+            if (e.target.value.trim() !== '') {
+                debouncedRender(e.target.value);
+            } else if (dropdown) {
+                dropdown.style.display = 'none';
+            }
+        });
+    }
 
-    // Event listener for live search on the input field
-    searchInput.addEventListener('input', (e) => {
-        // Only show the dropdown if the input is not empty
-        if (e.target.value.trim() !== '') {
-            debouncedRender(e.target.value);
-        } else {
-            // Hide the dropdown if the input is cleared
-            dropdown.style.display = 'none';
-        }
-    });
-
-    // Event listener to hide the dropdown when the user clicks away
     document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.style.display = 'none';
+        if ((searchInput && !searchInput.contains(e.target)) &&
+            (dropdown && !dropdown.contains(e.target))) {
+            if (dropdown) dropdown.style.display = 'none';
         }
     });
 
-    // Corrected logic for page load
     <?php if (!empty($product['category_id'])): ?>
     fetch('../ajax/fetch_leaf_categories.php?id=<?= (int)$product['category_id'] ?>')
         .then(res => res.json())
         .then(data => {
             if (data.length > 0) {
-                // Category exists, so populate the input and fetch features as normal.
                 searchInput.value = data[0].name;
                 fetchFeatures(data[0].id);
             } else {
-                // Category does NOT exist, so clear the inputs and load all categories.
-                console.log('Pre-selected category not found. Clearing inputs and loading all categories.');
                 searchInput.value = '';
                 categoryIdInput.value = '';
                 featuresContainer.innerHTML = '<p class="text-muted small">The previous category was deleted. Please select a new one.</p>';
-                // Load all categories for the user to select from.
                 renderCategoryDropdown('');
             }
         })
         .catch(err => {
             console.error('Error fetching initial category:', err);
-            // In case of an error, also clear inputs and load all categories.
             searchInput.value = '';
             categoryIdInput.value = '';
             featuresContainer.innerHTML = `<p class="text-danger small">Error loading the previous category: ${err.message}</p>`;
             renderCategoryDropdown('');
         });
     <?php else: ?>
-        // If there's no category ID to begin with, just load all categories.
-        renderCategoryDropdown('');
+    renderCategoryDropdown('');
     <?php endif; ?>
 });
 

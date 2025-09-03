@@ -17,13 +17,13 @@
         <label for="categorySearch" class="form-label" style="width:100%;text-align: center;">Search in categories:</label>
         <div class="input-box" style="width: 100%; margin:0 0 5px 0;" >
              <div class="svgSearch">
-                <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                </svg>
+                 <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                 </svg>
              </div>
-            <input type="text" id="categorySearch" placeholder="Search categories..." autocomplete="off">
-            <input type="hidden" name="category_id" id="category_id">
-            <div id="categoryResults" class="category-results" style="display:none;"></div>
+             <input type="text" id="categorySearch" placeholder="Search categories..." autocomplete="off">
+             <input type="hidden" name="category_id" id="category_id">
+             <div id="categoryResults" class="category-results" style="display:none;"></div>
         </div>
     </div>
 
@@ -45,7 +45,6 @@
         </div>
     </div>
 </form>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -134,12 +133,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = document.createElement("div");
         row.classList.add("feature-row");
         const isRequiredChecked = feature.is_required == 1 ? 'checked' : '';
-        const dataTypes = ['varchar(50)', 'decimal(12,3)', 'TEXT', 'boolean'];
+        // Include new data types in the list
+        const dataTypes = ['varchar(50)', 'decimal(15,7)', 'TEXT', 'boolean', 'range', 'multiselect'];
         let optionsHtml = '';
         dataTypes.forEach(type => {
             const isSelected = type === feature.data_type ? 'selected' : '';
             optionsHtml += `<option value="${type}" ${isSelected}>${type}</option>`;
         });
+
+        // Parse metadata JSON
+        let metadata = {};
+        try {
+            metadata = feature.metadata ? JSON.parse(feature.metadata) : {};
+        } catch (e) {
+            console.error('Failed to parse metadata JSON:', e);
+        }
 
         row.innerHTML = `
             <input type="hidden" name="feature_id" value="${feature.id}">
@@ -150,17 +158,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
                 <label for="Data TypeInput" class="form-label">Data Type:</label>
-                <select class="form-control ml-1" name="data_type" autocomplete="off">${optionsHtml}</select>
+                <select class="form-control ml-1 data-type-select" name="data_type" autocomplete="off">${optionsHtml}</select>
             </div>
 
             <div class="col-6 col-md-2 d-flex flex-row align-items-center">
                 <label for="UnitInput" class="form-label">Unit:</label>
-                <input class="form-control"  type="text" name="unit" value="${feature.unit}" placeholder="Unit (optional)" autocomplete="off">
+                <input class="form-control unit-input"  type="text" name="unit" value="${feature.unit}" placeholder="Unit (optional)" autocomplete="off">
             </div>
 
             <div class="col-6 col-md-2 d-flex align-items-end justify-content-center">
                 <label>
-                    <!-- This line is key. The checked attribute is dynamically added or removed. -->
                     <input type="checkbox" name="is_required" ${isRequiredChecked}> Required
                 </label>
             </div>
@@ -172,8 +179,71 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button type="button" class="action-btn delete-btn p-2" title="delete" onclick="deleteFeature(this)">
                     <svg width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>
                 </button>
-            </div>    
+            </div> 
+             <div class="col-12 px-1 existing-metadata-container"></div>
         `;
+        
+        // Find the newly created row's metadata container and populate it
+        const metadataContainer = row.querySelector('.existing-metadata-container');
+        if (feature.data_type === 'range') {
+            metadataContainer.innerHTML = `
+                <div class="row">
+                    <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                        <label class="form-label">Min:</label>
+                        <input type="number" step="any" class="form-control" name="metadata_min" value="${metadata.min || ''}" autocomplete="off">
+                    </div>
+                    <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                        <label class="form-label">Max:</label>
+                        <input type="number" step="any" class="form-control" name="metadata_max" value="${metadata.max || ''}" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-md-6 px-1 d-flex flex-row align-items-center">
+                        <label class="form-label">Units (comma-separated):</label>
+                        <input type="text" class="form-control" name="metadata_units" value="${(metadata.units || []).join(', ')}" placeholder="e.g., mΩ, Ω, kΩ" autocomplete="off">
+                    </div>
+                </div>
+            `;
+        } else if (feature.data_type === 'multiselect') {
+            metadataContainer.innerHTML = `
+                <div class="col-12 px-1 d-flex flex-row align-items-center">
+                    <label class="form-label">Options (comma-separated):</label>
+                    <input type="text" class="form-control" name="metadata_options" value="${(metadata.options || []).join(', ')}" placeholder="e.g., SMD, Through Hole" autocomplete="off">
+                </div>
+            `;
+        }
+
+        // Add event listener to the select to handle dynamic metadata fields
+        const dataTypeSelect = row.querySelector('select[name="data_type"]');
+        dataTypeSelect.addEventListener('change', function(e) {
+            metadataContainer.innerHTML = ''; // Clear old metadata fields
+            const newDataType = e.target.value;
+
+            if (newDataType === 'range') {
+                 metadataContainer.innerHTML = `
+                    <div class="row">
+                        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Min:</label>
+                            <input type="number" step="any" class="form-control" name="metadata_min" autocomplete="off">
+                        </div>
+                        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Max:</label>
+                            <input type="number" step="any" class="form-control" name="metadata_max" autocomplete="off">
+                        </div>
+                        <div class="col-12 col-md-6 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Units (comma-separated):</label>
+                            <input type="text" class="form-control" name="metadata_units" placeholder="e.g., mΩ, Ω, kΩ" autocomplete="off">
+                        </div>
+                    </div>
+                `;
+            } else if (newDataType === 'multiselect') {
+                metadataContainer.innerHTML = `
+                    <div class="col-12 px-1 d-flex flex-row align-items-center">
+                        <label class="form-label">Options (comma-separated):</label>
+                        <input type="text" class="form-control" name="metadata_options" placeholder="e.g., SMD, Through Hole" required autocomplete="off">
+                    </div>
+                `;
+            }
+        });
+        
         existingFeatureRowsContainer.appendChild(row);
     }
     
@@ -183,10 +253,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const name = row.querySelector('input[name="name"]').value;
         const dataType = row.querySelector('select[name="data_type"]').value;
         const unit = row.querySelector('input[name="unit"]').value;
-        
-        // This is the key change: explicitly check the checkbox state
         const isRequired = row.querySelector('input[name="is_required"]').checked ? 1 : 0;
         
+        // New: Collect and serialize metadata if applicable
+        let metadata = {};
+        if (dataType === 'range') {
+            const min = row.querySelector('input[name="metadata_min"]').value;
+            const max = row.querySelector('input[name="metadata_max"]').value;
+            const units = row.querySelector('input[name="metadata_units"]').value;
+            metadata = {
+                min: min,
+                max: max,
+                units: units.split(',').map(s => s.trim())
+            };
+        } else if (dataType === 'multiselect') {
+            const options = row.querySelector('input[name="metadata_options"]').value;
+            metadata = {
+                options: options.split(',').map(s => s.trim())
+            };
+        }
+
         Swal.fire({
             title: "Are you sure?",
             text: "Do you want to update this feature?",
@@ -203,6 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 formData.append('data_type', dataType);
                 formData.append('unit', unit);
                 formData.append('is_required', isRequired);
+                formData.append('metadata', JSON.stringify(metadata));
 
                 fetch("../../core/ajax/edit_delete_feature_ajax.php", {
                     method: "POST",
@@ -279,42 +366,90 @@ document.addEventListener("DOMContentLoaded", function () {
     function createNewFeatureRow() {
         const row = document.createElement("div");
         row.classList.add("feature-row");
+        const counter = featureCounter;
         row.innerHTML = `
-        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
-            <label for="Feature Name" class="form-label">Name:</label>
-            <input class="form-control" type="text" name="features[${featureCounter}][name]" placeholder="Feature Name" required autocomplete="off">
+        <div class="col-12 col-md-3 px-1 d-flex flex-row align-items-center">
+            <label class="form-label">Name:</label>
+            <input class="form-control" type="text" name="features[${counter}][name]" placeholder="Feature Name" required autocomplete="off">
         </div>
 
-        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
-            <label for="Data Type" class="form-label">Data Type:</label>
-            <select name="features[${featureCounter}][data_type]" autocomplete="off">
-                <option value="varchar(50)"> (under 50char)</option>
-                <option value="decimal(12,3)">Decimal</option>
+        <div class="col-12 col-md-3 px-1 d-flex flex-row align-items-center">
+            <label class="form-label">Data Type:</label>
+            <select name="features[${counter}][data_type]" class="data-type-select form-control" autocomplete="off">
+                <option value="varchar(50)">(under 50char)</option>
+                <option value="decimal(15,7)">Decimal</option>
                 <option value="TEXT">Long Text</option>
                 <option value="boolean">Boolean</option>
+                <option value="range">Range</option>
+                <option value="multiselect">Multiselect</option>
             </select>
         </div>
         
-          <div class="col-6 col-md-2 d-flex flex-row align-items-center">
-            <label for="Unit" class="form-label">Unit:</label>
-            <input type="text" class="form-control" name="features[${featureCounter}][unit]" placeholder="Unit (optional)" autocomplete="off">
-          </div>
+        <div class="col-12 col-md-2 d-flex flex-row align-items-center">
+            <label class="form-label">Unit:</label>
+            <input type="text" class="form-control unit-input" name="features[${counter}][unit]" placeholder="Unit (optional)" autocomplete="off">
+        </div>
 
-        <div class="col-6 col-md-2 d-flex align-items-end justify-content-center">
+        <div class="col-12 col-md-2 d-flex align-items-end justify-content-center">
             <label>
-                <input type="checkbox" name="features[${featureCounter}][is_required]"> Required
+                <input type="checkbox" name="features[${counter}][is_required]"> Required
             </label>
-        </div>  
+        </div> 
 
-        <div class="col-6 col-md-1 px-1 d-flex flex-row align-items-center justify-content-end">
+        <div class="col-12 col-md-1 d-flex flex-row align-items-center justify-content-end">
             <button type="button" class="action-btn delete-btn" onclick="this.closest('.feature-row').remove();">
                 <svg width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>
             </button>
-        </div>    
+        </div>
+        <div class="col-12 px-1 metadata-container" style="display: none;"></div>
         `;
         newFeatureRowsContainer.appendChild(row);
         featureCounter++;
     }
+
+    // Dynamic field creation based on data type selection
+    newFeatureRowsContainer.addEventListener('change', function(e) {
+        if (e.target.classList.contains('data-type-select')) {
+            const row = e.target.closest('.feature-row');
+            const metadataContainer = row.querySelector('.metadata-container');
+            const unitInput = row.querySelector('.unit-input');
+            const counter = e.target.name.match(/\[(\d+)\]/)[1];
+
+            // Reset container and unit field
+            metadataContainer.innerHTML = '';
+            unitInput.disabled = false;
+            metadataContainer.style.display = 'none';
+
+            if (e.target.value === 'range') {
+                metadataContainer.style.display = 'block';
+                metadataContainer.innerHTML = `
+                    <div class="row">
+                        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Min:</label>
+                            <input type="number" step="any" class="form-control" name="features[${counter}][min]" autocomplete="off">
+                        </div>
+                        <div class="col-6 col-md-3 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Max:</label>
+                            <input type="number" step="any" class="form-control" name="features[${counter}][max]" autocomplete="off">
+                        </div>
+                        <div class="col-12 col-md-6 px-1 d-flex flex-row align-items-center">
+                            <label class="form-label">Units (comma-separated):</label>
+                            <input type="text" class="form-control" name="features[${counter}][units]" placeholder="e.g., mΩ, Ω, kΩ" autocomplete="off">
+                        </div>
+                    </div>
+                `;
+            } else if (e.target.value === 'multiselect') {
+                unitInput.disabled = true; // No unit for multiselect
+                metadataContainer.style.display = 'block';
+                metadataContainer.innerHTML = `
+                    <div class="col-12 px-1 d-flex flex-row align-items-center">
+                        <label class="form-label">Options (comma-separated):</label>
+                        <input type="text" class="form-control" name="features[${counter}][options]" placeholder="e.g., SMD, Through Hole" required autocomplete="off">
+                    </div>
+                `;
+            }
+        }
+    });
 
     // Add row button handler
     addRowBtn.addEventListener("click", function() {
@@ -341,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         icon: "success"
                     }).then(() => {
                         // Re-fetch and re-render the list without reloading the whole page
-                        fetchExistingFeatures(categoryIdInput.value); 
+                        fetchExistingFeatures(categoryIdInput.value);
                         
                         // Clear the "New Features" section and add one new row
                         newFeatureRowsContainer.innerHTML = '';
@@ -357,5 +492,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire("Error", "Something went wrong", "error");
             });
     });
+
+    // Initial row creation
+    createNewFeatureRow();
 });
 </script>

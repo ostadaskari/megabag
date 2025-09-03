@@ -80,8 +80,8 @@ $sql = "
         f.data_type,
         f.unit AS feature_unit,
         f.is_required,
-        pfv.value,
-        pfv.unit
+        f.metadata,
+        pfv.value
     FROM
         features f
     LEFT JOIN
@@ -94,29 +94,50 @@ $sql = "
 
 try {
     if ($stmt = $conn->prepare($sql)) {
-        // We need to bind the product_id first, followed by the category IDs.
-        $bind_params = array_merge([$types . 'i'], [$productId], $categoryIds);
+        // First param type string: product_id + category IDs
+        $bindTypes = 'i' . str_repeat('i', count($categoryIds));
+        $bindParams = array_merge([$bindTypes], [$productId], $categoryIds);
 
-        // The correct way to bind dynamically in older PHP versions.
+        // Reference trick for call_user_func_array
         $refs = [];
-        foreach ($bind_params as $key => $value) {
-            $refs[$key] = &$bind_params[$key];
+        foreach ($bindParams as $key => $value) {
+            $refs[$key] = &$bindParams[$key];
         }
         call_user_func_array([$stmt, 'bind_param'], $refs);
-        
+
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             $features = [];
             while ($row = $result->fetch_assoc()) {
-                $features[] = $row;
+                
+                // Decode metadata if it exists
+                $metadata = $row['metadata'] ? json_decode($row['metadata'], true) : null;
+                
+                // Get the units from metadata if available, otherwise from the unit column
+                $units = [];
+                if (isset($metadata['units']) && is_array($metadata['units'])) {
+                    $units = $metadata['units'];
+                } else if (!empty($row['feature_unit'])) {
+                    $units = array_map('trim', explode(',', $row['feature_unit']));
+                }
+                
+                $features[] = [
+                    'id' => $row['feature_id'],
+                    'name' => $row['feature_name'],
+                    'data_type' => $row['data_type'],
+                    'value' => $row['value'], // Send raw JSON string to front-end for parsing
+                    'unit' => $units, // Send units as an array
+                    'is_required' => (bool)$row['is_required'],
+                    'metadata' => $metadata
+                ];
             }
-            
+
             http_response_code(200);
             echo json_encode([
                 'success' => true,
                 'features' => $features
             ]);
-            
+
             $result->free();
         } else {
             handle_error($conn, "Query execution failed: " . $stmt->error);
@@ -128,6 +149,7 @@ try {
 } catch (Exception $e) {
     handle_error($conn, "An unexpected error occurred: " . $e->getMessage());
 }
+
 
 // Close the database connection.
 $conn->close();

@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $category_id = $_POST['category_id'] ?? null;
         $features = $_POST['features'] ?? [];
-        $valid_data_types = ['varchar(50)', 'decimal(12,3)', 'TEXT', 'boolean'];
+        // Add new data types for structured features
+        $valid_data_types = ['varchar(50)', 'decimal(15,7)', 'TEXT', 'boolean', 'range', 'multiselect'];
 
         if (!$category_id) {
             echo json_encode(['status' => 'error', 'message' => 'A category must be selected.']);
@@ -41,6 +42,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data_type = $feature['data_type'] ?? 'varchar(50)';
             $unit = trim($feature['unit'] ?? '');
             $is_required = isset($feature['is_required']) ? 1 : 0;
+            $metadata = null; // Initialize metadata as null
+
+            // Construct the metadata JSON based on the selected data_type
+            if ($data_type === 'range') {
+                $min = $feature['min'] ?? null;
+                $max = $feature['max'] ?? null;
+                $units = $feature['units'] ?? null;
+
+                // Create array of units from a comma-separated string
+                $units_array = !empty($units) ? array_map('trim', explode(',', $units)) : [];
+                $metadata = json_encode(['min' => $min, 'max' => $max, 'units' => $units_array]);
+
+            } else if ($data_type === 'multiselect') {
+                $options = $feature['options'] ?? null;
+
+                // Create array of options from a comma-separated string
+                $options_array = !empty($options) ? array_map('trim', explode(',', $options)) : [];
+                $metadata = json_encode(['options' => $options_array]);
+
+            }
 
             if (!$name) {
                 continue;
@@ -50,12 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
             }
 
-            $stmt = $conn->prepare("INSERT INTO features (category_id, name, data_type, unit, is_required) VALUES (?, ?, ?, ?, ?)");
+            // The SQL query is updated to include the `metadata` column
+            $stmt = $conn->prepare("INSERT INTO features (category_id, name, data_type, unit, is_required, metadata) VALUES (?, ?, ?, ?, ?, ?)");
             if ($stmt === false) {
                 throw new Exception('Database prepare failed: ' . $conn->error);
             }
 
-            $stmt->bind_param("isssi", $category_id, $name, $data_type, $unit, $is_required);
+            $stmt->bind_param("isssis", $category_id, $name, $data_type, $unit, $is_required, $metadata);
 
             if (!$stmt->execute()) {
                 $all_success = false;
