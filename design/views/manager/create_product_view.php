@@ -62,7 +62,7 @@
 
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
-                        <label class="form-label" for="manufacturer" title="Manufacturer">MFR:</label>
+                        <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
                         <input class="form-control" type="text" name="mfg" id="mfg" placeholder="Manufacturer" autocomplete="off"  />
 
                     </div>
@@ -75,26 +75,14 @@
                 <div class="row d-flex justify-content-between">
 
 
-                 <div class="col-12 col-md-2 px-2 my-2">
-                    <label class="form-label" for="name" title="Name">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name" placeholder="Name" autocomplete="off" required />
-
-                    </div>
-
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                        <input class="form-control" type="number" name="qty" id="qty" placeholder="Quantity" autocomplete="off" min="0" required />
+                        <input class="form-control" type="number" name="qty" id="qty" placeholder="Quantity" autocomplete="off" min="0"  />
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label for="location" class="form-label" title="location in Inventory">Location:</label>
                         <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off"  />
-                    </div>
-
-                    <div class="col-12 col-md-2 px-2 my-2">
-                        <label for="Received Code" class="form-label" title="Received Code">Received Code:</label>
-                        <input class="form-control" type="text" name="recieve_code" id="recieve_code" placeholder="Received Code" autocomplete="off"  />
-
                     </div>
 
                     <div class="col-12 col-md-2 px-2 my-2">
@@ -195,183 +183,243 @@
     </div>
 
 <script>
-    let categories = [];
-    const featuresContainer = document.getElementById('featuresContainer');
-    const categoryIdInput = document.getElementById('category_id');
+let categories = [];
+const featuresContainer = document.getElementById('featuresContainer');
+const categoryIdInput = document.getElementById('category_id');
 
-    async function fetchCategories() {
-        const response = await fetch('../ajax/fetch_leaf_categories.php');
-        categories = await response.json();
-        renderDropdown('');
+async function fetchCategories() {
+    const response = await fetch('../ajax/fetch_leaf_categories.php');
+    categories = await response.json();
+    renderDropdown('');
+}
+
+function renderDropdown(searchText) {
+    const dropdown = document.getElementById('category-dropdown');
+    dropdown.innerHTML = '';
+
+    const filtered = categories.filter(cat =>
+        cat.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    // Hide the dropdown if no search text or no results
+    if (searchText === '' || filtered.length === 0) {
+        dropdown.style.display = 'none'; // Hide the box
+        if (filtered.length === 0 && searchText !== '') {
+            dropdown.innerHTML = '<li>No results found</li>';
+            dropdown.style.display = 'block'; // Show "No results" message
+        }
+        return;
     }
 
-    function renderDropdown(searchText) {
-        const dropdown = document.getElementById('category-dropdown');
-        dropdown.innerHTML = '';
+    dropdown.style.display = 'block'; // Show the box when there are results
 
-        const filtered = categories.filter(cat =>
-            cat.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-
-        // Hide the dropdown if no search text or no results
-        if (searchText === '' || filtered.length === 0) {
-            dropdown.style.display = 'none'; // Hide the box
-            if (filtered.length === 0 && searchText !== '') {
-                dropdown.innerHTML = '<li>No results found</li>';
-                dropdown.style.display = 'block'; // Show "No results" message
-            }
-            return;
-        }
-
-        dropdown.style.display = 'block'; // Show the box when there are results
-
-        filtered.forEach(cat => {
-            const li = document.createElement('li');
-            li.textContent = cat.name;
-            li.classList.add('category-suggestion-item'); 
+    filtered.forEach(cat => {
+        const li = document.createElement('li');
+        li.textContent = cat.name;
+        li.classList.add('category-suggestion-item');
+        
+        li.onclick = () => {
+            document.getElementById('category_search').value = cat.name;
+            categoryIdInput.value = cat.id;
+            dropdown.innerHTML = '';
+            dropdown.style.display = 'none'; // Hide the box after selection
             
-            li.onclick = () => {
-                document.getElementById('category_search').value = cat.name;
-                categoryIdInput.value = cat.id;
-                dropdown.innerHTML = '';
-                dropdown.style.display = 'none'; // Hide the box after selection
-                
-                // Call the function to load features for the selected category
-                loadFeatures(cat.id);
-            };
-            dropdown.appendChild(li);
-        });
+            // Call the function to load features for the selected category
+            loadFeatures(cat.id);
+        };
+        dropdown.appendChild(li);
+    });
 
+}
+
+/**
+ * Fetches and displays dynamic features (specifications) for a given category.
+ * @param {number} categoryId The ID of the selected category.
+ */
+async function loadFeatures(categoryId) {
+    // Check if the container element exists before trying to manipulate it
+    if (!featuresContainer) {
+        console.error('Features container element not found.');
+        return;
     }
 
-    /**
-     * Fetches and displays dynamic features (specifications) for a given category.
-     * @param {number} categoryId The ID of the selected category.
-     */
-    async function loadFeatures(categoryId) {
-        // Clear previous features
-        
-        
-        if (!categoryId) {
-            return; // Exit if no category is selected
+    // Clear previous features
+    featuresContainer.innerHTML = '';
+
+    if (!categoryId) {
+        return; // Exit if no category is selected
+    }
+
+    try {
+        const response = await fetch(`../ajax/fetch_features.php?category_id=${categoryId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        const features = await response.json();
 
-        try {
-            const response = await fetch(`../ajax/fetch_features.php?category_id=${categoryId}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const features = await response.json();
+        if (features.length === 0) {
+            featuresContainer.innerHTML = '<div class="col-12"><p class="text-muted">No specifications found for this category or its parents.</p></div>';
+        } else {
+            features.forEach(feature => {
+                const featureElement = document.createElement('div');
+                featureElement.classList.add('col-12', 'col-md-4', 'px-2', 'my-2');
 
-            if (features.length === 0) {
-                featuresContainer.innerHTML = '<div class="col-12"><p class="text-muted">No specifications found for this category or its parents.</p></div>';
-            } else {
-                features.forEach(feature => {
-                    const featureElement = document.createElement('div');
-                    featureElement.classList.add('col-12', 'col-md-4', 'px-2', 'my-2');
+                let inputHtml = '';
+                
+                // Parse the metadata JSON if it exists
+                const metadata = feature.metadata ? JSON.parse(feature.metadata) : {};
 
-                    let inputHtml = '';
-                    
-                    // Logic to build the correct input HTML based on feature type
-                    if (feature.unit && feature.unit.trim() !== '') {
-                        const units = feature.unit.split(',').map(unit => unit.trim());
-                        const unitOptions = units.map(unit => `<option value="${unit}">${unit}</option>`).join('');
-                        
+                // Logic to build the correct input HTML based on feature data type
+                switch (feature.data_type) {
+                    case 'range':
+                        // Handle 'range' type with min/max inputs and optional units from metadata
+                        const min = metadata.min || '';
+                        const max = metadata.max || '';
+                        const units = metadata.units || []; // Correctly reads units from the metadata JSON
+                        const defaultUnit = metadata.defaultUnit || '';
+                        const unitOptions = units.map(unit => 
+                            `<option value="${unit}" ${unit === defaultUnit ? 'selected' : ''}>${unit}</option>`
+                        ).join('');
+
                         inputHtml = `
-                            <div class="input-group">
-                                <input class="form-control" type="${feature.input_type}" step="any" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
-                                <select class="form-select" name="feature_unit[${feature.id}]">
-                                    ${unitOptions}
-                                </select>
+                            <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                            <div class="row gx-1">
+                                <div class="col-4">
+                                    <input class="form-control" type="number" step="any" name="feature[${feature.id}][min]" placeholder="from ${min}" autocomplete="off" />
+                                </div>
+                                <div class="col-4">
+                                    <input class="form-control" type="number" step="any" name="feature[${feature.id}][max]" placeholder="to ${max}" autocomplete="off" />
+                                </div>
+                                ${units.length > 0 ? `
+                                <div class="col-3">
+                                    <select class="form-select" name="feature_unit[${feature.id}]">
+                                        ${unitOptions}
+                                    </select>
+                                </div>
+                                ` : ''}
                             </div>
                         `;
-                    } else {
-                        // Handle different input types without units
-                        switch (feature.input_type) {
-                            case 'text':
-                            case 'number':
-                                // For number inputs, set the step to allow for decimals
-                                inputHtml = `<input class="form-control" type="number" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" step="any" />`;
-                                break;
-                            case 'textarea':
-                                inputHtml = `<textarea class="form-control py-1" name="feature[${feature.id}]" placeholder="${feature.name}" rows="1"></textarea>`;
-                                break;
-                            case 'checkbox':
-                                // Corrected logic to handle checkboxes
-                                // The label will be rendered with the input. The value is "1" if checked.
-                                inputHtml = `<input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">`;
-                                break;
-                            default:
-                                inputHtml = `<input class="form-control" type="text" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />`;
-                                break;
-                        }
-                    }
-                    
-                    // Build the complete element HTML and append to the container
-                    const labelTitle = feature.input_type === 'checkbox' ? `${feature.name}` : feature.name;
-                    featureElement.innerHTML = `
-                        <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${labelTitle}:</label>
-                        ${inputHtml}
-                    `;
-                    featuresContainer.appendChild(featureElement);
-                });
-            }
+                        break;
+                        
+                    case 'multiselect':
+                        const options = metadata.options || [];
+                        inputHtml = `
+                            <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                            <select class="form-select" id="feature_${feature.id}" name="feature[${feature.id}][]" >
+                                ${options.map(opt => `
+                                    <option value="${opt}">${opt}</option>
+                                `).join('')}
+                            </select>
+                        `;
+                        break;
 
-        } catch (error) {
-            console.error('Error fetching features:', error);
-            featuresContainer.innerHTML = '<div class="col-12"><p class="text-danger">Failed to load specifications.</p></div>';
+                    case 'boolean':
+                        // Corrected logic: The label and input are now combined into a single HTML string
+                        // to ensure the label is always rendered correctly.
+                        inputHtml = `
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">
+                                <label class="form-check-label" for="feature_${feature.id}">${feature.name}</label>
+                            </div>
+                        `;
+                        break;
+
+                    case 'TEXT':
+                        inputHtml = `
+                            <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                            <textarea class="form-control py-1" name="feature[${feature.id}]" placeholder="${feature.name}" rows="1"></textarea>
+                        `;
+                        break;
+
+                    case 'varchar(50)':
+                    case 'decimal(15,7)':
+                    default:
+                        let inputType = 'text';
+                        if (feature.data_type === 'decimal(15,7)') {
+                            inputType = 'number';
+                        }
+                        
+                        // Fallback case that uses the 'unit' field directly.
+                        if (feature.unit && feature.unit.trim() !== '') {
+                            const unitOptions = feature.unit.split(',').map(unit => unit.trim()).map(unit => `<option value="${unit}">${unit}</option>`).join('');
+                            inputHtml = `
+                                <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="${inputType}" step="any" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" />
+                                    <select class="form-select" name="feature_unit[${feature.id}]">
+                                        ${unitOptions}
+                                    </select>
+                                </div>
+                            `;
+                        } else {
+                            inputHtml = `
+                                <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
+                                <input class="form-control" type="${inputType}" name="feature[${feature.id}]" placeholder="${feature.name}" autocomplete="off" step="any" />
+                            `;
+                        }
+                        break;
+                }
+
+                // Append the complete element to the container. The HTML is now pre-built in the switch case.
+                featureElement.innerHTML = inputHtml;
+                featuresContainer.appendChild(featureElement);
+            });
         }
+    } catch (error) {
+        console.error('Error fetching features:', error);
+        featuresContainer.innerHTML = '<div class="col-12"><p class="text-danger">Failed to load specifications.</p></div>';
+    }
+}
+
+
+// Reload suggestions when user types
+document.getElementById('category_search').addEventListener('input', function () {
+    const searchText = this.value;
+    renderDropdown(searchText);
+});
+
+// Hide the dropdown when the input field loses focus
+document.getElementById('category_search').addEventListener('blur', function () {
+    setTimeout(() => {
+        document.getElementById('category-dropdown').style.display = 'none';
+    }, 200); // A small delay to allow for click event to register
+});
+
+// Add an event listener to the hidden input to trigger feature loading
+categoryIdInput.addEventListener('change', (event) => {
+    loadFeatures(event.target.value);
+});
+
+// Load categories on page load
+fetchCategories();
+
+// Wait for the DOM to be fully loaded before running the script
+document.addEventListener('DOMContentLoaded', function() {
+    // Get a reference to the select element
+    const dateCodeSelect = document.getElementById('date-code');
+
+    // Define the starting year
+    const startYear = 2017;
+
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+
+    // Loop from the current year down to the start year
+    for (let year = currentYear; year >= startYear; year--) {
+        // Create a new option element for each year
+        const option = document.createElement('option');
+
+        // Set the value and display text of the option
+        option.value = year;
+        option.textContent = year;
+
+        // Append the option to the select element
+        dateCodeSelect.appendChild(option);
     }
 
-
-    // Reload suggestions when user types
-    document.getElementById('category_search').addEventListener('input', function () {
-        const searchText = this.value;
-        renderDropdown(searchText);
-    });
-
-    // Hide the dropdown when the input field loses focus
-    document.getElementById('category_search').addEventListener('blur', function () {
-        setTimeout(() => {
-            document.getElementById('category-dropdown').style.display = 'none';
-        }, 200); // A small delay to allow for click event to register
-    });
-
-    // Add an event listener to the hidden input to trigger feature loading
-    categoryIdInput.addEventListener('change', (event) => {
-        loadFeatures(event.target.value);
-    });
-
-    // Load categories on page load
-    fetchCategories();
-
-    // Wait for the DOM to be fully loaded before running the script
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get a reference to the select element
-        const dateCodeSelect = document.getElementById('date-code');
-
-        // Define the starting year
-        const startYear = 2017;
-
-        // Get the current year
-        const currentYear = new Date().getFullYear();
-
-        // Loop from the current year down to the start year
-        for (let year = currentYear; year >= startYear; year--) {
-            // Create a new option element for each year
-            const option = document.createElement('option');
-
-            // Set the value and display text of the option
-            option.value = year;
-            option.textContent = year;
-
-            // Append the option to the select element
-            dateCodeSelect.appendChild(option);
-        }
-
-        // Optional: You can set the currently selected year to the current year
-        dateCodeSelect.value = currentYear;
-    });
+    // Optional: You can set the currently selected year to the current year
+    dateCodeSelect.value = currentYear;
+});
 </script>
 
 

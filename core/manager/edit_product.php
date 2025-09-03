@@ -1,10 +1,10 @@
 <?php
-require_once '../db/db.php';
-// Check if a session has already been started before starting a new one.
-// This prevents the "Ignoring session_start()" notice.
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once '../db/db.php';
+
 // (ACL) Restrict access to admins/managers only
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
@@ -14,9 +14,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
 $errors = [];
 $success = '';
 $product = null;
-$images = []; 
+$images = [];
 $pdfs = [];
-$cover_image = null; // New variable to store the cover image
+$cover_image = null;
+$product_features = [];
 
 // Read success/error messages from URL (for SweetAlert)
 if (isset($_GET['success'])) {
@@ -38,8 +39,8 @@ if ($id > 0) {
     if (!$product) {
         $errors[] = 'Product not found.';
     } else {
-        // Fetch all images, but separate the cover image
-        $stmt = $conn->prepare("SELECT * FROM images WHERE product_id = ? ORDER BY is_cover DESC"); // Order by is_cover to get it first
+        // Fetch existing images and separate the cover image
+        $stmt = $conn->prepare("SELECT * FROM images WHERE product_id = ? ORDER BY is_cover DESC");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $all_images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -54,10 +55,26 @@ if ($id > 0) {
             }
         }
 
+        // Fetch PDFs
         $stmt = $conn->prepare("SELECT * FROM pdfs WHERE product_id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $pdfs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        // Fetch existing feature values and their types for display
+        $stmt = $conn->prepare("SELECT pfv.feature_id, pfv.value, f.data_type, f.unit, f.name FROM product_feature_values pfv JOIN features f ON pfv.feature_id = f.id WHERE pfv.product_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $product_features[$row['feature_id']] = [
+                'value' => json_decode($row['value'], true),
+                'data_type' => $row['data_type'],
+                'unit' => $row['unit'],
+                'name' => $row['name']
+            ];
+        }
         $stmt->close();
     }
 }
@@ -65,36 +82,34 @@ if ($id > 0) {
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['product_id']);
-    $name = trim($_POST['name']);
-    $p_n = trim($_POST['p_n']);
-    $MFG = trim($_POST['MFG']);
+    $pn = trim($_POST['p_n']);
+    $mfg = trim($_POST['MFG']);
     $qty = intval($_POST['qty']);
     $company_cmt = trim($_POST['company_cmt']);
     $location = trim($_POST['location']);
     $status = trim($_POST['status'] ?? 'available');
     $tag = trim($_POST['tag']);
     $date_code = trim($_POST['date_code']);
-    $receive_code = trim($_POST['recieve_code']);
     $category_id = intval($_POST['category_id']);
-    // Check if the 'rf' checkbox is set and assign 1 or 0
-    $rf = isset($_POST['rf']) ? 1 : 0; 
-    
-    // Get the features data from the form
-    $features = $_POST['features'] ?? [];
 
+    // Get the features data from the form, using the imitation's input names
+    // $features_values = $_POST['feature'] ?? [];
+    // $features_units = $_POST['feature_unit'] ?? [];
+     $submitted_features = $_POST['features'] ?? [];
 
-    if (empty($name)) {
-        $errors[] = "Product name is required.";
+    // Validation
+    if (empty($pn)) {
+        $errors[] = "Product part number is required.";
     }
 
     if (empty($errors)) {
-        // Update product details, including the new 'rf' column
-        $stmt = $conn->prepare("UPDATE products SET name=?, part_number=?, mfg=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, recieve_code=?, category_id=?, rf=?, updated_at=NOW() WHERE id=?");
-        $stmt->bind_param("sssissssssiii", $name, $p_n, $MFG, $qty, $company_cmt, $location, $status, $tag, $date_code, $receive_code, $category_id, $rf, $id);
+        // Update product details
+        $stmt = $conn->prepare("UPDATE products SET part_number=?, mfg=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, category_id=?, updated_at=NOW() WHERE id=?");
+        $stmt->bind_param("ssisssssii", $pn, $mfg, $qty, $company_cmt, $location, $status, $tag, $date_code, $category_id, $id);
         if ($stmt->execute()) {
             $stmt->close();
-            
-            // --- UPDATED LOGIC FOR SAVING FEATURES ---
+
+            // --- INLINE LOGIC FOR SAVING JSON-BASED FEATURES ---
             // First, delete all existing features for this product
             $stmtDelFeatures = $conn->prepare("DELETE FROM product_feature_values WHERE product_id = ?");
             $stmtDelFeatures->bind_param("i", $id);
@@ -102,62 +117,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtDelFeatures->close();
 
             // Then, re-insert the features submitted with the form
-            if (!empty($features)) {
-                // Fetch feature data types for validation
-                $feature_ids_in = implode(',', array_map('intval', array_keys($features)));
-                $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
-                $feature_types = [];
-                if ($feature_types_query) {
-                    while ($row = $feature_types_query->fetch_assoc()) {
-                        $feature_types[$row['id']] = $row['data_type'];
+            if (!empty($submitted_features)) {
+                // Fetch feature data types to correctly format the JSON value
+                $feature_ids_in = implode(',', array_map('intval', array_keys($submitted_features)));
+                $feature_info_query = $conn->query("SELECT id, data_type, metadata FROM features WHERE id IN ($feature_ids_in)");
+                
+                $feature_info = [];
+                if ($feature_info_query) {
+                    while ($row = $feature_info_query->fetch_assoc()) {
+                        $feature_info[$row['id']] = $row;
                     }
                 }
-                
+
                 // Prepare statement once outside the loop
-                $stmtInsertFeatures = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
-                
+                $stmtInsertFeatures = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value) VALUES (?, ?, ?)");
+
                 if ($stmtInsertFeatures === false) {
                     $errors[] = "Failed to prepare feature insertion statement: " . $conn->error;
                 } else {
-                    foreach ($features as $feature_id => $feature_data) {
-                        $value = trim($feature_data['value'] ?? '');
-                        $unit = trim($feature_data['unit'] ?? '');
-                        $data_type = $feature_types[$feature_id] ?? null;
+                    foreach ($submitted_features as $feature_id => $feature_data) {
+                        $data_type = $feature_info[$feature_id]['data_type'] ?? null;
+                        $metadata = json_decode($feature_info[$feature_id]['metadata'] ?? '{}', true);
 
-                        if (!empty($value)) {
-                            $value_to_save = $value;
+                        $value_to_save = [];
+
+                        // Check if the data is an array (for range, decimal with unit, etc.)
+                        if (is_array($feature_data)) {
                             switch ($data_type) {
-                                case 'decimal(12,3)':
-                                    $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                    if ($value_to_save === false) {
-                                        $errors[] = "Invalid decimal value for feature ID {$feature_id}.";
+                                case 'range':
+                                    $value_to_save['min'] = isset($feature_data['min']) ? filter_var($feature_data['min'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : null;
+                                    $value_to_save['max'] = isset($feature_data['max']) ? filter_var($feature_data['max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : null;
+                                    if (isset($feature_data['unit'])) {
+                                        $value_to_save['unit'] = htmlspecialchars($feature_data['unit'], ENT_QUOTES, 'UTF-8');
+                                    }
+                                    break;
+                                case 'multiselect':
+                                    // Data is an array of selected values.
+                                    $value_to_save['values'] = array_map('htmlspecialchars', $feature_data);
+                                    break;
+                                case 'decimal(15,7)':
+                                    // Data is an array with 'value' and 'unit' keys
+                                    $value_to_save['value'] = isset($feature_data['value']) ? filter_var($feature_data['value'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : null;
+                                    if (isset($feature_data['unit'])) {
+                                        $value_to_save['unit'] = htmlspecialchars($feature_data['unit'], ENT_QUOTES, 'UTF-8');
                                     }
                                     break;
                                 case 'boolean':
-                                    $value_to_save = ($value == '1') ? '1' : '0';
+                                    // Boolean checkbox value is in a nested array
+                                    $value_to_save['value'] = (isset($feature_data['value']) && $feature_data['value'] === '1');
                                     break;
-                                case 'TEXT':
                                 default:
-                                    // For TEXT, varchar, and other types, sanitize the input
-                                    $value_to_save = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                                    // Fallback for other array-based data types if they are added later
+                                    $value_to_save['value'] = 'Error: Invalid data format.';
                                     break;
                             }
-                            
-                            $unit_to_save = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8');
-                            
-                            if (empty($errors)) {
-                                $stmtInsertFeatures->bind_param("iiss", $id, $feature_id, $value_to_save, $unit_to_save);
-                                if (!$stmtInsertFeatures->execute()) {
-                                    $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmtInsertFeatures->error;
-                                }
+                        } else {
+                            // The data is a single value (string, integer, etc.)
+                            // This case will now only handle 'TEXT' and other simple types.
+                            switch ($data_type) {
+                                case 'varchar(50)':
+                                case 'TEXT':
+                                default:
+                                    $value_to_save['value'] = htmlspecialchars($feature_data, ENT_QUOTES, 'UTF-8');
+                                    break;
+                            }
+                        }
+
+                        // Encode the PHP array into a JSON string to save in the 'value' column
+                        $json_value_to_save = json_encode($value_to_save);
+
+                        if (empty($errors)) {
+                            $stmtInsertFeatures->bind_param("iis", $id, $feature_id, $json_value_to_save);
+                            if (!$stmtInsertFeatures->execute()) {
+                                $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmtInsertFeatures->error;
                             }
                         }
                     }
                     $stmtInsertFeatures->close();
                 }
             }
-            // --- END OF UPDATED LOGIC ---
-
+            // --- END OF INLINE LOGIC ---
 
             // --- File Upload Logic ---
             $imageDir = '../../uploads/images/';
@@ -198,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmtDelRecord->close();
 
                     // Upload new cover image
-                    $newName = $p_n . "-cover." . $fileExt;
+                    $newName = $pn . "-cover." . $fileExt;
                     $target = $imageDir . $newName;
 
                     if (move_uploaded_file($file['tmp_name'], $target)) {
@@ -221,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $result = $stmtCount->get_result();
                 $currentImgCount = $result->fetch_row()[0];
                 $stmtCount->close();
-                
+
                 foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
                     if ($_FILES['images']['error'][$index] === UPLOAD_ERR_OK) {
                         $size = $_FILES['images']['size'][$index];
@@ -233,7 +272,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         } elseif ($size > $maxFileSize) {
                             $errors[] = "Image file '$filename' size exceeds the 20MB limit.";
                         } else {
-                            $newName = $p_n . "-img-" . ($currentImgCount + $index + 1) . "." . $ext;
+                            $newName = $pn . "-img-" . ($currentImgCount + $index + 1) . "." . $ext;
                             $target = $imageDir . $newName;
 
                             if (move_uploaded_file($tmpName, $target)) {
@@ -264,13 +303,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $size = $_FILES['pdfs']['size'][$index];
                         $filename = $_FILES['pdfs']['name'][$index];
                         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-                        
+
                         if (!in_array($ext, $allowedDocExtensions)) {
                             $errors[] = "Document file '$filename' has an invalid file format.";
                         } elseif ($size > $maxFileSize) {
                             $errors[] = "Document file '$filename' size exceeds the 20MB limit.";
                         } else {
-                            $newName = $p_n . "-pdf-" . ($currentPdfCount + $index + 1) . "." . $ext;
+                            $newName = $pn . "-pdf-" . ($currentPdfCount + $index + 1) . "." . $ext;
                             $target = $pdfDir . $newName;
 
                             if (move_uploaded_file($tmpName, $target)) {
@@ -305,4 +344,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Fetch categories for the view
+$catsRes = $conn->query("SELECT * FROM categories");
+$categories = $catsRes->fetch_all(MYSQLI_ASSOC);
+
+// Load the view
 require_once '../../design/views/manager/edit_product_view.php';

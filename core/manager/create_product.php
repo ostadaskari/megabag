@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = (int) ($_POST['product_id'] ?? 0);
     $is_update = $product_id > 0;
 
-    $name = trim($_POST['name'] ?? '');
+
     $pn = trim($_POST['pn'] ?? '');
     $mfg = trim($_POST['mfg'] ?? '');
     $qty = (int) ($_POST['qty'] ?? 0);
@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = trim($_POST['status'] ?? 'available');
     $tag = trim($_POST['tag'] ?? '');
     $date_code = trim($_POST['date_code'] ?? '');
-    $recieve_code = trim($_POST['recieve_code'] ?? '');
-    $rf = trim($_POST['rf'] ?? '');
+
+
     
     $features_values = $_POST['feature'] ?? [];
     $features_units = $_POST['feature_unit'] ?? [];
@@ -40,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if ($is_update) {
             // It's an update. Prepare the UPDATE statement.
-            $stmt = $conn->prepare("UPDATE products SET name = ?, part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ?, tag = ?, date_code = ?, recieve_code = ?, rf = ? WHERE id = ?");
-            $stmt->bind_param("sssisiissssssi", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf, $product_id);
+            $stmt = $conn->prepare("UPDATE products SET  part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ?, tag = ?, date_code = ? WHERE id = ?");
+            $stmt->bind_param("ssisiissssi",  $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $product_id);
         } else {
             // It's a new product. Prepare the INSERT statement.
-            $stmt = $conn->prepare("INSERT INTO products (name, part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code, recieve_code, rf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssisiissssss", $name, $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code, $recieve_code, $rf);
+            $stmt = $conn->prepare("INSERT INTO products ( part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag, date_code  ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssisiissss",  $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $date_code);
         }
 
         if ($stmt->execute()) {
@@ -158,66 +158,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // --- UPDATED CODE FOR FEATURES ---
-            if (!empty($features_values)) {
-                // Fetch feature data types for validation
-                $feature_ids_in = implode(',', array_map('intval', array_keys($features_values)));
-                $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
-                $feature_types = [];
-                while ($row = $feature_types_query->fetch_assoc()) {
-                    $feature_types[$row['id']] = $row['data_type'];
-                }
-                
-                // If this is an update, delete all old feature values first
-                if ($is_update) {
-                    $conn->query("DELETE FROM product_feature_values WHERE product_id = $product_id");
-                }
-                
-                // Prepare statement once outside the loop
-                $stmt_features = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value, unit) VALUES (?, ?, ?, ?)");
-                
-                if ($stmt_features === false) {
-                    $errors[] = "Failed to prepare feature insertion statement: " . $conn->error;
-                } else {
-                    foreach ($features_values as $feature_id => $value) {
-                        $unit = $features_units[$feature_id] ?? null;
-                        $data_type = $feature_types[$feature_id] ?? null;
-                        
-                        $value_to_save = $value;
-                        switch ($data_type) {
-                            case 'decimal(12,3)':
-                                if (!empty($value)) {
-                                    $value_to_save = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                    if ($value_to_save === false || !is_numeric($value_to_save)) {
-                                        $errors[] = "Value for a decimal field is not a valid number.";
-                                    }
-                                }
-                                break;
-                            case 'TEXT':
-                                $value_to_save = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-                                break;
-                            case 'boolean':
-                                if ($value !== '1' && $value !== '0') {
-                                    $errors[] = "Value for a boolean field is not valid.";
-                                }
-                                break;
-                            case 'varchar(50)':
-                            default:
-                                $value_to_save = substr(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), 0, 50);
-                                break;
-                        }
+if (!empty($features_values)) {
+    // Fetch feature data types for validation
+    $feature_ids_in = implode(',', array_map('intval', array_keys($features_values)));
+    $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
+    $feature_types = [];
+    while ($row = $feature_types_query->fetch_assoc()) {
+        $feature_types[$row['id']] = $row['data_type'];
+    }
+    
+    // If this is an update, delete all old feature values first
+    if ($is_update) {
+        $conn->query("DELETE FROM product_feature_values WHERE product_id = " . intval($product_id));
+    }
+    
+    // Prepare the SQL statement for inserting features
+    // We are now only inserting into product_id, feature_id, and value
+    $stmt_features = $conn->prepare("INSERT INTO product_feature_values (product_id, feature_id, value) VALUES (?, ?, ?)");
+    
+    if ($stmt_features === false) {
+        $errors[] = "Failed to prepare feature insertion statement: " . $conn->error;
+    } else {
+        foreach ($features_values as $feature_id => $value) {
+            $unit = $features_units[$feature_id] ?? null;
+            $data_type = $feature_types[$feature_id] ?? null;
+            
+            // This is the new logic to create a single JSON object for the value
+            $feature_data = [];
 
-                        $unit_to_save = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8') ?? '';
+            switch ($data_type) {
+                case 'range':
+                    // Handle 'range' type which has min, max, and an optional unit
+                    $feature_data = [
+                        'min' => filter_var($value['min'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
+                        'max' => filter_var($value['max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
+                        'unit' => htmlspecialchars($unit, ENT_QUOTES, 'UTF-8') ?? ''
+                    ];
+                    break;
 
-                        if (empty($errors)) {
-                            $stmt_features->bind_param("iiss", $product_id, $feature_id, $value_to_save, $unit_to_save);
-                            if (!$stmt_features->execute()) {
-                                $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmt_features->error;
-                            }
-                        }
-                    }
-                    $stmt_features->close();
+                case 'multiselect':
+                    // Handle 'multiselect' which has multiple values
+                    $feature_data['values'] = array_map(function($val) {
+                        return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+                    }, $value);
+                    break;
+                
+                case 'boolean':
+                    // Handle 'boolean' which has a single value (1 or 0)
+                    $feature_data['value'] = ($value === '1') ? 1 : 0;
+                    break;
+
+                case 'decimal(15,7)':
+                    // Handle 'decimal' with an optional unit
+                    $feature_data['value'] = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    $feature_data['unit'] = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8') ?? '';
+                    break;
+                
+                case 'varchar(50)':
+                case 'TEXT':
+                default:
+                    // Handle simple text inputs
+                    $feature_data['value'] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                    $feature_data['unit'] = htmlspecialchars($unit, ENT_QUOTES, 'UTF-8') ?? '';
+                    break;
+            }
+
+            // Encode the PHP array into a JSON string to save in the 'value' column
+            $value_to_save = json_encode($feature_data);
+
+            if (empty($errors)) {
+                // Bind parameters for the prepared statement: product_id, feature_id, and the JSON string value
+                $stmt_features->bind_param("iis", $product_id, $feature_id, $value_to_save);
+                if (!$stmt_features->execute()) {
+                    $errors[] = "Failed to save feature with ID {$feature_id}. Database error: " . $stmt_features->error;
                 }
             }
+        }
+        $stmt_features->close();
+    }
+}
             // --- END OF UPDATED CODE ---
 
             $message = $is_update ? "Product updated successfully!" : "Product created successfully!";
