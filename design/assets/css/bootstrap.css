@@ -409,6 +409,9 @@ position: relative !important;
 .text-danger {
   color: #dc3545; 
 }
+.text-success{
+  color:green;
+}
 .text-muted {
   color: #6c757d;
 }

@@ -1441,6 +1441,8 @@ font-weight: 300;
   display: flex;
   align-content:center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .swal2-cancel{

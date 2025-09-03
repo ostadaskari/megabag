@@ -29,9 +29,6 @@
     pointer-events: none;
 }
 
-
-
-
 /* design\views\manager\stock_issue_view.php Autocomplete dropdown styling */
 .autocomplete-dropdown {
     position: absolute;
@@ -286,22 +283,22 @@
             background-color: #f8f9fa;
         }
 
-           /*     CSV   */
+  /*     CSV   */
 
-           /* Custom styles for the receive_stock_csv_view.php page */
+/* Custom styles for the receive_stock_csv_view.php page */
 
 /* Highlight newly added rows from the uploaded CSV */
 .highlight-new {
-    background-color: #e6ffe6 !important; /* A mild green background */
-    border-left: 3px solid #28a745; /* A green border on the left to stand out */
-    font-weight: 500; /* Slightly bolder text */
-    transition: background-color 0.3s ease; /* Smooth transition for background changes */
+    background-color: #e6ffe6 !important; 
+    border-left: 3px solid #28a745; 
+    font-weight: 500; 
+    transition: background-color 0.3s ease;
 }
 
 /* Style for the category autocomplete container */
 .category-autocomplete-container {
     position: relative;
-    display: inline-block; /* Prevents the container from taking up the full width of the cell */
+    display: inline-block; 
 }
 
 /* Style for the category search input field */
@@ -364,14 +361,14 @@
         margin: auto;
     }
 
-        /* Add this CSS to make the cursor a pointer on hover */
+ /* Add this CSS to make the cursor a pointer on hover */
     #productsTableBody tr:hover {
         cursor: pointer;
     }
 
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #0d6efd; /* Bootstrap primary color */
+            border-left-color: #0d6efd; 
             border-radius: 50%;
             width:50px;
             height:50px;
@@ -393,7 +390,7 @@
 .part-number-existed {
     border-bottom: 2px solid #dc3545;
     display: inline-block;
-    line-height: 1; /* Aligns the border tightly under the text */
+    line-height: 1;
 }
 .edit-link {
     color: #dc3545;
@@ -431,6 +428,7 @@ margin-left: 0.5rem;
     color: #6b7280;
 }
 
+/* for zoomy */
 .img-magnifier-glass {
     position: absolute;
     border: 3px solid #000;
@@ -444,7 +442,3 @@ margin-left: 0.5rem;
     z-index: 1000;
 }
 
-.imgCover {
-  position: relative;
-  overflow: hidden;
-}
