@@ -1228,6 +1228,36 @@ fill:var(--main-text-color);
   display: none;
 }
 
+
+.feature-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.feature-row .feature-content {
+  flex: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 8px;
+  overflow-x: auto;
+}
+
+.feature-row .feature-actions {
+  flex: 0 0 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #fff;
+  border-left: 1px solid #ddd;
+}
+
+
 /* ##################### end Categories ################## */
 
 /* ##################### stock in // List-Of-Receives ################## */
