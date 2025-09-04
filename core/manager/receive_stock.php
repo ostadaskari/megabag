@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
         $product_id = isset($p['product_id']) ? (int)$p['product_id'] : 0;
         $qty_received = isset($p['qty_received']) ? (int)$p['qty_received'] : 0;
         $purchase_code = $p['purchase_code'] ?? null;
+        $vrm_x_code = $p['vrm_x_code'] ?? null;
         $date_code = $p['date_code'] ?? date('Y');
         $remarks = trim($p['remarks'] ?? '');
 
@@ -55,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
         // Insert into product_lots
         $stmt = $conn->prepare("
             INSERT INTO product_lots 
-            (product_id, user_id, purchase_code, x_code, qty_received, qty_available, date_code) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (product_id, user_id, purchase_code, x_code, vrm_x_code, qty_received, qty_available, date_code) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->bind_param("iissiii", $product_id, $user_id, $purchase_code, $x_code, $qty_received, $qty_received, $date_code);
+        $stmt->bind_param("iisssiii", $product_id, $user_id, $purchase_code, $x_code, $vrm_x_code, $qty_received, $qty_received, $date_code);
         if (!$stmt->execute()) {
             $errors[] = "Row " . ($index + 1) . ": Failed to insert into product_lots.";
             continue;

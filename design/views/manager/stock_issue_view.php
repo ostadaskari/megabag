@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
 
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
@@ -75,30 +75,6 @@ Swal.fire({
 </style>
 
 <script>
-
-    // Select all inputs that trigger suggestions
-    const inputs = document.querySelectorAll('.product-search');
-
-    document.addEventListener('click', (e) => {
-    const clickedRow = e.target.closest('.stock-row');
-
-    // Close other opened rows
-    document.querySelectorAll('.stock-row.is-open').forEach(r => {
-        if (r !== clickedRow) {
-        r.classList.remove('is-open');
-        const box = r.querySelector('.category-suggestions');
-        if (box) box.style.display = 'none';
-        }
-    });
-
-    // If clicked inside a row, open it
-    if (clickedRow) {
-        clickedRow.classList.add('is-open');
-        const box = clickedRow.querySelector('.category-suggestions');
-        if (box) box.style.display = 'block';
-    }
-    });
-
 // Keep a global counter for row indices
 let rowCounter = 0;
 
@@ -108,9 +84,9 @@ function createRowHtml(index) {
         <div class="stock-row border p-1 rounded mb-1 bg-light">
             <div class="row g-2 align-items-end">
                 <div class="col-6 col-md-2 px-1 position-relative">
-                    <label for="productInput" class="form-label">Product:</label>
-                    <input type="text" name="products[${index}][product_search]" class="form-control product-search" placeholder="Search name/tag/part" autocomplete="off" required>
-                    <input type="hidden" name="products[${index}][product_id]" class="product-id">
+                    <label for="productInput" class="form-label">X-Code:</label>
+                    <input type="text" name="products[${index}][lot_search]" class="form-control lot-search" placeholder="Search by X-Code" autocomplete="off" required>
+                    <input type="hidden" name="products[${index}][product_lot_id]" class="product-lot-id">
                 </div>
                 <div class="col-6 col-md-3 px-1">
                     <label for="quantityInput" class="form-label">QTY: <span class="text-muted small current-qty">(Available: <span class="qty-value" style="color: green;">--</span>)</span></label>
@@ -180,9 +156,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.btn-remove-row').classList.add('d-none');
 });
 
-// Live input listener for product and user search
+// Live input listener for product lot and user search
 document.addEventListener('input', function(e) {
-    if (e.target.classList.contains('product-search')) {
+    // Handle product lot search
+    if (e.target.classList.contains('lot-search')) {
         const input = e.target;
         const keyword = input.value;
         const parentCol = input.closest('.position-relative');
@@ -194,7 +171,7 @@ document.addEventListener('input', function(e) {
             parentCol.appendChild(dropdown);
         }
 
-        const hiddenInput = input.closest('.stock-row').querySelector('.product-id');
+        const hiddenInput = input.closest('.stock-row').querySelector('.product-lot-id');
         const qtyInput = input.closest('.stock-row').querySelector('.qty-input');
         const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
 
@@ -208,16 +185,17 @@ document.addEventListener('input', function(e) {
         }
 
         if (keyword.length >= 2) {
-            fetch(`../ajax/search_products_by_keyword.php?keyword=${encodeURIComponent(keyword)}`)
+            fetch(`../ajax/search_lot_by_x.php?keyword=${encodeURIComponent(keyword)}`)
                 .then(res => res.json())
                 .then(data => {
-                    showDropdown(data, input, dropdown, 'product-id', 'id', 'name', 'part_number', true);
+                    showDropdown(data, input, dropdown, 'product-lot-id', 'id', 'x_code', 'part_number', true);
                 });
         } else {
             if (dropdown) dropdown.style.display = 'none';
         }
     }
 
+    // Handle user search
     if (e.target.classList.contains('user-search')) {
         const input = e.target;
         const keyword = input.value;
@@ -262,7 +240,7 @@ document.addEventListener('click', function (e) {
 });
 
 // Show dropdown
-function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, secondaryKey, isProduct = false) {
+function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, secondaryKey, isLot = false) {
     dropdown.innerHTML = '';
     
     if (data.length > 0) {
@@ -279,26 +257,15 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
                 dropdown.innerHTML = ''; // Clear dropdown content
                 dropdown.style.display = 'none'; // Hide the dropdown
 
-                // Fetch and display product quantity
-                if (isProduct) {
-                    fetch(`../ajax/get_product_qty.php?product_id=${item[idKey]}`)
-                        .then(res => res.json())
-                        .then(qtyData => {
-                            const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
-                            const qtyInput = input.closest('.stock-row').querySelector('.qty-input');
-                            if (qtyEl) {
-                                qtyEl.textContent = qtyData.qty;
-                                qtyInput.max = qtyData.qty; // Set max attribute
-                                qtyInput.value = Math.min(qtyInput.value, qtyData.qty); // Adjust value if it exceeds max
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching quantity:', error);
-                            const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
-                            if (qtyEl) {
-                                qtyEl.textContent = '--';
-                            }
-                        });
+                // Fetch and display product lot quantity
+                if (isLot) {
+                    const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
+                    const qtyInput = input.closest('.stock-row').querySelector('.qty-input');
+                    if (qtyEl) {
+                        qtyEl.textContent = item.qty_available;
+                        qtyInput.max = item.qty_available; // Set max attribute
+                        qtyInput.value = Math.min(qtyInput.value, item.qty_available); // Adjust value if it exceeds max
+                    }
                 }
             });
             dropdown.appendChild(div);
@@ -310,15 +277,15 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
     }
 }
 
-// Check if product-id and user-id are filled before allowing form submission
+// Check if product-lot-id and user-id are filled before allowing form submission
 document.getElementById('groupIssueForm').addEventListener('submit', function (e) {
     let valid = true;
 
     document.querySelectorAll('.stock-row').forEach(row => {
-        const productId = row.querySelector('.product-id')?.value;
+        const productLotId = row.querySelector('.product-lot-id')?.value;
         const userId = row.querySelector('.user-id')?.value;
 
-        if (!productId || !userId) {
+        if (!productLotId || !userId) {
             valid = false;
         }
     });
@@ -328,7 +295,7 @@ document.getElementById('groupIssueForm').addEventListener('submit', function (e
         Swal.fire({
             icon: 'error',
             title: 'Missing Fields',
-            text: 'Please make sure you have selected a valid product and user for all rows from the dropdowns.'
+            text: 'Please make sure you have selected a valid product lot and user for all rows from the dropdowns.'
         });
     }
 });
