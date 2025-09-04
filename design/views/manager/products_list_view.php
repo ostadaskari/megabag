@@ -180,7 +180,7 @@
                                         // Option A: Simple comma-separated list
                                         // featureDisplayValue = feature.value.join(', ');
                                         
-                                        // Option B: Nicer looking badges (requires Bootstrap)
+                                        // Option B: Nicer looking badges
                                         featureDisplayValue = feature.value.map(val => `<span class="badge bg-secondary mx-1">${val}</span>`).join(' ');
 
                                     } 

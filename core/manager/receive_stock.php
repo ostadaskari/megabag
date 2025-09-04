@@ -1,7 +1,6 @@
 <?php
 require_once '../db/db.php';
-// Check if a session has already been started before starting a new one.
-// This prevents the "Ignoring session_start()" notice.
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -20,41 +19,68 @@ if (isset($_GET['success'])) {
     $success = $_GET['success'];
 }
 if (isset($_GET['error'])) {
-    $errors = explode(' | ', $_GET['error']); // Returns an array of strings, 
+    $errors = explode(' | ', $_GET['error']);
 }
 
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_array($_POST['products'])) {
     $products = $_POST['products'];
     $user_id = $_SESSION['user_id'];
-    $now = date('Y-m-d H:i:s');
 
-    foreach ($products as $index => $product) {
-        $product_id = isset($product['product_id']) ? (int) $product['product_id'] : 0;
-        $quantity = isset($product['qty_received']) ? (int) $product['qty_received'] : 0;
-        $notes = trim($product['remarks'] ?? '');
+    foreach ($products as $index => $p) {
+        $product_id = isset($p['product_id']) ? (int)$p['product_id'] : 0;
+        $qty_received = isset($p['qty_received']) ? (int)$p['qty_received'] : 0;
+        $purchase_code = $p['purchase_code'] ?? null;
+        $date_code = $p['date_code'] ?? date('Y');
+        $remarks = trim($p['remarks'] ?? '');
 
+        // Validate inputs
         if ($product_id <= 0) {
             $errors[] = "Row " . ($index + 1) . ": Invalid product selection.";
             continue;
         }
-
-        if ($quantity <= 0) {
+        if ($qty_received <= 0) {
             $errors[] = "Row " . ($index + 1) . ": Quantity must be greater than 0.";
             continue;
         }
 
-        // Insert into stock_receipts
-        $stmt = $conn->prepare("INSERT INTO stock_receipts (product_id, user_id, qty_received, remarks, created_at) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiiss", $product_id, $user_id, $quantity, $notes, $now);
+        // Generate unique x_code
+        try {
+            $x_code = 'X' . strtoupper(bin2hex(random_bytes(4)));
+        } catch (Exception $e) {
+            $errors[] = "Row " . ($index + 1) . ": Failed to generate x_code.";
+            continue;
+        }
+
+        // Insert into product_lots
+        $stmt = $conn->prepare("
+            INSERT INTO product_lots 
+            (product_id, user_id, purchase_code, x_code, qty_received, qty_available, date_code) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+        $stmt->bind_param("iissiii", $product_id, $user_id, $purchase_code, $x_code, $qty_received, $qty_received, $date_code);
         if (!$stmt->execute()) {
+            $errors[] = "Row " . ($index + 1) . ": Failed to insert into product_lots.";
+            continue;
+        }
+
+        $lot_id = $conn->insert_id;
+
+        // Insert into stock_receipts
+        $stmt2 = $conn->prepare("
+            INSERT INTO stock_receipts 
+            (product_lot_id, user_id, qty_received, remarks) 
+            VALUES (?, ?, ?, ?)
+        ");
+        $stmt2->bind_param("iiis", $lot_id, $user_id, $qty_received, $remarks);
+        if (!$stmt2->execute()) {
             $errors[] = "Row " . ($index + 1) . ": Failed to insert into stock_receipts.";
             continue;
         }
 
         // Update product quantity
         $update = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
-        $update->bind_param("ii", $quantity, $product_id);
+        $update->bind_param("ii", $qty_received, $product_id);
         if (!$update->execute()) {
             $errors[] = "Row " . ($index + 1) . ": Failed to update product stock.";
             continue;

@@ -115,8 +115,6 @@ try {
 
                 if (json_last_error() === JSON_ERROR_NONE && is_array($decoded_json)) {
                     
-                    // ================= START OF MODIFIED LOGIC =================
-                    
                     if ($feature['data_type'] === 'range') {
                         // Handle range type (min/max)
                         $feature_value = isset($decoded_json['min'], $decoded_json['max']) 
@@ -141,9 +139,6 @@ try {
                     if (isset($decoded_json['unit'])) {
                         $feature_unit = $decoded_json['unit'];
                     }
-
-                    // ================= END OF MODIFIED LOGIC =================
-
                 } else {
                     // Fallback to the original value if JSON decoding fails
                     $feature_value = $feature['value'];
