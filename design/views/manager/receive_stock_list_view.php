@@ -244,10 +244,6 @@
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK'
             });
-            // Clean up the URL to prevent the alert on refresh
-            urlParams.delete('status');
-            history.replaceState(null, '', `?${urlParams.toString()}`);
-
         } else if (status === 'error') {
             Swal.fire({
                 title: 'Error!',
@@ -256,7 +252,18 @@
                 confirmButtonColor: '#d33',
                 confirmButtonText: 'OK'
             });
-            // Clean up the URL to prevent the alert on refresh
+        } else if (status === 'updated') {
+            Swal.fire({
+                title: 'Updated!',
+                text: 'The receipt has been updated.',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
+        
+        // Clean up the URL after displaying the alert
+        if (status) {
             urlParams.delete('status');
             history.replaceState(null, '', `?${urlParams.toString()}`);
         }

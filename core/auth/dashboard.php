@@ -19,6 +19,7 @@ $allowed_pages = [
     'manage_categories' => '../manager/manage_categories.php',
     'receive_stock' => '../manager/receive_stock.php',
     'list_receipts' => '../manager/list_receipts.php',
+    'edit_receipt' => '../manager/edit_receipt.php',
     'receive_csv' => '../csv/receive_csv.php',
     'stock_issue' => '../manager/stock_issue.php',
     'list_issues' => '../manager/list_issues.php',
