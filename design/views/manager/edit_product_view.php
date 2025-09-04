@@ -5,7 +5,7 @@
             <svg width="24" height="24" fill="currentColor" class="bi bi-pen mx-1 me-2" viewBox="0 0 16 16">
                 <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
             </svg>
-            Edit Product</h2>
+            Edit Part</h2>
 
         <a href="../auth/dashboard.php?page=products_list" class="backBtn">
             <svg width="24" height="24"fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
@@ -429,13 +429,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         const max = metadata.max || '';
                         inputHtml = `
                             <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
-                            <div class="row gx-1">
-                                <div class="col-3">
+                            <div class="row gx-1 d-flex justify-content-between">
+                                <div class="col-4">
                                     <input class="form-control" type="number" step="any"
                                         name="features[${feature.id}][min]"
                                         value="${valMin}" placeholder="from ${min}" />
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <input class="form-control" type="number" step="any"
                                         name="features[${feature.id}][max]"
                                         value="${valMax}" placeholder="to ${max}" />
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         inputHtml = `
                             <label class="form-label">${feature.name}${feature.is_required ? ' *' : ''}</label>
                             <textarea class="form-control py-1" name="features[${feature.id}]"
-                                placeholder="${feature.name}" rows="2">${value}</textarea>`;
+                                placeholder="${feature.name}" rows="1">${value}</textarea>`;
                         break;
                     default: {
                         const inputType = feature.data_type === 'decimal(15,7)' ? 'number' : 'text';

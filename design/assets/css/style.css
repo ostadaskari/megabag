@@ -1535,3 +1535,10 @@ font-weight: 300;
 .stock-row.is-open {
   z-index: 9999;
 }
+/* style to remove the eye icon in Edge and Chrome browser */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-password-toggle {
+    display: none;
+    -webkit-appearance: none;
+}
