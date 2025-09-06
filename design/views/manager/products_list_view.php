@@ -255,15 +255,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4">
-                                        <div class="d-flex flex-column align-items-end">
-                                            <div class="imgCover mb-2">
-                                                <img src="${mainImageSrc}" class="img-fluid w-100">
-                                            </div>
-                                            <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
-                                                ${imageListHtml}
-                                            </ul>
-
-                                        </div>
+                                        <div class="d-flex flex-column align-items-end" id="myZoom"></div>
                                     </div>
                                 </div>
 
@@ -277,29 +269,28 @@
                                 </div>
                             </div>
                         `;
-                        //################### for zoomy #################
-                            // Activate magnifier on the main image after it is added to the DOM
-                            const mainImageInModal = document.querySelector('#product-images img');
-                            if (mainImageInModal) {
-                                magnify(mainImageInModal, 2);
-                            }
+                       
+                        if (images && images.length > 0) {
+                            // Prepare an array in the proper format for Zoomy
+                            const zoomImages = images.map(img => ({
+                                image: img.file_path,  // main image
+                                thumb: img.file_path   // if no separate thumbnail, use the main image
+                            }));
 
-                            // Also, when a thumbnail is clicked, the main image changes
-                            document.querySelectorAll('.itemfile span img').forEach(img => {
-                                img.addEventListener('click', () => {
-                                    const mainImg = document.querySelector('.imgCover img');
-                                    mainImg.src = img.src;
+                            // Get the target element for Zoomy
+                            const el = document.getElementById('myZoom');
 
-                                    // Remove the previous magnifier
-                                    const oldGlass = document.querySelector('.img-magnifier-glass');
-                                    if (oldGlass) oldGlass.remove();
-
-                                    // Activate magnifier again on the new main image
-                                    magnify(mainImg, 2);
-                                });
+                            // Initialize the Zoomy plugin (pure JS version)
+                            zoomy(el, zoomImages, {
+                                width: 300,
+                                height: 300,
+                                zoomScale: 2,
+                                thumbHide: false // set to true if you want to hide thumbnails
                             });
+                        }
 
-                        //################### end for zoomy #################
+
+
                         // Add event listener for image thumbnails
                         document.querySelectorAll('.itemfile span img').forEach(img => {
                             img.addEventListener('click', () => {
@@ -412,76 +403,91 @@
 </script>
 
 
+<!-- for zoomy -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function magnify(img, zoom) {
-    // Create magnifier glass
-    let glass = document.createElement("div");
-    glass.className = "img-magnifier-glass";
-    glass.style.display = "none";      // Initially hidden
-    glass.style.opacity = "0";         // Fade effect
+(function() {
+    function zoomy(element, urls, options) {
+        if (!urls) return;
+        if (typeof urls === 'string') urls = [urls];
+        options = options || {};
 
-    // Insert glass
-    img.parentElement.insertBefore(glass, img);
+        // Options
+        const thumbHide = options.thumbHide || urls.length < 2; // Hide thumbnails if only one image
+        const width = options.width || 300;                      // Width of the zoom container
+        const height = options.height || 300;                    // Height of the zoom container
+        const zoomScale = options.zoomScale || 2;               // Zoom magnification on hover
 
-    // Glass background
-    glass.style.backgroundImage = `url('${img.src}')`;
-    glass.style.backgroundRepeat = "no-repeat";
-    glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+        // Set element size and add class
+        element.style.width = width + 'px';
+        element.style.height = height + 'px';
+        element.classList.add('zoom');
 
-    let bw = 3;             // border width
-    let w = glass.offsetWidth / 2;
-    let h = glass.offsetHeight / 2;
+        // Determine if thumbnails are objects with 'image' and 'thumb'
+        const thumbMode = typeof urls[0] !== 'string';
+        const firstImage = thumbMode ? urls[0].image : urls[0];
 
-    // Mouse enter: show glass with fade
-    img.addEventListener("mouseenter", () => {
-        glass.style.display = "block";
-        glass.style.transition = "opacity 0.3s";
-        glass.style.opacity = "1";
-        img.style.cursor = "none";  // hide cursor
-    });
+        // Main zoom container
+        let html = `<div class="zoom-main" style="
+                        width:100%; height:100%; 
+                        background-image:url('${firstImage}');
+                        background-size:100%;
+                        background-position:center;
+                        background-repeat:no-repeat;
+                        transition: background-size 0.3s, background-position 0.1s;
+                        position:relative;">
+                    </div>`;
 
-    // Mouse leave: hide glass with fade
-    img.addEventListener("mouseleave", () => {
-        glass.style.opacity = "0";
-        img.style.cursor = "default"; 
-        setTimeout(() => { glass.style.display = "none"; }, 300); // wait for fade
-    });
+        // Thumbnails container
+        if (!thumbHide) {
+            html += `<div class="zoom-thumb">`;
+            urls.forEach((url) => {
+                const imgSrc = thumbMode ? url.thumb : url;
+                const mainSrc = thumbMode ? url.image : url;
+                html += `<img class="zoom-click" src="${imgSrc}" data-url="${mainSrc}" style="cursor:pointer; object-fit:cover;">`;
+            });
+            html += `</div>`;
+        }
 
-    // Move magnifier
-    glass.addEventListener("mousemove", moveMagnifier);
-    img.addEventListener("mousemove", moveMagnifier);
-    glass.addEventListener("touchmove", moveMagnifier);
-    img.addEventListener("touchmove", moveMagnifier);
+        element.innerHTML = html;
 
-    function moveMagnifier(e) {
-        e.preventDefault();
-        let pos = getCursorPos(e);
-        let x = pos.x;
-        let y = pos.y;
+        const zoomMain = element.querySelector('.zoom-main');
 
-        // Limit x/y so the magnifier stays fully inside the image
-        x = Math.max(w / zoom, Math.min(img.width - w / zoom, x));
-        y = Math.max(h / zoom, Math.min(img.height - h / zoom, y));
+        // Zoom on mouse enter
+        zoomMain.addEventListener('mouseenter', () => {
+            zoomMain.style.backgroundSize = `${zoomScale * 100}%`;
+        });
 
-        glass.style.left = (x - w) + "px";
-        glass.style.top = (y - h) + "px";
-        glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
+        // Move background on mouse move
+        zoomMain.addEventListener('mousemove', (e) => {
+            const rect = zoomMain.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            const xPercent = (offsetX / rect.width) * 100;
+            const yPercent = (offsetY / rect.height) * 100;
+            zoomMain.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+        });
+
+        // Reset zoom on mouse leave
+        zoomMain.addEventListener('mouseleave', () => {
+            zoomMain.style.backgroundSize = '100%';
+            zoomMain.style.backgroundPosition = 'center';
+        });
+
+        // Click on thumbnails to change main image
+        const zoomClicks = element.querySelectorAll('.zoom-click');
+        zoomClicks.forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const newUrl = img.getAttribute('data-url');
+                zoomMain.style.backgroundImage = `url('${newUrl}')`;
+            });
+        });
     }
 
-    function getCursorPos(e) {
-        let a = img.getBoundingClientRect();
-        let x = e.pageX - a.left - window.pageXOffset;
-        let y = e.pageY - a.top - window.pageYOffset;
-        return {x, y};
-    }
-}
-
-// Activate magnifier on main image
-document.addEventListener("DOMContentLoaded", function() {
-    const mainImage = document.querySelector('#product-images img');
-    if (mainImage) magnify(mainImage, 3);
-});
-
-
+    // Add zoomy function to the global window object
+    window.zoomy = zoomy;
+})();
 </script>
+

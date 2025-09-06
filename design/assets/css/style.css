@@ -1152,6 +1152,7 @@ fill:var(--main-text-color);
   }
 }
 /* ########### end search box ########### */
+
 /* ##################### Categories ################## */
    .category-tree {
     list-style: none;
@@ -1172,7 +1173,7 @@ fill:var(--main-text-color);
 }
 
 .tree span {
-  font-size: 15px;
+  font-size: 18px;
   font-style: italic;
   margin: 0 5px 0 0;
 }
