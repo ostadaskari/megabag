@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     $newPurchaseCode = $_POST['purchase_code'] ?? '';
     $newVrmXCode = $_POST['vrm_x_code'] ?? '';
     $newDateCode = $_POST['date_code'] ?? '';
+    $newLotLocation = $_POST['lot_location'] ?? '';
+    $newProjectName = $_POST['project_name'] ?? '';
+    $isLocked = isset($_POST['lock']) ? 1 : 0;
     $newRemarks = $_POST['remarks'] ?? '';
     
     // Ensure all required fields are present
@@ -64,15 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
             
             // Step 4: Update the stock_receipts table
             $updateReceipt = $conn->prepare("UPDATE stock_receipts SET qty_received = ?, remarks = ? WHERE id = ?");
-            $updateReceipt->bind_param("isi", $newQty,  $newRemarks, $receiptId);
+            $updateReceipt->bind_param("isi", $newQty, $newRemarks, $receiptId);
             if (!$updateReceipt->execute()) {
                 throw new Exception("Failed to update stock receipt.");
             }
             $updateReceipt->close();
 
             // Step 5: Update the product_lots table with new values
-            $updateLot = $conn->prepare("UPDATE product_lots SET qty_received = ?, qty_available = ?, purchase_code = ?, vrm_x_code = ?, date_code = ? WHERE id = ?");
-            $updateLot->bind_param("iissii", $newQty, $newQty, $newPurchaseCode, $newVrmXCode, $newDateCode, $lotId);
+            $updateLot = $conn->prepare("UPDATE product_lots SET qty_received = ?, qty_available = ?, purchase_code = ?, vrm_x_code = ?, date_code = ?, lot_location = ?, project_name = ?, `lock` = ? WHERE id = ?");
+            $updateLot->bind_param("iississii", $newQty, $newQty, $newPurchaseCode, $newVrmXCode, $newDateCode, $newLotLocation, $newProjectName, $isLocked, $lotId);
             if (!$updateLot->execute()) {
                 throw new Exception("Failed to update product lot.");
             }
@@ -111,6 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
                 pl.vrm_x_code, 
                 pl.date_code,
                 pl.x_code,
+                pl.lot_location,
+                pl.project_name,
+                pl.lock AS is_locked,
                 p.part_number
             FROM stock_receipts sr
             JOIN product_lots pl ON sr.product_lot_id = pl.id

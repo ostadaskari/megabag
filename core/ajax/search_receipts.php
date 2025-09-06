@@ -14,10 +14,10 @@ $params = [];
 $types = '';
 
 if (!empty($keyword)) {
-    // Added product_lots.x_code to the search conditions
-    $conditions[] = "(products.part_number LIKE ? OR users.name LIKE ? OR users.family LIKE ? OR users.nickname LIKE ? OR product_lots.x_code LIKE ?)";
-    // We now have 5 parameters for the keyword
-    for ($i = 0; $i < 5; $i++) {
+    // Added product_lots.x_code, product_lots.lot_location, product_lots.project_name to the search conditions
+    $conditions[] = "(products.part_number LIKE ? OR users.name LIKE ? OR users.family LIKE ? OR users.nickname LIKE ? OR product_lots.x_code LIKE ? OR product_lots.lot_location LIKE ? OR product_lots.project_name LIKE ?)";
+    // We now have 7 parameters for the keyword
+    for ($i = 0; $i < 7; $i++) {
         $params[] = "%$keyword%";
         $types .= 's';
     }
@@ -40,7 +40,7 @@ $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
 $countStmt = $conn->prepare("SELECT COUNT(*) FROM stock_receipts
     JOIN product_lots ON stock_receipts.product_lot_id = product_lots.id
     JOIN products ON product_lots.product_id = products.id
-    JOIN users ON stock_receipts.user_id = users.id $where"); // Note: You'll want to adjust this COUNT query if you are joining tables with multiple matches. For now, it's fine.
+    JOIN users ON stock_receipts.user_id = users.id $where"); 
 
 if (!empty($params)) $countStmt->bind_param($types, ...$params);
 $countStmt->execute();
@@ -55,7 +55,10 @@ $query = "SELECT stock_receipts.*,
         product_lots.qty_available,
         product_lots.x_code,
         product_lots.vrm_x_code,
-        product_lots.date_code
+        product_lots.date_code,
+        product_lots.lot_location,
+        product_lots.project_name,
+        product_lots.`lock`
 FROM stock_receipts
 JOIN product_lots ON stock_receipts.product_lot_id = product_lots.id
 JOIN products ON product_lots.product_id = products.id
@@ -81,18 +84,30 @@ while ($row = $result->fetch_assoc()) {
     $shortRemarks = mb_strlen($remarks) > 10 ? htmlspecialchars(mb_substr($remarks, 0, 10)) . '...' : $remarks;
     $tooltip = $remarks ? "title=\"$remarks\"" : '';
 
+    $lockIcon = $row['lock'] == 1 ? 
+        '<svg width="16" height="16" fill="red" class="bi bi-lock-fill" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+</svg>' :
+        '<svg fill="green" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M12 0a4 4 0 0 1 4 4v2.5h-1V4a3 3 0 1 0-6 0v2h.5A2.5 2.5 0 0 1 12 8.5v5A2.5 2.5 0 0 1 9.5 16h-7A2.5 2.5 0 0 1 0 13.5v-5A2.5 2.5 0 0 1 2.5 6H8V4a4 4 0 0 1 4-4M2.5 7A1.5 1.5 0 0 0 1 8.5v5A1.5 1.5 0 0 0 2.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 9.5 7z"/>
+</svg>';
+
     $html .= "<tr>
         <td>{$i}</td>
         <td>" . htmlspecialchars($row['x_code']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
         <td>" . htmlspecialchars($row['date_code']) . "</td>
+        <td>" . htmlspecialchars($row['lot_location']) . "</td>
+        <td>" . htmlspecialchars($row['project_name']) . "</td>
+        
         <td>" . htmlspecialchars($row['vrm_x_code']) . "</td>
 
         <td>{$row['qty_received']}</td>
         <td>{$row['qty_available']}</td>
         <td>" . htmlspecialchars($row['nickname']) . "</td>
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>
+        <td>" . $lockIcon . "</td>
         <td>
             <div title=\"" . date('Y/n/d ,G:i', strtotime($row['created_at'])) . "\">
                 <svg width=\"24\" height=\"24\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
@@ -104,15 +119,15 @@ while ($row = $result->fetch_assoc()) {
         <td class=\"flex justify-center space-x-2\">
             <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"editReceipt({$row['id']})\" title=\"Edit\">
               <svg width=\"20\" height=\"20\" fill=\"var(--main-bg1-color)\" class=\"bi bi-pencil-square\" viewBox=\"0 0 16 16\">
-                        <path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"></path>
-                        <path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z\"></path>
-                    </svg>
+                    <path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"></path>
+                    <path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z\"></path>
+                </svg>
             </button>
             <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"deleteReceipt({$row['id']})\" title=\"Delete\">
                 <svg width=\"20\" height=\"20\" fill=\"#8b000d\" class=\"bi bi-trash hoverSvg\" viewBox=\"0 0 16 16\">
-                        <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"></path>
-                        <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"></path>
-                    </svg>
+                    <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"></path>
+                    <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"></path>
+                </svg>
             </button>
         </td>
     </tr>";
@@ -166,7 +181,7 @@ if ($totalPages > 1) {
 }
 
 echo json_encode([
-    'html' => $html ?: '<tr><td colspan="12" class="text-center">No receipts found.</td></tr>', // Adjusted colspan for 12 columns
+    'html' => $html ?: '<tr><td colspan="15" class="text-center">No receipts found.</td></tr>', // Adjusted colspan for 15 columns
     'pagination' => $paginationHtml,
     'totalPages' => $totalPages,
     'currentPage' => $page

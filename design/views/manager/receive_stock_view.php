@@ -51,11 +51,35 @@
                                 <!-- Options will be populated dynamically by JS -->
                             </select>
                         </div>
+                        
+                        <!-- Lot Location -->
+                        <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
+                            <label class="form-label">Lot Location:</label>
+                            <input type="text" name="products[0][lot_location]" class="form-control" placeholder="Lot Location" autocomplete="off">
+                        </div>
+                        
+                        <!-- Project Name -->
+                        <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
+                            <label class="form-label">Project Name:</label>
+                            <input type="text" name="products[0][project_name]" class="form-control" placeholder="Project Name" autocomplete="off">
+                        </div>
 
                         <!-- Remarks -->
                         <div class="col-12 col-md-3 px-1 mt-2 mt-md-0">
                             <label class="form-label">Comment:</label>
                             <textarea class="form-control responsive-textarea" name="products[0][remarks]" rows="1"></textarea>
+                        </div>
+                         
+                        <!-- Lock Checkbox -->
+                        <div class="col-6 col-md-1 px-1 mt-2 mt-md-0 d-flex justify-content-center align-items-center">
+                            <div class="form-check pt-4">
+                                <input class="form-check-input" type="checkbox" name="products[0][lock]" value="1" id="lockCheck">
+                                <label class="form-check-label" for="lockCheck">
+                                    <svg  width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                                    </svg>
+                                </label>
+                            </div>
                         </div>
 
                         <!-- Hidden x_code -->
@@ -182,7 +206,7 @@
                 removeButton.style.display = rows.length > 1 ? 'block' : 'none';
             }
             // Re-index form fields after adding/removing a row to ensure correct submission
-            row.querySelectorAll('input, textarea').forEach(el => {
+            row.querySelectorAll('input, textarea, select').forEach(el => {
                 const name = el.getAttribute('name');
                 if (name) {
                     el.setAttribute('name', name.replace(/\[\d+\]/, `[${index}]`));
@@ -203,7 +227,11 @@
 
         // Reset values for new row
         newRow.querySelectorAll('input, textarea').forEach(el => {
-            el.value = '';
+            if (el.type === 'checkbox') {
+                el.checked = false;
+            } else {
+                el.value = '';
+            }
         });
 
         stockRowsContainer.appendChild(newRow);
@@ -272,4 +300,3 @@
         }
     });
 </script>
-

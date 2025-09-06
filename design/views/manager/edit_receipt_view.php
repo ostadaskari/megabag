@@ -39,6 +39,16 @@
                             <input type="text" id="product_x_code" class="form-control disabled" value="<?php echo htmlspecialchars($receiptData['x_code']); ?>" readonly >
                         </div>
 
+                        <!-- New Fields: Lot Location and Project Name -->
+                        <div class="col-12 col-md-2 px-1 mt-2 mt-md-0">
+                            <label for="lotLocation" class="form-label">Lot Location:</label>
+                            <input type="text" id="lotLocation" name="lot_location" class="form-control" value="<?php echo htmlspecialchars($receiptData['lot_location'] ?? ''); ?>">
+                        </div>
+                        <div class="col-12 col-md-2 px-1 mt-2 mt-md-0">
+                            <label for="projectName" class="form-label">Project Name:</label>
+                            <input type="text" id="projectName" name="project_name" class="form-control" value="<?php echo htmlspecialchars($receiptData['project_name'] ?? ''); ?>">
+                        </div>
+
                         <!-- Qty -->
                         <div class="col-6 col-md-1 px-1 mt-2 mt-md-0">
                             <label for="quantityInput" class="form-label">Rcvd QTY:</label>
@@ -59,10 +69,18 @@
 
                         <!-- Optional date code -->
                         <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
-                    <label for="" class="form-label">Date Code:</label>
-                    <select name="date_code" id="date_code" class="form-select" required>
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
+                            <label for="" class="form-label">Date Code:</label>
+                            <select name="date_code" id="date_code" class="form-select" required>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+
+                        <!-- New Field: Lock Checkbox -->
+                        <div class="col-12 col-md-1 px-1 mt-2 mt-md-0">
+                            <div class="form-check d-flex flex-column align-items-center justify-content-center h-100">
+                                <label class="form-check-label" for="lockCheckbox">Lock:</label>
+                                <input class="form-check-input mt-2" type="checkbox" name="lock" id="lockCheckbox" value="1" <?php echo ($receiptData['is_locked'] ?? false) ? 'checked' : ''; ?>>
+                            </div>
                         </div>
 
                         <!-- Remarks -->
