@@ -23,7 +23,7 @@
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput" class="form-control px-5" autocomplete="off" placeholder="Search by product/user...">
+                    <input type="text" id="searchInput" class="form-control px-5" autocomplete="off" placeholder="Search x-code,P/N, VRM-X, BY - TO user..." title="Search By p/n, x-code, vrm_x_code, issued-by user, or issued-to user">
                     </div>
                 </div>
 
@@ -90,15 +90,17 @@
                     <thead class="table-invitionLink sticky-top" style="top:-6px; z-index: 1;">
                         <tr>
                             <th style="width: 3%">#</th>
+                            <th>X-Code</th>
                             <th>P/N</th>
+                            <th>VRM Tag</th>
                             <th>MFG</th>
-                            <th>Tag</th>
-
+                            <th>Date Code</th>
                             <th>Qty</th>
-                            <th style="width: 12%;">Issued By</th>
-                            <th style="width: 12%;">Issued To</th>
-                            <th style="width:7%">Date</th>
-                            <th style="width: 10%;">Comment</th>
+                            <th>Issued By</th>
+                            <th>Issued To</th>
+                            <th>Date</th>
+                            <th>Comment</th>
+                            <th style="width: 10%;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="issuesTableBody">
@@ -110,8 +112,23 @@
     </div>
     <div id="pagination" class="my-2"></div>
 </div>
-
-
+<!-- Comment Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="commentText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 // Function to fetch and display stock issues
@@ -208,6 +225,28 @@ function exportIssues(format) {
     const t = document.getElementById('toDate').value;
     
     window.open(`../ajax/export_issues.php?format=${format}&keyword=${encodeURIComponent(k)}&from_date=${f}&to_date=${t}`, '_blank');
+}
+
+// Placeholder function for editing an issue
+function editIssue(id) {
+    Swal.fire({
+        title: 'Edit Functionality',
+        text: `Editing issue with ID: ${id}. This feature is under development.`,
+        icon: 'info',
+        confirmButtonText: 'OK'
+    });
+    console.log(`Edit function called for ID: ${id}`);
+}
+
+// Placeholder function for deleting an issue
+function deleteIssue(id) {
+    Swal.fire({
+        title: 'Delete Functionality',
+        text: `Deleting issue with ID: ${id}. This feature is under development.`,
+        icon: 'warning',
+        confirmButtonText: 'OK'
+    });
+    console.log(`Delete function called for ID: ${id}`);
 }
 
 // Open modal and display comment when a user clicks the comment icon
