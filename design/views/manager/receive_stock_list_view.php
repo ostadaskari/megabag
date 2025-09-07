@@ -98,7 +98,6 @@
                                 <th>Date Code</th>
                                 <th>Lot Location</th>
                                 <th>Project Name</th>
-
                                 <th>VRM X-Code</th>
                                 <th>Initial QTY</th>
                                 <th style="color:aqua;">Available QTY</th>
@@ -160,6 +159,38 @@
         };
         xhr.send();
     }
+        // New function to toggle the lock status of a product lot
+    window.toggleLock = function(lotId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will toggle the lock status for this receipt.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, do it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `../ajax/toggle_receipt_lock.php`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            Swal.fire('Success!', response.message, 'success');
+                            fetchReceipts(); // Refresh the table to show the new status
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    } else {
+                        Swal.fire('Error!', 'An error occurred while communicating with the server.', 'error');
+                    }
+                };
+                xhr.send(`product_lot_id=${lotId}`);
+            }
+        });
+    };
 
     function exportReceipts(format) {
         const keyword = document.getElementById("searchInput").value;

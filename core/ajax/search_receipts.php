@@ -100,14 +100,16 @@ while ($row = $result->fetch_assoc()) {
         <td>" . htmlspecialchars($row['date_code']) . "</td>
         <td>" . htmlspecialchars($row['lot_location']) . "</td>
         <td>" . htmlspecialchars($row['project_name']) . "</td>
-        
         <td>" . htmlspecialchars($row['vrm_x_code']) . "</td>
-
         <td>{$row['qty_received']}</td>
         <td>{$row['qty_available']}</td>
         <td>" . htmlspecialchars($row['nickname']) . "</td>
         <td><span {$tooltip}>" . $shortRemarks . "</span></td>
-        <td>" . $lockIcon . "</td>
+         <td>
+            <button class=\"btnSvg hoverSvg\" onclick=\"toggleLock({$row['product_lot_id']})\" title=\"" . ($row['lock'] == 1 ? 'Unlock' : 'Lock') . "\">
+                " . $lockIcon . "
+            </button>
+        </td>
         <td>
             <div title=\"" . date('Y/n/d ,G:i', strtotime($row['created_at'])) . "\">
                 <svg width=\"24\" height=\"24\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
