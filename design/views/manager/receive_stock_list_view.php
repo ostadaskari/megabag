@@ -101,7 +101,7 @@
                                 <th>VRM X-Code</th>
                                 <th>Initial QTY</th>
                                 <th style="color:aqua;">Available QTY</th>
-                                <th style="width: 15%;">User</th>
+                                <th style="width: 10%;">User</th>
                                 <th style="width: 15%;">Comment</th>
                                 <th>
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
@@ -109,7 +109,7 @@
                                     </svg>
                                 </th>
                                 <th style="width: 6%;" >Date</th>
-                                <th style="width: 10%;" >Action</th>
+                                <th style="width: 8%;" >Action</th>
                             </tr>
                         </thead>
                         <tbody id="receiptsTableBody">

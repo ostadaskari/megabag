@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
 
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="red" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
@@ -45,34 +45,6 @@ Swal.fire({
 </script>
 <?php endif; ?>
 
-<style>
-    /* Styles for autocomplete dropdown */
-    .autocomplete-dropdown {
-        position: absolute;
-        border: 1px solid #ddd;
-        background-color: white;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 1000; /* Ensure it's above other content */
-        width: calc(100% - 2px); /* Match input width */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        border-radius: 5px;
-        left: 1px; /* Align with input */
-        top: 100%; /* Position below the input */
-        display: none; /* Add this line to hide it by default */
-    }
-    .autocomplete-item {
-        padding: 8px 10px;
-        cursor: pointer;
-        border-bottom: 1px solid #eee;
-    }
-    .autocomplete-item:hover {
-        background-color: #f0f0f0;
-    }
-    .autocomplete-item:last-child {
-        border-bottom: none;
-    }
-</style>
 
 <script>
 // Keep a global counter for row indices

@@ -1256,6 +1256,7 @@ fill:var(--main-text-color);
   justify-content: space-evenly;
   background: #fff;
   border-left: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 

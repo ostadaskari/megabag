@@ -55,7 +55,7 @@
                         <input type="hidden" name="action" id="action" value="add">
                         <input type="hidden" name="category_id" id="category_id" value="">
                         
-                        <div class="col-12 col-md-3 mt-4 d-flex justify-content-center">
+                        <div class="col-12 col-md-3 mt-4 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary mx-1">Submit</button>
                             <button type="button" onclick="clearCategory()" class="btn btn-secondary mx-1">Clear</button>
                         </div>
