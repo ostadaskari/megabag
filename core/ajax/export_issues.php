@@ -19,30 +19,68 @@ $params = [];
 $types = '';
 $conds = [];
 
+// The query is updated to join `stock_issues` with `product_lots` and `products`
+// to pull all the detailed information for the new headers.
+$query = "
+    SELECT
+        si.qty_issued,
+        si.created_at,
+        si.remarks,
+        u1.nickname AS issued_by,
+        u2.nickname AS issued_to,
+        pl.x_code,
+        pl.vrm_x_code,
+        pl.date_code AS lot_date_code,
+        p.part_number,
+        p.mfg
+    FROM stock_issues si
+    JOIN users u1 ON si.user_id = u1.id
+    JOIN users u2 ON si.issued_to = u2.id
+    JOIN product_lots pl ON si.product_lot_id = pl.id
+    JOIN products p ON pl.product_id = p.id
+";
+
+// Add filters to the query
 if ($keyword) {
-    $conds[] = "(p.name LIKE ? OR p.tag LIKE ? OR p.part_number LIKE ? OR u1.name LIKE ? OR u1.family LIKE ? OR u1.nickname LIKE ? OR u2.name LIKE ? OR u2.family LIKE ? OR u2.nickname LIKE ?)";
-    for ($i=0; $i<9; $i++) {
-        $params[] = "%$keyword%"; $types .= 's';
-    }
+    // Search now includes fields from products and product_lots
+    $conds[] = "(p.part_number LIKE ? OR p.mfg LIKE ? OR pl.x_code LIKE ? OR pl.vrm_x_code LIKE ? OR u1.nickname LIKE ? OR u2.nickname LIKE ?)";
+    $kw = "%$keyword%";
+    $params = array_fill(0, 6, $kw);
+    $types .= str_repeat('s', 6);
 }
 if ($from) { $conds[] = "si.created_at >= ?"; $params[] = $from.' 00:00:00'; $types .= 's'; }
 if ($to) { $conds[] = "si.created_at <= ?"; $params[] = $to.' 23:59:59'; $types .= 's'; }
-$where = $conds ? 'WHERE '.implode(' AND ', $conds) : '';
 
-$query = "
-    SELECT p.name, p.mfg, p.part_number, p.tag, si.qty_issued, u1.nickname AS issued_by,
-           u2.nickname AS issued_to, si.created_at, si.remarks
-    FROM stock_issues si
-    JOIN products p ON si.product_id = p.id
-    JOIN users u1 ON si.user_id = u1.id
-    JOIN users u2 ON si.issued_to = u2.id
-    $where
-    ORDER BY si.created_at DESC
-";
+$where = $conds ? 'WHERE '.implode(' AND ', $conds) : '';
+$query .= $where;
+$query .= " ORDER BY si.created_at DESC";
+
 $stmt = $conn->prepare($query);
 if ($types) $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $res = $stmt->get_result();
+
+// Define an array of pastel colors (ARGB format for Excel, hex for PDF)
+$pastelColors = [
+    'FFDED1E7',
+    'FFD9EAD3',
+    'FFF9D4BB',
+    'FFD0E0F6',
+    'FFFCE4D6',
+    'FFD5D8DC',
+    'FFFBE5F0',
+    'FFC9CCC7'
+];
+$pdfColors = [
+    '#DED1E7',
+    '#D9EAD3',
+    '#F9D4BB',
+    '#D0E0F6',
+    '#FCE4D6',
+    '#D5D8DC',
+    '#FBE5F0',
+    '#C9CCC7'
+];
 
 // ---------------------------
 // Export to Excel (using PhpSpreadsheet)
@@ -52,25 +90,12 @@ if ($format === 'excel') {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Set the column headers
-    $header = [ 'Part No', 'MFG', 'Tag', 'Qty', 'Issued By', 'Issued To', 'Date', 'P-Name', 'Comment'];
+    $header = ['#', 'X-Code', 'P/N', 'VRM X-code', 'MFG', 'Date Code', 'Qty', 'Issued By', 'Issued To', 'Date', 'Comment'];
     $sheet->fromArray($header, NULL, 'A1');
-
-    // Define an array of pastel colors (ARGB format)
-    $pastelColors = [
-        'FFDED1E7', // 
-        'FFD9EAD3', // Light Green
-        'FFC9CCC7', // 
-        'FFF9D4BB', // Light Peach
-        'FFD0E0F6', // Light Blue
-        'FFFCE4D6', // Light Orange
-        'FFD5D8DC', // Light Gray
-        'FFFBE5F0', // Light Pink
-        'FFC9CCC7'  // Pastel Gray
-    ];
 
     // Apply styling to each header cell individually with a different color
     $column_index = 0;
-    foreach (range('A', 'I') as $columnID) {
+    foreach (range('A', 'K') as $columnID) {
         $color = $pastelColors[$column_index % count($pastelColors)];
         $sheet->getStyle($columnID . '1')
             ->getFill()
@@ -86,14 +111,16 @@ if ($format === 'excel') {
     while ($r = $res->fetch_assoc()) {
         $formattedDate = date('Y-m-d H:i', strtotime($r['created_at']));
         $data = [
+            $row_index - 1,
+            $r['x_code'],
             $r['part_number'],
+            $r['vrm_x_code'],
             $r['mfg'],
-            $r['tag'],
+            $r['lot_date_code'],
             $r['qty_issued'],
             $r['issued_by'],
             $r['issued_to'],
             $formattedDate,
-            $r['name'],
             $r['remarks']
         ];
         $sheet->fromArray($data, NULL, 'A' . $row_index);
@@ -101,7 +128,7 @@ if ($format === 'excel') {
     }
 
     // Auto-size columns for better readability
-    foreach (range('A', 'H') as $columnID) {
+    foreach (range('A', 'K') as $columnID) {
         $sheet->getColumnDimension($columnID)->setAutoSize(true);
     }
     
@@ -121,15 +148,43 @@ if ($format === 'excel') {
 elseif ($format === 'pdf') {
     require_once '../../tcpdf/tcpdf.php';
     $pdf = new TCPDF();
-    $pdf->AddPage(); $pdf->SetFont('helvetica','',10);
-    $html = '<h3>Stock Out Report</h3><table border="1" cellpadding="4"><thead><tr>'
-        .'<th>P/N</th><th>MFG</th><th>Tag</th><th>Qty</th><th>Issued By</th>'
-        .'<th>Issued To</th><th>Date</th><th>P-Name</th><th>Comment</th></tr></thead><tbody>';
+    $pdf->AddPage('L', 'A4');
+    $pdf->SetFont('helvetica','',8);
+
+    $headers = ['#', 'X-Code', 'P/N', 'VRM X-Code', 'MFG', 'Date Code', 'Qty', 'Issued By', 'Issued To', 'Date', 'Comment'];
+    
+    // Define an array of column widths for TCPDF to ensure alignment
+    // These widths are a percentage of the total page width and should sum to 100
+    $columnWidths = [
+        '4%', '12%', '12%', '10%', '9%', '8%', '5%', '9%', '9%', '10%', '12%'
+    ];
+
+    $html = '<h3>Stock Out Report</h3><table border="1" cellpadding="4"><thead><tr>';
+    $column_index = 0;
+    foreach ($headers as $h) {
+        $color = $pdfColors[$column_index % count($pdfColors)];
+        $width = $columnWidths[$column_index];
+        $html .= '<th style="background-color:' . $color . '; font-weight: bold; width:' . $width . ';">' . $h . '</th>';
+        $column_index++;
+    }
+    $html .= '</tr></thead><tbody>';
+
+    $row_count = 1;
     while ($r = $res->fetch_assoc()) {
-        $html .= '<tr><td>'.htmlspecialchars($r['part_number']).'</td><td>'.$r['mfg'].'</td>'
-            .'<td>'.htmlspecialchars($r['tag']).'</td><td>'.$r['qty_issued'].'</td>'
-            .'<td>'.htmlspecialchars($r['issued_by']).'</td><td>'.htmlspecialchars($r['issued_to']).'</td>'
-            .'<td>'.$r['created_at'].'</td><td>'.htmlspecialchars($r['name']).'</td><td>'.htmlspecialchars($r['remarks']).'</td></tr>';
+        $html .= '<tr>
+                    <td style="width:' . $columnWidths[0] . ';">' . $row_count . '</td>
+                    <td style="width:' . $columnWidths[1] . ';">' . htmlspecialchars($r['x_code']) . '</td>
+                    <td style="width:' . $columnWidths[2] . ';">' . htmlspecialchars($r['part_number']) . '</td>
+                    <td style="width:' . $columnWidths[3] . ';">' . htmlspecialchars($r['vrm_x_code']) . '</td>
+                    <td style="width:' . $columnWidths[4] . ';">' . htmlspecialchars($r['mfg']) . '</td>
+                    <td style="width:' . $columnWidths[5] . ';">' . htmlspecialchars($r['lot_date_code']) . '</td>
+                    <td style="width:' . $columnWidths[6] . ';">' . htmlspecialchars($r['qty_issued']) . '</td>
+                    <td style="width:' . $columnWidths[7] . ';">' . htmlspecialchars($r['issued_by']) . '</td>
+                    <td style="width:' . $columnWidths[8] . ';">' . htmlspecialchars($r['issued_to']) . '</td>
+                    <td style="width:' . $columnWidths[9] . ';">' . htmlspecialchars($r['created_at']) . '</td>
+                    <td style="width:' . $columnWidths[10] . ';">' . htmlspecialchars($r['remarks']) . '</td>
+                 </tr>';
+        $row_count++;
     }
     $html .= '</tbody></table>';
     $pdf->writeHTML($html);

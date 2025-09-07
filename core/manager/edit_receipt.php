@@ -73,9 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
             }
             $updateReceipt->close();
 
-            // Step 5: Update the product_lots table with new values
-            $updateLot = $conn->prepare("UPDATE product_lots SET qty_received = ?, qty_available = ?, purchase_code = ?, vrm_x_code = ?, date_code = ?, lot_location = ?, project_name = ?, `lock` = ? WHERE id = ?");
-            $updateLot->bind_param("iississii", $newQty, $newQty, $newPurchaseCode, $newVrmXCode, $newDateCode, $newLotLocation, $newProjectName, $isLocked, $lotId);
+            // Step 5: Update the product_lots table with new values,
+            // adjusting the qty_available by the difference
+            $updateLot = $conn->prepare("UPDATE product_lots SET qty_received = ?, qty_available = qty_available + ?, purchase_code = ?, vrm_x_code = ?, date_code = ?, lot_location = ?, project_name = ?, `lock` = ? WHERE id = ?");
+            $updateLot->bind_param("iississii", $newQty, $qtyDifference, $newPurchaseCode, $newVrmXCode, $newDateCode, $newLotLocation, $newProjectName, $isLocked, $lotId);
             if (!$updateLot->execute()) {
                 throw new Exception("Failed to update product lot.");
             }

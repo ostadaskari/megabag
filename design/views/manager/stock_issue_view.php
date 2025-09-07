@@ -1,5 +1,4 @@
-<div class="d-flex flex-row align-items-center justify-content-between titleTop">      
-
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right mx-1 me-2" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 1 0 3.5v9A1.5 1.5 0 0 1 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
@@ -16,7 +15,7 @@
 <div class="container p-0">
     <form method="POST" action="" id="groupIssueForm">
         <div id="issueRows">
-            </div>
+        </div>
 
         <div class="d-flex flex-row justify-content-between align-items-center w-100 px-1 mt-3">
             <div id="addRowBtn" class="add-row-btn" title="Add Row">
@@ -72,6 +71,15 @@ Swal.fire({
     .autocomplete-item:last-child {
         border-bottom: none;
     }
+    /* New style for locked items */
+    .locked-item {
+        color: #dc3545; /* Bootstrap red */
+    }
+    /* New style for the locked input field */
+    .locked-input {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+    }
 </style>
 
 <script>
@@ -83,12 +91,12 @@ function createRowHtml(index) {
     return `
         <div class="stock-row border p-1 rounded mb-1 bg-light">
             <div class="row g-2 align-items-end">
-                <div class="col-6 col-md-2 px-1 position-relative">
+                <div class="col-6 col-md-3 px-1 position-relative">
                     <label for="productInput" class="form-label">X-Code:</label>
                     <input type="text" name="products[${index}][lot_search]" class="form-control lot-search" placeholder="Search by X-Code" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][product_lot_id]" class="product-lot-id">
                 </div>
-                <div class="col-6 col-md-3 px-1">
+                <div class="col-6 col-md-2 px-1">
                     <label for="quantityInput" class="form-label">QTY: <span class="text-muted small current-qty">(Available: <span class="qty-value" style="color: green;">--</span>)</span></label>
                     <input type="number" name="products[${index}][qty_issued]" class="form-control qty-input" min="1" required>
                 </div>
@@ -97,7 +105,7 @@ function createRowHtml(index) {
                     <input type="text" name="products[${index}][issued_to_search]" class="form-control user-search" placeholder="Name, Family, Nickname" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][issued_to_id]" class="user-id">
                 </div>
-                <div class="col-10 col-md-4 px-1">
+                <div class="col-12 col-md-4 px-1">
                     <label for="commentInputOut" class="form-label">Remarks (optional)</label>
                     <textarea name="products[${index}][remarks]" class="form-control" rows="1"></textarea>
                 </div>
@@ -181,6 +189,7 @@ document.addEventListener('input', function(e) {
             qtyInput.max = '';
             qtyEl.textContent = '--';
             if (dropdown) dropdown.style.display = 'none';
+            toggleRowInputs(input.closest('.stock-row'), false);
             return;
         }
 
@@ -229,6 +238,57 @@ document.addEventListener('input', function(e) {
     }
 });
 
+// New event listener for checking an exact match on blur
+document.addEventListener('blur', function(e) {
+    if (e.target.classList.contains('lot-search')) {
+        const input = e.target;
+        const keyword = input.value;
+        if (keyword.length > 0) {
+            handleLotSearchBlur(input);
+        }
+    }
+}, true); // Use capture phase to ensure this runs before other blur events
+
+// Function to handle the blur event on lot-search input
+function handleLotSearchBlur(input) {
+    const keyword = input.value;
+    // Only check for exact match if the input is not empty
+    if (keyword) {
+        fetch(`../ajax/search_lot_by_x.php?exact_keyword=${encodeURIComponent(keyword)}`)
+            .then(res => res.json())
+            .then(data => {
+                const row = input.closest('.stock-row');
+                // Check if a single, exact item was found
+                if (data.length === 1) {
+                    input.classList.add('locked-input');
+                    const hiddenInput = row.querySelector('.product-lot-id');
+                    if (hiddenInput) {
+                        hiddenInput.value = data[0].id;
+                    }
+                    toggleRowInputs(row, true);
+                    // Also check if the exact item is locked and show a specific message
+                    if (data[0].lock) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Item Locked',
+                            text: `This item is locked for the project: ${data[0].project_name}`
+                        });
+                    }
+                } else {
+                    input.classList.remove('locked-input');
+                    toggleRowInputs(row, false);
+                }
+            });
+    }
+}
+
+// Function to toggle the disabled state of other inputs in a row
+function toggleRowInputs(row, disable) {
+    row.querySelectorAll('.qty-input, .user-search, textarea').forEach(el => {
+        el.disabled = disable;
+    });
+}
+
 // Hide dropdown on outside click
 document.addEventListener('click', function (e) {
     document.querySelectorAll('.autocomplete-dropdown').forEach(dropdown => {
@@ -247,26 +307,50 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
         data.forEach(item => {
             const div = document.createElement('div');
             div.classList.add('autocomplete-item');
-            div.innerHTML = `<strong>${item[nameKey]}</strong> - ${item[secondaryKey]}`;
+
+            // Check if the item is a locked product lot
+            if (isLot && item.lock) {
+                div.classList.add('locked-item');
+                div.innerHTML = `<strong>${item[nameKey]}</strong> - ${item[secondaryKey]} (LOCKED)`;
+            } else {
+                div.innerHTML = `<strong>${item[nameKey]}</strong> - ${item[secondaryKey]}`;
+            }
 
             div.addEventListener('click', () => {
-                input.value = `${item[nameKey]} (${item[secondaryKey]})`;
-                const hiddenInput = input.closest('.stock-row').querySelector(`.${hiddenInputClass}`);
-                if (hiddenInput) hiddenInput.value = item[idKey];
+                const row = input.closest('.stock-row');
+                const hiddenInput = row.querySelector(`.${hiddenInputClass}`);
+
+                // Check if the selected item is locked
+                if (isLot && item.lock) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Item Locked',
+                        text: `This item is locked for the project: ${item.project_name}`
+                    });
+                    input.value = ''; // Clear the input so it's not pre-filled with the locked item
+                    if (hiddenInput) hiddenInput.value = ''; // Also clear the hidden ID
+                    toggleRowInputs(row, false);
+                } else {
+                    input.value = `${item[nameKey]} (${item[secondaryKey]})`;
+                    if (hiddenInput) {
+                        hiddenInput.value = item[idKey];
+                    }
+
+                    // Fetch and display product lot quantity
+                    if (isLot) {
+                        const qtyEl = row.querySelector('.qty-value');
+                        const qtyInput = row.querySelector('.qty-input');
+                        if (qtyEl) {
+                            qtyEl.textContent = item.qty_available;
+                            qtyInput.max = item.qty_available; // Set max attribute
+                            qtyInput.value = Math.min(qtyInput.value, item.qty_available); // Adjust value if it exceeds max
+                        }
+                    }
+                    toggleRowInputs(row, false);
+                }
 
                 dropdown.innerHTML = ''; // Clear dropdown content
                 dropdown.style.display = 'none'; // Hide the dropdown
-
-                // Fetch and display product lot quantity
-                if (isLot) {
-                    const qtyEl = input.closest('.stock-row').querySelector('.qty-value');
-                    const qtyInput = input.closest('.stock-row').querySelector('.qty-input');
-                    if (qtyEl) {
-                        qtyEl.textContent = item.qty_available;
-                        qtyInput.max = item.qty_available; // Set max attribute
-                        qtyInput.value = Math.min(qtyInput.value, item.qty_available); // Adjust value if it exceeds max
-                    }
-                }
             });
             dropdown.appendChild(div);
         });
@@ -284,8 +368,10 @@ document.getElementById('groupIssueForm').addEventListener('submit', function (e
     document.querySelectorAll('.stock-row').forEach(row => {
         const productLotId = row.querySelector('.product-lot-id')?.value;
         const userId = row.querySelector('.user-id')?.value;
+        const isLocked = row.querySelector('.lot-search').classList.contains('locked-input');
 
-        if (!productLotId || !userId) {
+        // The row is not valid if a locked item is selected
+        if (!productLotId || !userId || isLocked) {
             valid = false;
         }
     });
