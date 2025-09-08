@@ -13,22 +13,23 @@
     <span>Back</span>
     </a>
 </div>
+
 <!-- List Project -->
 <div id="List-Project" class="tab-content" >
 <div class="container px-0">
     <!-- searchbar -->
-    <div class="d-flex flex-row align-items-center justify-content-between" >
-        <div class="input-box w-50 position-relative" style="margin: 0!important;">
+    <div class="d-flex flex-row align-items-center justify-content-between mb-3" >
+        <div class="input-box w-50 position-relative">
             <div class="svgSearch">
                 <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
             </div>
-            <input type="text" id="searchInput" placeholder="Search by project name, employer, or purchase code..." autocomplete="off" />
+            <input type="text" id="searchInput" placeholder="Search by project name, employer, or purchase code..." autocomplete="off" class="form-control rounded-lg"/>
         </div>
 
         <div class="w-25">
-            <select id="statusFilter" class="form-select py-2">
+            <select id="statusFilter" class="form-select py-2 rounded-lg">
                 <option value="">All Statuses</option>
                 <option value="pending">Pending</option>
                 <option value="finished">Finished</option>
@@ -45,9 +46,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Project Name</th>
-                    <th scope="col">Date Code</th>
                     <th scope="col">Employer</th>
-                    <th style="width: 15%;">Purchase Code</th>
                     <th style="width: 8%;">Status</th>
                     <th style="width: 10%;">Created At</th>
                     <th style="width: 10%;">Actions</th>
@@ -56,7 +55,7 @@
         
             <tbody id="projectsTableBody">
                 <!-- Filled dynamically via AJAX -->
-                                                 <tr><td colspan="8" class="text-center py-4 text-gray-500">Loading projects...</td></tr>
+                <tr><td colspan="8" class="text-center py-4 text-gray-500">Loading projects...</td></tr>
 
             </tbody>
         
@@ -79,8 +78,8 @@
 <div id="modalOverlay" class="modal-overlay"></div>
 
 <div id="projectDetailsModal" class="container bg-light border rounded shadow-sm mb-4 modalDetails" style="display: none;">
-    <div class="mb-2 modal-header d-flex justify-content-between align-items-center" style="padding: 8px 16px;">
-        <div class="d-flex align-items-center ">
+    <div class="mb-2 modal-header d-flex justify-content-between align-items-center p-2">
+        <div class="d-flex align-items-center">
             <svg width="20" height="20" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
                 <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/>
                 <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5z"/>
@@ -139,7 +138,7 @@
                 confirmButtonText: 'OK'
             }).then(() => {
                 // Remove the URL parameter to prevent the alert from showing on refresh
-                const newUrl = window.location.href.split('?')[0] + '?page=project_list';
+                const newUrl = window.location.href.split('?')[0] + '?page=projects_list';
                 history.replaceState({}, document.title, newUrl);
             });
         }
@@ -157,9 +156,9 @@
         window.showProjectDetails = function(projectId) {
             // Show a loading spinner while the content is being fetched
             projectDetailsContent.innerHTML = `
-                <div style="text-align: center; padding: 20px;">
+                <div class="d-flex flex-column align-items-center justify-content-center py-4">
                     <div class="spinner"></div>
-                    <p style="margin-top: 10px; color: #666;">Loading...</p>
+                    <p class="mt-2 text-muted">Loading...</p>
                 </div>
             `;
             
@@ -180,38 +179,28 @@
                         const project = data.project;
                         
                         projectDetailsContent.innerHTML = `
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-6 my-2">
-                                                <strong>User ID:</strong> ${project.user_id}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Project Name:</strong> ${project.project_name}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Date Code:</strong> ${project.date_code}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Employer:</strong> ${project.employer}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Purchase Code:</strong> ${project.purchase_code}
-                                            </div>
-                                            <div class="col-6 my-2">
-                                                <strong>Status:</strong> ${project.status}
-                                            </div>
-                                            <div class="col-12 my-2">
-                                                <strong>Designators:</strong> ${project.designators ? project.designators : 'N/A'}
-                                            </div>
-                                            <div class="col-12 my-2">
-                                                <strong>Created At:</strong> ${project.created_at}
-                                            </div>
-                                            <div class="col-12 my-2">
-                                                <strong>Updated At:</strong> ${project.updated_at}
-                                            </div>
-                                        </div>
+                            <div class="container py-3">
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <strong>User ID:</strong> ${project.user_id}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Project Name:</strong> ${project.project_name}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Purchase Code:</strong> ${project.purchase_code}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Status:</strong> ${project.status}
+                                    </div>
+                                    <div class="col-12">
+                                        <strong>Designators:</strong> ${project.designators ? project.designators : 'N/A'}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Created At:</strong> ${project.created_at}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Updated At:</strong> ${project.updated_at}
                                     </div>
                                 </div>
                             </div>
@@ -219,13 +208,13 @@
                         
                     } else {
                         // Display the server-side error message to the user
-                        projectDetailsContent.innerHTML = `<p style="color: red;">Error: ${data.message}</p>`;
+                        projectDetailsContent.innerHTML = `<p class="text-danger p-3">Error: ${data.message}</p>`;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching project details:', error);
                     // This will catch network errors or parsing errors if the server still returns invalid data
-                    projectDetailsContent.innerHTML = `<p style="color: red;">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
+                    projectDetailsContent.innerHTML = `<p class="text-danger p-3">Network error or invalid response from server: ${error.message}. Check your server logs.</p>`;
                 });
         };
 
@@ -248,7 +237,7 @@
             const status = statusFilter.value;
             
             // Show loading spinner
-            projectsTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4"><div class="spinner"></div><p class="mt-2 text-gray-500">Loading...</p></td></tr>`;
+            projectsTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4"><div class="d-flex flex-column align-items-center justify-content-center"><div class="spinner"></div><p class="mt-2 text-muted">Loading...</p></div></td></tr>`;
 
             // Use the Fetch API for a more modern approach
             fetch(`../ajax/search_projects.php?keyword=${encodeURIComponent(keyword)}&status=${status}&page=${page}`)
@@ -264,7 +253,7 @@
                 })
                 .catch(error => {
                     console.error("Failed to fetch projects:", error);
-                    projectsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-red-500">Error: Failed to fetch projects. Check your network or server.</td></tr>';
+                    projectsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Error: Failed to fetch projects. Check your network or server.</td></tr>';
                     paginationContainer.innerHTML = '';
                 });
         };
@@ -276,8 +265,6 @@
         // Initial load
         searchProjects();
 
-
-        
         // Function to delete a product using SweetAlert2
         window.deleteProject = function(projectId) {
             Swal.fire({

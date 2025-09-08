@@ -101,21 +101,27 @@ CREATE TABLE pdfs (
 
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- automatically deletes images/PDFs when the product is deleted
 );
--- This table tracks individual lots of products with unique codes,
--- quantities, and locations.
+-- This table tracks individual lots of products with unique x-codes,
+
 CREATE TABLE product_lots (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,              -- Links to the general product
-    purchase_code VARCHAR(40) NOT NULL,   -- The specific purchase code
-    x_code VARCHAR(70) NOT NULL UNIQUE,   -- The unique x_code for the physical pack
-    vrm_x_code VARCHAR(70) UNIQUE,   -- The unique x_code for the physical pack
+    product_id INT NOT NULL,            -- Links to the general product
+    user_id INT NULL,                   -- User who created/owns the lot (nullable)
+    purchase_code VARCHAR(40),          -- The specific purchase code (nullable now)
+    x_code VARCHAR(70) NOT NULL UNIQUE, -- The unique x_code for the physical pack
+    vrm_x_code VARCHAR(70) UNIQUE,      -- The unique vrm_x_code for the physical pack
     qty_received INT UNSIGNED DEFAULT 0,  -- The original quantity in this lot
     qty_available INT UNSIGNED DEFAULT 0, -- The current quantity left in this lot
-    date_code YEAR,
+    date_code YEAR,                        -- year of made
+    lot_location VARCHAR(30),           -- The location of the lot
+    project_name VARCHAR(30),           -- The project associated with the lot
+    lock BOOLEAN,                       -- Flag to indicate if a lot is locked
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
 
 CREATE TABLE stock_receipts (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,112 +1,89 @@
-    <div class="d-flex flex-row align-items-center justify-content-between titleTop">
-        <h2 class="d-flex align-items-center">
-            <svg width="24" height="24" fill="currentColor" class="bi bi-pencil-square mx-1 me-2" viewBox="0 0 16 16">
-                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
+    <h2 class="d-flex align-items-center">
+            <svg width="22" height="22" fill="currentColor" class="bi bi-database-add" viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+            <path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4"/>
             </svg>
-            Edit Project
-        </h2>
-        <a href="../auth/dashboard.php?page=home" class="backBtn">
-            <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
-            </svg>
-            <span>Back</span>
-        </a>
-    </div>
+        Edit Project
+    </h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
+        <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+        </svg>
+        <span>Back</span>
+    </a>
+</div>
 
-
-    <div id="editProject" class="tab-content">
-        <!-- Form action points to the controller itself -->
-        <form method="POST" action="" >
+<div id="editProject" class="tab-content">
+    <?php if (!$project_data): ?>
+        <div class="alert alert-danger" role="alert">
+            Project not found or invalid ID.
+        </div>
+    <?php else: ?>
+        <form method="POST" action="">
+            <input type="hidden" name="project_id" value="<?= htmlspecialchars($project_data['id']) ?>">
             
-            <!-- Hidden input to store the project ID -->
-            <input type="hidden" name="project_id" value="<?= htmlspecialchars($project['id']) ?>">
-
-            <div class="container bg-light border rounded shadow-sm p-2">
-                 
+            <div class="container bg-light border rounded shadow-sm p-2">    
                 <!-- project details -->
                 <div class="d-flex flex-row align-items-center mb-2">
-                    <svg width="18" height="18" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                     </svg>
                     <h3 class="pl-1">Project Details:</h3>
-                </div> 
-
-                <!-- Project Details Section -->
+                </div>
+                
                 <div class="row">
                     <!-- Project Name -->
                     <div class="col-12 col-md-3 my-2">
                         <label for="projectName" class="form-label">Project Name:</label>
-                        <input type="text" name="project_name" id="projectName" class="form-control" required value="<?= htmlspecialchars($project['project_name']) ?>">
-                    </div>
-                    <!-- date code -->
-                    <div class="col-12 col-md-3 px-2 my-2">
-                        <label for="dateCode" class="form-label">Date Code:</label>
-                        <input type="text" name="date_code" id="dateCode" class="form-control" value="<?= htmlspecialchars($project['date_code']) ?>">
+                        <input type="text" name="project_name" id="projectName" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['project_name']) ?>" required>
                     </div>
                     <!-- Project Employer -->
                     <div class="col-12 col-md-3 px-2 my-2">
                         <label for="employer" class="form-label">Employer:</label>
-                        <input type="text" name="employer" id="employer" class="form-control" value="<?= htmlspecialchars($project['employer']) ?>">
+                        <input type="text" name="employer" id="employer" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['employer']) ?>">
                     </div>
 
-
-                    <div class="col-12 col-md-3 px-2 my-2">
-                        <label for="purchaseCode" class="form-label">Purchase Code(s):</label>
-                        <input type="text" name="purchase_code" id="purchaseCode" class="form-control" placeholder="e.g., code1, code2" value="<?= htmlspecialchars($project['purchase_code']) ?>">
-                    </div>
-
-                    <div class="col-12 col-md-9 my-2">
+                    <div class="col-12">
                         <label for="designators" class="form-label">Designators:</label>
-                        <textarea name="designators" id="designators" class="form-control"><?= htmlspecialchars($project['designators']) ?></textarea>
+                        <textarea name="designators" id="designators" class="form-control" autocomplete="off"><?= htmlspecialchars($project_data['designators']) ?></textarea>
                     </div>
-
-                    <div class="col-12 col-md-3 px-2 my-2">
-                     <label for="status" class="form-label">Status:</label>
-                        <select name="status" id="status" class="form-select">
-                            <option value="<?= htmlspecialchars($project['status']) ?>"><?= htmlspecialchars($project['status']) ?></option>
-                            <option value="Pending">Pending</option>
-                            <option value="Finished">Finished</option>
-                        </select>
-                   </div>
                 </div>
-
-            </div>
-           
-            
+            </div> 
+    
             <div class="container bg-light border rounded shadow-sm p-2 my-2">
-                <!-- Part Used Section -->
-              <div class="d-flex flex-row align-items-center mb-2">
+                <!-- Products Used Section -->
+                <div class="d-flex flex-row align-items-center my-2">
                     <svg width="20" height="20" fill="currentColor" class="bi bi-app-indicator" viewBox="0 0 16 16">
                         <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1z"/>
                         <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                     </svg>
-                    <h3 class="pl-1">Part Used in Project:</h3>
+                    <h3 class="pl-1">Parts Used in Project:</h3>
                 </div>
-                <div class="row">
-                    <div class="col-12 my-2">
+                <div class="row my-3">
+                    <div class="col-12">
                         <div id="stockRows">
-                            <?php if (empty($projectProducts)): ?>
-                                <!-- Initial product row template if no products are found -->
+                            <?php if (empty($project_products)): ?>
+                                <!-- Display a single empty row if no products are associated yet -->
                                 <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
                                     <div class="row d-flex align-items-end justify-content-between">
-                                        <div class="col-12 col-md-5 px-1 position-relative mb-2">
-                                            <label for="productInput" class="form-label">Part:</label>
-                                            <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
-                                            <input type="hidden" name="products[0][product_id]" class="product-id">
-                                            <div class="autocomplete-box" style="display: none;"></div>
+                                        <div class="col-12 col-md-4 px-1 position-relative mb-2">
+                                            <label for="productInput" class="form-label">Part Lot Code:</label>
+                                            <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by part number, x-code, or tag" autocomplete="off" required>
+                                            <input type="hidden" name="products[0][product_lot_id]" class="product-lot-id">
+                                            <div class="autocomplete-box category-suggestions" style="display: none;"></div>
                                         </div>
                                         <div class="col-4 col-md-3 px-1 mb-2">
                                             <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
                                             <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
                                         </div>
-                                        <div class="col-8 col-md-3 px-1 mb-2">
+                                        <div class="col-8 col-md-4 px-1 mb-2">
                                             <label for="commentInput" class="form-label">Remarks:</label>
                                             <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-end mb-2">
-                                            <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
+                                            <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove" style="display: none;">
                                                 <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
@@ -116,23 +93,23 @@
                                     </div>
                                 </div>
                             <?php else: ?>
-                                <!-- Loop through existing project products and display them -->
-                                <?php foreach ($projectProducts as $key => $product): ?>
-                                    <div class="stock-row border p-2 rounded mb-2 bg-light position-relative ">
+                                <!-- Dynamically generate rows for existing products -->
+                                <?php foreach ($project_products as $index => $product): ?>
+                                    <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
                                         <div class="row d-flex align-items-end justify-content-between">
-                                            <div class="col-12 col-md-4 position-relative mb-2">
-                                                <label for="productInput" class="form-label">Part:</label>
-                                                <input type="text" name="products[<?= $key ?>][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required value="<?= htmlspecialchars($product['part_number'] . ' (' . $product['product_name'] . ')') ?>">
-                                                <input type="hidden" name="products[<?= $key ?>][product_id]" class="product-id" value="<?= htmlspecialchars($product['product_id']) ?>">
+                                            <div class="col-12 col-md-4 px-1 position-relative mb-2">
+                                                <label for="productInput" class="form-label">Part Lot Code:</label>
+                                                <input type="text" name="products[<?= $index ?>][product_search]" class="form-control product-search" placeholder="Search by part number, x-code, or tag" autocomplete="off" value="<?= htmlspecialchars($product['x_code'] . " pn:" . $product['part_number']) ?>" required>
+                                                <input type="hidden" name="products[<?= $index ?>][product_lot_id]" class="product-lot-id" value="<?= htmlspecialchars($product['product_lot_id']) ?>">
                                                 <div class="autocomplete-box category-suggestions" style="display: none;"></div>
                                             </div>
-                                            <div class="col-4 col-md-3 mb-2">
-                                                <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"> (Available: <?= htmlspecialchars($product['current_qty']) ?>)</span></label>
-                                                <input type="number" name="products[<?= $key ?>][used_qty]" class="form-control" min="1" required value="<?= htmlspecialchars($product['used_qty']) ?>">
+                                            <div class="col-4 col-md-3 px-1 mb-2">
+                                                <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
+                                                <input type="number" name="products[<?= $index ?>][used_qty]" class="form-control" min="1" value="<?= htmlspecialchars($product['used_qty']) ?>" required>
                                             </div>
-                                            <div class="col-8 col-md-4 mb-2">
+                                            <div class="col-8 col-md-4 px-1 mb-2">
                                                 <label for="commentInput" class="form-label">Remarks:</label>
-                                                <textarea class="form-control" name="products[<?= $key ?>][remarks]" rows="1"><?= htmlspecialchars($product['remarks']) ?></textarea>
+                                                <textarea class="form-control" name="products[<?= $index ?>][remarks]" rows="1"><?= htmlspecialchars($product['remarks']) ?></textarea>
                                             </div>
                                             <div class="col d-flex justify-content-end align-items-end mb-2">
                                                 <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
@@ -148,7 +125,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <div class="d-flex flex-row justify-content-between align-items-center w-100 px-1 mt-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center w-100 mt-3">
                             <div title="Add Row">
                                 <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0">
                                     <svg width="28" height="28" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
@@ -156,29 +133,26 @@
                                     </svg>
                                 </button>
                             </div>
-
-                            
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> 
+            </div> 
 
             <div style="text-align: end">
-                <button type="submit" class="btn btn-primary" title="Update">
+                <button type="submit" class="btn btn-primary" title="Submit">
                     Update Project
                 </button>
             </div>
         </form>
-   
+    <?php endif; ?>
 </div>
-
 
 <?php if (!empty($success)): ?>
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: <?= json_encode($success) ?>
+        Swal.fire({ 
+            icon: 'success', 
+            title: 'Success', 
+            text: <?= json_encode($success) ?> 
         });
     </script>
 <?php elseif (!empty($errors)): ?>
@@ -192,44 +166,18 @@
 <?php endif; ?>
 
 <script>
+    const stockRowsContainer = document.getElementById('stockRows');
 
-    // Select all inputs that trigger suggestions
-    const inputs = document.querySelectorAll('.product-search');
-
-    document.addEventListener('click', (e) => {
-    const clickedRow = e.target.closest('.stock-row');
-
-    // Close other opened rows
-    document.querySelectorAll('.stock-row.is-open').forEach(r => {
-        if (r !== clickedRow) {
-        r.classList.remove('is-open');
-        const box = r.querySelector('.category-suggestions');
-        if (box) box.style.display = 'none';
-        }
-    });
-
-    // If clicked inside a row, open it
-    if (clickedRow) {
-        clickedRow.classList.add('is-open');
-        const box = clickedRow.querySelector('.category-suggestions');
-        if (box) box.style.display = 'block';
-    }
-    });
-    
-    // This script dynamically adds and removes product rows and handles product search.
-    
     // Function to re-index rows and manage remove button visibility
     const updateRows = () => {
         const rows = document.querySelectorAll('.stock-row');
         rows.forEach((row, index) => {
-            // Re-index form fields
             row.querySelectorAll('input, textarea').forEach(el => {
                 const name = el.getAttribute('name');
                 if (name) {
                     el.setAttribute('name', name.replace(/\[\d+\]/, `[${index}]`));
                 }
             });
-            // Manage remove button visibility
             const removeButton = row.querySelector('.btn-remove-row');
             if (removeButton) {
                 removeButton.style.display = rows.length > 1 ? 'block' : 'none';
@@ -237,29 +185,26 @@
         });
     };
 
-    // Add a new row
-    const addRow = () => {
-        const stockRowsContainer = document.getElementById('stockRows');
-        const firstRow = stockRowsContainer.querySelector('.stock-row');
-        if (firstRow) {
-            const newRow = firstRow.cloneNode(true);
-            newRow.querySelectorAll('input, textarea').forEach(el => {
-                el.value = '';
-                if (el.classList.contains('product-id')) {
-                    el.value = '';
-                }
-            });
-            const availableQtySpan = newRow.querySelector('.available-qty');
-            if (availableQtySpan) {
-                availableQtySpan.textContent = '';
-            }
-            stockRowsContainer.appendChild(newRow);
-            updateRows();
-        }
-    }
-
+    // Attach event listeners for dynamic actions
     document.addEventListener('DOMContentLoaded', updateRows);
-    document.getElementById('addRowBtn').addEventListener('click', addRow);
+
+    // Add a new row
+    document.getElementById('addRowBtn').addEventListener('click', () => {
+        const templateRow = stockRowsContainer.querySelector('.stock-row:first-child');
+        const newRow = templateRow.cloneNode(true);
+        newRow.querySelectorAll('input, textarea').forEach(el => {
+            el.value = '';
+            if (el.classList.contains('product-lot-id')) {
+                el.value = '';
+            }
+        });
+        const availableQtySpan = newRow.querySelector('.available-qty');
+        if (availableQtySpan) {
+            availableQtySpan.textContent = '';
+        }
+        stockRowsContainer.appendChild(newRow);
+        updateRows();
+    });
 
     // Remove a row
     document.addEventListener('click', (e) => {
@@ -272,7 +217,7 @@
         }
     });
 
-    // Product search using AJAX
+    // Product lot search using AJAX (same as create_project_view.php)
     document.addEventListener('input', function (e) {
         if (e.target.classList.contains('product-search')) {
             const input = e.target;
@@ -287,36 +232,24 @@
             }
 
             if (keyword.length >= 2) {
-                fetch(`../ajax/search_products_by_keyword.php?keyword=${encodeURIComponent(keyword)}`)
+                fetch(`../ajax/search_product_lots.php?keyword=${encodeURIComponent(keyword)}`)
                     .then(res => res.json())
                     .then(data => {
                         resultBox.innerHTML = '';
                         resultBox.style.display = 'block';
                         if (data.length === 0) {
-                            resultBox.innerHTML = '<div class="p-2 text-muted">No products found</div>';
+                            resultBox.innerHTML = '<div class="p-2 text-muted">No product lots found</div>';
                         } else {
                             data.forEach(item => {
                                 const div = document.createElement('div');
                                 div.classList.add('p-2', 'autocomplete-item');
-                                div.textContent = `${item.name} (${item.part_number})`;
+                                div.textContent = `${item.part_number} - x-code: ${item.x_code} (Available: ${item.qty_available})`;
                                 div.style.cursor = 'pointer';
                                 div.addEventListener('click', () => {
-                                    input.value = item.name;
-                                    const productIdInput = productRow.querySelector('.product-id');
-                                    productIdInput.value = item.id;
-                                    
-                                    // Fetch the available quantity using the new endpoint
-                                    fetch(`../ajax/get_product_qty.php?product_id=${item.id}`)
-                                        .then(res => res.json())
-                                        .then(qtyData => {
-                                            if (qtyData.qty !== undefined) {
-                                                availableQtySpan.textContent = `(Available: ${qtyData.qty})`;
-                                            } else {
-                                                availableQtySpan.textContent = '';
-                                            }
-                                        })
-                                        .catch(error => console.error('Error fetching product quantity:', error));
-                                    
+                                    input.value = `${item.part_number} - x-code: ${item.x_code}`;
+                                    const productLotIdInput = productRow.querySelector('.product-lot-id');
+                                    productLotIdInput.value = item.lot_id;
+                                    availableQtySpan.textContent = `(Available: ${item.qty_available})`;
                                     resultBox.innerHTML = '';
                                     resultBox.style.display = 'none';
                                 });
@@ -324,7 +257,7 @@
                             });
                         }
                     })
-                    .catch(error => console.error('Error fetching products:', error));
+                    .catch(error => console.error('Error fetching product lots:', error));
             } else {
                 resultBox.innerHTML = '';
                 resultBox.style.display = 'none';
@@ -338,6 +271,25 @@
             document.querySelectorAll('.autocomplete-box').forEach(box => {
                 box.style.display = 'none';
             });
+        }
+    });
+
+    // Close other opened rows when a new one is clicked
+    document.addEventListener('click', (e) => {
+        const clickedRow = e.target.closest('.stock-row');
+
+        document.querySelectorAll('.stock-row.is-open').forEach(r => {
+            if (r !== clickedRow) {
+                r.classList.remove('is-open');
+                const box = r.querySelector('.category-suggestions');
+                if (box) box.style.display = 'none';
+            }
+        });
+
+        if (clickedRow) {
+            clickedRow.classList.add('is-open');
+            const box = clickedRow.querySelector('.category-suggestions');
+            if (box) box.style.display = 'block';
         }
     });
 </script>
