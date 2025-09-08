@@ -44,6 +44,15 @@
                         <label for="employer" class="form-label">Employer:</label>
                         <input type="text" name="employer" id="employer" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['employer']) ?>">
                     </div>
+                    <!-- Project status -->
+                    <div class="col-12 col-md-3 px-2 my-2">
+                     <label for="status" class="form-label">Status:</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="<?= htmlspecialchars($project_data['status']) ?>"><?= htmlspecialchars($project_data['status']) ?></option>
+                            <option value="Pending">Pending</option>
+                            <option value="Finished">Finished</option>
+                        </select>
+                    </div>
 
                     <div class="col-12">
                         <label for="designators" class="form-label">Designators:</label>
@@ -70,7 +79,7 @@
                                     <div class="row d-flex align-items-end justify-content-between">
                                         <div class="col-12 col-md-4 px-1 position-relative mb-2">
                                             <label for="productInput" class="form-label">Part Lot Code:</label>
-                                            <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by part number, x-code, or tag" autocomplete="off" required>
+                                            <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by x-code, part number " autocomplete="off" required>
                                             <input type="hidden" name="products[0][product_lot_id]" class="product-lot-id">
                                             <div class="autocomplete-box category-suggestions" style="display: none;"></div>
                                         </div>

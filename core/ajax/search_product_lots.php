@@ -17,20 +17,19 @@ try {
     if (strlen($keyword) >= 2) {
         // Search for product lots by part number, product tag, x-code, or vrm-x-code
         $stmt = $conn->prepare("
-            SELECT 
-                pl.id AS lot_id, 
-                pl.x_code,
-                pl.vrm_x_code,
-                pl.qty_available,
-                p.tag AS product_tag,
-                p.part_number
+            SELECT
+            pl.id AS lot_id,
+            pl.x_code,
+            pl.vrm_x_code,
+            pl.qty_available,
+            p.part_number
             FROM product_lots pl
             JOIN products p ON pl.product_id = p.id
-            WHERE 
-                p.part_number LIKE ? OR
-                p.tag LIKE ? OR
-                pl.x_code LIKE ? OR
-                pl.vrm_x_code LIKE ?
+            WHERE
+            (p.part_number LIKE ? OR
+            pl.x_code LIKE ? OR
+            pl.vrm_x_code LIKE ?)
+            AND pl.qty_available > 0
             LIMIT 10
         ");
 
@@ -40,7 +39,7 @@ try {
         }
 
         $searchKeyword = '%' . $keyword . '%';
-        $stmt->bind_param("ssss", $searchKeyword, $searchKeyword, $searchKeyword, $searchKeyword);
+        $stmt->bind_param("sss", $searchKeyword, $searchKeyword, $searchKeyword);
         $stmt->execute();
         $result = $stmt->get_result();
         $products = $result->fetch_all(MYSQLI_ASSOC);

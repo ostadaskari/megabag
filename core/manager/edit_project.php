@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $project_id = (int)$_GET['id'];
     
     // Fetch project details using the correct 'id' column
-    $stmt_project = $conn->prepare("SELECT id, project_name, employer, designators FROM projects WHERE id = ?");
+    $stmt_project = $conn->prepare("SELECT id, project_name, employer, status, designators FROM projects WHERE id = ?");
     $stmt_project->bind_param("i", $project_id);
     $stmt_project->execute();
     $result_project = $stmt_project->get_result();
@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $projectId = $_POST['project_id'] ?? null;
     $projectName = $_POST['project_name'] ?? '';
     $employer = $_POST['employer'] ?? '';
+    $status = $_POST['status'] ?? '';
     $designators = $_POST['designators'] ?? '';
     $products_submitted = $_POST['products'] ?? [];
 
@@ -82,12 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn->begin_transaction();
 
             // 1. Update the main projects table using the 'id' column
-            $stmt_update_project = $conn->prepare("UPDATE projects SET project_name = ?, employer = ?, designators = ?, updated_at = ? WHERE id = ?");
+            $stmt_update_project = $conn->prepare("UPDATE projects SET project_name = ?, employer = ?, status = ?, designators = ?, updated_at = ? WHERE id = ?");
             if (!$stmt_update_project) {
                 throw new Exception("Prepare statement failed: " . $conn->error);
             }
             // Corrected bind_param: The SQL query has 5 placeholders, so you must bind 5 variables with 5 type specifiers.
-            $stmt_update_project->bind_param("ssssi", $projectName, $employer, $designators, $now, $projectId);
+            $stmt_update_project->bind_param("sssssi", $projectName, $employer, $status, $designators, $now, $projectId);
             if (!$stmt_update_project->execute()) {
                 throw new Exception("Failed to update project: " . $stmt_update_project->error);
             }
