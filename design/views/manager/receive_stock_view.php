@@ -71,17 +71,12 @@
                         </div>
                          
                         <!-- Lock Checkbox -->
-                        <div class="col-6 col-md-1 px-1 mt-2 mt-md-0">
-                            <label class="form-label">Lock:</label>
-
-                            <div class="form-check d-flex flex-row">
-                                <input class="form-check-input" type="checkbox" name="products[0][lock]" value="1" id="lockCheck">
-                                <label class="form-check-label" for="lockCheck">
-                                    <svg  width="20" height="20" fill="currentColor" class="bi bi-lock-fill hoverSvg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
-                                    </svg>
-                                </label>
-                            </div>
+                        <div class="col-6 col-md-1 px-1 mb-2 d-flex justify-content-end align-items-center">
+                            <svg  width="20" height="20" fill="currentColor" class="bi bi-lock-fill hoverSvg" viewBox="0 0 16 16">
+                                 <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                            </svg>
+                            <label class="form-check-label" for="lockCheck"> Lock:</label>
+                            <input class="form-check-input" type="checkbox" name="products[0][lock]" value="1" id="lockCheck">
                         </div>
 
                         <!-- Hidden x_code -->
