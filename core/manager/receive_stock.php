@@ -25,7 +25,7 @@ if (isset($_GET['error'])) {
 // Function to generate a truly unique x_code
 function generateUniqueXCode($conn) {
     while (true) {
-        $x_code = 'X' . strtoupper(bin2hex(random_bytes(5)));
+        $x_code = 'M' . strtoupper(bin2hex(random_bytes(4)));
 
         $check = $conn->prepare("SELECT id FROM product_lots WHERE x_code = ?");
         $check->bind_param("s", $x_code);

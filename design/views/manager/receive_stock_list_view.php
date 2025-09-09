@@ -233,7 +233,7 @@
         });
     }
 
-    // Functions for edit and delete actions using SweetAlert2
+
     window.editReceipt = function(receiptId) {
         window.location.href = `../auth/dashboard.php?page=edit_receipt&id=${receiptId}`;
     };
@@ -268,6 +268,15 @@
         });
     };
 
+
+            function printXcode(receiptxc) {
+                const w = window.open(`../auth/dashboard.php?page=print_receipt&xc=${encodeURIComponent(receiptxc)}`, "_blank");
+                w.onload = () => {
+                    w.print();
+                    w.onafterprint = () => w.close();
+                };
+            }
+        
     // Initial load
     document.addEventListener("DOMContentLoaded", () => {
         fetchReceipts();
