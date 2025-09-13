@@ -75,22 +75,22 @@
                 <div class="row d-flex justify-content-between">
 
 
-                    <div class="col-12 col-md-2 px-2 my-2">
+                    <!-- <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
                         <input class="form-control" type="number" name="qty" id="qty" placeholder="Quantity" autocomplete="off" min="0"  />
-                    </div>
+                    </div> -->
 
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label for="location" class="form-label" title="location in Inventory">Location:</label>
                         <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off"  />
                     </div>
 
-                    <div class="col-12 col-md-2 px-2 my-2">
+                    <!-- <div class="col-12 col-md-2 px-2 my-2">
                         <label for="date-code" class="form-label">Date Code:</label>
-                        <select id="date-code" name="date_code" class="form-select">
+                        <select id="date-code" name="date_code" class="form-select"> -->
                             <!-- Years will be populated here by JavaScript -->
-                        </select>
-                    </div>
+                        <!-- </select>
+                    </div> -->
 
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="statusSelector">

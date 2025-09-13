@@ -109,7 +109,7 @@
                                     </svg>
                                 </th>
                                 <th style="width: 6%;" >Date</th>
-                                <th style="width: 10%;" >Action</th>
+                                <th style="width: 15%;" >Action</th>
                             </tr>
                         </thead>
                         <tbody id="receiptsTableBody">
@@ -276,44 +276,56 @@
                     w.onafterprint = () => w.close();
                 };
             }
+
+        
         
     // Initial load
-    document.addEventListener("DOMContentLoaded", () => {
-        fetchReceipts();
+document.addEventListener("DOMContentLoaded", () => {
+    fetchReceipts();
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const error = urlParams.get('error');
 
-        if (status === 'deleted') {
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'The receipt has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
-        } else if (status === 'error') {
-            Swal.fire({
-                title: 'Error!',
-                text: 'An error occurred during deletion.',
-                icon: 'error',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-            });
-        } else if (status === 'updated') {
-            Swal.fire({
-                title: 'Updated!',
-                text: 'The receipt has been updated.',
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
-        }
-        
-        // Clean up the URL after displaying the alert
-        if (status) {
-            urlParams.delete('status');
-            history.replaceState(null, '', `?${urlParams.toString()}`);
-        }
-    });
+    // Handle generic status messages (deleted, updated)
+    if (status === 'deleted') {
+        Swal.fire({
+            title: 'Deleted!',
+            text: 'The receipt has been deleted.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    } else if (status === 'updated') {
+        Swal.fire({
+            title: 'Updated!',
+            text: 'The receipt has been updated.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    }
+
+    // Handle specific error messages from the backend
+    if (error) {
+        Swal.fire({
+            title: 'Error!',
+            text: decodeURIComponent(error),
+            icon: 'error',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        });
+    }
+
+    // Clean up the URL after displaying the alert
+    if (status) {
+        urlParams.delete('status');
+    }
+    if (error) {
+        urlParams.delete('error');
+    }
+    if (status || error) {
+        history.replaceState(null, '', `?${urlParams.toString()}`);
+    }
+});
 </script>

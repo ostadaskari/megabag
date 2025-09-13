@@ -209,6 +209,9 @@
                                                     <strong>MFG:</strong> ${product.mfg}
                                                 </div>
                                                 <div class="col-6 my-2">
+                                                    <strong>Location:</strong> ${product.location}
+                                                </div>
+                                                <div class="col-6 my-2">
                                                     <strong>Tag:</strong> ${product.tag}
                                                 </div>
                                                 <div class="col-6 my-2">
@@ -217,23 +220,16 @@
                                                 <div class="col-6 my-2">
                                                     <strong>Category:</strong> ${product.category_name}
                                                 </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Location:</strong> ${product.location}
-                                                </div>
+
                                                 <div class="col-6 my-2">
                                                     <strong>Status:</strong> ${product.status}
                                                 </div>
+
                                                 <div class="col-6 my-2">
-                                                    <strong>Date Code:</strong> ${product.date_code}
+                                                    <strong>Created_At:</strong> ${formatDate(product.created_at)}
                                                 </div>
                                                 <div class="col-6 my-2">
-                                                    <strong>Recieve Code:</strong> ${product.recieve_code}
-                                                </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Created_At:</strong> ${product.created_at}
-                                                </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Updated_At:</strong> ${product.updated_at}
+                                                    <strong>Updated_At:</strong> ${formatDate(product.updated_at)}
                                                 </div>
                                                 <div class="col-12 my-2">
                                                     <strong>Description:</strong> ${product.company_cmt}
@@ -465,5 +461,19 @@ function magnify(img, zoom) {
     return {x, y};
   }
 }
+
+
+function formatDate(dateString) {
+    const date = new Date(dateString.replace(" ", "T")); // make it ISO-friendly
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // months are 0-based
+    const day = date.getDate();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+}
+
 
 </script>

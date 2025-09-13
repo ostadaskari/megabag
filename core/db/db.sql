@@ -200,7 +200,7 @@ CREATE TABLE projects (
     status ENUM('pending', 'finished') DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 --
@@ -217,34 +217,6 @@ CREATE TABLE project_products (
     FOREIGN KEY (product_lot_id) REFERENCES product_lots(id) ON DELETE CASCADE
 );
 
-
-
-
-
--- eX FEATUES Edition
-
---  -- adding some specific features to each category
--- CREATE TABLE features (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     category_id INT NOT NULL,
---     name VARCHAR(60) NOT NULL,
---     data_type ENUM('varchar(50)', 'decimal(15,7)', 'TEXT', 'boolean') DEFAULT 'varchar(50)',
---     unit VARCHAR(50) DEFAULT NULL,  -- example: 'kg', 'cm', '%', etc.
---     is_required BOOLEAN DEFAULT FALSE,
---     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
--- );
--- -- each product could have feature values that is belonging to their features
--- -- Product Feature Values (Pivot Table)
--- -- Table: product_feature_values
--- CREATE TABLE product_feature_values (
---     product_id INT NOT NULL,
---     feature_id INT NOT NULL,
---     value TEXT NOT NULL,
---     unit VARCHAR(50) DEFAULT NULL,
---     PRIMARY KEY (product_id, feature_id),
---     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
---     FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE
--- );
 
 
 

@@ -61,17 +61,14 @@
                 </div>
             </div> 
             <div class="row d-flex flex-row align-items-center justify-content-between">
-                <div class="col-12 col-md-2 px-2 my-2">
-                    <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                    <input class="form-control" type="text" name="qty" value="<?= htmlspecialchars($product['qty']) ?>" min="0" autocomplete="off" placeholder="Quantity" required>
-                </div>
+
                 <div class="col-12 col-md-2 px-2">
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
                     <input class="form-control" type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
                 </div>
                 <div class="col-12 col-md-2 px-2 my-2">
                     <label for="" class="form-label">Date Code:</label>
-                    <select name="date_code" id="date_code" class="form-select" required>
+                    <select name="date_code" id="date_code" class="form-select" required disabled>
                         <!-- Options will be populated by JavaScript -->
                     </select>
                 </div>
@@ -562,31 +559,42 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- end search categories and fetch features -->
 
 
-    <!-- sweet alerts  -->
 
-    <?php if (!empty($success)): ?>
-        <script>
+    <!-- sweet alerts -->
+    <?php if (!empty($success) || !empty($errors)): ?>
+    <script>
+        // Combine all logic into a single script block
+        const url = new URL(window.location.href);
+
+        <?php if (!empty($success)): ?>
+            // Display the success message
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
                 text: <?= json_encode($success) ?>,
                 confirmButtonColor: '#3085d6'
             });
-        </script>
-        <?php endif; ?>
+            // After displaying the message, clean the URL
+            url.searchParams.delete('success');
 
-        <?php if (!empty($errors)): ?>
-        <script>
+        <?php elseif (!empty($errors)): ?>
+            // Display the error message
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 html: `<ul style="text-align:left;">
-                    <?php foreach ($errors as $e): ?>
-                        <li><?= htmlspecialchars($e) ?></li>
-                    <?php endforeach; ?>
-                </ul>`,
+                            <?php foreach ($errors as $e): ?>
+                                <li><?= htmlspecialchars($e) ?></li>
+                            <?php endforeach; ?>
+                        </ul>`,
                 confirmButtonColor: '#d33'
             });
-        </script>
+            // After displaying the message, clean the URL
+            url.searchParams.delete('errors');
+        <?php endif; ?>
+
+        // Update the URL in the browser without reloading the page
+        history.replaceState(null, '', url);
+    </script>
     <?php endif; ?>
     <!-- end sweet alerts -->
