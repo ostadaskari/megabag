@@ -9,7 +9,7 @@ if (!isset($_GET['xc']) || empty($_GET['xc'])) {
 $x_code = $_GET['xc'];
 
 $generator = new BarcodeGeneratorPNG();
-$barcode = base64_encode($generator->getBarcode($x_code, $generator::TYPE_CODE_128, 1, 30)); // scale 2, height 60
+$barcode = base64_encode($generator->getBarcode($x_code, $generator::TYPE_CODE_128, 2, 30)); // scale 1, height 20
 
 // Minimal HTML wrapper for print
 echo '<!DOCTYPE html>

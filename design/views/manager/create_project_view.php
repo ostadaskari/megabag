@@ -116,21 +116,34 @@
     
 </div>
 
-<?php if (!empty($success)): ?>
+<?php if (!empty($success) || !empty($errors)): ?>
     <script>
-        Swal.fire({ 
-            icon: 'success', 
-            title: 'Success', 
-            text: <?= json_encode($success) ?> 
-        });
-    </script>
-<?php elseif (!empty($errors)): ?>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Errors',
-            html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
-        });
+        // Combine all logic into a single script block
+        const url = new URL(window.location.href);
+
+        <?php if (!empty($success)): ?>
+            // Display the success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: <?= json_encode($success) ?>
+            });
+            // After displaying the message, clean the URL
+            url.searchParams.delete('success');
+
+        <?php elseif (!empty($errors)): ?>
+            // Display the error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Errors',
+                html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
+            });
+            // After displaying the message, clean the URL
+            url.searchParams.delete('errors');
+        <?php endif; ?>
+
+        // Update the URL in the browser without reloading the page
+        history.replaceState(null, '', url);
     </script>
 <?php endif; ?>
 

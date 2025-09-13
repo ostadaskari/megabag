@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Include the database connection file
-require_once('../db/db.php');
+require_once '../db/db.php';
 
 // ACL: Allow only manager or admin
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 
     // Fetch associated product lots for the project using 'x_code'
     $stmt_products = $conn->prepare("
-            SELECT 
+        SELECT 
             pp.project_id, 
             pp.product_lot_id, 
             pp.used_qty, 
@@ -51,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         JOIN
             products p ON pl.product_id = p.id
         WHERE 
-            pp.project_id = ?");
+            pp.project_id = ?
+        ");
     $stmt_products->bind_param("i", $project_id);
     $stmt_products->execute();
     $result_products = $stmt_products->get_result();
@@ -87,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$stmt_update_project) {
                 throw new Exception("Prepare statement failed: " . $conn->error);
             }
-            // Corrected bind_param: The SQL query has 5 placeholders, so you must bind 5 variables with 5 type specifiers.
             $stmt_update_project->bind_param("sssssi", $projectName, $employer, $status, $designators, $now, $projectId);
             if (!$stmt_update_project->execute()) {
                 throw new Exception("Failed to update project: " . $stmt_update_project->error);
@@ -111,9 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt_delete = $conn->prepare("DELETE FROM project_products WHERE project_id = ? AND product_lot_id = ?");
             
             // Prepared statements for stock updates
-            $stmt_update_lot = $conn->prepare("UPDATE product_lots SET qty_available = qty_available - ? WHERE id = ?");
-            // Update both 'qty' (available) and 'used_qty' in the products table
-            $stmt_update_product = $conn->prepare("UPDATE products SET qty = qty - ?, used_qty = used_qty + ? WHERE id = ?");
+            $stmt_debit_stock = $conn->prepare("UPDATE product_lots SET qty_available = qty_available - ? WHERE id = ?");
+            $stmt_credit_stock = $conn->prepare("UPDATE product_lots SET qty_available = qty_available + ? WHERE id = ?");
+            
+            // Prepared statements for main product updates (only updating 'qty')
+            $stmt_debit_product_qty = $conn->prepare("UPDATE products SET qty = qty - ? WHERE id = ?");
+            $stmt_credit_product_qty = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
 
             // Process submitted products
             $submitted_lot_ids = [];
@@ -122,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $usedQty = (int)$productData['used_qty'];
                 $remarks = trim($productData['remarks'] ?? '');
 
-                if ($productLotId <= 0 || $usedQty <= 0) {
+                if ($productLotId <= 0 || $usedQty < 0) {
                     $errors[] = "Invalid product lot or quantity submitted.";
                     continue;
                 }
@@ -142,8 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $qty_change = $usedQty - $original_qty;
 
                     if ($qty_change != 0) {
-                        // Check if sufficient stock is available for positive changes
-                        if ($qty_change > 0) {
+                        if ($qty_change > 0) { // Quantity increased, debit stock
                             $stmt_check_qty = $conn->prepare("SELECT qty_available FROM product_lots WHERE id = ?");
                             $stmt_check_qty->bind_param("i", $productLotId);
                             $stmt_check_qty->execute();
@@ -152,20 +154,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $errors[] = "Row with lot ID {$productLotId}: Insufficient stock to add {$qty_change} units.";
                                 continue;
                             }
+                            // Debit stock
+                            $stmt_debit_stock->bind_param("ii", $qty_change, $productLotId);
+                            $stmt_debit_stock->execute();
+                            // Update main product
+                            $stmt_debit_product_qty->bind_param("ii", $qty_change, $main_product_id);
+                            $stmt_debit_product_qty->execute();
+                        } else { // Quantity decreased, credit stock
+                             $qty_to_credit = abs($qty_change);
+                            // Credit stock
+                            $stmt_credit_stock->bind_param("ii", $qty_to_credit, $productLotId);
+                            $stmt_credit_stock->execute();
+                            // Update main product
+                            $stmt_credit_product_qty->bind_param("ii", $qty_to_credit, $main_product_id);
+                            $stmt_credit_product_qty->execute();
                         }
-                        
-                        // Update product lots stock
-                        $stmt_update_lot->bind_param("ii", $qty_change, $productLotId);
-                        $stmt_update_lot->execute();
-                        
-                        // Update main product stock, adjusting for both qty and used_qty
-                        $stmt_update_product->bind_param("iii", $qty_change, $qty_change, $main_product_id);
-                        $stmt_update_product->execute();
-
-                        // Update project_products
-                        $stmt_update->bind_param("iisi", $usedQty, $remarks, $projectId, $productLotId);
-                        $stmt_update->execute();
                     }
+                    
+                    // Moved update query outside of the quantity change check.
+                    // This ensures remarks are updated even if qty is unchanged.
+                    $stmt_update->bind_param("isii", $usedQty, $remarks, $projectId, $productLotId);
+                    $stmt_update->execute();
+
                     unset($current_products[$productLotId]); // Mark as processed
                 } else {
                     // This is a new product, debit stock and insert
@@ -183,12 +193,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_insert->execute();
 
                     // Debit product lots stock
-                    $stmt_update_lot->bind_param("ii", $usedQty, $productLotId);
-                    $stmt_update_lot->execute();
+                    $stmt_debit_stock->bind_param("ii", $usedQty, $productLotId);
+                    $stmt_debit_stock->execute();
                     
-                    // Debit main product stock, adjusting for both qty and used_qty
-                    $stmt_update_product->bind_param("iii", $usedQty, $usedQty, $main_product_id);
-                    $stmt_update_product->execute();
+                    // Debit main product stock
+                    $stmt_debit_product_qty->bind_param("ii", $usedQty, $main_product_id);
+                    $stmt_debit_product_qty->execute();
                 }
             }
 
@@ -203,14 +213,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_fetch_prod_id->close();
                 
                 // Add quantity back to stock, and decrease used_qty
-                $qty_to_return = -$usedQty; // Negative to add back
-                $stmt_update_lot->bind_param("ii", $qty_to_return, $productLotId);
-                $stmt_update_lot->execute();
+                // Use explicit subtraction
+                $stmt_credit_stock->bind_param("ii", $usedQty, $productLotId);
+                $stmt_credit_stock->execute();
                 
-                // Add quantity back to main product stock, and decrease used_qty
-                // The 'qty_to_return' is negative, so adding it back increases 'qty' and decreases 'used_qty'
-                $stmt_update_product->bind_param("iii", $qty_to_return, $qty_to_return, $main_product_id);
-                $stmt_update_product->execute();
+                // Add quantity back to main product stock
+                $stmt_credit_product_qty->bind_param("ii", $usedQty, $main_product_id);
+                $stmt_credit_product_qty->execute();
 
                 // Delete from project_products
                 $stmt_delete->bind_param("ii", $projectId, $productLotId);
@@ -221,8 +230,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt_insert->close();
             $stmt_update->close();
             $stmt_delete->close();
-            $stmt_update_lot->close();
-            $stmt_update_product->close();
+            $stmt_debit_stock->close();
+            $stmt_credit_stock->close();
+            $stmt_debit_product_qty->close();
+            $stmt_credit_product_qty->close();
 
             if (!empty($errors)) {
                 $conn->rollback();

@@ -385,4 +385,67 @@ document.getElementById('groupIssueForm').addEventListener('submit', function (e
         });
     }
 });
+
+// === BARCODE SCANNER LOGIC ===
+// Listen for keyup events on all .lot-search inputs
+document.addEventListener('keyup', function(e) {
+    // Check if the key is 'Enter' and the target is a lot-search input
+    if (e.key === 'Enter' && e.target.classList.contains('lot-search')) {
+        e.preventDefault(); // Prevent form submission
+        const input = e.target;
+        const keyword = input.value;
+        
+        if (keyword.length > 0) {
+            // Perform the exact search
+            fetch(`../ajax/search_lot_by_x.php?exact_keyword=${encodeURIComponent(keyword)}`)
+                .then(res => res.json())
+                .then(data => {
+                    const row = input.closest('.stock-row');
+                    // Check if a single, exact item was found
+                    if (data.length === 1) {
+                        input.classList.add('locked-input');
+                        const hiddenInput = row.querySelector('.product-lot-id');
+                        hiddenInput.value = data[0].id;
+                        
+                        // Update UI with available quantity
+                        const qtyEl = row.querySelector('.qty-value');
+                        const qtyInput = row.querySelector('.qty-input');
+                        qtyEl.textContent = data[0].qty_available;
+                        qtyInput.max = data[0].qty_available;
+                        
+                        toggleRowInputs(row, false);
+                        
+                        // Check for locked items and show a message
+                        if (data[0].lock) {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Item Locked',
+                                text: `This item is locked for the project: ${data[0].project_name}`
+                            });
+                        }
+
+                        // Automatically add a new row after a short delay
+                        // This allows the UI to update smoothly before the new row appears
+                        setTimeout(() => {
+                            addRow();
+                            const lastRow = document.querySelector('#issueRows').lastElementChild;
+                            lastRow.querySelector('.lot-search').focus();
+                        }, 100);
+
+                    } else {
+                        // If no exact match, clear the input to indicate an invalid barcode
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No Exact Match',
+                            text: 'The scanned barcode did not match an available item. Please try again.'
+                        });
+                        input.value = '';
+                        input.classList.remove('locked-input');
+                        input.closest('.stock-row').querySelector('.product-lot-id').value = '';
+                        toggleRowInputs(input.closest('.stock-row'), false);
+                    }
+                });
+        }
+    }
+});
 </script>

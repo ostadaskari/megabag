@@ -59,7 +59,6 @@ CREATE TABLE products (
     part_number VARCHAR(80) NOT NULL UNIQUE,      -- Renamed "p-n" to "part_number"
     mfg VARCHAR(80),                            -- Manufacturer
     qty MEDIUMINT UNSIGNED DEFAULT 0,              -- 0 to 16777215
-    used_qty MEDIUMINT UNSIGNED DEFAULT 0,         -- 0 to 16777215
     company_cmt TEXT,                            -- company comment
     location VARCHAR(100),                         -- location address in stock 
     status ENUM('available', 'unavailable') DEFAULT 'available',
