@@ -111,7 +111,7 @@ CREATE TABLE product_lots (
     vrm_x_code VARCHAR(70) UNIQUE,      -- The unique vrm_x_code for the physical pack
     qty_received INT UNSIGNED DEFAULT 0,  -- The original quantity in this lot
     qty_available INT UNSIGNED DEFAULT 0, -- The current quantity left in this lot
-    date_code YEAR,                        -- year of made
+    date_code YEAR,                     -- year of made
     lot_location VARCHAR(30),           -- The location of the lot
     project_name VARCHAR(30),           -- The project associated with the lot
     lock BOOLEAN,                       -- Flag to indicate if a lot is locked

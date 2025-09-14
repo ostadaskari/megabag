@@ -1,4 +1,6 @@
 <?php
+// This script now fetches products, their feature values, and associated lot details.
+// It uses a more efficient query pattern to avoid N+1 issues.
 
 require_once '../db/db.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -11,6 +13,7 @@ try {
     $response = ['features' => [], 'products' => []];
 
     // Get features for the selected category (if a category is provided)
+    $features_result = [];
     if ($category_id > 0) {
         $stmt = $conn->prepare("SELECT * FROM features WHERE category_id = ?");
         $stmt->bind_param("i", $category_id);
@@ -18,7 +21,7 @@ try {
         $features_result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
     } else {
-        // Fetch all features if no category is specified
+        // Fetch all features if no category is specified (for general search)
         $stmt = $conn->prepare("SELECT * FROM features");
         $stmt->execute();
         $features_result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -33,7 +36,7 @@ try {
     $params = [];
     $types = "";
 
-    // --- NEW LOGIC: Determine if the category has children and adjust the query ---
+    // Determine if the category has children and adjust the query
     $childCategories = [];
     if ($category_id > 0) {
         $stmt_children = $conn->prepare("SELECT id FROM categories WHERE parent_id = ?");
@@ -67,31 +70,26 @@ try {
             $types .= "i" . str_repeat("i", count($childCategories));
         }
     }
-    // --- END NEW LOGIC ---
 
     foreach ($features_result as $f) {
         $fname_val = "feature_{$f['id']}";
         $fname_unit = "feature_{$f['id']}_unit";
 
-        // Only add joins and conditions if a filter value is provided in the URL
         if (isset($filters[$fname_val]) && !empty($filters[$fname_val])) {
             $alias = "pfv{$f['id']}";
             $joins[] = "JOIN product_feature_values $alias ON p.id = $alias.product_id AND $alias.feature_id = {$f['id']}";
 
-            // Handle different data types based on the feature
             switch ($f['data_type']) {
                 case 'multiselect':
                     $filter_value = $filters[$fname_val];
                     $conds[] = "JSON_CONTAINS($alias.value, ?, '$.values')";
-                    // The value needs to be a JSON string for JSON_CONTAINS
                     $params[] = json_encode($filter_value);
                     $types .= "s";
                     break;
-
                 case 'decimal(15,7)':
-                    $conds[] = "JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) = ?";
+                    $conds[] = "CAST(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) AS DECIMAL(15,7)) = ?";
                     $params[] = $filters[$fname_val];
-                    $types .= "s";
+                    $types .= "d";
                     
                     if (isset($filters[$fname_unit]) && !empty($filters[$fname_unit])) {
                        $conds[] = "LOWER(TRIM(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.unit')))) = LOWER(?)";
@@ -99,13 +97,11 @@ try {
                        $types .= "s";
                     }
                     break;
-                
                 case 'boolean':
                     $conds[] = "JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) = ?";
                     $params[] = $filters[$fname_val];
                     $types .= "s";
                     break;
-
                 case 'range':
                     $range_parts = explode('-', $filters[$fname_val]);
                     if (count($range_parts) === 2) {
@@ -117,7 +113,6 @@ try {
                         $types .= "dd";
                     }
                     break;
-
                 default: // Handles 'varchar(50)' and 'TEXT'
                     $conds[] = "TRIM(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value'))) = TRIM(?)";
                     $params[] = $filters[$fname_val];
@@ -137,8 +132,60 @@ try {
         $stmt->bind_param($types, ...$params);
     }
     $stmt->execute();
-    $response['products'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
+    
+    // --- Now, fetch features and lots for all found products in a single go ---
+    $product_ids = array_column($products, 'id');
+    $products_with_details = [];
+
+    if (!empty($product_ids)) {
+        $id_placeholders = implode(',', array_fill(0, count($product_ids), '?'));
+        $id_types = str_repeat('i', count($product_ids));
+
+        // Fetch all product features
+        $sql_features = "SELECT pfv.product_id, pfv.value, f.name, f.unit 
+                         FROM product_feature_values pfv 
+                         JOIN features f ON pfv.feature_id = f.id 
+                         WHERE pfv.product_id IN ($id_placeholders)";
+        $stmt_features = $conn->prepare($sql_features);
+        $stmt_features->bind_param($id_types, ...$product_ids);
+        $stmt_features->execute();
+        $features_data = $stmt_features->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt_features->close();
+
+        $features_by_product = [];
+        foreach ($features_data as $feature) {
+            $decoded_value = json_decode($feature['value'], true);
+            $features_by_product[$feature['product_id']][] = [
+                'name' => $feature['name'],
+                'value' => $decoded_value['value'] ?? 'N/A',
+                'unit' => $decoded_value['unit'] ?? $feature['unit']
+            ];
+        }
+
+        // Fetch all product lots
+        $sql_lots = "SELECT * FROM product_lots WHERE product_id IN ($id_placeholders)";
+        $stmt_lots = $conn->prepare($sql_lots);
+        $stmt_lots->bind_param($id_types, ...$product_ids);
+        $stmt_lots->execute();
+        $lots_data = $stmt_lots->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt_lots->close();
+
+        $lots_by_product = [];
+        foreach ($lots_data as $lot) {
+            $lots_by_product[$lot['product_id']][] = $lot;
+        }
+
+        // Merge features and lots back into the main products array
+        foreach ($products as $product) {
+            $product['features'] = $features_by_product[$product['id']] ?? [];
+            $product['lots'] = $lots_by_product[$product['id']] ?? [];
+            $products_with_details[] = $product;
+        }
+    }
+    
+    $response['products'] = $products_with_details;
 
     echo json_encode($response);
 
