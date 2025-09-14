@@ -34,7 +34,8 @@ $allowed_pages = [
     'bans' => '../logs/bans.php',
     'profile' => '../auth/profile.php',
     'user_search_products' => '../user/user_search_products.php',
-    'mouser_search' => '../user/mouser_search.php'
+    'mouser_search' => '../user/mouser_search.php',
+    'filter_search' => '../user/filter_search.php'
 ];
 
 // Map `?page=...` to the actual core file
