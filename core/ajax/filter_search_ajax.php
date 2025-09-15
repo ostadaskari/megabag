@@ -36,40 +36,48 @@ try {
     $params = [];
     $types = "";
 
-    // Determine if the category has children and adjust the query
-    $childCategories = [];
+    // --- CHANGED SECTION: Use a recursive query to find all descendant categories ---
+    $descendantCategories = [];
     if ($category_id > 0) {
-        $stmt_children = $conn->prepare("SELECT id FROM categories WHERE parent_id = ?");
-        $stmt_children->bind_param("i", $category_id);
-        $stmt_children->execute();
-        $result_children = $stmt_children->get_result();
-        while ($row = $result_children->fetch_assoc()) {
-            $childCategories[] = $row['id'];
+        // This SQL query recursively finds the selected category and all its children, grandchildren, etc.
+        $sql_descendants = "
+            WITH RECURSIVE CategoryHierarchy AS (
+                -- Start with the selected category itself
+                SELECT id FROM categories WHERE id = ?
+                UNION ALL
+                -- Recursively find all children
+                SELECT c.id FROM categories c
+                INNER JOIN CategoryHierarchy ch ON c.parent_id = ch.id
+            )
+            SELECT id FROM CategoryHierarchy
+        ";
+        $stmt_descendants = $conn->prepare($sql_descendants);
+        $stmt_descendants->bind_param("i", $category_id);
+        $stmt_descendants->execute();
+        $result_descendants = $stmt_descendants->get_result();
+        while ($row = $result_descendants->fetch_assoc()) {
+            $descendantCategories[] = $row['id'];
         }
-        $stmt_children->close();
+        $stmt_descendants->close();
     }
 
-    // Add the category filter to the query conditions
-    if ($category_id > 0) {
-        if (empty($childCategories)) {
-            // No children, filter by the single category ID
-            $conds[] = "p.category_id = ?";
-            $params[] = $category_id;
-            $types .= "i";
-        } else {
-            // Children exist, filter by parent OR any of the children
-            $in_placeholders = implode(',', array_fill(0, count($childCategories), '?'));
-            $conds[] = "(p.category_id = ? OR p.category_id IN ($in_placeholders))";
-            
-            // Add parent category ID first, then all child IDs
-            $params[] = $category_id;
-            foreach ($childCategories as $childId) {
-                $params[] = $childId;
-            }
-            
-            $types .= "i" . str_repeat("i", count($childCategories));
+    // Add the category filter to the query conditions using all descendant IDs
+    if (!empty($descendantCategories)) {
+        $in_placeholders = implode(',', array_fill(0, count($descendantCategories), '?'));
+        $conds[] = "p.category_id IN ($in_placeholders)";
+        
+        foreach ($descendantCategories as $descendantId) {
+            $params[] = $descendantId;
         }
+        
+        $types .= str_repeat("i", count($descendantCategories));
+    } elseif ($category_id > 0) {
+        // Fallback for a category that might not have been found or has no descendants
+        $conds[] = "p.category_id = ?";
+        $params[] = $category_id;
+        $types .= "i";
     }
+    // --- END OF CHANGED SECTION ---
 
     foreach ($features_result as $f) {
         $fname_val = "feature_{$f['id']}";
