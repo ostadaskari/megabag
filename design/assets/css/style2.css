@@ -570,9 +570,9 @@ margin-left: 0.5rem;
 .bg-light {
   background-color: #f8f9fa !important;
 }
-        .product-card {
-            background-color: #f1f1f1;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.075);
-        }
+.product-card {
+    background-color: #f1f1f1;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.075);
+}

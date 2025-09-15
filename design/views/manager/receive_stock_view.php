@@ -59,13 +59,13 @@
                         </div>
                         
                         <!-- Project Name -->
-                        <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
+                        <div class="col-6 col-md-3 px-1 mt-2 mt-md-0">
                             <label class="form-label">Project Name:</label>
                             <input type="text" name="products[0][project_name]" class="form-control" placeholder="Project Name" autocomplete="off">
                         </div>
 
                         <!-- Remarks -->
-                        <div class="col-12 col-md-3 px-1 mt-2 mt-md-0">
+                        <div class="col-12 col-md-6 px-1 mt-2 mt-md-0">
                             <label class="form-label">Comment:</label>
                             <textarea class="form-control responsive-textarea" name="products[0][remarks]" rows="1"></textarea>
                         </div>
@@ -77,7 +77,7 @@
                                 <label class="form-check-label" for="lockCheck">
                                     <svg  width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
-                                    </svg>
+                                    </svg> Lock
                                 </label>
                             </div>
                         </div>

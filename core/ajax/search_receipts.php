@@ -94,7 +94,7 @@ while ($row = $result->fetch_assoc()) {
 
     $html .= "<tr>
         <td>{$i}</td>
-        <td onclick=\"printXcode('".htmlspecialchars($row['x_code'])."')\" >" . htmlspecialchars($row['x_code']) . "</td>
+        <td style=\"color:brown\" onclick=\"printXcode('".htmlspecialchars($row['x_code'])."')\" >" . htmlspecialchars($row['x_code']) . "</td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
         <td>" . htmlspecialchars($row['date_code']) . "</td>
@@ -112,7 +112,7 @@ while ($row = $result->fetch_assoc()) {
         </td>
         <td>
             <div title=\"" . date('Y/n/d ,G:i', strtotime($row['created_at'])) . "\">
-                <svg width=\"24\" height=\"24\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
+                <svg width=\"20\" height=\"20\" fill=\"mediumblue\" class=\"bi bi-clock hoverSvg\" viewBox=\"0 0 16 16\">
                     <path d=\"M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z\"></path>
                     <path d=\"M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0\"></path>
                 </svg>
@@ -120,13 +120,13 @@ while ($row = $result->fetch_assoc()) {
         </td>
         <td class=\"flex justify-center space-x-2\">
             <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"editReceipt({$row['id']})\" title=\"Edit\">
-              <svg width=\"20\" height=\"20\" fill=\"var(--main-bg1-color)\" class=\"bi bi-pencil-square\" viewBox=\"0 0 16 16\">
+              <svg width=\"18\" height=\"18\" fill=\"var(--main-bg1-color)\" class=\"bi bi-pencil-square\" viewBox=\"0 0 16 16\">
                     <path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"></path>
                     <path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z\"></path>
                 </svg>
             </button>
             <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"deleteReceipt({$row['id']})\" title=\"Delete\">
-                <svg width=\"20\" height=\"20\" fill=\"#8b000d\" class=\"bi bi-trash hoverSvg\" viewBox=\"0 0 16 16\">
+                <svg width=\"18\" height=\"18\" fill=\"#8b000d\" class=\"bi bi-trash hoverSvg\" viewBox=\"0 0 16 16\">
                     <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"></path>
                     <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"></path>
                 </svg>
