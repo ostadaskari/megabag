@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
     foreach ($products as $index => $p) {
         $product_id    = isset($p['product_id']) ? (int)$p['product_id'] : 0;
         $qty_received  = isset($p['qty_received']) ? (int)$p['qty_received'] : 0;
-        $purchase_code = $p['purchase_code'] ?? null;
-        $vrm_x_code    = $p['vrm_x_code'] ?? null;
-        $date_code     = isset($p['date_code']) ? (int)$p['date_code'] : (int)date('Y');
-        $lot_location  = $p['lot_location'] ?? null;
-        $project_name  = $p['project_name'] ?? null;
+        $purchase_code = !empty($p['purchase_code']) ? $p['purchase_code'] : null;
+        $vrm_x_code    = !empty($p['vrm_x_code']) ? $p['vrm_x_code'] : null;
+        $date_code     = !empty($p['date_code']) ? (int)$p['date_code'] : (int)date('Y');
+        $lot_location  = !empty($p['lot_location']) ? $p['lot_location'] : null;
+        $project_name  = !empty($p['project_name']) ? $p['project_name'] : null;
         $lock          = isset($p['lock']) ? 1 : 0;
         $remarks       = trim($p['remarks'] ?? '');
 
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
             $lock
         );
         if (!$stmt->execute()) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to insert into product_lots.";
+            $errors[] = "Row " . ($index + 1) . ": Failed to insert into product_lots. (" . $stmt->error . ")";
             continue;
         }
 
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
         $update = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
         $update->bind_param("ii", $qty_received, $product_id);
         if (!$update->execute()) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to update product stock.";
+            $errors[] = "Row " . ($index + 1) . ": Failed to update product stock. (" . $update->error . ")";
             continue;
         }
     }

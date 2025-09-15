@@ -83,7 +83,7 @@ try {
         $fname_val = "feature_{$f['id']}";
         $fname_unit = "feature_{$f['id']}_unit";
 
-        if (isset($filters[$fname_val]) && !empty($filters[$fname_val])) {
+        if (isset($filters[$fname_val]) && $filters[$fname_val] !== '') {
             $alias = "pfv{$f['id']}";
             $joins[] = "JOIN product_feature_values $alias ON p.id = $alias.product_id AND $alias.feature_id = {$f['id']}";
 
@@ -134,6 +134,9 @@ try {
     if ($joins) $sql .= " " . implode(" ", array_unique($joins));
     if ($conds) $sql .= " WHERE " . implode(" AND ", $conds);
     
+        // Add the LIMIT clause
+    $sql .= " LIMIT 10";
+
     // Prepare and execute the statement
     $stmt = $conn->prepare($sql);
     if ($types) {
