@@ -84,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['product_id']);
     $pn = trim($_POST['p_n']);
     $mfg = trim($_POST['MFG']);
-    $qty = intval($_POST['qty']);
     $company_cmt = trim($_POST['company_cmt']);
     $location = trim($_POST['location']);
     $status = trim($_POST['status'] ?? 'available');
@@ -104,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         // Update product details
-        $stmt = $conn->prepare("UPDATE products SET part_number=?, mfg=?, qty=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, category_id=?, updated_at=NOW() WHERE id=?");
-        $stmt->bind_param("ssisssssii", $pn, $mfg, $qty, $company_cmt, $location, $status, $tag, $date_code, $category_id, $id);
+        $stmt = $conn->prepare("UPDATE products SET part_number=?, mfg=?, company_cmt=?, location=?, status=?, tag=?, date_code=?, category_id=?, updated_at=NOW() WHERE id=?");
+        $stmt->bind_param("sssssssii", $pn, $mfg, $company_cmt, $location, $status, $tag, $date_code, $category_id, $id);
         if ($stmt->execute()) {
             $stmt->close();
 
@@ -205,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!file_exists($pdfDir)) mkdir($pdfDir, 0777, true);
 
             // Define allowed file types and max size
-            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif','webp'];
             $allowedDocExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'];
             $maxFileSize = 20 * 1024 * 1024; // 20 MB
 

@@ -16,12 +16,12 @@ $types = "";
 
 // Search filters
 if (!empty($keyword)) {
-    $where .= " AND (products.name LIKE ? OR products.part_number LIKE ? OR products.tag LIKE ?)";
+    $where .= " AND (products.part_number LIKE ? OR products.tag LIKE ?)";
     $keywordParam = "%{$keyword}%";
+
     $params[] = $keywordParam;
     $params[] = $keywordParam;
-    $params[] = $keywordParam;
-    $types .= "sss";
+    $types .= "ss";
 }
 
 // Status filter

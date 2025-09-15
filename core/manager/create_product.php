@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Define allowed file types and max size
-            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'webp'];
             $allowedDocExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'];
             $maxFileSize = 20 * 1024 * 1024; // 20 MB
 
