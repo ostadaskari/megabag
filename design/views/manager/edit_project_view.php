@@ -273,15 +273,36 @@
                             data.forEach(item => {
                                 const div = document.createElement('div');
                                 div.classList.add('p-2', 'autocomplete-item');
-                                div.textContent = `${item.part_number} - x-code: ${item.x_code} (Available: ${item.qty_available})`;
+                                
+                                // Check if the item is locked
+                                if (item.lock == 1) { // Assuming 'lock' is 1 for true
+                                    div.classList.add('locked-item');
+                                    div.innerHTML = `${item.part_number} - x-code: ${item.x_code} <span class="text-danger fw-bold">(Locked for: ${item.project_name})</span>`;
+                                } else {
+                                    div.textContent = `${item.part_number} - x-code: ${item.x_code} (Available: ${item.qty_available})`;
+                                }
+
                                 div.style.cursor = 'pointer';
                                 div.addEventListener('click', () => {
-                                    input.value = `${item.part_number} - x-code: ${item.x_code}`;
-                                    const productLotIdInput = productRow.querySelector('.product-lot-id');
-                                    productLotIdInput.value = item.lot_id;
-                                    availableQtySpan.textContent = `(Available: ${item.qty_available})`;
-                                    resultBox.innerHTML = '';
-                                    resultBox.style.display = 'none';
+                                    // Prevent selection if the item is locked
+                                    if (item.lock == 1) {
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'Item Locked',
+                                            text: `This item is locked for the project: ${item.project_name}`
+                                        });
+                                        // Do not select the item, just clear the dropdown
+                                        resultBox.innerHTML = '';
+                                        resultBox.style.display = 'none';
+                                    } else {
+                                        // Set the input value to the selected lot details
+                                        input.value = `${item.part_number} - x-code: ${item.x_code}`;
+                                        const productLotIdInput = productRow.querySelector('.product-lot-id');
+                                        productLotIdInput.value = item.lot_id;
+                                        availableQtySpan.textContent = `(Available: ${item.qty_available})`;
+                                        resultBox.innerHTML = '';
+                                        resultBox.style.display = 'none';
+                                    }
                                 });
                                 resultBox.appendChild(div);
                             });
