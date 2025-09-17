@@ -23,10 +23,9 @@ $part_number = trim($_GET['pn']);
 // Prepare a SQL statement to fetch product details along with its category name.
 // We use a prepared statement to prevent SQL injection.
 $stmt = $conn->prepare("
-    SELECT p.*, c.name AS category_name
+    SELECT id
     FROM products p
-    INNER JOIN categories c ON p.category_id = c.id
-    WHERE p.part_number = ?
+    WHERE part_number = ?
 ");
 
 // Check if the statement was prepared successfully.
@@ -44,63 +43,12 @@ $stmt->execute();
 // Get the result set from the executed statement.
 $product_result = $stmt->get_result();
 
+
 // Check if a product was found.
 if ($product_result->num_rows > 0) {
     // Fetch the product data as an associative array.
     $product_data = $product_result->fetch_assoc();
-    $product_id = $product_data['id'];
-
-    // Initialize arrays to hold nested data.
-    $features = [];
-    $images = [];
-    $pdfs = [];
-
-    // --- Fetch Product Features ---
-    // Prepare a statement to get all features for the found product.
-    $features_stmt = $conn->prepare("SELECT feature_id, value, unit FROM product_feature_values WHERE product_id = ?");
-    if ($features_stmt) {
-        $features_stmt->bind_param("i", $product_id); // 'i' indicates an integer type.
-        $features_stmt->execute();
-        $features_result = $features_stmt->get_result();
-        // Loop through the results and add each feature to the features array.
-        while ($row = $features_result->fetch_assoc()) {
-            $features[] = $row;
-        }
-        $features_stmt->close();
-    }
-
-    // --- Fetch Product Images ---
-    // Prepare a statement to get all images for the found product.
-    $images_stmt = $conn->prepare("SELECT file_name, is_cover FROM images WHERE product_id = ?");
-    if ($images_stmt) {
-        $images_stmt->bind_param("i", $product_id);
-        $images_stmt->execute();
-        $images_result = $images_stmt->get_result();
-        // Loop through the results and add each image to the images array.
-        while ($row = $images_result->fetch_assoc()) {
-            $images[] = $row;
-        }
-        $images_stmt->close();
-    }
-
-    // --- Fetch Product PDFs ---
-    // Prepare a statement to get all PDFs for the found product.
-    $pdfs_stmt = $conn->prepare("SELECT file_name FROM pdfs WHERE product_id = ?");
-    if ($pdfs_stmt) {
-        $pdfs_stmt->bind_param("i", $product_id);
-        $pdfs_stmt->execute();
-        $pdfs_result = $pdfs_stmt->get_result();
-        // Loop through the results and add each PDF to the pdfs array.
-        while ($row = $pdfs_result->fetch_assoc()) {
-            $pdfs[] = $row;
-        }
-        $pdfs_stmt->close();
-    }
-
-    // Add the fetched nested data arrays to the main product data array.
-    $product_data['features'] = $features;
-    $product_data['images'] = $images;
-    $product_data['pdfs'] = $pdfs;
+    
 
     // Return the complete product data as a successful JSON response.
     echo json_encode(['status' => 'success', 'data' => $product_data]);
