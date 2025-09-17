@@ -12,9 +12,9 @@ if (isset($_GET['exact_keyword']) && !empty($_GET['exact_keyword'])) {
         SELECT pl.id, pl.x_code, pl.qty_available, p.part_number, pl.lock, pl.project_name
         FROM product_lots pl
         JOIN products p ON pl.product_id = p.id
-        WHERE pl.x_code = ? AND pl.qty_available > 0
+        WHERE (pl.x_code = ? OR p.part_number = ?) AND pl.qty_available > 0
     ");
-    $stmt->bind_param("s", $keyword);
+    $stmt->bind_param("ss", $keyword, $keyword);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -36,10 +36,10 @@ elseif (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
         SELECT pl.id, pl.x_code, pl.qty_available, p.part_number, pl.lock, pl.project_name
         FROM product_lots pl
         JOIN products p ON pl.product_id = p.id
-        WHERE pl.x_code LIKE ? AND pl.qty_available > 0
+        WHERE (pl.x_code LIKE ? OR p.part_number LIKE ?) AND pl.qty_available > 0
     ");
     $search = "%" . $keyword . "%";
-    $stmt->bind_param("s", $search);
+    $stmt->bind_param("ss", $search, $search);
     $stmt->execute();
     $result = $stmt->get_result();
     

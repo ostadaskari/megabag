@@ -43,28 +43,29 @@
             <!-- part number and Manufacturer inputs -->
             <div class="container bg-light border rounded shadow-sm p-2 mb-2">
                 <div class="d-flex flex-row align-items-center mb-2">
-                <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                </svg>
-                <h3 class="pl-1">Part Details :</h3>
-                <div id="editLinkContainer" class="ml-auto" style="display: none;">
-                    <a id="editLink" href="#" class="btn btn-warning btn-sm">Edit Existing Part</a>
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    <h3 class="pl-1">Part Details :</h3>
+                    <div id="editLinkContainer" class="ml-auto" style="display: none;">
+                        <a id="editLink" href="#" class="btn btn-warning btn-sm">Edit Existing Part</a>
+                    </div>
                 </div>
-                </div>
-            
+                
                 <div class="row">
-                    <div class="col-12 col-md-4 px-2 my-2">
-
-                    <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
-                        <input class="form-control" type="text" name="pn" id="pn" placeholder="Part number" autocomplete="off" required />
-                                        <span id="partNumberExistsMessage" class="error-message text-danger" style="display: none;">This part number already exists.</span>
-
+                    <div class="col-12 col-md-4 px-2 my-2 position-relative">
+                        <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="pn" id="pn" placeholder="Part number" autocomplete="off" required />
+                            <button class="btn btn-outline-secondary" type="button" id="mouserSearchBtn">M</button>
+                        </div>
+                        <span id="mouserStatus" class="ms-2"></span>
+                        <span id="partNumberExistsMessage" class="error-message text-danger" style="display: none;">This part number already exists.</span>
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
-                        <input class="form-control" type="text" name="mfg" id="mfg" placeholder="Manufacturer" autocomplete="off"  />
-
+                        <input class="form-control" type="text" name="mfg" id="mfg" placeholder="Manufacturer" autocomplete="off" />
                     </div>
                     <div class="col-12 col-md-4 px-2 my-2">
                         <label class="form-label" for="tag name" title="Tag Name">Tag:</label>
@@ -73,25 +74,10 @@
                 </div>
 
                 <div class="row d-flex justify-content-between">
-
-
-                    <!-- <div class="col-12 col-md-2 px-2 my-2">
-                        <label class="form-label" for="Quantity" title="Quantity">QTY:</label>
-                        <input class="form-control" type="number" name="qty" id="qty" placeholder="Quantity" autocomplete="off" min="0"  />
-                    </div> -->
-
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label for="location" class="form-label" title="location in Inventory">Location:</label>
-                        <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off"  />
+                        <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off" />
                     </div>
-
-                    <!-- <div class="col-12 col-md-2 px-2 my-2">
-                        <label for="date-code" class="form-label">Date Code:</label>
-                        <select id="date-code" name="date_code" class="form-select"> -->
-                            <!-- Years will be populated here by JavaScript -->
-                        <!-- </select>
-                    </div> -->
-
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="statusSelector">
                             Status:
@@ -107,8 +93,7 @@
                         <textarea class="form-control" id="company_cmt" class="mt-2" name="company_cmt" rows="3"></textarea>
                     </div>
                 </div>
-
-                <!-- inputs features -->
+                            <!-- features -->
                 <div class="container px-0 mt-3">
                     <div class="d-flex flex-row align-items-center mb-2">
                         <svg width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -118,7 +103,6 @@
                         <h3 class="pl-1 mb-0">Specifications :</h3>
                         <div class="flex-grow-1 ms-2 border-bottom"></div>
                     </div>
-
                     <div class="row" id="featuresContainer">
                     </div>
                 </div>
@@ -393,33 +377,7 @@ categoryIdInput.addEventListener('change', (event) => {
 // Load categories on page load
 fetchCategories();
 
-// Wait for the DOM to be fully loaded before running the script
-document.addEventListener('DOMContentLoaded', function() {
-    // Get a reference to the select element
-    const dateCodeSelect = document.getElementById('date-code');
 
-    // Define the starting year
-    const startYear = 2017;
-
-    // Get the current year
-    const currentYear = new Date().getFullYear();
-
-    // Loop from the current year down to the start year
-    for (let year = currentYear; year >= startYear; year--) {
-        // Create a new option element for each year
-        const option = document.createElement('option');
-
-        // Set the value and display text of the option
-        option.value = year;
-        option.textContent = year;
-
-        // Append the option to the select element
-        dateCodeSelect.appendChild(option);
-    }
-
-    // Optional: You can set the currently selected year to the current year
-    dateCodeSelect.value = currentYear;
-});
 </script>
 
 
@@ -458,20 +416,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('DOMContentLoaded', function() {
             const pnInput = document.getElementById('pn');
             const form = document.querySelector('form');
-            const productIdInput = document.getElementById('product_id');
             const submitBtn = document.getElementById('Addpart');
             const editLinkContainer = document.getElementById('editLinkContainer');
             const editLink = document.getElementById('editLink');
-            const categorySearchInput = document.getElementById('category_search');
-            const mfgInput = document.getElementById('mfg');
-            const tagNameInput = document.getElementById('tag');
-            const nameInput = document.getElementById('name');
-            const qtyInput = document.getElementById('qty');
-            const locationInput = document.getElementById('location');
-            const receivedCodeInput = document.getElementById('recieve_code');
-            const dateCodeSelect = document.getElementById('date-code');
-            const rfCheckbox = document.getElementById('rfCheckbox');
-            const companyCmtTextarea = document.getElementById('company_cmt');
             const featuresContainer = document.getElementById('featuresContainer');
             const existsMessage = document.getElementById('partNumberExistsMessage');
 
@@ -535,5 +482,110 @@ document.addEventListener('DOMContentLoaded', function() {
                     existsMessage.style.display = 'none';
                 }
             }
+
+
+            // mouser
+                const mouserSearchBtn = document.getElementById('mouserSearchBtn');
+                const partNumberInput = document.getElementById('pn');
+                const manufacturerInput = document.getElementById('mfg');
+                const companyCmtTextarea = document.getElementById('company_cmt');
+                const mouserStatusSpan = document.getElementById('mouserStatus');
+
+                mouserSearchBtn.addEventListener('click', async () => {
+                    const partNumber = partNumberInput.value.trim();
+                    // Use your actual API key here.
+                    const apiKey = '9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2';
+                    const apiUrl = `https://api.mouser.com/api/v4/search/keyword?apiKey=${apiKey}`;
+
+                    if (!partNumber) {
+                        alert('Please enter a part number first.');
+                        return;
+                    }
+
+                    // Show loading spinner
+                    mouserStatusSpan.innerHTML = '<span class="spinner-border spinner-border-sm text-primary" role="status"></span> Loading...';
+                    mouserStatusSpan.style.color = 'black';
+
+                    // Construct the JSON payload for the POST request
+                    const payload = {
+                        "SearchByKeywordRequest": {
+                            "keyword": partNumber,
+                            "records": 1, // We only need the first result
+                            "startingRecord": 0
+                        }
+                    };
+
+                    let retries = 0;
+                    const maxRetries = 5;
+                    let success = false;
+                    let finalData = null;
+
+                    while (retries < maxRetries && !success) {
+                        try {
+                            const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+
+                            finalData = await response.json();
+                            success = true;
+
+                        } catch (error) {
+                            console.error(`Attempt ${retries + 1} failed:`, error);
+                            retries++;
+                            if (retries < maxRetries) {
+                                // Exponential backoff
+                                await new Promise(res => setTimeout(res, Math.pow(2, retries) * 1000));
+                            }
+                        }
+                    }
+
+                    // Hide loading spinner
+                    mouserStatusSpan.innerHTML = '';
+
+                    if (!success || !finalData) {
+                        mouserStatusSpan.textContent = 'Failed! check VPN or Connection.';
+                        mouserStatusSpan.style.color = 'red';
+                        return;
+                    }
+
+                    // Check for API-specific errors
+                    if (finalData.Errors && finalData.Errors.length > 0) {
+                        mouserStatusSpan.textContent = 'API Error: ' + finalData.Errors[0].Message;
+                        mouserStatusSpan.style.color = 'red';
+                        return;
+                    }
+
+                    const parts = finalData.SearchResults?.Parts || [];
+
+                    if (parts.length > 0) {
+                        const firstResult = parts[0];
+                        
+                        // Set the values in the form fields
+                        if (firstResult.Manufacturer) {
+                            manufacturerInput.value = firstResult.Manufacturer;
+                        }
+                        if (firstResult.Description) {
+                            companyCmtTextarea.value = firstResult.Description;
+                        }
+                        
+                        mouserStatusSpan.textContent = 'Success!';
+                        mouserStatusSpan.style.color = 'green';
+                    } else {
+                        // No results found
+                        mouserStatusSpan.textContent = 'Failed! No results found for this part number.';
+                        mouserStatusSpan.style.color = 'red';
+                    }
+                });
+
+
+
         });
     </script>
