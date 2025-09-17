@@ -195,7 +195,7 @@ CREATE TABLE projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,  -- New column to link to the users table
     project_name VARCHAR(40),
-    employer VARCHAR(60),
+    owner VARCHAR(60),
     designators TEXT,
     status ENUM('pending', 'finished') DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

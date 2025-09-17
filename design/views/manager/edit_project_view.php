@@ -39,10 +39,10 @@
                         <label for="projectName" class="form-label">Project Name:</label>
                         <input type="text" name="project_name" id="projectName" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['project_name']) ?>" required>
                     </div>
-                    <!-- Project Employer -->
+                    <!-- Project owner -->
                     <div class="col-12 col-md-3 px-2 my-2">
-                        <label for="employer" class="form-label">Employer:</label>
-                        <input type="text" name="employer" id="employer" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['employer']) ?>">
+                        <label for="owner" class="form-label">owner:</label>
+                        <input type="text" name="owner" id="owner" class="form-control" autocomplete="off" value="<?= htmlspecialchars($project_data['owner']) ?>">
                     </div>
                     <!-- Project status -->
                     <div class="col-12 col-md-3 px-2 my-2">

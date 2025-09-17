@@ -24,9 +24,9 @@ $whereClause = "WHERE 1";
 $params = [];
 $types = '';
 
-// Correctly search only for project_name and employer, as per the projects table schema
+// Correctly search only for project_name and owner, as per the projects table schema
 if (!empty($keyword)) {
-    $whereClause .= " AND (project_name LIKE ? OR employer LIKE ?)";
+    $whereClause .= " AND (project_name LIKE ? OR owner LIKE ?)";
     $keywordParam = "%{$keyword}%";
     array_push($params, $keywordParam, $keywordParam);
     $types .= 'ss';
@@ -53,7 +53,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
 // Fetch projects
 // Note: Removed date_code and purchase_code from the select statement as they are not in the projects table
-$sql = "SELECT id, project_name, employer, status, created_at FROM projects " . $whereClause . " LIMIT ?, ?";
+$sql = "SELECT id, project_name, owner, status, created_at FROM projects " . $whereClause . " LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $types .= 'ii';
 array_push($params, $offset, $recordsPerPage);
@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
         $html .= '<tr class="tdColor" data-id="' . htmlspecialchars($row['id']) . '">';
         $html .= '<td scope="row">' . $count . '</td>'; // Use the counter here
         $html .= '<td>' . htmlspecialchars($row['project_name']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($row['employer']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['owner']) . '</td>';
         $html .= '<td><span class="badge ' . ($row['status'] === 'finished' ? 'bg-success' : 'bg-secondary') . '">' . htmlspecialchars($row['status']) . '</span></td>';
         $html .= '<td>
                         <div title="' . htmlspecialchars($row['created_at']) . '">
