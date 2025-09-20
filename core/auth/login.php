@@ -10,9 +10,6 @@ $password = trim($_POST['password'] ?? '');
 $captcha_input = trim($_POST['captcha'] ?? '');
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
-
-
-
 // set and Track failures in session for userrnames not IP. because we have just 2 ip in this projec
 if (!isset($_SESSION['failures'])) $_SESSION['failures'] = [];
 if (!isset($_SESSION['failures'][$username])) $_SESSION['failures'][$username] = 0;
@@ -62,16 +59,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $user = $res->fetch_assoc();
 
             if ($user && password_verify($password, $user['password'])) { //successful login
-                 // reset sessions before any login
-                    session_unset();
-                    session_destroy();
-                    session_start();
-
+                // Regenerate the session ID to prevent session fixation attacks
+                session_regenerate_id(true); //prevent session fixation attacks
+                
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['nickname'] = $user['nickname'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['last_activity'] = time(); // Set initial activity timestamp
 
                 log_login_attempt($conn, $ip, $username, 'ok');
                 $_SESSION['failures'][$username] = 0;
@@ -104,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Load form if not POST
 include("../../design/views/auth/login_form.php");
 
-//  LOG LOGIN function
+//  LOG LOGIN function
 function log_login_attempt($conn, $ip, $username, $status) {
     try {
         $stmt = $conn->prepare("INSERT INTO login_logs (ip, username, status) VALUES (?, ?, ?)");
@@ -115,5 +111,3 @@ function log_login_attempt($conn, $ip, $username, $status) {
         // Fails silently if logging itself fails
     }
 }
-
-

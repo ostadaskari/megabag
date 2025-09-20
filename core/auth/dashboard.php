@@ -2,6 +2,28 @@
 session_start();
 ob_start();
 
+// Set the session timeout duration in seconds (e.g., 3600 seconds = 1 hour)
+$session_timeout = 1200;
+
+// Check for session inactivity and log out if necessary
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $session_timeout)) {
+    // Session has expired, so we destroy it and redirect to the login page.
+    session_unset();
+    session_destroy();
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+// Check if user is logged in. If not, redirect to login page.
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+// Update the last activity timestamp on every page load
+$_SESSION['last_activity'] = time();
+
+
 $msg = $_SESSION['msg'] ?? '';
 $type = $_SESSION['type'] ?? 'info';
 $username = $_SESSION['username'] ?? 'Guest';
@@ -13,7 +35,7 @@ $page = $_GET['page'] ?? 'home';
 $allowed_pages = [
     'home' => '../manager/home.php',
     'product_feature_values' => '../manager/product_feature_values.php', 
-    'add_category_feature' => '../manager/add_category_feature.php',   
+    'add_category_feature' => '../manager/add_category_feature.php', 
     'invite_users' => '../admin/invite_users.php',
     'manage_users' => '../admin/manage_users.php',
     'manage_categories' => '../manager/manage_categories.php',
@@ -24,7 +46,7 @@ $allowed_pages = [
     'receive_csv' => '../csv/receive_csv.php',
     'stock_issue' => '../manager/stock_issue.php',
     'list_issues' => '../manager/list_issues.php',
-    'create_product' => '../manager/create_product.php',  
+    'create_product' => '../manager/create_product.php', 
     'create_project' => '../manager/create_project.php', 
     'edit_product' => '../manager/edit_product.php',
     'edit_project' => '../manager/edit_project.php',
