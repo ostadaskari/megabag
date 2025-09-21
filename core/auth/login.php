@@ -108,6 +108,7 @@ function log_login_attempt($conn, $ip, $username, $status) {
         $stmt->execute();
         
     } catch (Exception $e) {
-        // Fails silently if logging itself fails
+        // Log the failure itself for debugging and security auditing.
+        error_log("Failed to log login attempt for user '{$username}': " . $e->getMessage());
     }
 }
