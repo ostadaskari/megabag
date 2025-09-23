@@ -18,7 +18,8 @@
         <form method="post" enctype="multipart/form-data" class="d-flex flex-column partForm">
             <!-- hidden for updating after existed partnumber -->
         <input type="hidden" id="product_id" name="product_id" value="">
-
+                  <!-- CSRF  -->
+            <?php generate_csrf_token(); ?>
 
             <!-- Category Dropdown Section -->
             <div class="container bg-light border rounded shadow-sm p-2 mb-2" style="z-index:1000;">
@@ -58,7 +59,7 @@
                         <label class="form-label" for="partNumber" title="Part Number">P/N:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="pn" id="pn" placeholder="Part number" autocomplete="off" required />
-                            <button class="btn btn-outline-secondary" type="button" id="mouserSearchBtn">M</button>
+                            <button class="btn btn-outline-secondary" type="button" id="mouserSearchBtn" title="mouser Inquiry">M</button>
                         </div>
                         <span id="mouserStatus" class="ms-2"></span>
                         <span id="partNumberExistsMessage" class="error-message text-danger" style="display: none;">This part number already exists.</span>
@@ -486,13 +487,12 @@ fetchCategories();
 
             // mouser
                 const mouserSearchBtn = document.getElementById('mouserSearchBtn');
-                const partNumberInput = document.getElementById('pn');
                 const manufacturerInput = document.getElementById('mfg');
                 const companyCmtTextarea = document.getElementById('company_cmt');
                 const mouserStatusSpan = document.getElementById('mouserStatus');
 
                 mouserSearchBtn.addEventListener('click', async () => {
-                    const partNumber = partNumberInput.value.trim();
+                    const partNumber = pnInput.value.trim();
                     // Use your actual API key here.
                     const apiKey = '9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2';
                     const apiUrl = `https://api.mouser.com/api/v4/search/keyword?apiKey=${apiKey}`;

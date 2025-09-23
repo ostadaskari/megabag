@@ -64,8 +64,6 @@ CREATE TABLE products (
     status ENUM('available', 'unavailable') DEFAULT 'available',
     user_id INT,                               -- Submitter's user ID
     category_id INT,                           -- Connects to the last child of categories
-    date_code YEAR,                               -- Use the YEAR data type for year values
-    recieve_code VARCHAR(80),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- Foreign Key Constraints

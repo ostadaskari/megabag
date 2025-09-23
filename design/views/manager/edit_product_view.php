@@ -17,6 +17,8 @@
 
     <form id="EditPartForm" class="d-flex flex-column partForm" action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
+            <!-- CSRF  -->
+        <?php generate_csrf_token(); ?>
 
         <div class="container bg-light border rounded shadow-sm p-2 mb-2" style="z-index:1000;">
               <div class="row">
@@ -66,12 +68,7 @@
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
                     <input class="form-control" type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
                 </div>
-                <div class="col-12 col-md-2 px-2 my-2">
-                    <label for="" class="form-label">Date Code:</label>
-                    <select name="date_code" id="date_code" class="form-select" required disabled>
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
-                </div>
+
                 
                 <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="status">
@@ -185,7 +182,7 @@
                         <div class="mt-3">
                             <p class="mb-1">Current Cover:</p>
                             <div class="d-flex flex-row align-items-center justify-content-between itemfile">
-                                <span><img src="<?= htmlspecialchars($cover_image['file_path']) ?>" width="60" style="border: 1px solid #ddd; padding: 2px;"></span>
+                                <span><img src="<?= $base_path . htmlspecialchars($cover_image['file_path']) ?>" width="60" style="border: 1px solid #ddd; padding: 2px;"></span>
                                 <button class="btnSvg" type="button" onclick="deleteFile('image', <?= $cover_image['id'] ?>)">
                                     <svg width="18" height="18" fill="rgb(207, 44, 16)" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -214,7 +211,7 @@
                         <ul id="editImageList" class="mt-1 list-group small" style="max-height: 150px; overflow-y: scroll;">
                             <?php foreach ($images as $img): ?>
                             <li class="d-flex flex-row align-items-center justify-content-between itemfile">
-                                <span><img src="<?= htmlspecialchars($img['file_path']) ?>" width="40" style="border: 1px solid #ddd; padding: 2px;"></span>
+                                <span><img src="<?=$base_path . htmlspecialchars($img['file_path']) ?>" width="40" style="border: 1px solid #ddd; padding: 2px;"></span>
                                 <button class="btnSvg" type="button" onclick="deleteFile('image', <?= $img['id'] ?>)">
                                     <svg width="18" height="18" fill="currentColor" class="bi bi-trash hoverSvg mx-1" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -245,7 +242,7 @@
                         <ul id="editDatasheetList" class="mt-3 list-group small" style="max-height: 180px;overflow-y:scroll;">
                             <?php foreach ($pdfs as $pdf): ?>
                             <li class="d-flex flex-row align-items-center justify-content-between itemfile">
-                                <a style="color:#101010;" href="<?= htmlspecialchars($pdf['file_path']) ?>" target="_blank">
+                                <a style="color:#101010;" href="<?= $base_path . htmlspecialchars($pdf['file_path']) ?>" target="_blank">
                                     <span><?= htmlspecialchars($pdf['file_name']) ?></span>
                                 </a>
                                 <button class="btnSvg" type="button" onclick="deleteFile('pdf', <?= $pdf['id'] ?>)">
@@ -306,19 +303,7 @@
     <script>
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Populate Date Code select
-    const dateCodeSelect = document.getElementById('date_code');
-    const startYear = 2017;
-    const currentYear = new Date().getFullYear();
 
-    for (let year = currentYear; year >= startYear; year--) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        dateCodeSelect.appendChild(option);
-    }
-
-    dateCodeSelect.value = "<?= htmlspecialchars($product['date_code']) ?>";
 
     // --- Category search & feature loading ---
     const dropdown = document.getElementById('category_dropdown');

@@ -81,7 +81,7 @@ $role = $_SESSION['role'] ?? 'guest';
                 </a>
                 <ul class="submenu list-unstyled">
                   <li><a href="?page=add_category_feature">Add Features to a Category</a></li>
-                  <li><a href="?page=product_feature_values">Part Feature Values</a></li>
+                  <!-- <li><a href="?page=product_feature_values">Part Feature Values</a></li> -->
                   
                 </ul>
               </li>
