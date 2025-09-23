@@ -1,6 +1,6 @@
 <?php
 require_once '../db/db.php';
-
+require_once '../auth/csrf.php'; // This file contains the validate_csrf_token function
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -42,90 +42,103 @@ function generateUniqueXCode($conn) {
 
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_array($_POST['products'])) {
-    $products = $_POST['products'];
-    $user_id = $_SESSION['user_id'];
+    $conn->begin_transaction();
 
-    foreach ($products as $index => $p) {
-        $product_id    = isset($p['product_id']) ? (int)$p['product_id'] : 0;
-        $qty_received  = isset($p['qty_received']) ? (int)$p['qty_received'] : 0;
-        $purchase_code = !empty($p['purchase_code']) ? $p['purchase_code'] : null;
-        $vrm_x_code    = !empty($p['vrm_x_code']) ? $p['vrm_x_code'] : null;
-        $date_code     = !empty($p['date_code']) ? (int)$p['date_code'] : (int)date('Y');
-        $lot_location  = !empty($p['lot_location']) ? $p['lot_location'] : null;
-        $project_name  = !empty($p['project_name']) ? $p['project_name'] : null;
-        $lock          = isset($p['lock']) ? 1 : 0;
-        $remarks       = trim($p['remarks'] ?? '');
-
-        // Validate inputs
-        if ($product_id <= 0) {
-            $errors[] = "Row " . ($index + 1) . ": Invalid product selection.";
-            continue;
-        }
-        if ($qty_received <= 0) {
-            $errors[] = "Row " . ($index + 1) . ": Quantity must be greater than 0.";
-            continue;
+    try {
+        // Validate the CSRF token before processing any form data.
+        if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+            throw new Exception("Invalid or missing CSRF token. Request denied.");
         }
 
-        // Generate guaranteed unique x_code
-        try {
+        $products = $_POST['products'];
+        $user_id = $_SESSION['user_id'];
+
+        foreach ($products as $index => $p) {
+            $product_id    = isset($p['product_id']) ? (int)$p['product_id'] : 0;
+            $qty_received  = isset($p['qty_received']) ? (int)$p['qty_received'] : 0;
+            $purchase_code = !empty($p['purchase_code']) ? $p['purchase_code'] : null;
+            $vrm_x_code    = !empty($p['vrm_x_code']) ? $p['vrm_x_code'] : null;
+            $date_code     = !empty($p['date_code']) ? (int)$p['date_code'] : (int)date('Y');
+            $lot_location  = !empty($p['lot_location']) ? $p['lot_location'] : null;
+            $project_name  = !empty($p['project_name']) ? $p['project_name'] : null;
+            $lock          = isset($p['lock']) ? 1 : 0;
+            $remarks       = trim($p['remarks'] ?? '');
+
+            // Validate inputs
+            if ($product_id <= 0) {
+                throw new Exception("Row " . ($index + 1) . ": Invalid product selection.");
+            }
+            if ($qty_received <= 0) {
+                throw new Exception("Row " . ($index + 1) . ": Quantity must be greater than 0.");
+            }
+
+            // Generate guaranteed unique x_code
             $x_code = generateUniqueXCode($conn);
-        } catch (Exception $e) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to generate x_code.";
-            continue;
+
+            // Insert into product_lots
+            $stmt = $conn->prepare("
+                INSERT INTO product_lots 
+                (product_id, user_id, purchase_code, x_code, vrm_x_code, qty_received, qty_available, date_code, lot_location, project_name, `lock`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+            if ($stmt === false) {
+                throw new Exception("Failed to prepare product_lots statement: " . $conn->error);
+            }
+            $stmt->bind_param(
+                "iisssiiissi",
+                $product_id,
+                $user_id,
+                $purchase_code,
+                $x_code,
+                $vrm_x_code,
+                $qty_received,
+                $qty_received,
+                $date_code,
+                $lot_location,
+                $project_name,
+                $lock
+            );
+            if (!$stmt->execute()) {
+                throw new Exception("Row " . ($index + 1) . ": Failed to insert into product_lots. (" . $stmt->error . ")");
+            }
+            $stmt->close();
+
+            $lot_id = $conn->insert_id;
+
+            // Insert into stock_receipts
+            $stmt2 = $conn->prepare("
+                INSERT INTO stock_receipts 
+                (product_lot_id, user_id, qty_received, remarks) 
+                VALUES (?, ?, ?, ?)
+            ");
+            if ($stmt2 === false) {
+                throw new Exception("Failed to prepare stock_receipts statement: " . $conn->error);
+            }
+            $stmt2->bind_param("iiis", $lot_id, $user_id, $qty_received, $remarks);
+            if (!$stmt2->execute()) {
+                throw new Exception("Row " . ($index + 1) . ": Failed to insert into stock_receipts.");
+            }
+            $stmt2->close();
+
+            // Update product quantity
+            $update = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
+            if ($update === false) {
+                throw new Exception("Failed to prepare product update statement: " . $conn->error);
+            }
+            $update->bind_param("ii", $qty_received, $product_id);
+            if (!$update->execute()) {
+                throw new Exception("Row " . ($index + 1) . ": Failed to update product stock. (" . $update->error . ")");
+            }
+            $update->close();
         }
 
-        // Insert into product_lots
-        $stmt = $conn->prepare("
-            INSERT INTO product_lots 
-            (product_id, user_id, purchase_code, x_code, vrm_x_code, qty_received, qty_available, date_code, lot_location, project_name, `lock`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->bind_param(
-            "iisssiiissi",
-            $product_id,
-            $user_id,
-            $purchase_code,
-            $x_code,
-            $vrm_x_code,
-            $qty_received,
-            $qty_received,
-            $date_code,
-            $lot_location,
-            $project_name,
-            $lock
-        );
-        if (!$stmt->execute()) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to insert into product_lots. (" . $stmt->error . ")";
-            continue;
-        }
-
-        $lot_id = $conn->insert_id;
-
-        // Insert into stock_receipts
-        $stmt2 = $conn->prepare("
-            INSERT INTO stock_receipts 
-            (product_lot_id, user_id, qty_received, remarks) 
-            VALUES (?, ?, ?, ?)
-        ");
-        $stmt2->bind_param("iiis", $lot_id, $user_id, $qty_received, $remarks);
-        if (!$stmt2->execute()) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to insert into stock_receipts.";
-            continue;
-        }
-
-        // Update product quantity
-        $update = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
-        $update->bind_param("ii", $qty_received, $product_id);
-        if (!$update->execute()) {
-            $errors[] = "Row " . ($index + 1) . ": Failed to update product stock. (" . $update->error . ")";
-            continue;
-        }
-    }
-
-    if (empty($errors)) {
+        $conn->commit();
         header("Location: ../auth/dashboard.php?page=receive_stock&success=" . urlencode("Stock received successfully."));
         exit;
-    } else {
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $errors[] = $e->getMessage();
         header("Location: ../auth/dashboard.php?page=receive_stock&error=" . urlencode(implode(' | ', $errors)));
         exit;
     }

@@ -3,7 +3,7 @@ session_start();
 ob_start();
 
 // Set the session timeout duration in seconds (e.g., 3600 seconds = 1 hour)
-$session_timeout = 1200;
+$session_timeout = 3600;
 
 // Check for session inactivity and log out if necessary
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $session_timeout)) {

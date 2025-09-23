@@ -15,6 +15,9 @@
 <div id="Insert-Items" class="tab-content">
     <div class="container px-0 mt-1">
         <form method="POST" action="" id="groupStockForm">
+                        <!-- CSRF  -->
+        <?php generate_csrf_token(); ?>
+        
             <div id="stockRows">
                 <div class="stock-row border p-1 rounded mb-1 bg-light position-relative">
                     <div class="row d-flex align-items-end justify-content-between">
