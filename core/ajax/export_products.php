@@ -23,8 +23,7 @@ $query = "SELECT
               u.nickname, 
               c.name AS category_name, 
               p.location, 
-              p.status,
-              p.date_code
+              p.status
           FROM products p
           LEFT JOIN users u ON p.user_id = u.id
           LEFT JOIN categories c ON p.category_id = c.id

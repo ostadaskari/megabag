@@ -9,6 +9,7 @@
                         <option value="">-- Select Category --</option>
                         <option value="25">Capacitors</option>
                         <option value="22">Resistors</option>
+                        <option value="64">ICs</option>
                     </select>
                 </div>
 

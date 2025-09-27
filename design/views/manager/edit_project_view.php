@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Add New Parts Section -->
-                <h4>Add New Parts</h4>
+                
                 <div class="d-flex align-items-center mb-2">
                     <div title="Add Row">
                         <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0">

@@ -14,6 +14,8 @@
 </div>
 <div class="container p-0">
     <form method="POST" action="" id="groupIssueForm">
+                                <!-- CSRF  -->
+        <?php generate_csrf_token(); ?>
         <div id="issueRows">
         </div>
 

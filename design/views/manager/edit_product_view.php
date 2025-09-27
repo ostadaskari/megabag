@@ -31,7 +31,7 @@
                             <h3 class="pl-1">Category :</h3>
                           </div>
                         <div style="width:40%;">
-                            <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select">
+                            <input type="text" id="category_search" placeholder="Search categories..." autocomplete="off" class="form-select" required>
                             <input type="hidden" name="category_id" id="category_id" value="<?= htmlspecialchars($product['category_id']) ?>">
                             <ul class="category-suggestions" id="category-dropdown" style="width: 40%; display: none;"></ul>
                         </div> 
