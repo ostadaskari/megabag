@@ -50,6 +50,7 @@ $allowed_pages = [
     'create_project' => '../manager/create_project.php', 
     'edit_product' => '../manager/edit_product.php',
     'edit_project' => '../manager/edit_project.php',
+    'edit_issue' => '../manager/edit_issue.php',
     'products_list' => '../manager/products_list.php',
     'projects_list' => '../manager/projects_list.php',
     'login_logs' => '../logs/login_logs.php',

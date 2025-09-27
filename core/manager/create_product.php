@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Validate the CSRF token before processing any form data.
         if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+            // Log the error for security monitoring purposes.
+            error_log('CSRF token validation failed.');
             throw new Exception("Invalid or missing CSRF token. Request denied.");
         }
 

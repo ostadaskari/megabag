@@ -275,9 +275,9 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
             // Check if the item is a locked product lot
             if (isLot && item.lock) {
                 div.classList.add('locked-item');
-                div.innerHTML = `<strong>xcode: ${item[nameKey]}</strong> - P/N: ${item[secondaryKey]} (LOCKED)`;
+                div.innerHTML = `<strong> ${item[nameKey]}</strong> - P/N: ${item[secondaryKey]} (LOCKED)`;
             } else {
-                div.innerHTML = `<strong>xcode: ${item[nameKey]}</strong> - P/N: ${item[secondaryKey]}`;
+                div.innerHTML = `<strong> ${item[nameKey]}</strong> - ( ${item[secondaryKey]} )`;
             }
 
             div.addEventListener('click', () => {

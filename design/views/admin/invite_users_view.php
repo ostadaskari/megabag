@@ -1,3 +1,8 @@
+<?php
+// Generate a single CSRF token for the entire page
+$csrf_token = generate_csrf_token();
+?>
+
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
     <svg width="22" height="22" fill="currentColor" class="bi bi-envelope-paper mx-1 me-2" viewBox="0 0 16 16">
@@ -11,23 +16,20 @@
     <span>Back</span>
     </a>
 </div>
+
+
+
 <div class="container px-0">
-    <?php foreach ($errors as $e): ?>
-        <script>Swal.fire('Error', '<?php echo addslashes($e); ?>', 'error');</script>
-    <?php endforeach; ?>
-
-    <?php if ($success): ?>
-        <script>Swal.fire('Success', '<?php echo addslashes($success); ?>', 'success');</script>
-    <?php endif; ?>
-
     <div id="Invait-User" class="tab-content">
         <div class="row">
             <div class="col-12 px-0">
                 <div class="form-box border rounded shadow-sm bg-light p-1">
                     <form method="POST" id="inviteForm">
+                        <!-- csrf -->
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                         <div class="d-flex flex-row align-items-center gap-2">
                             <label for="nicknameInput" class="form-label mb-0" style="width: 200px;">Nickname:</label>
-                            <input type="text" name="nickname" class="form-control" style="height: 38px;" id="nicknameInput" placeholder="Nickname for Invite" required>
+                            <input type="text" name="nickname" class="form-control" style="height: 38px;" id="nicknameInput" placeholder="Nickname for Invite" autocomplete="off" required>
 
                             <select name="role" class="form-control ml-1" id="roleSelector" style="width: 150px; height: 38px;" required>
                                 <option value="user" <?php echo (isset($_POST['role']) && $_POST['role'] === 'user') ? 'selected' : ''; ?>>User</option>
@@ -120,6 +122,9 @@
                                         </td>
                                         <td>
                                             <form method="POST" id="delete-form-<?php echo $invite['id']; ?>" style="display:inline;">
+                                                <!-- csrf -->
+                                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+
                                                 <input type="hidden" name="delete_code_id" value="<?php echo $invite['id']; ?>">
                                                 <button type="button" class="p-0" onclick="confirmDelete(<?php echo $invite['id']; ?>, <?php echo (int)$invite['is_used']; ?>)" style="background:none;border:none;cursor:pointer;">
                                                     <svg width="22" height="22" fill="currentColor" class="bi bi-fire text-danger hoverSvg" viewBox="0 0 16 16">
@@ -150,8 +155,8 @@
                                     <a href="?page=invite_users&p=1" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight">
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"/>
-                                        </svg>
-                                        First
+                                    </svg>
+                                    First
                                     </a>
                                 <?php else: ?>
                                     <span class="btn px-3 px-custom d-flex align-items-center btnNP borderRight disabled">
@@ -168,14 +173,14 @@
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                     </svg>
-                                        Prev
+                                    Prev
                                     </a>
                                 <?php else: ?>
                                     <span class="btn px-3 px-custom d-flex align-items-center btnNP borderRight disabled">
                                     <svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                     </svg>
-                                        Prev
+                                    Prev
                                     </span>
                                 <?php endif; ?>
 
@@ -236,6 +241,46 @@
         </div>
     </div>
 </div>
+
+
+
+<?php if (!empty($success) || !empty($errors)): ?>
+<script>
+    // Get the URL and its parameters
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    
+    // Check if the success message should be shown
+    const successMessage = params.get('success');
+    if (successMessage) {
+        Swal.fire({ 
+            icon: 'success', 
+            title: 'Success', 
+            text: successMessage
+        });
+        // Remove the 'success' parameter from the URL
+        params.delete('success');
+    }
+    
+    // Check if the error message should be shown
+    const errorMessage = params.get('error');
+    if (errorMessage) {
+        const errorsArray = errorMessage.split(' | ');
+        const htmlContent = '<ul>' + errorsArray.map(error => '<li>' + error + '</li>').join('') + '</ul>';
+        Swal.fire({
+            icon: 'error',
+            title: 'Errors',
+            html: htmlContent
+        });
+        // Remove the 'error' parameter from the URL
+        params.delete('error');
+    }
+
+    // Replace the current URL with the cleaned-up version
+    const newUrl = `${url.pathname}?${params.toString()}`;
+    history.replaceState(null, '', newUrl);
+</script>
+<?php endif; ?>
 
 <script>
 /**

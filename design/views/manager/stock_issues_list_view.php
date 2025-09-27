@@ -15,49 +15,49 @@
     <div class="row align-items-center">
         <div class="col-12 col-md-11 pr-1">
         <form class="row d-flex align-items-end justify-content-between mb-2 border rounded bg-light shadow-sm p-2">
-                <div class="col-12 col-md-4">
-                    <label for="" class="form-label">Part:</label>
-                    <div class="input-box m-0" style="width: 100%;">
-                    <div class="svgSearch">
-                        <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="searchInput" class="form-control px-5" autocomplete="off" placeholder="Search x-code,P/N, VRM-X, BY - TO user..." title="Search By p/n, x-code, vrm_x_code, issued-by user, or issued-to user">
-                    </div>
+            <div class="col-12 col-md-4">
+                <label for="" class="form-label">Part:</label>
+                <div class="input-box m-0" style="width: 100%;">
+                <div class="svgSearch">
+                    <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                    </svg>
                 </div>
-
-                <div class="col-5 col-md-2 mt-md-0 mt-2">
-                    <div class="mx-0" style="width: 100%;">
-                    <label for="fromDate" class="form-label">From:</label>
-                        <input type="date" id="fromDate"  class="form-control" style="font-size: 14px;">
-                    </div>
+                <input type="text" id="searchInput" class="form-control px-5" autocomplete="off" placeholder="Search x-code,P/N, VRM-X, BY - TO user..." title="Search By p/n, x-code, vrm_x_code, issued-by user, or issued-to user">
                 </div>
+            </div>
 
-                <div class="col-5 col-md-2 mt-md-0 mt-2">
-                    <div class="mx-0" style="width: 100%;">
-                    <label for="toDate" class="form-label">To:</label>
-                    <input type="date" id="toDate" class="form-control" style="font-size: 14px;">
-                    </div>
+            <div class="col-5 col-md-2 mt-md-0 mt-2">
+                <div class="mx-0" style="width: 100%;">
+                <label for="fromDate" class="form-label">From:</label>
+                    <input type="date" id="fromDate" class="form-control" style="font-size: 14px;">
                 </div>
+            </div>
 
-                <div class="col-12 col-md-3 d-flex justify-content-end align-items-end">
-                    <div class="d-flex justify-content-end align-items-end">
-                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="fetchIssues(1)" title="Search">
-                        <svg width="16" height="16" fill="currentColor" class="bi bi-search mx-1" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                        Search
-                    </button>
-
-                    <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="clearSearch()" title="Clear Search">
-                        <svg width="20" height="20" fill="currentColor" class="bi bi-eraser mx-1" viewBox="0 0 16 16">
-                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
-                        </svg>
-                        Clear
-                    </button>
-                    </div>
+            <div class="col-5 col-md-2 mt-md-0 mt-2">
+                <div class="mx-0" style="width: 100%;">
+                <label for="toDate" class="form-label">To:</label>
+                <input type="date" id="toDate" class="form-control" style="font-size: 14px;">
                 </div>
+            </div>
+
+            <div class="col-12 col-md-3 d-flex justify-content-end align-items-end">
+                <div class="d-flex justify-content-end align-items-end">
+                <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="fetchIssues(1)" title="Search">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-search mx-1" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                    Search
+                </button>
+
+                <button type="button" class="btn p-2 px-3 mx-1 d-flex flex-row align-items-center" style="height:34px;" onclick="clearSearch()" title="Clear Search">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-eraser mx-1" viewBox="0 0 16 16">
+                    <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
+                    </svg>
+                    Clear
+                </button>
+                </div>
+            </div>
         </form> 
         </div>
         <div class="col-12 col-md-1">
@@ -92,7 +92,7 @@
                             <th style="width: 3%">#</th>
                             <th>X-Code</th>
                             <th>P/N</th>
-                            <th>VRM Tag</th>
+                            <th>VRM X-code</th>
                             <th>MFG</th>
                             <th>Date Code</th>
                             <th>Qty</th>
@@ -227,26 +227,44 @@ function exportIssues(format) {
     window.open(`../ajax/export_issues.php?format=${format}&keyword=${encodeURIComponent(k)}&from_date=${f}&to_date=${t}`, '_blank');
 }
 
-// Placeholder function for editing an issue
-function editIssue(id) {
-    Swal.fire({
-        title: 'Edit Functionality',
-        text: `Editing issue with ID: ${id}. This feature is under development.`,
-        icon: 'info',
-        confirmButtonText: 'OK'
-    });
-    console.log(`Edit function called for ID: ${id}`);
-}
+// function for editing an issue
+    window.editIssue = function(issueId) {
+        window.location.href = `../auth/dashboard.php?page=edit_issue&id=${issueId}`;
+    };
 
-// Placeholder function for deleting an issue
+// Function to delete an issue with confirmation
 function deleteIssue(id) {
     Swal.fire({
-        title: 'Delete Functionality',
-        text: `Deleting issue with ID: ${id}. This feature is under development.`,
+        title: 'Are you sure?',
+        text: "You won't be able to revert this! The quantity will be added back to stock.",
         icon: 'warning',
-        confirmButtonText: 'OK'
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Use a form to send a POST request
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '';
+
+            const actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = 'delete_issue';
+            form.appendChild(actionInput);
+
+            const idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = 'issue_id';
+            idInput.value = id;
+            form.appendChild(idInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
     });
-    console.log(`Delete function called for ID: ${id}`);
 }
 
 // Open modal and display comment when a user clicks the comment icon
@@ -263,4 +281,16 @@ document.addEventListener('click', function (e) {
 
 // Load data on page load
 document.addEventListener('DOMContentLoaded', () => fetchIssues());
+
+// Display SweetAlert for status messages from URL
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const error = urlParams.get('error');
+    if (status === 'deleted') {
+        Swal.fire('Deleted!', 'The stock issue has been successfully deleted and the quantity restored.', 'success');
+    } else if (error) {
+        Swal.fire('Error!', decodeURIComponent(error), 'error');
+    }
+});
 </script>

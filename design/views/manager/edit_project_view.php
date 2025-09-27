@@ -61,6 +61,19 @@
                 </div>
             </div> 
     
+            <!--
+             * FIX: BUTTON PLACEMENT
+             * The "Update Project" button has been moved to a more accessible location,
+             * right after the Project Details section and before the parts list.
+             * This allows the user to save changes without having to scroll
+             * past all the existing parts.
+             -->
+            <div class="my-3 text-end">
+                <button type="submit" class="btn btn-primary" title="Submit">
+                    Update Project
+                </button>
+            </div>
+            
             <div class="container bg-light border rounded shadow-sm p-2 my-2">
                 <!-- Products Used Section -->
                 <div class="d-flex flex-row align-items-center justify-content-between my-2">
@@ -145,7 +158,7 @@
                     <label for="productInput" class="form-label">Part Lot Code:</label>
                     <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by x-code, part number " autocomplete="off" >
                     <input type="hidden" name="products[0][product_lot_id]" class="product-lot-id">
-                    <div class="autocomplete-box category-suggestions" style="display: none;"></div>
+                    <div class="autocomplete-box category-suggestions"></div>
                 </div>
                 <div class="col-4 col-md-3 px-1 mb-2">
                     <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
@@ -314,6 +327,25 @@
                 resultBox.style.display = 'none';
             }
         }
+    });
+        document.addEventListener('click', (e) => {
+    const clickedRow = e.target.closest('.stock-row');
+
+    // Close other opened rows
+    document.querySelectorAll('.stock-row.is-open').forEach(r => {
+        if (r !== clickedRow) {
+        r.classList.remove('is-open');
+        const box = r.querySelector('.category-suggestions');
+        if (box) box.style.display = 'none';
+        }
+    });
+
+    // If clicked inside a row, open it
+    if (clickedRow) {
+        clickedRow.classList.add('is-open');
+        const box = clickedRow.querySelector('.category-suggestions');
+        if (box) box.style.display = 'block';
+    }
     });
 
     // Hide autocomplete on click outside
