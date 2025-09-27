@@ -3,6 +3,17 @@
 session_start();
 require_once("../db/db.php");
 
+// --------------------------------------------------------
+// --- SECURITY CHECK: Redirect already logged-in users ---
+// --------------------------------------------------------
+// Check if the 'user_id' session variable is set, indicating an active login.
+if (isset($_SESSION['user_id'])) {
+    // Redirect to the main dashboard page (using 'dashboard.php' as per your existing successful login path).
+    header("Location: dashboard.php");
+    exit; // Stop script execution immediately after redirection
+}
+// --------------------------------------------------------
+
 //
 $errors = [];
 $username = trim($_POST['username'] ?? '');
@@ -100,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Load form if not POST
 include("../../design/views/auth/login_form.php");
 
-//  LOG LOGIN function
+//  LOG LOGIN function
 function log_login_attempt($conn, $ip, $username, $status) {
     try {
         $stmt = $conn->prepare("INSERT INTO login_logs (ip, username, status) VALUES (?, ?, ?)");

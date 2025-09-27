@@ -138,7 +138,7 @@ elseif ($format === 'pdf') {
     $pdf->SetFont('helvetica', '', 8);
 
     $headers = ['#', 'P/N', 'MFG', 'Tag', 'Qty', 'Submitter', 'Category', 'Location', 'Status'];
-    $columnWidths = ['4%', '16%', '10%', '10%', '5%', '10%', '19%', '10%', '6%'];
+    $columnWidths = ['4%', '26%', '10%', '10%', '5%', '10%', '19%', '10%', '6%'];
 
     $html = '<h3>Part List Report</h3><table border="1" cellpadding="4"><thead><tr>';
     $column_index = 0;

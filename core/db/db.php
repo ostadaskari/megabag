@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "saeed";
-$pass = "saeed_pass"; 
-$dbname = "mega_db";
+$user = "saeed";   // in host : dohteksc_megabag_u
+$pass = "saeed_pass";  // in host : !G0baU%vZMak;rFr
+$dbname = "mega_db";  //  in host : dohteksc_megabag
 
 // Create database connection
 $conn = new mysqli($host, $user, $pass, $dbname);
