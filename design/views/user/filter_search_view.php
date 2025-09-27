@@ -39,6 +39,8 @@
     </div>
 </div>
 
+<!-- teeeeeeeeeeeeeeeeest -->
+
 <script>
     const categoryEl = document.getElementById("category-select");
     const filtersEl = document.getElementById("dynamic-filters");
