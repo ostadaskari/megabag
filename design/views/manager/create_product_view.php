@@ -268,7 +268,7 @@ async function loadFeatures(categoryId) {
 
                         inputHtml = `
                             <label class="form-label" for="feature_${feature.id}" title="${feature.name}">${feature.name}:</label>
-                            <div class="row gx-1">
+                            <div class="row gx-1 d-flex justify-content-between">
                                 <div class="col-4">
                                     <input class="form-control" type="number" step="any" name="feature[${feature.id}][min]" placeholder="from ${min}" autocomplete="off" />
                                 </div>
@@ -302,9 +302,10 @@ async function loadFeatures(categoryId) {
                         // Corrected logic: The label and input are now combined into a single HTML string
                         // to ensure the label is always rendered correctly.
                         inputHtml = `
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">
+                            <label class="form-label" for="form-check" title=""></label>
+                            <div class="form-check text-center mt-3">
                                 <label class="form-check-label" for="feature_${feature.id}">${feature.name}</label>
+                                <input class="form-check-input" type="checkbox" id="feature_${feature.id}" name="feature[${feature.id}]" value="1">
                             </div>
                         `;
                         break;

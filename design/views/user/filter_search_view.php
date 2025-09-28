@@ -1,10 +1,15 @@
-<div class="container-fluid">
-    <div class="row g-2">
-        <aside class="col-lg-3">
-            <div class="filters-panel">
-                <h4 class="mb-3">Filter Search</h4>
-                <div class="mb-3">
-                    <label for="category-select" class="form-label">Category</label>
+<div class="container-fluid px-0">
+    <div class="row">
+        <aside class="col-12 col-md-3" >
+            <div class="d-flex flex-row align-items-center justify-content-between titleTop">
+                <h2 class="d-flex align-items-center">
+                <svg width="22" height="22" fill="currentColor" class="bi bi-funnel mx-1 me-2" viewBox="0 0 16 16">
+                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
+                </svg>    
+                Filter Search</h2>
+            </div>
+            <div class="filters-panel" style="position: sticky;"> 
+                <div class="mb-2">
                     <select id="category-select" class="form-select">
                         <option value="">-- Select Category --</option>
                         <option value="25">Capacitors</option>
@@ -14,14 +19,21 @@
                 </div>
 
                 <div id="dynamic-filters"></div>
-                <button id="search-btn" class="btn btn-primary w-100 mt-3">Search</button>
+                <button id="search-btn" class="btn btn-primary w-100">Search</button>
             </div>
         </aside>
 
-        <main class="col-lg-9">
+        <main class="col-12 col-md-9 pl-2">
+            <div class="d-flex flex-row align-items-center justify-content-between titleTop">
+                <h2 class="d-flex align-items-center">
+                <svg width="22" height="22" fill="currentColor" class="bi bi-list-columns mx-1 me-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 0 .5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2A.5.5 0 0 1 .5 2h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2A.5.5 0 0 1 .5 4h10a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2A.5.5 0 0 1 .5 6h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2A.5.5 0 0 1 .5 8h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-13 2a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                </svg>    
+                Search Results</h2>
+            </div>
             <div class="results-panel">
-                <h4 class="mb-3">Search Results</h4>
-                <div class="d-flex justify-content-end mb-3">
+                
+                <div class="d-flex justify-content-end mb-2">
                     <button id="listViewBtn" class="btn btn-secondary ">List View</button>
                     <button id="tableViewBtn" class="btn btn-outline-secondary ml-2">Table View</button>
                 </div>
@@ -33,7 +45,7 @@
                 </div>
 
                 <div id="product-list" class="row"></div>
-                <div id="product-table-container" class="table-responsive" style="display: none;"></div>
+                <div id="product-table-container" class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="display: none;max-height: 65vh; overflow: auto;"></div>
             </div>
         </main>
     </div>
@@ -77,36 +89,37 @@
         } else {
             products.forEach((p, i) => {
                 const featureHtml = (p.features && p.features.length > 0) ?
-                    `<h6>Features:</h6><ul class="list-unstyled">
-                        ${p.features.map(f => `<li><strong>${f.name}:</strong> ${f.value} ${f.unit || ''}</li>`).join('')}
+                    `<label class="form-label bg-light py-2 w-98 rounded">Features:</label>
+                    <ul class="list-unstyled">
+                        ${p.features.map(f => `<li class="mb-2"><strong>${f.name}:</strong> ${f.value} ${f.unit || ''}</li>`).join('')}
                     </ul>` : '';
 
                 const lotHtml = (p.lots && p.lots.length > 0) ?
-                    `<h6>Lots:</h6>
+                    `<label class="form-label bg-light py-2 w-98 rounded">Lots:</label>
                         <ul class="list-unstyled">
                             ${p.lots.map(l => `
                                 <li>
-                                    <div class="card card-body mb-2 bg-light">
+                                    <div class="card card-body mb-2 bg-light p-2">
                                         <div class="row align-items-center">
-                                            <div class="col-6"><strong>X-Code:</strong></div>
-                                            <div class="col-6">${l.x_code}</div>
+                                            <div class="col-6 my-1"><strong>X-Code:</strong></div>
+                                            <div class="col-6 my-1">${l.x_code}</div>
 
-                                            <div class="col-6"><strong>Available Qty:</strong></div>
-                                            <div class="col-6">${l.qty_available}</div>
+                                            <div class="col-6 my-1"><strong>Available Qty:</strong></div>
+                                            <div class="col-6 my-1">${l.qty_available}</div>
 
-                                            <div class="col-6"><strong>Date Code:</strong></div>
-                                            <div class="col-6">${l.date_code || 'N/A'}</div>
+                                            <div class="col-6 my-1"><strong>Date Code:</strong></div>
+                                            <div class="col-6 my-1">${l.date_code || 'N/A'}</div>
 
-                                            <div class="col-6"><strong>Location:</strong></div>
-                                            <div class="col-6">${l.lot_location || 'N/A'}</div>
+                                            <div class="col-6 my-1"><strong>Location:</strong></div>
+                                            <div class="col-6 my-1">${l.lot_location || 'N/A'}</div>
 
-                                            <div class="col-6"><strong>Project:</strong></div>
-                                            <div class="col-6">${l.project_name || 'N/A'}</div>
+                                            <div class="col-6 my-1"><strong>Project:</strong></div>
+                                            <div class="col-6 my-1">${l.project_name || 'N/A'}</div>
 
-                                            <div class="col-6"><strong>Lock:</strong></div>
-                                            <div class="col-6 d-flex align-items-center gap-2">
+                                            <div class="col-6 my-1"><strong>Lock:</strong></div>
+                                            <div class="col-6 my-1 d-flex align-items-center gap-2">
                                                 ${l.lock 
-                                                    ? `<svg  width="18" height="18" fill="red" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                                    ? `<svg  width="18" height="18" fill="#FF0000" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                                         <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
                                                     </svg> Locked`
                                                     : `<svg  width="18" height="18" fill="green" class="bi bi-unlock-fill" viewBox="0 0 16 16">
@@ -121,7 +134,7 @@
 
 
                 html += `
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-2">
                     <div class="product-card">
                         <div class="product-card-header d-flex align-items-center">
                             <span class="me-2">${i + 1}.</span>
@@ -130,9 +143,9 @@
                         <div class="product-card-body">
                             <div class="row g-4">
                                 <div class="col-md-6">
-                                    <p class="mb-1"><strong>Tag:</strong> ${p.tag || "N/A"}</p>
-                                    <p class="mb-1"><strong>Manufacturer:</strong> ${p.mfg || "N/A"}</p>
-                                    <p class="mb-1"><strong>Quantity:</strong> ${p.qty}</p>
+                                    <p class="mb-2"><strong>Tag:</strong> ${p.tag || "N/A"}</p>
+                                    <p class="mb-2"><strong>Manufacturer:</strong> ${p.mfg || "N/A"}</p>
+                                    <p class="mb-2"><strong>Quantity:</strong> ${p.qty}</p>
                                     <p class="mb-2"><strong>Status:</strong> ${p.status}</p>
                                     <p> ${featureHtml}</p>
                                 </div>
@@ -160,7 +173,7 @@
             tableHtml = "<p class='text-center text-muted mt-3'>No products found.</p>";
         } else {
             tableHtml = `
-            <table class="table table-hover table-striped">
+            <table class="table table-bordered table-striped table-hover mb-0 text-center">
                 <thead class="table-primary">
                     <tr>
                         <th scope="col">#</th>
@@ -174,13 +187,14 @@
                 </thead>
                 <tbody>
             `;
+            
             products.forEach((p, i) => {
                 const featureHtml = (p.features && p.features.length > 0) ?
                     p.features.map(f => `<strong>${f.name}:</strong> ${f.value} ${f.unit || ''}`).join('<br>') : 'N/A';
                 
                 // Button now targets the row's ID directly
                 const lotsButtonHtml = (p.lots && p.lots.length > 0)
-                ? `<button class="btn btn-sm btn-info view-lots-btn"
+                ? `<button class="btn btn-sm btn-info view-lots-btn" style="width: 79px;"
                             data-target="lots-row-${p.id}"
                             aria-controls="lots-row-${p.id}"
                             aria-expanded="false">View Lots</button>`
@@ -222,7 +236,7 @@
                                         <td>${l.project_name || 'N/A'}</td>
                                         <td>
                                             ${l.lock 
-                                                ? `<svg width="16" height="16" fill="red" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                                ? `<svg width="16" height="16" fill="#FF0000" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                                     <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
                                                 </svg>`
                                                 : `<svg width="16" height="16" fill="green" class="bi bi-unlock-fill" viewBox="0 0 16 16">

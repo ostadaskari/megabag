@@ -58,7 +58,7 @@
 
 .centerRegistration{
   position:absolute;
-  max-width:500px;
+  width: 420px;
   top: 38%;
   left: 49%;
   margin-left:-200px;

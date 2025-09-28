@@ -101,6 +101,7 @@
                                 <th>VRM X-Code</th>
                                 <th>Initial QTY</th>
                                 <th style="color:aqua;">Available QTY</th>
+
                                 <th style="width: 15%;">Submitter</th>
                                 <th style="width: 15%;">Comment</th>
                                 <th>
@@ -108,6 +109,7 @@
                                     <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
                                     </svg>
                                 </th>
+
                                 <th>Date</th>
                                 <th style="width: 15%;">Actions</th>
                             </tr>
