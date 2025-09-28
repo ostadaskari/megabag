@@ -578,3 +578,9 @@ font-size: 16px;
     align-items: center;
     min-height: 200px;
 }
+
+/*  */
+#product-list{
+    height: 80vh;
+    overflow-y: auto;
+}
