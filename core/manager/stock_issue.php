@@ -37,11 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             continue;
         }
 
-        // Check available stock in product lot
-        $check = $conn->prepare("SELECT product_id, qty_available FROM product_lots WHERE id = ?");
+        // Check available stock and the lock status in product lot
+        // We now select a new column, 'lock' to check if the lot is locked.
+        $check = $conn->prepare("SELECT product_id, qty_available, `lock` FROM product_lots WHERE id = ?");
         $check->bind_param("i", $product_lot_id);
         $check->execute();
         $res = $check->get_result()->fetch_assoc();
+
+        // Check for the x-code lock. If the lot is locked (lock == 1), add an error and skip this item.
+        if ($res && $res['lock'] == 1) {
+            $errors[] = "Row #" . ($index + 1) . ": This product lot is locked and cannot be issued.";
+            continue;
+        }
 
         if (!$res || $res['qty_available'] < $qty_issued) {
             $errors[] = "Not enough stock in row #" . ($index + 1) . ".";

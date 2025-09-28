@@ -1,165 +1,165 @@
-   <div class="d-flex flex-row align-items-center justify-content-between titleTop">
-        <h2 class="d-flex align-items-center">
-            <svg width="26" height="26" fill="currentColor" class="bi bi-cloud-plus mx-1 me-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
-                <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
-            </svg>
-            Define a New Project
-        </h2>
-            <a href="../auth/dashboard.php?page=home" class="backBtn">
+<div class="d-flex flex-row align-items-center justify-content-between titleTop">
+    <h2 class="d-flex align-items-center">
+        <svg width="26" height="26" fill="currentColor" class="bi bi-cloud-plus mx-1 me-2" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
+            <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
+        </svg>
+        Create New Project
+    </h2>
+    <a href="../auth/dashboard.php?page=home" class="backBtn">
         <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
         </svg>
         <span>Back</span>
-        </a>
-    </div>
+    </a>
+</div>
 
-    <div id="createProject" class="tab-content">
-        
-            <form method="POST" action="">
-
-                <div class="container bg-light border rounded shadow-sm p-2">    
-                    <!-- project details -->
-                    <div class="d-flex flex-row align-items-center mb-2">
-                        <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                        </svg>
-                        <h3 class="pl-1">Project Details:</h3>
-                    </div>
-                    <!-- Project Details Section -->
-                    <div class="row">
-
-                        <!-- Project Name -->
-                        <div class="col-12 col-md-3 my-2">
-                            <label for="projectName" class="form-label">Project Name:</label>
-                            <input type="text" name="project_name" id="projectName" class="form-control" autocomplete="off" required>
-                        </div>
-                        <!-- date code -->
-                        <div class="col-12 col-md-3 px-2 my-2">
-                            <label for="dateCode" class="form-label">Date Code:</label>
-                            <input type="text" name="date_code" id="dateCode" class="form-control" autocomplete="off">
-                        </div>
-                        <!-- Project Employer -->
-                        <div class="col-12 col-md-3 px-2 my-2">
-                            <label for="employer" class="form-label">Employer:</label>
-                            <input type="text" name="employer" id="employer" class="form-control" autocomplete="off">
-                        </div>
-
-                        <div class="col-12 col-md-3 px-2 my-2">
-                            <label for="purchaseCode" class="form-label">Purchase Code(s):</label>
-                            <input type="text" name="purchase_code" id="purchaseCode" class="form-control" placeholder="e.g., code1, code2" autocomplete="off">
-                        </div>
-
-                        <div class="col-12">
-                            <label for="designators" class="form-label">Designators:</label>
-                            <textarea name="designators" id="designators" class="form-control" autocomplete="off"></textarea>
-                        </div>
-
-                    </div>
-                </div> 
+<div id="createProject" class="tab-content">
     
-                <div class="container bg-light border rounded shadow-sm p-2 my-2">
-                    <!-- Products Used Section -->
-                    <div class="d-flex flex-row align-items-center my-2">
-                        <svg width="20" height="20" fill="currentColor" class="bi bi-app-indicator" viewBox="0 0 16 16">
-                            <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1z"/>
-                            <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+    <form method="POST" action="">
+
+        <div class="container bg-light border rounded shadow-sm p-2">    
+            <!-- project details -->
+            <div class="d-flex flex-row align-items-center mb-2">
+                <svg width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                <h3 class="pl-1">Project Details:</h3>
+            </div>
+            <!-- Project Details Section -->
+            <div class="row">
+
+                <!-- Project Name -->
+                <div class="col-12 col-md-3 my-2">
+                    <label for="projectName" class="form-label">Project Name:</label>
+                    <input type="text" name="project_name" id="projectName" class="form-control" autocomplete="off" required>
+                </div>
+                <!-- Project Employer -->
+                <div class="col-12 col-md-3 px-2 my-2">
+                    <label for="employer" class="form-label">Employer:</label>
+                    <input type="text" name="employer" id="employer" class="form-control" autocomplete="off">
+                </div>
+
+                <div class="col-12">
+                    <label for="designators" class="form-label">Designators:</label>
+                    <textarea name="designators" id="designators" class="form-control" autocomplete="off"></textarea>
+                </div>
+
+            </div>
+        </div> 
+    
+        <div class="container bg-light border rounded shadow-sm p-2 my-2">
+            <!-- Products Used Section -->
+            <div class="d-flex flex-row justify-content-between align-items-center my-2">
+                <div class="d-flex align-items-center">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-app-indicator" viewBox="0 0 16 16">
+                        <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1z"/>
+                        <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    </svg>
+                    <h3 class="pl-1">Part Used in Project:</h3>
+                </div>
+                <div title="Add Row">
+                    <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0">
+                        <svg width="28" height="28" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
+                            <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                         </svg>
-                        <h3 class="pl-1">Part Used in Project:</h3>
-                    </div>
-                    <div class="row my-3">
-                    <div class="col-12">
-                        <div id="stockRows">
-                            <!-- Initial product row template -->
-                            <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
-                                <div class="row d-flex align-items-end justify-content-between">
-                                    <div class="col-12 col-md-4 px-1 position-relative mb-2">
-                                        <label for="productInput" class="form-label">Part:</label>
-                                        <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by name, tag, or part number" autocomplete="off" required>
-                                        <input type="hidden" name="products[0][product_id]" class="product-id">
-                                        <div class="autocomplete-box category-suggestions" style="display: none;"></div>
-                                    </div>
-
-                                    <div class="col-4 col-md-3 px-1 mb-2">
-                                        <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
-                                        <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
-                                    </div>
-                                    
-                                    <div class="col-8 col-md-4 px-1 mb-2">
-                                        <label for="commentInput" class="form-label">Remarks:</label>
-                                        <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
-                                    </div>
-                                    
-                                    <div class="col d-flex justify-content-end align-items-end mb-2">
-                                        <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
-                                            <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
-                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex flex-row justify-content-between align-items-center w-100 mt-3">
-                            <div title="Add Row">
-                                <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0">
-                                    <svg width="28" height="28" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
-                                        <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            
-                        </div>
-                        </div>
-                    </div>
-                </div> 
-
-                <div style="text-align: end">
-                    <button type="submit" class="btn btn-primary" title="Submit">
-                        Save Project
                     </button>
                 </div>
-            </form>
-        
-    </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-12">
+                    <div id="stockRows">
+                        <!-- Initial product row template -->
+                        <div class="stock-row border p-2 rounded mb-2 bg-light position-relative">
+                            <div class="row d-flex align-items-end justify-content-between">
+                                <div class="col-12 col-md-4 px-1 position-relative mb-2">
+                                    <label for="productInput" class="form-label">Part Lot X-Code:</label>
+                                    <input type="text" name="products[0][product_search]" class="form-control product-search" placeholder="Search by x-code, part number" autocomplete="off" required>
+                                    <input type="hidden" name="products[0][product_lot_id]" class="product-lot-id">
+                                    <div class="autocomplete-box category-suggestions" style="display: none;"></div>
+                                </div>
 
+                                <div class="col-4 col-md-3 px-1 mb-2">
+                                    <label for="quantityInput" class="form-label">QTY Used: <span class="available-qty text-muted fw-normal"></span></label>
+                                    <input type="number" name="products[0][used_qty]" class="form-control" min="1" required>
+                                </div>
+                                
+                                <div class="col-8 col-md-4 px-1 mb-2">
+                                    <label for="commentInput" class="form-label">Remarks:</label>
+                                    <textarea class="form-control" name="products[0][remarks]" rows="1"></textarea>
+                                </div>
+                                
+                                <div class="col d-flex justify-content-end align-items-end mb-2">
+                                    <button type="button" class="btn btn-link btn-remove-row btnSvg p-0" title="Remove">
+                                        <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
 
-<?php if (!empty($success)): ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div> 
+
+        <div style="text-align: end">
+            <button type="submit" class="btn btn-primary" title="Submit">
+                Save Project
+            </button>
+        </div>
+    </form>
+    
+</div>
+
+<?php if (!empty($success) || !empty($errors)): ?>
     <script>
-        Swal.fire({ 
-            icon: 'success', 
-            title: 'Success', 
-            text: <?= json_encode($success) ?> 
-        });
-    </script>
-<?php elseif (!empty($errors)): ?>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Errors',
-            html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
-        });
+        // Combine all logic into a single script block
+        const url = new URL(window.location.href);
+
+        <?php if (!empty($success)): ?>
+            // Display the success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: <?= json_encode($success) ?>
+            });
+            // After displaying the message, clean the URL
+            url.searchParams.delete('success');
+
+        <?php elseif (!empty($errors)): ?>
+            // Display the error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Errors',
+                html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
+            });
+            // After displaying the message, clean the URL
+            url.searchParams.delete('errors');
+        <?php endif; ?>
+
+        // Update the URL in the browser without reloading the page
+        history.replaceState(null, '', url);
     </script>
 <?php endif; ?>
 
 <script>
-       // Select all inputs that trigger suggestions
-        const inputs = document.querySelectorAll('.product-search');
+    // Select all inputs that trigger suggestions
+    const inputs = document.querySelectorAll('.product-search');
 
-        document.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
         const clickedRow = e.target.closest('.stock-row');
 
         // Close other opened rows
         document.querySelectorAll('.stock-row.is-open').forEach(r => {
             if (r !== clickedRow) {
-            r.classList.remove('is-open');
-            const box = r.querySelector('.category-suggestions');
-            if (box) box.style.display = 'none';
+                r.classList.remove('is-open');
+                const box = r.querySelector('.category-suggestions');
+                if (box) box.style.display = 'none';
             }
         });
 
@@ -169,8 +169,8 @@
             const box = clickedRow.querySelector('.category-suggestions');
             if (box) box.style.display = 'block';
         }
-        });
-    // This script dynamically adds and removes product rows and handles product search.
+    });
+    // This script dynamically adds and removes product rows and handles product lot search.
     
     // Function to re-index rows and manage remove button visibility
     const updateRows = () => {
@@ -201,7 +201,7 @@
             const newRow = firstRow.cloneNode(true);
             newRow.querySelectorAll('input, textarea').forEach(el => {
                 el.value = '';
-                if (el.classList.contains('product-id')) {
+                if (el.classList.contains('product-lot-id')) {
                     el.value = '';
                 }
             });
@@ -209,7 +209,8 @@
             if (availableQtySpan) {
                 availableQtySpan.textContent = '';
             }
-            stockRowsContainer.appendChild(newRow);
+            // Change: prepend the new row instead of appending it
+            stockRowsContainer.prepend(newRow);
             updateRows();
         }
     });
@@ -225,7 +226,7 @@
         }
     });
 
-    // Product search using AJAX
+    // Product lot search using AJAX
     document.addEventListener('input', function (e) {
         if (e.target.classList.contains('product-search')) {
             const input = e.target;
@@ -240,36 +241,26 @@
             }
 
             if (keyword.length >= 2) {
-                fetch(`../ajax/search_products_by_keyword.php?keyword=${encodeURIComponent(keyword)}`)
+                fetch(`../ajax/search_product_lots.php?keyword=${encodeURIComponent(keyword)}`)
                     .then(res => res.json())
                     .then(data => {
                         resultBox.innerHTML = '';
                         resultBox.style.display = 'block';
                         if (data.length === 0) {
-                            resultBox.innerHTML = '<div class="p-2 text-muted">No products found</div>';
+                            resultBox.innerHTML = '<div class="p-2 text-muted">No part-lots(x-code) found</div>';
                         } else {
                             data.forEach(item => {
                                 const div = document.createElement('div');
                                 div.classList.add('p-2', 'autocomplete-item');
-                                div.textContent = `${item.name} (${item.part_number})`;
+                                // Use the new fields for display
+                                div.textContent = `x-code: ${item.x_code} - PN: ${item.part_number} (Available: ${item.qty_available})`;
                                 div.style.cursor = 'pointer';
                                 div.addEventListener('click', () => {
-                                    input.value = item.name;
-                                    const productIdInput = productRow.querySelector('.product-id');
-                                    productIdInput.value = item.id;
-                                    
-                                    // Fetch the available quantity using the new endpoint
-                                    fetch(`../ajax/get_product_qty.php?product_id=${item.id}`)
-                                        .then(res => res.json())
-                                        .then(qtyData => {
-                                            if (qtyData.qty !== undefined) {
-                                                availableQtySpan.textContent = `(Available: ${qtyData.qty})`;
-                                            } else {
-                                                availableQtySpan.textContent = '';
-                                            }
-                                        })
-                                        .catch(error => console.error('Error fetching product quantity:', error));
-                                    
+                                    // Set the input value to the selected lot details
+                                    input.value = `x-code: ${item.x_code} - PN: ${item.part_number}`;
+                                    const productLotIdInput = productRow.querySelector('.product-lot-id');
+                                    productLotIdInput.value = item.lot_id;
+                                    availableQtySpan.textContent = `(Available: ${item.qty_available})`;
                                     resultBox.innerHTML = '';
                                     resultBox.style.display = 'none';
                                 });
@@ -277,7 +268,7 @@
                             });
                         }
                     })
-                    .catch(error => console.error('Error fetching products:', error));
+                    .catch(error => console.error('Error fetching product lots:', error));
             } else {
                 resultBox.innerHTML = '';
                 resultBox.style.display = 'none';
@@ -293,8 +284,5 @@
             });
         }
     });
-
-
- 
 
 </script>

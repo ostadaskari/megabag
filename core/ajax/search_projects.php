@@ -24,11 +24,12 @@ $whereClause = "WHERE 1";
 $params = [];
 $types = '';
 
+// Correctly search only for project_name and employer, as per the projects table schema
 if (!empty($keyword)) {
-    $whereClause .= " AND (project_name LIKE ? OR employer LIKE ? OR purchase_code LIKE ?)";
+    $whereClause .= " AND (project_name LIKE ? OR employer LIKE ?)";
     $keywordParam = "%{$keyword}%";
-    array_push($params, $keywordParam, $keywordParam, $keywordParam);
-    $types .= 'sss';
+    array_push($params, $keywordParam, $keywordParam);
+    $types .= 'ss';
 }
 
 if (!empty($status)) {
@@ -41,6 +42,7 @@ if (!empty($status)) {
 $sqlCount = "SELECT COUNT(*) FROM projects " . $whereClause;
 $stmtCount = $conn->prepare($sqlCount);
 if ($types) {
+    // We need to bind the parameters for the count query as well
     $stmtCount->bind_param($types, ...$params);
 }
 $stmtCount->execute();
@@ -50,7 +52,8 @@ $stmtCount->close();
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
 // Fetch projects
-$sql = "SELECT id, project_name, date_code, employer, purchase_code, status, created_at FROM projects " . $whereClause . " LIMIT ?, ?";
+// Note: Removed date_code and purchase_code from the select statement as they are not in the projects table
+$sql = "SELECT id, project_name, employer, status, created_at FROM projects " . $whereClause . " LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $types .= 'ii';
 array_push($params, $offset, $recordsPerPage);
@@ -65,9 +68,7 @@ if ($result->num_rows > 0) {
         $html .= '<tr class="tdColor" data-id="' . htmlspecialchars($row['id']) . '">';
         $html .= '<td scope="row">' . $count . '</td>'; // Use the counter here
         $html .= '<td>' . htmlspecialchars($row['project_name']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($row['date_code']) . '</td>';
         $html .= '<td>' . htmlspecialchars($row['employer']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($row['purchase_code']) . '</td>';
         $html .= '<td><span class="badge ' . ($row['status'] === 'finished' ? 'bg-success' : 'bg-secondary') . '">' . htmlspecialchars($row['status']) . '</span></td>';
         $html .= '<td>
                         <div title="' . htmlspecialchars($row['created_at']) . '">
@@ -80,12 +81,12 @@ if ($result->num_rows > 0) {
 
         $html .= '<td class="actions-cell">
                     <div class="d-flex justify-content-center">
-                        <a href="../auth/dashboard.php?page=edit_project&project_id=' . htmlspecialchars($row['id']) . '" class="btn btn-sm btn-primary btnSvg mx-1">
+                        <button onclick="editProject(' . htmlspecialchars($row['id']) . ')" class="btn btn-sm btn-primary btnSvg mx-1">
                             <svg width="20" height="20" fill="var(--main-bg1-color)" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                             </svg>
-                        </a>
+                        </button>
                         <button onclick="deleteProject(' . htmlspecialchars($row['id']) . ')" class="btn btn-sm btn-danger btnSvg mx-1">
                             <svg width="20" height="20" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>

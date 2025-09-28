@@ -26,9 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get project details from the form
     $projectName = $_POST['project_name'] ?? '';
-    $dateCode = $_POST['date_code'] ?? '';
     $employer = $_POST['employer'] ?? '';
-    $purchaseCode = $_POST['purchase_code'] ?? '';
     $designators = $_POST['designators'] ?? '';
     $products = $_POST['products'] ?? [];
 
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (count($products) === 0) {
-        $errors[] = "At least one product is required for a project.";
+        $errors[] = "At least one product lot is required for a project.";
     }
 
     // If there are initial validation errors, redirect and exit
@@ -52,11 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction();
 
         // 1. Insert into the projects table
-        $stmt_project = $conn->prepare("INSERT INTO projects (project_name, date_code, employer, purchase_code, designators, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        // NOTE: The database schema provided does not have 'date_code' or 'purchase_code',
+        // but the form does. Assuming your actual table structure includes them.
+        $stmt_project = $conn->prepare("INSERT INTO projects (project_name, employer, designators, user_id, created_at) VALUES ( ?, ?, ?, ?, ?)");
         if (!$stmt_project) {
             throw new Exception("Prepare statement failed: " . $conn->error);
         }
-        $stmt_project->bind_param("sssssis", $projectName, $dateCode, $employer, $purchaseCode, $designators, $user_id, $now);
+        $stmt_project->bind_param("sssis", $projectName, $employer, $designators, $user_id, $now);
         
         if (!$stmt_project->execute()) {
             throw new Exception("Failed to insert project: " . $stmt_project->error);
@@ -64,17 +64,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $projectId = $conn->insert_id;
         $stmt_project->close();
 
-        // 2. Loop through and process each product
-        $stmt_insert_product = $conn->prepare("INSERT INTO project_products (project_id, product_id, used_qty, remarks) VALUES (?, ?, ?, ?)");
-        $stmt_update_product = $conn->prepare("UPDATE products SET qty = qty - ?, used_qty = used_qty + ? WHERE id = ?");
+        // 2. Loop through and process each product lot
+        $stmt_insert_project_products = $conn->prepare("INSERT INTO project_products (project_id, product_lot_id, used_qty, remarks) VALUES (?, ?, ?, ?)");
+        $stmt_update_product_lot = $conn->prepare("UPDATE product_lots SET qty_available = qty_available - ? WHERE id = ?");
+        // NEW: Prepared statement for updating the main products table
+        $stmt_update_product = $conn->prepare("UPDATE products SET qty = qty - ? WHERE id = ?");
 
         foreach ($products as $index => $productData) {
-            $productId = isset($productData['product_id']) ? (int) $productData['product_id'] : 0;
+            $productLotId = isset($productData['product_lot_id']) ? (int) $productData['product_lot_id'] : 0;
             $usedQty = isset($productData['used_qty']) ? (int) $productData['used_qty'] : 0;
             $remarks = trim($productData['remarks'] ?? '');
 
-            if ($productId <= 0) {
-                $errors[] = "Row " . ($index + 1) . ": Invalid product selection.";
+            if ($productLotId <= 0) {
+                $errors[] = "Row " . ($index + 1) . ": Invalid product lot selection.";
                 continue;
             }
 
@@ -84,26 +86,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Check if sufficient quantity is available
-            $stmt_check_qty = $conn->prepare("SELECT qty FROM products WHERE id = ?");
-            $stmt_check_qty->bind_param("i", $productId);
+            $stmt_check_qty = $conn->prepare("SELECT qty_available, product_id FROM product_lots WHERE id = ?");
+            $stmt_check_qty->bind_param("i", $productLotId);
             $stmt_check_qty->execute();
             $result = $stmt_check_qty->get_result();
             $row = $result->fetch_assoc();
             $stmt_check_qty->close();
 
-            if (!$row || $row['qty'] < $usedQty) {
-                $errors[] = "Row " . ($index + 1) . ": Insufficient stock. Available: " . ($row['qty'] ?? 0);
+            if (!$row || $row['qty_available'] < $usedQty) {
+                $errors[] = "Row " . ($index + 1) . ": Insufficient stock. Available: " . ($row['qty_available'] ?? 0);
                 continue;
             }
 
             // Insert into the project_products join table
-            $stmt_insert_product->bind_param("iiis", $projectId, $productId, $usedQty, $remarks);
-            if (!$stmt_insert_product->execute()) {
-                throw new Exception("Error inserting product into project at row " . ($index + 1) . ": " . $stmt_insert_product->error);
+            $stmt_insert_project_products->bind_param("iiis", $projectId, $productLotId, $usedQty, $remarks);
+            if (!$stmt_insert_project_products->execute()) {
+                throw new Exception("Error inserting product lot into project at row " . ($index + 1) . ": " . $stmt_insert_project_products->error);
             }
 
-            // Update the quantity in the main products table
-            $stmt_update_product->bind_param("iii", $usedQty, $usedQty, $productId);
+            // Update the quantity in the product_lots table
+            $stmt_update_product_lot->bind_param("ii", $usedQty, $productLotId);
+            if (!$stmt_update_product_lot->execute()) {
+                throw new Exception("Error updating product lot stock at row " . ($index + 1) . ": " . $stmt_update_product_lot->error);
+            }
+
+            // NEW: Update the quantity in the products table
+            $productId = $row['product_id'];
+            $stmt_update_product->bind_param("ii", $usedQty, $productId);
             if (!$stmt_update_product->execute()) {
                 throw new Exception("Error updating product stock at row " . ($index + 1) . ": " . $stmt_update_product->error);
             }
@@ -129,9 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } finally {
         // Close prepared statements and connection
-        if (isset($stmt_insert_product)) $stmt_insert_product->close();
+        if (isset($stmt_insert_project_products)) $stmt_insert_project_products->close();
+        if (isset($stmt_update_product_lot)) $stmt_update_product_lot->close();
+        // NEW: Close the new prepared statement
         if (isset($stmt_update_product)) $stmt_update_product->close();
-        if (isset($stmt_check_qty)) $stmt_check_qty->close();
         if ($conn) $conn->close();
     }
 }
