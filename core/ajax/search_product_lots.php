@@ -22,6 +22,8 @@ try {
             pl.x_code,
             pl.vrm_x_code,
             pl.qty_available,
+            pl.project_name,
+            pl.lock,
             p.part_number
             FROM product_lots pl
             JOIN products p ON pl.product_id = p.id

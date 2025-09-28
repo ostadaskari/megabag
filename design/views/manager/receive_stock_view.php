@@ -15,6 +15,9 @@
 <div id="Insert-Items" class="tab-content">
     <div class="container px-0 mt-1">
         <form method="POST" action="" id="groupStockForm">
+                        <!-- CSRF  -->
+        <?php generate_csrf_token(); ?>
+        
             <div id="stockRows">
                 <div class="stock-row border p-1 rounded mb-1 bg-light position-relative">
                     <div class="row d-flex align-items-end justify-content-between">
@@ -65,18 +68,23 @@
                         </div>
 
                         <!-- Remarks -->
-                        <div class="col-12 col-md-5 px-1 mt-2 mt-md-0">
+
+                        <div class="col-12 col-md-6 px-1 mt-2 mt-md-0">
                             <label class="form-label">Comment:</label>
                             <textarea class="form-control responsive-textarea" name="products[0][remarks]" rows="1"></textarea>
                         </div>
                          
                         <!-- Lock Checkbox -->
-                        <div class="col-6 col-md-1 px-1 mb-2 d-flex justify-content-end align-items-center">
-                            <svg  width="20" height="20" fill="currentColor" class="bi bi-lock-fill hoverSvg" viewBox="0 0 16 16">
-                                 <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
-                            </svg>
-                            <label class="form-check-label" for="lockCheck"> Lock:</label>
-                            <input class="form-check-input" type="checkbox" name="products[0][lock]" value="1" id="lockCheck">
+
+                        <div class="col-6 col-md-1 px-1 mt-2 mt-md-0 d-flex justify-content-center align-items-center">
+                            <div class="form-check pt-4">
+                                <input class="form-check-input" type="checkbox" name="products[0][lock]" value="1" id="lockCheck">
+                                <label class="form-check-label" for="lockCheck">
+                                    <svg  width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                                    </svg> Lock
+                                </label>
+                            </div>
                         </div>
 
                         <!-- Hidden x_code -->

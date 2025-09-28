@@ -64,8 +64,6 @@ CREATE TABLE products (
     status ENUM('available', 'unavailable') DEFAULT 'available',
     user_id INT,                               -- Submitter's user ID
     category_id INT,                           -- Connects to the last child of categories
-    date_code YEAR,                               -- Use the YEAR data type for year values
-    recieve_code VARCHAR(80),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- Foreign Key Constraints
@@ -111,7 +109,7 @@ CREATE TABLE product_lots (
     vrm_x_code VARCHAR(70) UNIQUE,      -- The unique vrm_x_code for the physical pack
     qty_received INT UNSIGNED DEFAULT 0,  -- The original quantity in this lot
     qty_available INT UNSIGNED DEFAULT 0, -- The current quantity left in this lot
-    date_code YEAR,                        -- year of made
+    date_code YEAR,                     -- year of made
     lot_location VARCHAR(30),           -- The location of the lot
     project_name VARCHAR(30),           -- The project associated with the lot
     lock BOOLEAN,                       -- Flag to indicate if a lot is locked
@@ -195,12 +193,12 @@ CREATE TABLE projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,  -- New column to link to the users table
     project_name VARCHAR(40),
-    employer VARCHAR(60),
+    owner VARCHAR(60),
     designators TEXT,
     status ENUM('pending', 'finished') DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 --
@@ -217,34 +215,6 @@ CREATE TABLE project_products (
     FOREIGN KEY (product_lot_id) REFERENCES product_lots(id) ON DELETE CASCADE
 );
 
-
-
-
-
--- eX FEATUES Edition
-
---  -- adding some specific features to each category
--- CREATE TABLE features (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     category_id INT NOT NULL,
---     name VARCHAR(60) NOT NULL,
---     data_type ENUM('varchar(50)', 'decimal(15,7)', 'TEXT', 'boolean') DEFAULT 'varchar(50)',
---     unit VARCHAR(50) DEFAULT NULL,  -- example: 'kg', 'cm', '%', etc.
---     is_required BOOLEAN DEFAULT FALSE,
---     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
--- );
--- -- each product could have feature values that is belonging to their features
--- -- Product Feature Values (Pivot Table)
--- -- Table: product_feature_values
--- CREATE TABLE product_feature_values (
---     product_id INT NOT NULL,
---     feature_id INT NOT NULL,
---     value TEXT NOT NULL,
---     unit VARCHAR(50) DEFAULT NULL,
---     PRIMARY KEY (product_id, feature_id),
---     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
---     FOREIGN KEY (feature_id) REFERENCES features(id) ON DELETE CASCADE
--- );
 
 
 

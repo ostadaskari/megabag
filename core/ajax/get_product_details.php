@@ -50,7 +50,10 @@ try {
             $response['message'] = 'Product details retrieved successfully.';
             $response['product'] = $product;
             
-            // Fetch associated images
+            // Define the base path for files, which is two directories up from the PHP script
+            $base_path = '../../';
+
+            // Fetch associated images and prepend the base path
             $images_query = "SELECT file_path, file_name, is_cover FROM images WHERE product_id = ?";
             $images_stmt = $conn->prepare($images_query);
             if (!$images_stmt) {
@@ -63,6 +66,8 @@ try {
             $all_images = [];
             $cover_image = null;
             while ($image = $images_result->fetch_assoc()) {
+                // Prepend the relative path to the file path
+                $image['file_path'] = $base_path . ltrim($image['file_path'], '/');
                 if ($image['is_cover'] == 1) {
                     $cover_image = $image;
                 } else {
@@ -76,7 +81,7 @@ try {
             }
             $response['images'] = $all_images;
 
-            // Fetch associated PDFs
+            // Fetch associated PDFs and prepend the base path
             $pdfs_query = "SELECT file_path, file_name FROM pdfs WHERE product_id = ?";
             $pdfs_stmt = $conn->prepare($pdfs_query);
             if (!$pdfs_stmt) {
@@ -86,18 +91,20 @@ try {
             $pdfs_stmt->execute();
             $pdfs_result = $pdfs_stmt->get_result();
             while ($pdf = $pdfs_result->fetch_assoc()) {
+                // Prepend the relative path to the file path
+                $pdf['file_path'] = $base_path . ltrim($pdf['file_path'], '/');
                 $response['pdfs'][] = $pdf;
             }
             $pdfs_stmt->close();
 
             // Fetch product features
             $features_query = "SELECT 
-                                   f.name,
-                                   f.data_type, 
-                                   pfv.value
-                               FROM product_feature_values pfv
-                               JOIN features f ON pfv.feature_id = f.id
-                               WHERE pfv.product_id = ?";
+                                    f.name,
+                                    f.data_type, 
+                                    pfv.value
+                                FROM product_feature_values pfv
+                                JOIN features f ON pfv.feature_id = f.id
+                                WHERE pfv.product_id = ?";
 
             $features_stmt = $conn->prepare($features_query);
             if (!$features_stmt) {
@@ -131,7 +138,7 @@ try {
                                        ? $decoded_json['values'] 
                                        : []; // Return an empty array if not found
                     } else {
-                        // Default handler for other types (text, number) that use the 'value' key
+                        // Default handler for other types (string, number) that use the 'value' key
                         $feature_value = $decoded_json['value'] ?? null;
                     }
 
@@ -173,4 +180,3 @@ if (isset($conn) && $conn) {
 
 echo json_encode($response);
 exit; // Ensure no other output
-?>

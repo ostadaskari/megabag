@@ -5,6 +5,7 @@
         <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
     </svg>
     Parts List</h2>
+
     <a href="../auth/dashboard.php?page=home" class="backBtn">
     <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
@@ -12,29 +13,48 @@
     <span>Back</span>
     </a>
 </div>
-<!-- List Product -->
 <div id="List-Product" class="tab-content" >
 <div class="container px-0">
-    <!-- searchbar -->
-    <div class="d-flex flex-row align-items-center justify-content-between" >
-        <div class="input-box w-50 position-relative" style="margin: 0!important;">
-            <div class="svgSearch">
-                <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
+    <div class="row d-flex align-items-center mb-1">
+        <div class="col-12 col-md-11 px-1">
+            <div class="d-flex flex-row align-items-center justify-content-between p-1">
+                <div class="input-box w-75 position-relative" style="margin: 0!important;">
+                    <div class="svgSearch">
+                        <svg width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search by P/N, tag ..." autocomplete="off" />
+                </div>
+                <div class="w-25 ms-2">
+                    <select id="statusFilter" class="form-select py-2">
+                        <option value="">All Statuses</option>
+                        <option value="available">Available</option>
+                    </select>
+                </div>
             </div>
-            <input type="text" id="searchInput" placeholder="Search by name, tag or P/N..." autocomplete="off" />
         </div>
-
-        <div class="w-25">
-            <select id="statusFilter" class="form-select py-2">
-                <option value="">All Statuses</option>
-                <option value="available">Available</option>
-            </select>
+        <div class="col-12 col-md-1">
+            <div class="d-flex flex-column justify-content-md-center justify-content-between filesBtn border rounded bg-light shadow-sm p-1">
+                <div class="d-flex flex-row align-items-center justify-content-between my-1">
+                    <p class="py-1 fontS mb-0">Excel:</p>
+                    <button type="button" class="btnSvg" class="btn p-1 mx-1" title="Excel File" onclick="exportProducts('xlsx')">
+                        <svg width="24" height="24" fill="#217346" class="bi bi-filetype-exe" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM2.575 15.202H.785v-1.073H2.47v-.606H.785v-1.025h1.79v-.648H0v3.999h2.575zM6.31 11.85h-.893l-.823 1.439h-.036l-.832-1.439h-.931l1.227 1.983-1.239 2.016h.861l.853-1.415h.035l.85 1.415h.908l-1.254-1.992zm1.025 3.352h1.79v.647H6.548V11.85h2.576v.648h-1.79v1.025h1.684v.606H7.334v1.073Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="d-flex flex-row align-items-center justify-content-between my-1">
+                    <p class="py-1 fontS mb-0">PDF:</p>
+                    <button type="button" class="btnSvg" class="btn p-1 mx-1" title="PDF File" onclick="exportProducts('pdf')">
+                        <svg width="24" height="24" fill="#FF0000" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/>
+                        </svg>
+                    </button>
+                </div> 
+            </div>
         </div>
     </div>
-
-    <!-- table list product -->
     <div class="row mt-2">
     <div class="col-12">
         <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 65vh;">
@@ -55,15 +75,13 @@
             </thead>
         
             <tbody id="productsTableBody">
-                <!-- Filled dynamically via AJAX -->
-            </tbody>
+                </tbody>
         
             </table>
         </div>
     </div>
     </div>
 
-    <!-- Pagination -->
     <div class="row my-2">
         <div class="col-12 d-flex justify-content-center">
             <div id="pagination" class="pagination-container"></div>
@@ -209,6 +227,9 @@
                                                     <strong>MFG:</strong> ${product.mfg}
                                                 </div>
                                                 <div class="col-6 my-2">
+                                                    <strong>Location:</strong> ${product.location}
+                                                </div>
+                                                <div class="col-6 my-2">
                                                     <strong>Tag:</strong> ${product.tag}
                                                 </div>
                                                 <div class="col-6 my-2">
@@ -217,23 +238,16 @@
                                                 <div class="col-6 my-2">
                                                     <strong>Category:</strong> ${product.category_name}
                                                 </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Location:</strong> ${product.location}
-                                                </div>
+
                                                 <div class="col-6 my-2">
                                                     <strong>Status:</strong> ${product.status}
                                                 </div>
+
                                                 <div class="col-6 my-2">
-                                                    <strong>Date Code:</strong> ${product.date_code}
+                                                    <strong>Created_At:</strong> ${formatDate(product.created_at)}
                                                 </div>
                                                 <div class="col-6 my-2">
-                                                    <strong>Recieve Code:</strong> ${product.recieve_code}
-                                                </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Created_At:</strong> ${product.created_at}
-                                                </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Updated_At:</strong> ${product.updated_at}
+                                                    <strong>Updated_At:</strong> ${formatDate(product.updated_at)}
                                                 </div>
                                                 <div class="col-12 my-2">
                                                     <strong>Description:</strong> ${product.company_cmt}
@@ -489,5 +503,29 @@
     // Add zoomy function to the global window object
     window.zoomy = zoomy;
 })();
+</script>
+
+
+<script>
+function formatDate(dateString) {
+    const date = new Date(dateString.replace(" ", "T")); // make it ISO-friendly
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // months are 0-based
+    const day = date.getDate();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+}
+
+    function exportProducts(format) {
+        const searchInput = document.getElementById("searchInput").value;
+        const statusFilter = document.getElementById("statusFilter").value;
+        const url = `../ajax/export_products.php?format=${format}&search=${encodeURIComponent(searchInput)}&status=${encodeURIComponent(statusFilter)}`;
+        window.open(url, '_blank');
+    }
+
+
 </script>
 

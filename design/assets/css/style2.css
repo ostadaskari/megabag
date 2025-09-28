@@ -54,7 +54,7 @@
     border-bottom: 1px solid #eee;
 }
 .autocomplete-item:hover {
-    background-color: #f0f0f0;
+    background-color: #f1f1f1;
 }
 .autocomplete-item:last-child {
     border-bottom: none;
@@ -459,4 +459,122 @@ margin-left: 0.5rem;
     border: 2px solid #2e6b9361;
     border-radius:8px;
 
+}
+/* =========================
+   Variables
+============================ */
+:root {
+    --pastel-blue: #a3c1d1;
+}
+
+/* =========================
+   Buttons
+============================ */
+.btn-secondary {
+    background-color: var(--pastel-blue) !important;
+    border-color: var(--pastel-blue) !important;
+}
+
+/* =========================
+   Cards
+============================ */
+.card, .product-card, .main-card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-card-header {
+    background-color: var(--pastel-blue);
+    color: white;
+    padding: 5px 10px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.product-card-body {
+    padding: 10px;
+}
+.product-card-body{
+ font-size: 14px;
+}
+.product-card-body label{
+font-weight: 600;
+font-size: 16px;
+
+}
+/* =========================
+   Filter Panel
+============================ */
+.filters-panel {
+    background-color: #d1d0d023;
+    padding: 12px;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
+                0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pastel-header {
+    background-color: var(--pastel-blue);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.w-98{
+    width: 98%;
+}
+/* =========================
+   Lot Subtable
+============================ */
+.lot-subtable {
+    font-size: 0.9rem;
+}
+.lot-subtable th, .lot-subtable td {
+    vertical-align: middle;
+}
+.lot-subtable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* =========================
+   Lock / Disabled Fields
+============================ */
+.locked-item {
+    color: #dc3545;
+}
+.locked-input {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+.form-control:disabled, 
+.form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+/* =========================
+   Misc / Utility
+============================ */
+.mb-2 { margin-bottom: 0.5rem !important; }
+.bg-light { background-color: #f8f9fa !important; }
+.bg-matcha-green { background-color: #709A72 !important; }
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
 }

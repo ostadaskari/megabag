@@ -14,6 +14,8 @@
 </div>
 <div class="container p-0">
     <form method="POST" action="" id="groupIssueForm">
+                                <!-- CSRF  -->
+        <?php generate_csrf_token(); ?>
         <div id="issueRows">
         </div>
 
@@ -44,43 +46,7 @@ Swal.fire({
 </script>
 <?php endif; ?>
 
-<style>
-    /* Styles for autocomplete dropdown */
-    .autocomplete-dropdown {
-        position: absolute;
-        border: 1px solid #ddd;
-        background-color: white;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 1000; /* Ensure it's above other content */
-        width: calc(100% - 2px); /* Match input width */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        border-radius: 5px;
-        left: 1px; /* Align with input */
-        top: 100%; /* Position below the input */
-        display: none; /* Add this line to hide it by default */
-    }
-    .autocomplete-item {
-        padding: 8px 10px;
-        cursor: pointer;
-        border-bottom: 1px solid #eee;
-    }
-    .autocomplete-item:hover {
-        background-color: #f0f0f0;
-    }
-    .autocomplete-item:last-child {
-        border-bottom: none;
-    }
-    /* New style for locked items */
-    .locked-item {
-        color: #dc3545; /* Bootstrap red */
-    }
-    /* New style for the locked input field */
-    .locked-input {
-        border-color: #dc3545 !important;
-        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
-    }
-</style>
+
 
 <script>
 // Keep a global counter for row indices
@@ -93,7 +59,7 @@ function createRowHtml(index) {
             <div class="row g-2 align-items-end">
                 <div class="col-6 col-md-3 px-1 position-relative">
                     <label for="productInput" class="form-label">X-Code:</label>
-                    <input type="text" name="products[${index}][lot_search]" class="form-control lot-search" placeholder="Search by X-Code" autocomplete="off" required>
+                    <input type="text" name="products[${index}][lot_search]" class="form-control lot-search" placeholder="Search by X-Code & P/N" autocomplete="off" required>
                     <input type="hidden" name="products[${index}][product_lot_id]" class="product-lot-id">
                 </div>
                 <div class="col-6 col-md-2 px-1">
@@ -311,9 +277,9 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
             // Check if the item is a locked product lot
             if (isLot && item.lock) {
                 div.classList.add('locked-item');
-                div.innerHTML = `<strong>${item[nameKey]}</strong> - ${item[secondaryKey]} (LOCKED)`;
+                div.innerHTML = `<strong> ${item[nameKey]}</strong> - P/N: ${item[secondaryKey]} (LOCKED)`;
             } else {
-                div.innerHTML = `<strong>${item[nameKey]}</strong> - ${item[secondaryKey]}`;
+                div.innerHTML = `<strong> ${item[nameKey]}</strong> - ( ${item[secondaryKey]} )`;
             }
 
             div.addEventListener('click', () => {

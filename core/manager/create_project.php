@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get project details from the form
     $projectName = $_POST['project_name'] ?? '';
-    $employer = $_POST['employer'] ?? '';
+    $owner = $_POST['owner'] ?? '';
     $designators = $_POST['designators'] ?? '';
     $products = $_POST['products'] ?? [];
 
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 1. Insert into the projects table
         // NOTE: The database schema provided does not have 'date_code' or 'purchase_code',
         // but the form does. Assuming your actual table structure includes them.
-        $stmt_project = $conn->prepare("INSERT INTO projects (project_name, employer, designators, user_id, created_at) VALUES ( ?, ?, ?, ?, ?)");
+        $stmt_project = $conn->prepare("INSERT INTO projects (project_name, owner, designators, user_id, created_at) VALUES ( ?, ?, ?, ?, ?)");
         if (!$stmt_project) {
             throw new Exception("Prepare statement failed: " . $conn->error);
         }
-        $stmt_project->bind_param("sssis", $projectName, $employer, $designators, $user_id, $now);
+        $stmt_project->bind_param("sssis", $projectName, $owner, $designators, $user_id, $now);
         
         if (!$stmt_project->execute()) {
             throw new Exception("Failed to insert project: " . $stmt_project->error);

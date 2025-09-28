@@ -3,15 +3,23 @@
 session_start();
 require_once("../db/db.php");
 
+// --------------------------------------------------------
+// --- SECURITY CHECK: Redirect already logged-in users ---
+// --------------------------------------------------------
+// Check if the 'user_id' session variable is set, indicating an active login.
+if (isset($_SESSION['user_id'])) {
+    // Redirect to the main dashboard page (using 'dashboard.php' as per your existing successful login path).
+    header("Location: dashboard.php");
+    exit; // Stop script execution immediately after redirection
+}
+// --------------------------------------------------------
+
 //
 $errors = [];
 $username = trim($_POST['username'] ?? '');
 $password = trim($_POST['password'] ?? '');
 $captcha_input = trim($_POST['captcha'] ?? '');
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-
-
-
 
 // set and Track failures in session for userrnames not IP. because we have just 2 ip in this projec
 if (!isset($_SESSION['failures'])) $_SESSION['failures'] = [];
@@ -62,16 +70,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $user = $res->fetch_assoc();
 
             if ($user && password_verify($password, $user['password'])) { //successful login
-                 // reset sessions before any login
-                    session_unset();
-                    session_destroy();
-                    session_start();
-
+                // Regenerate the session ID to prevent session fixation attacks
+                session_regenerate_id(true); //prevent session fixation attacks
+                
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['nickname'] = $user['nickname'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['last_activity'] = time(); // Set initial activity timestamp
 
                 log_login_attempt($conn, $ip, $username, 'ok');
                 $_SESSION['failures'][$username] = 0;
@@ -112,8 +119,7 @@ function log_login_attempt($conn, $ip, $username, $status) {
         $stmt->execute();
         
     } catch (Exception $e) {
-        // Fails silently if logging itself fails
+        // Log the failure itself for debugging and security auditing.
+        error_log("Failed to log login attempt for user '{$username}': " . $e->getMessage());
     }
 }
-
-

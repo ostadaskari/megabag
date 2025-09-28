@@ -1,5 +1,6 @@
 <?php
 require_once '../db/db.php';
+require_once '../auth/csrf.php'; // This file contains the validate_csrf_token function
 // Check if a session has already been started before starting a new one.
 // This prevents the "Ignoring session_start()" notice.
 if (session_status() === PHP_SESSION_NONE) {
@@ -23,6 +24,12 @@ if (isset($_GET['error'])) {
 }
 // IF post method 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Validate the CSRF token before processing any form data.
+    if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        // Log the error for security monitoring purposes.
+        error_log('CSRF token validation failed.');
+        throw new Exception("Invalid or missing CSRF token. Request denied.");
+    }
     $user_id = $_SESSION['user_id'];
     $products = $_POST['products'] ?? [];
 

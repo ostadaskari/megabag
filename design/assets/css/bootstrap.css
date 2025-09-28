@@ -840,3 +840,36 @@ position: relative !important;
   border-bottom: 2px solid #8cadbb75 !important; 
   box-shadow: 0 1px 5px #cdcfcf73;
 }
+
+/* g-2 gutter (Bootstrap 5 style) */
+/* Usage: <div class="row g-2"> ... </div> */
+
+.row.g-2 {
+  /* gutter values */
+  --bs-gutter-x: 0.5rem;
+  --bs-gutter-y: 0.5rem;
+}
+
+/* apply negative margins to compensate column padding */
+.row.g-2 {
+  display: flex;                 /* same as .row in BS */
+  flex-wrap: wrap;
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
+  margin-right: calc(var(--bs-gutter-x) * -0.5);
+  margin-top: calc(var(--bs-gutter-y) * -0.5);
+  margin-bottom: calc(var(--bs-gutter-y) * -0.5);
+  box-sizing: border-box;
+}
+
+/* apply half-gutter padding to immediate children (columns) */
+.row.g-2 > * {
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-top: calc(var(--bs-gutter-y) * 0.5);
+  padding-bottom: calc(var(--bs-gutter-y) * 0.5);
+  box-sizing: border-box;
+}
+/* gap-2 = 0.5rem (from Bootstrap spacing scale) */
+.gap-2 {
+  gap: 0.5rem !important;
+}

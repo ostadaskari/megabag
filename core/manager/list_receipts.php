@@ -77,9 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         } catch (Exception $e) {
             // Rollback the transaction on error
             $conn->rollback();
-            // You can add an error message to a session variable here
+            // Pass the error message to the view
+            $errorMessage = urlencode($e->getMessage());
             error_log("Receipt deletion failed: " . $e->getMessage());
-            header("Location: ../auth/dashboard.php?page=list_receipts&status=error");
+            header("Location: ../auth/dashboard.php?page=list_receipts&error=" . $errorMessage);
             exit;
         } finally {
             // Close the database connection

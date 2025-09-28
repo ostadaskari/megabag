@@ -35,10 +35,10 @@
                     <label for="projectName" class="form-label">Project Name:</label>
                     <input type="text" name="project_name" id="projectName" class="form-control" autocomplete="off" required>
                 </div>
-                <!-- Project Employer -->
+                <!-- Project owner -->
                 <div class="col-12 col-md-3 px-2 my-2">
-                    <label for="employer" class="form-label">Employer:</label>
-                    <input type="text" name="employer" id="employer" class="form-control" autocomplete="off">
+                    <label for="owner" class="form-label">owner:</label>
+                    <input type="text" name="owner" id="owner" class="form-control" autocomplete="off">
                 </div>
 
                 <div class="col-12">
@@ -225,7 +225,6 @@
             }
         }
     });
-
     // Product lot search using AJAX
     document.addEventListener('input', function (e) {
         if (e.target.classList.contains('product-search')) {
@@ -252,17 +251,36 @@
                             data.forEach(item => {
                                 const div = document.createElement('div');
                                 div.classList.add('p-2', 'autocomplete-item');
-                                // Use the new fields for display
-                                div.textContent = `x-code: ${item.x_code} - PN: ${item.part_number} (Available: ${item.qty_available})`;
+                                
+                                // Check if the item is locked
+                                if (item.lock == 1) { // Assuming 'lock' is 1 for true
+                                    div.classList.add('locked-item');
+                                    div.innerHTML = `x-code: ${item.x_code} - PN: ${item.part_number} <span class="text-danger fw-bold">(Locked for: ${item.project_name})</span>`;
+                                } else {
+                                    div.textContent = `x-code: ${item.x_code} - PN: ${item.part_number} (Available: ${item.qty_available})`;
+                                }
+
                                 div.style.cursor = 'pointer';
                                 div.addEventListener('click', () => {
-                                    // Set the input value to the selected lot details
-                                    input.value = `x-code: ${item.x_code} - PN: ${item.part_number}`;
-                                    const productLotIdInput = productRow.querySelector('.product-lot-id');
-                                    productLotIdInput.value = item.lot_id;
-                                    availableQtySpan.textContent = `(Available: ${item.qty_available})`;
-                                    resultBox.innerHTML = '';
-                                    resultBox.style.display = 'none';
+                                    // Prevent selection if the item is locked
+                                    if (item.lock == 1) {
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'Item Locked',
+                                            text: `This item is locked for the project: ${item.project_name}`
+                                        });
+                                        // Do not select the item, just clear the dropdown
+                                        resultBox.innerHTML = '';
+                                        resultBox.style.display = 'none';
+                                    } else {
+                                        // Set the input value to the selected lot details
+                                        input.value = `x-code: ${item.x_code} - PN: ${item.part_number}`;
+                                        const productLotIdInput = productRow.querySelector('.product-lot-id');
+                                        productLotIdInput.value = item.lot_id;
+                                        availableQtySpan.textContent = `(Available: ${item.qty_available})`;
+                                        resultBox.innerHTML = '';
+                                        resultBox.style.display = 'none';
+                                    }
                                 });
                                 resultBox.appendChild(div);
                             });

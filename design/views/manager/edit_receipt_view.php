@@ -22,6 +22,8 @@
 <div id="Edit-Receipt" class="tab-content">
     <div class="container px-0 mt-1">
         <form method="POST" action="">
+         <!-- CSRF token -->
+        <?php generate_csrf_token(); ?>
 
             <input type="hidden" name="receipt_id" value="<?php echo htmlspecialchars($receiptData['id']); ?>">
             

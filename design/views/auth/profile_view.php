@@ -1,4 +1,7 @@
-
+<?php
+// Generate a single CSRF token for the entire page
+$csrf_token = generate_csrf_token();
+?>
  <div class="d-flex flex-row align-items-center justify-content-between titleTop">       
     <h2 class="d-flex align-items-center">
    <svg width="24" height="24" fill="currentColor" class="bi bi-person-square mx-1 me-2" viewBox="0 0 16 16">
@@ -29,6 +32,8 @@
 
 <!-- Form -->
 <form method="POST" class="d-flex flex-column justify-content-between flex-grow-1">
+    <!-- csrf -->
+  <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
 <div class="row g-3">
   <div class="col-12 col-lg-6 px-1 mb-3">
     <label for="firstName" class="form-label ">First Name</label>
@@ -68,6 +73,8 @@
   </div>
   
   <form method="POST" >
+        <!-- csrf -->
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
     <div class="row mb-3">
       <div class="col-12 mb-3">
         <label for="currentPassword" class="form-label ">Current Password</label>
@@ -156,25 +163,35 @@
 
 
         <!-- SweetAlert for success -->
-    <?php if (!empty($success)): ?>
-        <script>
+<?php if (!empty($success) || !empty($errors)): ?>
+    <script>
+        // Combine all logic into a single script block
+        const url = new URL(window.location.href);
+
+        <?php if (!empty($success)): ?>
+            // Display the success message
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: '<?= addslashes($success) ?>',
+                text: <?= json_encode($success) ?>
             });
-        </script>
-    <?php endif; ?>
+            // After displaying the message, clean the URL
+            url.searchParams.delete('success');
 
-    <!-- SweetAlert for errors -->
-    <?php foreach ($errors as $e): ?>
-        <script>
+        <?php elseif (!empty($errors)): ?>
+            // Display the error message
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: '<?= addslashes($e) ?>',
+                title: 'Errors',
+                html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
             });
-        </script>
-    <?php endforeach; ?>
+            // After displaying the message, clean the URL
+            url.searchParams.delete('errors');
+        <?php endif; ?>
+
+        // Update the URL in the browser without reloading the page
+        history.replaceState(null, '', url);
+    </script>
+<?php endif; ?>
 
     
