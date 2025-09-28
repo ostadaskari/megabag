@@ -4,7 +4,8 @@
         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
         <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
     </svg>
-    Part List</h2>
+    Parts List</h2>
+
     <a href="../auth/dashboard.php?page=home" class="backBtn">
     <svg width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
@@ -183,7 +184,7 @@
                             // Build the HTML for the features list
                             let featuresListHtml = 'N/A';
                             if (features && features.length > 0) {
-                                featuresListHtml = `<ul class="list-unstyled mb-0">`;
+                                featuresListHtml = ``;
                                 features.forEach(feature => {
                                     let featureDisplayValue;
 
@@ -209,9 +210,9 @@
                                         featureDisplayValue = `${feature.value ?? 'N/A'}${feature.unit ? ' ' + feature.unit : ''}`;
                                     }
                                     
-                                    featuresListHtml += `<li><strong>${feature.name}:</strong> ${featureDisplayValue}</li>`;
+                                    featuresListHtml += `<div class="col-6 my-2"><strong>${feature.name}:</strong> ${featureDisplayValue}</div>`;
                                 });
-                                featuresListHtml += `</ul>`;
+                                
                             }
                             
                             productDetailsContent.innerHTML = `
@@ -219,7 +220,7 @@
                                     <div class="col-12 col-md-8">
                                         <div class="container px-0">
                                             <div class="row">
-                                                <div class="col-6 my-1">
+                                                <div class="col-6 my-2">
                                                     <strong>P/N:</strong> ${product.part_number}
                                                 </div>
                                                 <div class="col-6 my-2">
@@ -261,28 +262,19 @@
                                                     <h3 class="pl-1 mb-0">Features & Specifications:</h3>
                                                     <div class="flex-grow-1 ms-2 border-bottom"></div>
                                                 </div>
-                                                <div class="col-12 my-2">
+                                               
                                                     ${featuresListHtml}
-                                                </div>
+                                              
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4">
-                                        <div class="d-flex flex-column align-items-end">
-                                            <div class="imgCover mb-2">
-                                                <img src="${mainImageSrc}" class="img-fluid w-100">
-                                            </div>
-                                            <ul class="mt-1 list-group small d-flex justify-content-between align-items-center" style="max-height: 180px; overflow-y:auto;width: 100%;">
-                                                ${imageListHtml}
-                                            </ul>
-
-                                        </div>
+                                        <div class="d-flex flex-column align-items-end" id="myZoom"></div>
                                     </div>
                                 </div>
 
                                 
                             </div>
-
 
                             <div class="row modal-header">
                                 <div class="col-12 my-2 d-flex flex-row">
@@ -291,29 +283,28 @@
                                 </div>
                             </div>
                         `;
-                        //################### for zoomy #################
-                            // Activate magnifier on the main image after it is added to the DOM
-                            const mainImageInModal = document.querySelector('#product-images img');
-                            if (mainImageInModal) {
-                                magnify(mainImageInModal, 2);
-                            }
+                       
+                        if (images && images.length > 0) {
+                            // Prepare an array in the proper format for Zoomy
+                            const zoomImages = images.map(img => ({
+                                image: img.file_path,  // main image
+                                thumb: img.file_path   // if no separate thumbnail, use the main image
+                            }));
 
-                            // Also, when a thumbnail is clicked, the main image changes
-                            document.querySelectorAll('.itemfile span img').forEach(img => {
-                                img.addEventListener('click', () => {
-                                    const mainImg = document.querySelector('.imgCover img');
-                                    mainImg.src = img.src;
+                            // Get the target element for Zoomy
+                            const el = document.getElementById('myZoom');
 
-                                    // Remove the previous magnifier
-                                    const oldGlass = document.querySelector('.img-magnifier-glass');
-                                    if (oldGlass) oldGlass.remove();
-
-                                    // Activate magnifier again on the new main image
-                                    magnify(mainImg, 2);
-                                });
+                            // Initialize the Zoomy plugin (pure JS version)
+                            zoomy(el, zoomImages, {
+                                width: 300,
+                                height: 300,
+                                zoomScale: 2,
+                                thumbHide: false // set to true if you want to hide thumbnails
                             });
+                        }
 
-                        //################### for zoomy #################
+
+
                         // Add event listener for image thumbnails
                         document.querySelectorAll('.itemfile span img').forEach(img => {
                             img.addEventListener('click', () => {
@@ -426,60 +417,96 @@
 </script>
 
 
+<!-- for zoomy -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-function magnify(img, zoom) {
-  let glass = document.createElement("DIV");
-  glass.setAttribute("class", "img-magnifier-glass");
-  glass.style.display = "none"; // initially hidden
+(function() {
+    function zoomy(element, urls, options) {
+        if (!urls) return;
+        if (typeof urls === 'string') urls = [urls];
+        options = options || {};
 
-  img.parentElement.insertBefore(glass, img);
+        // Options
+        const thumbHide = options.thumbHide || urls.length < 2; // Hide thumbnails if only one image
+        const width = options.width || 300;                      // Width of the zoom container
+        const height = options.height || 300;                    // Height of the zoom container
+        const zoomScale = options.zoomScale || 2;               // Zoom magnification on hover
 
-  glass.style.backgroundImage = `url('${img.src}')`;
-  glass.style.backgroundRepeat = "no-repeat";
-  glass.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+        // Set element size and add class
+        element.style.width = width + 'px';
+        element.style.height = height + 'px';
+        element.classList.add('zoom');
 
-  let bw = 3, w = glass.offsetWidth / 2, h = glass.offsetHeight / 2;
+        // Determine if thumbnails are objects with 'image' and 'thumb'
+        const thumbMode = typeof urls[0] !== 'string';
+        const firstImage = thumbMode ? urls[0].image : urls[0];
 
-  // show magnifier on mouse enter
-  img.addEventListener("mouseenter", () => {
-    glass.style.display = "block";
-  });
+        // Main zoom container
+        let html = `<div class="zoom-main" style="
+                        width:100%; height:100%; 
+                        background-image:url('${firstImage}');
+                        background-size:100%;
+                        background-position:center;
+                        background-repeat:no-repeat;
+                        transition: background-size 0.3s, background-position 0.1s;
+                        position:relative;">
+                    </div>`;
 
-  // hide magnifier on mouse leave
-  img.addEventListener("mouseleave", () => {
-    glass.style.display = "none";
-  });
+        // Thumbnails container
+        if (!thumbHide) {
+            html += `<div class="zoom-thumb">`;
+            urls.forEach((url) => {
+                const imgSrc = thumbMode ? url.thumb : url;
+                const mainSrc = thumbMode ? url.image : url;
+                html += `<img class="zoom-click" src="${imgSrc}" data-url="${mainSrc}" style="cursor:pointer; object-fit:cover;">`;
+            });
+            html += `</div>`;
+        }
 
-  glass.addEventListener("mousemove", moveMagnifier);
-  img.addEventListener("mousemove", moveMagnifier);
-  glass.addEventListener("touchmove", moveMagnifier);
-  img.addEventListener("touchmove", moveMagnifier);
+        element.innerHTML = html;
 
-  function moveMagnifier(e) {
-    e.preventDefault();
-    let pos = getCursorPos(e);
-    let x = pos.x, y = pos.y;
+        const zoomMain = element.querySelector('.zoom-main');
 
-    if (x > img.width - (w / zoom)) x = img.width - (w / zoom);
-    if (x < w / zoom) x = w / zoom;
-    if (y > img.height - (h / zoom)) y = img.height - (h / zoom);
-    if (y < h / zoom) y = h / zoom;
+        // Zoom on mouse enter
+        zoomMain.addEventListener('mouseenter', () => {
+            zoomMain.style.backgroundSize = `${zoomScale * 100}%`;
+        });
 
-    glass.style.left = (x - w) + "px";
-    glass.style.top = (y - h) + "px";
-    glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`;
-  }
+        // Move background on mouse move
+        zoomMain.addEventListener('mousemove', (e) => {
+            const rect = zoomMain.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            const xPercent = (offsetX / rect.width) * 100;
+            const yPercent = (offsetY / rect.height) * 100;
+            zoomMain.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+        });
 
-  function getCursorPos(e) {
-    let a = img.getBoundingClientRect();
-    let x = e.pageX - a.left - window.pageXOffset;
-    let y = e.pageY - a.top - window.pageYOffset;
-    return {x, y};
-  }
-}
+        // Reset zoom on mouse leave
+        zoomMain.addEventListener('mouseleave', () => {
+            zoomMain.style.backgroundSize = '100%';
+            zoomMain.style.backgroundPosition = 'center';
+        });
+
+        // Click on thumbnails to change main image
+        const zoomClicks = element.querySelectorAll('.zoom-click');
+        zoomClicks.forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const newUrl = img.getAttribute('data-url');
+                zoomMain.style.backgroundImage = `url('${newUrl}')`;
+            });
+        });
+    }
+
+    // Add zoomy function to the global window object
+    window.zoomy = zoomy;
+})();
+</script>
 
 
+<script>
 function formatDate(dateString) {
     const date = new Date(dateString.replace(" ", "T")); // make it ISO-friendly
 
@@ -501,3 +528,4 @@ function formatDate(dateString) {
 
 
 </script>
+

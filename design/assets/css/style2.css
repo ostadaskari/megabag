@@ -29,9 +29,6 @@
     pointer-events: none;
 }
 
-
-
-
 /* design\views\manager\stock_issue_view.php Autocomplete dropdown styling */
 .autocomplete-dropdown {
     position: absolute;
@@ -48,22 +45,21 @@
     list-style: none;
     padding: 0;
     margin-top: 2px;
+    width: calc(100% - 2px); /* Match input width */
+    display: none; /* Add this line to hide it by default */
 }
-
 .autocomplete-item {
-    padding: 8px 12px;
+    padding: 8px 10px;
     cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #eee;
 }
-
-.autocomplete-item:last-child {
-    border-bottom: none;
-}
-
 .autocomplete-item:hover {
     background-color: #f1f1f1;
 }
-
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+/*  */
 .add-row-btn {
     cursor: pointer;
 }
@@ -286,22 +282,22 @@
             background-color: #f8f9fa;
         }
 
-           /*     CSV   */
+  /*     CSV   */
 
-           /* Custom styles for the receive_stock_csv_view.php page */
+/* Custom styles for the receive_stock_csv_view.php page */
 
 /* Highlight newly added rows from the uploaded CSV */
 .highlight-new {
-    background-color: #e6ffe6 !important; /* A mild green background */
-    border-left: 3px solid #28a745; /* A green border on the left to stand out */
-    font-weight: 500; /* Slightly bolder text */
-    transition: background-color 0.3s ease; /* Smooth transition for background changes */
+    background-color: #e6ffe6 !important; 
+    border-left: 3px solid #28a745; 
+    font-weight: 500; 
+    transition: background-color 0.3s ease;
 }
 
 /* Style for the category autocomplete container */
 .category-autocomplete-container {
     position: relative;
-    display: inline-block; /* Prevents the container from taking up the full width of the cell */
+    display: inline-block; 
 }
 
 /* Style for the category search input field */
@@ -364,14 +360,14 @@
         margin: auto;
     }
 
-        /* Add this CSS to make the cursor a pointer on hover */
+ /* Add this CSS to make the cursor a pointer on hover */
     #productsTableBody tr:hover {
         cursor: pointer;
     }
 
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #0d6efd; /* Bootstrap primary color */
+            border-left-color: #0d6efd; 
             border-radius: 50%;
             width:50px;
             height:50px;
@@ -393,7 +389,7 @@
 .part-number-existed {
     border-bottom: 2px solid #dc3545;
     display: inline-block;
-    line-height: 1; /* Aligns the border tightly under the text */
+    line-height: 1;
 }
 .edit-link {
     color: #dc3545;
@@ -431,165 +427,160 @@ margin-left: 0.5rem;
     color: #6b7280;
 }
 
-.img-magnifier-glass {
-  position: absolute;
-  border: 1px solid #000;
-  border-radius: 50%;
-  cursor: none;
-  width: 100px;
-  height: 100px;
-  z-index: 9999;
+/* for zoomy */
+.zoom {
+    position: relative;
+    overflow: hidden;
 }
-.imgCover {
-  position: relative;
+.zoom-main {
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease, background-position 0.1s ease;
+    cursor: zoom-in;
+    border:2px solid #35728e;
+    border-radius:8px;
+
 }
+.zoom-thumb {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 5px;
+}
+.zoom-thumb img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #2e6b9361;
+    border-radius:8px;
 
-
-
-        :root {
-            --pastel-blue: #a3c1d1;
-        }
-        .main-card {
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .filters-panel, .results-panel {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .product-card {
-            background-color: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-        .product-card-header {
-            background-color: #0d6efd;
-            color: white;
-            padding: 0.75rem 1.25rem;
-            border-bottom: 1px solid #dee2e6;
-            border-top-left-radius: 0.75rem;
-            border-top-right-radius: 0.75rem;
-        }
-        .product-card-body {
-            padding: 1.25rem;
-        }
-        .lot-subtable {
-            font-size: 0.9rem;
-        }
-        .lot-subtable th, .lot-subtable td {
-            vertical-align: middle;
-        }
-        .lot-subtable tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-                .filters-panel,
-        .results-panel {
-            background-color: #fff;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-        }
-
-        .pastel-header {
-            background-color: var(--pastel-blue);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .product-card {
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-
-        .product-card-header {
-            background-color: var(--pastel-blue);
-            padding: 0.75rem 1rem;
-            color: white;
-        }
-
-        .product-card-body {
-            padding: 1rem;
-        }
-
-        .loader {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
-        }
-
-        .btn-secondary {
-            background-color: var(--pastel-blue) !important;
-            border-color: var(--pastel-blue) !important;
-        }
-                /* Custom CSS for the matcha green color */
-        .bg-matcha-green {
-            background-color: #709A72 !important;
-        }
-/* Card base */
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.375rem; /* ~6px */
+}
+/* =========================
+   Variables
+============================ */
+:root {
+    --pastel-blue: #a3c1d1;
 }
 
-/* Card body */
-.card-body {
-  flex: 1 1 auto;
-  padding: 1rem; /* 16px */
+/* =========================
+   Buttons
+============================ */
+.btn-secondary {
+    background-color: var(--pastel-blue) !important;
+    border-color: var(--pastel-blue) !important;
 }
 
-/* Margin bottom spacing (mb-2 = 0.5rem) */
-.mb-2 {
-  margin-bottom: 0.5rem !important;
-}
-
-/* Background light (Bootstrap bg-light) */
-.bg-light {
-  background-color: #f8f9fa !important;
-}
-.product-card {
-    background-color: #f1f1f1;
+/* =========================
+   Cards
+============================ */
+.card, .product-card, .main-card {
+    background-color: #fff;
     border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.075);
+    border: 1px solid #dee2e6;
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.main-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
-/* New style for locked items */
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-card-header {
+    background-color: var(--pastel-blue);
+    color: white;
+    padding: 5px 10px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.product-card-body {
+    padding: 10px;
+}
+.product-card-body{
+ font-size: 14px;
+}
+.product-card-body label{
+font-weight: 600;
+font-size: 16px;
+
+}
+/* =========================
+   Filter Panel
+============================ */
+.filters-panel {
+    background-color: #d1d0d023;
+    padding: 12px;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
+                0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pastel-header {
+    background-color: var(--pastel-blue);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.w-98{
+    width: 98%;
+}
+/* =========================
+   Lot Subtable
+============================ */
+.lot-subtable {
+    font-size: 0.9rem;
+}
+.lot-subtable th, .lot-subtable td {
+    vertical-align: middle;
+}
+.lot-subtable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* =========================
+   Lock / Disabled Fields
+============================ */
 .locked-item {
-    color: #dc3545; /* Bootstrap red */
+    color: #dc3545;
 }
-/* New style for the locked input field (optional) */
 .locked-input {
     border-color: #dc3545 !important;
     box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
 }
-
 .form-control:disabled, 
 .form-control[readonly] {
-  background-color: #e9ecef;   /* light gray background */
-  opacity: 1;                  /* not faded */
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+/* =========================
+   Misc / Utility
+============================ */
+.mb-2 { margin-bottom: 0.5rem !important; }
+.bg-light { background-color: #f8f9fa !important; }
+.bg-matcha-green { background-color: #709A72 !important; }
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+/*  */
+#product-list{
+    height: 80vh;
+    overflow-y: auto;
 }
