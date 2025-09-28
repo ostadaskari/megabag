@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
             $stmt_update_lot->close();
             
             // Add the quantity back to the main products table's 'qty' and subtract from 'used_qty'
-            $stmt_update_product = $conn->prepare("UPDATE products SET qty = qty + ?, used_qty = used_qty - ? WHERE id = ?");
+            $stmt_update_product = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
             if (!$stmt_update_product) {
                 throw new Exception("Prepare statement failed for updating products.");
             }
-            $stmt_update_product->bind_param("iii", $usedQty, $usedQty, $productId);
+            $stmt_update_product->bind_param("ii", $usedQty, $productId);
             $stmt_update_product->execute();
             if ($stmt_update_product->affected_rows === 0) {
                 // This could happen if the product was already deleted, we can log it but not fail the transaction.
