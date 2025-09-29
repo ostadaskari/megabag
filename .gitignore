@@ -1,3 +1,3 @@
 uploads
 /vendor/
-/core/db/
+core/db/db.php
