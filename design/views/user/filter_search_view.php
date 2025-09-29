@@ -143,7 +143,7 @@
                         <div class="product-card-body">
                             <div class="row g-4">
                                 <div class="col-md-6">
-                                    <p class="mb-2"><strong>Tag:</strong> ${p.tag || "N/A"}</p>
+
                                     <p class="mb-2"><strong>Manufacturer:</strong> ${p.mfg || "N/A"}</p>
                                     <p class="mb-2"><strong>Quantity:</strong> ${p.qty}</p>
                                     <p class="mb-2"><strong>Status:</strong> ${p.status}</p>
@@ -178,7 +178,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Part Number</th>
-                        <th scope="col">Tag</th>
+
                         <th scope="col">Features</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Status</th>
@@ -204,7 +204,7 @@
                 <tr id="product-row-${p.id}">
                     <th scope="row">${i + 1}</th>
                     <td>${p.part_number}</td>
-                    <td>${p.tag || "N/A"}</td>
+
                     <td>${featureHtml}</td>
                     <td>${p.qty}</td>
                     <td>${p.status}</td>

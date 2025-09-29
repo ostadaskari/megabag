@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $category_id = (int) ($_POST['category_id'] ?? 0);
         $location = trim($_POST['location'] ?? '');
         $status = trim($_POST['status'] ?? 'available');
-        $tag = trim($_POST['tag'] ?? '');
+
 
 
         $features_values = $_POST['feature'] ?? [];
@@ -52,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($is_update) {
             // It's an update. Prepare the UPDATE statement.
-            $stmt = $conn->prepare("UPDATE products SET part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ?, tag = ? WHERE id = ?");
-            $stmt->bind_param("ssisiisssi", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag, $product_id);
+            $stmt = $conn->prepare("UPDATE products SET part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ? WHERE id = ?");
+            $stmt->bind_param("ssisiissi", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status,  $product_id);
         } else {
             // It's a new product. Prepare the INSERT statement.
-            $stmt = $conn->prepare("INSERT INTO products (part_number, mfg, qty, company_cmt, user_id, category_id, location, status, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssisiisss", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $tag);
+            $stmt = $conn->prepare("INSERT INTO products (part_number, mfg, qty, company_cmt, user_id, category_id, location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssisiiss", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status);
         }
 
         // Execute the main database query

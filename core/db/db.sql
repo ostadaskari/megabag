@@ -55,7 +55,7 @@ CREATE TABLE categories (
 
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    tag VARCHAR(60),
+
     part_number VARCHAR(80) NOT NULL UNIQUE,      -- Renamed "p-n" to "part_number"
     mfg VARCHAR(80),                            -- Manufacturer
     qty MEDIUMINT UNSIGNED DEFAULT 0,              -- 0 to 16777215

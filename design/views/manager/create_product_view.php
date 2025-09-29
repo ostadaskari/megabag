@@ -68,17 +68,14 @@
                         <label class="form-label" for="manufacturer" title="Manufacturer">MFG:</label>
                         <input class="form-control" type="text" name="mfg" id="mfg" placeholder="Manufacturer" autocomplete="off" />
                     </div>
-                    <div class="col-12 col-md-4 px-2 my-2">
-                        <label class="form-label" for="tag name" title="Tag Name">Tag:</label>
-                        <input class="form-control" type="text" name="tag" id="tag" placeholder="Tag Name" autocomplete="off" required />
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-between">
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label for="location" class="form-label" title="location in Inventory">Location:</label>
                         <input class="form-control" type="text" name="location" id="location" placeholder="Enter Location" autocomplete="off" />
                     </div>
+                </div>
+
+                <div class="row d-flex justify-content-between">
+
                     <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="statusSelector">
                             Status:

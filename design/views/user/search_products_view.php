@@ -21,7 +21,7 @@
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                     </svg>
                 </div>
-                <input type="text" id="searchInput" class="form-control"  placeholder="Search by name, part number or tag" autocomplete="off">
+                <input type="text" id="searchInput" class="form-control"  placeholder="Search by part number " autocomplete="off">
             </div>
         </div>
     </div>
@@ -34,7 +34,6 @@
                     <th>#</th>
                     <th>P/N</th>
                     <th>MFR</th>
-                    <th>Tag</th>
                     <th>Name</th>
                     <th>Availability</th> <!-- Renamed QTY to Availability and removed Status TH -->
                     <th>Description</th>
@@ -74,7 +73,6 @@
                             <td>${index + 1}</td>
                              <td>${p.part_number}</td>
                              <td>${p.mfg}</td>
-                             <td>${p.tag}</td>
                             <td>${p.name}</td>
                             <td> <!-- This is the Availability column -->
                                 ${p.qty > 0

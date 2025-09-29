@@ -24,7 +24,7 @@
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput" placeholder="Search by P/N, tag ..." autocomplete="off" />
+                    <input type="text" id="searchInput" placeholder="Search by P/N ..." autocomplete="off" />
                 </div>
                 <div class="w-25 ms-2">
                     <select id="statusFilter" class="form-select py-2">
@@ -64,7 +64,6 @@
                     <th scope="col">#</th>
                     <th scope="col">P/N</th>
                     <th scope="col">MFG</th>
-                    <th scope="col">Tag</th>
                     <th scope="col">Qty</th>
                     <th scope="col">Submitter</th>
                     <th scope="col">Category</th>
@@ -228,9 +227,6 @@
                                                 </div>
                                                 <div class="col-6 my-2">
                                                     <strong>Location:</strong> ${product.location}
-                                                </div>
-                                                <div class="col-6 my-2">
-                                                    <strong>Tag:</strong> ${product.tag}
                                                 </div>
                                                 <div class="col-6 my-2">
                                                     <strong>Qty:</strong> ${product.qty}

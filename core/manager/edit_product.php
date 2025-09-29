@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $company_cmt = trim($_POST['company_cmt']);
         $location = trim($_POST['location']);
         $status = trim($_POST['status'] ?? 'available');
-        $tag = trim($_POST['tag']);
+       
 
         $category_id = intval($_POST['category_id']);
         $submitted_features = $_POST['features'] ?? [];
@@ -112,8 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($errors)) {
             // Update product details
-            $stmt = $conn->prepare("UPDATE products SET part_number=?, mfg=?, company_cmt=?, location=?, status=?, tag=?, category_id=?, updated_at=NOW() WHERE id=?");
-            $stmt->bind_param("ssssssii", $pn, $mfg, $company_cmt, $location, $status, $tag, $category_id, $id);
+            $stmt = $conn->prepare("UPDATE products SET part_number=?, mfg=?, company_cmt=?, location=?, status=?, category_id=?, updated_at=NOW() WHERE id=?");
+            $stmt->bind_param("sssssii", $pn, $mfg, $company_cmt, $location, $status, $category_id, $id);
             if (!$stmt->execute()) {
                 throw new Exception("Failed to update product details: " . $stmt->error);
             }

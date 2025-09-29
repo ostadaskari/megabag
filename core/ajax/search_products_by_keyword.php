@@ -5,11 +5,10 @@ $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
 $results = [];
 
 if ($keyword !== '') {
-    $stmt = $conn->prepare("SELECT id, part_number, tag FROM products 
+    $stmt = $conn->prepare("SELECT id, part_number FROM products 
                             WHERE part_number LIKE CONCAT('%', ?, '%') 
-                               OR tag LIKE CONCAT('%', ?, '%') 
                             LIMIT 10");
-    $stmt->bind_param("ss", $keyword, $keyword);
+    $stmt->bind_param("s", $keyword);
     $stmt->execute();
     $res = $stmt->get_result();
     while ($row = $res->fetch_assoc()) {

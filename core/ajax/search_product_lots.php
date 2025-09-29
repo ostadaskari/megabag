@@ -15,7 +15,7 @@ try {
 
     // Proceed with the database search only if the keyword is at least 2 characters long
     if (strlen($keyword) >= 2) {
-        // Search for product lots by part number, product tag, x-code, or vrm-x-code
+        // Search for product lots by part number, x-code, or vrm-x-code
         $stmt = $conn->prepare("
             SELECT
             pl.id AS lot_id,

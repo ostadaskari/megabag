@@ -57,19 +57,13 @@
                 <label class="form-label" for="MFG" title="Manufacturer">MFG:</label>
                     <input class="form-control" type="text" name="MFG" value="<?= htmlspecialchars($product['mfg']) ?>" autocomplete="off" placeholder="Manufacturer" >
                 </div>
-                <div class="col-12 col-md-4 px-2 my-2">
-                    <label class="form-label" for="tag name" title="Tag Name">Tag Name:</label>
-                    <input class="form-control" type="text"name="tag" value="<?= htmlspecialchars($product['tag']) ?>" autocomplete="off" placeholder="Tag Name" >
-                </div>
-            </div> 
-            <div class="row d-flex flex-row align-items-center justify-content-between">
-
                 <div class="col-12 col-md-2 px-2">
                     <label for="location" class="form-label" title="location in Inventory">Location:</label>
                     <input class="form-control" type="text" name="location" value="<?= htmlspecialchars($product['location']) ?>" autocomplete="off" placeholder="Enter Location" >
                 </div>
 
-                
+            </div> 
+            <div class="row d-flex flex-row align-items-center justify-content-between">    
                 <div class="col-12 col-md-2 px-2 my-2">
                         <label class="form-label" for="status">
                             Status:

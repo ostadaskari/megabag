@@ -13,9 +13,9 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'mana
 // AJAX: search products
 if (isset($_GET['search_product'])) {
     $term = '%' . $conn->real_escape_string($_GET['search_product']) . '%';
-    $sql = "SELECT id, name, part_number, tag FROM products WHERE name LIKE ? OR tag LIKE ? OR part_number LIKE ? LIMIT 10";
+    $sql = "SELECT id, part_number FROM products WHERE part_number LIKE ? LIMIT 10";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $term,$term, $term);
+    $stmt->bind_param("s", $term);
     $stmt->execute();
     $result = $stmt->get_result();
     $products = [];

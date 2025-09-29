@@ -15,12 +15,12 @@ $types = "";
 
 // Search filters
 if (!empty($keyword)) {
-    $where .= " AND (products.part_number LIKE ? OR products.tag LIKE ?)";
+    $where .= " AND (products.part_number LIKE ?)";
     $keywordParam = "%{$keyword}%";
 
     $params[] = $keywordParam;
-    $params[] = $keywordParam;
-    $types .= "ss";
+
+    $types .= "s";
 }
 
 // Status filter
@@ -65,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
         <td>{$count}</td>
          <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
-        <td>" . htmlspecialchars($row['tag']) . "</td>
+
         <td>{$row['qty']}</td>
   
         <td>" . htmlspecialchars($row['submitter']) . "</td>
