@@ -107,6 +107,28 @@ function addRow() {
 // Event listener to add a new row
 document.getElementById('addRowBtn').addEventListener('click', addRow);
 
+    // This script dynamically bring up layer of searchbox among all rows.
+    document.addEventListener('click', (e) => {
+        const clickedRow = e.target.closest('.stock-row');
+
+        // Close other opened rows
+        document.querySelectorAll('.stock-row.is-open').forEach(r => {
+            if (r !== clickedRow) {
+                r.classList.remove('is-open');
+                const box = r.querySelector('.category-suggestions');
+                if (box) box.style.display = 'none';
+            }
+        });
+
+        // If clicked inside a row, open it
+        if (clickedRow) {
+            clickedRow.classList.add('is-open');
+            const box = clickedRow.querySelector('.category-suggestions');
+            if (box) box.style.display = 'block';
+        }
+    });
+    
+
 // Event listener to remove a row
 document.addEventListener('click', function(e) {
     if (e.target.closest('.btn-remove-row')) {
@@ -196,7 +218,7 @@ document.addEventListener('input', function(e) {
             fetch(`../ajax/search_users_by_keyword.php?keyword=${encodeURIComponent(keyword)}`)
                 .then(res => res.json())
                 .then(data => {
-                    showDropdown(data, input, dropdown, 'user-id', 'id', 'name', 'nickname', false);
+                    showDropdown(data, input, dropdown, 'user-id', 'id', 'nickname', null, false); 
                 });
         } else {
             if (dropdown) dropdown.style.display = 'none';
@@ -277,9 +299,9 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
             // Check if the item is a locked product lot
             if (isLot && item.lock) {
                 div.classList.add('locked-item');
-                div.innerHTML = `<strong> ${item[nameKey]}</strong> - P/N: ${item[secondaryKey]} (LOCKED)`;
+                div.innerHTML = `<strong>${item[nameKey]}</strong> ${item[secondaryKey] ? `- ${item[secondaryKey]}` : ''} (LOCKED)`;
             } else {
-                div.innerHTML = `<strong> ${item[nameKey]}</strong> - ( ${item[secondaryKey]} )`;
+                div.innerHTML = `<strong>${item[nameKey]}</strong>${item[secondaryKey] ? ` - ${item[secondaryKey]}` : ''}`;
             }
 
             div.addEventListener('click', () => {
@@ -297,7 +319,11 @@ function showDropdown(data, input, dropdown, hiddenInputClass, idKey, nameKey, s
                     if (hiddenInput) hiddenInput.value = ''; // Also clear the hidden ID
                     toggleRowInputs(row, false);
                 } else {
-                    input.value = `${item[nameKey]} (${item[secondaryKey]})`;
+                            // Only add secondaryKey if it exists
+                    input.value = item[secondaryKey] 
+                        ? `${item[nameKey]} (${item[secondaryKey]})`
+                        : item[nameKey];
+                        
                     if (hiddenInput) {
                         hiddenInput.value = item[idKey];
                     }

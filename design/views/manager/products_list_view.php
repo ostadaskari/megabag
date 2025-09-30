@@ -184,34 +184,48 @@
                             let featuresListHtml = 'N/A';
                             if (features && features.length > 0) {
                                 featuresListHtml = ``;
-                                features.forEach(feature => {
-                                    let featureDisplayValue;
+                            features.forEach(feature => {
+                                let featureDisplayValue = null;
 
-                                    // 1. Check if the value is a boolean (for tick/cross icons)
-                                    if (typeof feature.value === 'boolean') {
-                                        featureDisplayValue = feature.value 
-                                            ? '<span class="text-success fw-bold">✔ Yes</span>' 
-                                            : '<span class="text-danger fw-bold">✖ No</span>';
-                                    } 
-                                    // 2. Check if the value is an array (for multiselect)
-                                    else if (Array.isArray(feature.value)) {
-                                        // Option A: Simple comma-separated list
-                                        // featureDisplayValue = feature.value.join(', ');
+                                if (feature.type === 'range') {
+                                    // Normalize min/max: treat "" as null
+                                    const min = feature.min && feature.min.trim() !== '' ? feature.min : null;
+                                    const max = feature.max && feature.max.trim() !== '' ? feature.max : null;
+                                    const unit = feature.unit ? ' ' + feature.unit : '';
 
-                                        
-                                        // Option B: Nicer looking badges
-                                        featureDisplayValue = feature.value.map(val => `<span class="badge bg-secondary mx-1">${val}</span>`).join(' ');
-
-
-                                    } 
-                                    // 3. Handle all other types (string, number, etc.)
-                                    else {
-                                        featureDisplayValue = `${feature.value ?? 'N/A'}${feature.unit ? ' ' + feature.unit : ''}`;
+                                    if (min !== null && max !== null) {
+                                        featureDisplayValue = `${min} to ${max}${unit}`;
+                                    } else if (min !== null) {
+                                        featureDisplayValue = `${min}${unit}`;
+                                    } else if (max !== null) {
+                                        featureDisplayValue = `${max}${unit}`;
                                     }
-                                    
-                                    featuresListHtml += `<div class="col-6 my-2"><strong>${feature.name}:</strong> ${featureDisplayValue}</div>`;
-                                });
-                                
+                                    // If both are null → leave featureDisplayValue = null → won't render
+                                }
+                                else if (typeof feature.value === 'boolean') {
+                                    featureDisplayValue = feature.value 
+                                        ? '<span class="text-success fw-bold">✔ Yes</span>' 
+                                        : '<span class="text-danger fw-bold">✖ No</span>';
+                                }
+                                else if (Array.isArray(feature.value) && feature.value.length > 0) {
+                                    featureDisplayValue = feature.value
+                                        .map(val => `<span class="badge bg-secondary mx-1">${val}</span>`)
+                                        .join(' ');
+                                }
+                                else if (feature.value && feature.value.toString().trim() !== '') {
+                                    featureDisplayValue = `${feature.value}${feature.unit ? ' ' + feature.unit : ''}`;
+                                }
+
+                                // Only add if we got something meaningful
+                                if (featureDisplayValue) {
+                                    featuresListHtml += `
+                                        <div class="col-6 my-2">
+                                            <strong>${feature.name}:</strong> ${featureDisplayValue}
+                                        </div>
+                                    `;
+                                }
+                            });
+         
                             }
                             
                             productDetailsContent.innerHTML = `

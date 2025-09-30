@@ -339,17 +339,18 @@
                             </select>`;
                         }
                         inputHtml = `<div class="d-flex gap-2">
-                                        <input type="number" step="any" name="${inputName}" class="form-control" placeholder="Enter value">
-                                        ${unitHtml}
-                                    </div>`;
+                                            <input type="number" step="any" name="${inputName}" class="form-control" placeholder="Enter value">
+                                            ${unitHtml}
+                                        </div>`;
                     } else if (f.data_type === "varchar(50)" || f.data_type === "TEXT") {
                         inputHtml = `<input type="text" name="${inputName}" class="form-control" placeholder="Enter text">`;
                     } else if (f.data_type === "boolean") {
+                        // RE-ADDED BOOLEAN FILTER UI
                         inputHtml = `<select name="${inputName}" class="form-select">
-                                        <option value="">--Any--</option>
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>`;
+                                            <option value="">--Any--</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>`;
                     } else if (f.data_type === "multiselect") {
                         try {
                             const meta = JSON.parse(f.metadata || "{}");
@@ -363,11 +364,16 @@
                             console.error("Invalid metadata JSON", f.metadata);
                         }
                     } else if (f.data_type === "range") {
-                            inputHtml = `<input type="text" name="${inputName}" class="form-control" placeholder="e.g. 10-20">`;
+                        // Range filter uses a min-max text input (e.g., 10-20)
+                        inputHtml = `<input type="text" name="${inputName}" class="form-control" placeholder="e.g. 10-20">`;
                     }
-
+                    
                     filterBox.innerHTML = `<label class="form-label">${f.name}</label>${inputHtml}`;
-                    filtersEl.appendChild(filterBox);
+                    
+                    // Only append the filter box if an input element was successfully generated
+                    if (inputHtml.trim() !== "") {
+                         filtersEl.appendChild(filterBox);
+                    }
                 });
                 showLoader(false);
             })

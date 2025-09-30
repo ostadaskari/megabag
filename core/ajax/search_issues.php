@@ -56,7 +56,7 @@ $stmt = $conn->prepare("
     SELECT 
         si.id, si.qty_issued, si.remarks, si.created_at,
         pl.x_code, pl.vrm_x_code, pl.date_code,
-        p.part_number, p.mfg, p.tag,
+        p.part_number, p.mfg,
         u1.nickname AS issued_by, u2.nickname AS issued_to
     FROM stock_issues si
     JOIN product_lots pl ON si.product_lot_id = pl.id

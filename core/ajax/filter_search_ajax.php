@@ -83,22 +83,27 @@ try {
         $fname_val = "feature_{$f['id']}";
         $fname_unit = "feature_{$f['id']}_unit";
 
+        // Check if the filter for this feature was actually submitted and has a value
         if (isset($filters[$fname_val]) && $filters[$fname_val] !== '') {
             $alias = "pfv{$f['id']}";
+            // Use INNER JOIN to ensure the product has a feature value matching the criteria
             $joins[] = "JOIN product_feature_values $alias ON p.id = $alias.product_id AND $alias.feature_id = {$f['id']}";
 
             switch ($f['data_type']) {
                 case 'multiselect':
                     $filter_value = $filters[$fname_val];
+                    // Search for the selected value within the JSON array of values
                     $conds[] = "JSON_CONTAINS($alias.value, ?, '$.values')";
                     $params[] = json_encode($filter_value);
                     $types .= "s";
                     break;
                 case 'decimal(15,7)':
+                    // Filter by exact decimal value
                     $conds[] = "CAST(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) AS DECIMAL(15,7)) = ?";
                     $params[] = $filters[$fname_val];
                     $types .= "d";
                     
+                    // Also filter by unit if provided
                     if (isset($filters[$fname_unit]) && !empty($filters[$fname_unit])) {
                        $conds[] = "LOWER(TRIM(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.unit')))) = LOWER(?)";
                        $params[] = trim($filters[$fname_unit]);
@@ -106,8 +111,11 @@ try {
                     }
                     break;
                 case 'boolean':
-                    $conds[] = "JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) = ?";
-                    $params[] = $filters[$fname_val];
+                    // Filter by 'true' or 'false' JSON literal
+                    $filter_val_from_db = "JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value'))";
+                    $expected_json_literal = ($filters[$fname_val] === '1') ? 'true' : 'false';
+                    $conds[] = "{$filter_val_from_db} = ?";
+                    $params[] = $expected_json_literal;
                     $types .= "s";
                     break;
                 case 'range':
@@ -115,6 +123,7 @@ try {
                     if (count($range_parts) === 2) {
                         $min = (float)trim($range_parts[0]);
                         $max = (float)trim($range_parts[1]);
+                        // Check if the range value (the single number stored in the product) falls between the min and max filter range
                         $conds[] = "CAST(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value')) AS DECIMAL(15,7)) BETWEEN ? AND ?";
                         $params[] = $min;
                         $params[] = $max;
@@ -122,6 +131,7 @@ try {
                     }
                     break;
                 default: // Handles 'varchar(50)' and 'TEXT'
+                    // Filter by exact string value
                     $conds[] = "TRIM(JSON_UNQUOTE(JSON_EXTRACT($alias.value, '$.value'))) = TRIM(?)";
                     $params[] = $filters[$fname_val];
                     $types .= "s";
@@ -134,7 +144,7 @@ try {
     if ($joins) $sql .= " " . implode(" ", array_unique($joins));
     if ($conds) $sql .= " WHERE " . implode(" AND ", $conds);
     
-        // Add the LIMIT clause
+    // Add the LIMIT clause
     $sql .= " LIMIT 10";
 
     // Prepare and execute the statement
@@ -155,7 +165,7 @@ try {
         $id_types = str_repeat('i', count($product_ids));
 
         // Fetch all product features
-        $sql_features = "SELECT pfv.product_id, pfv.value, f.name, f.unit 
+        $sql_features = "SELECT pfv.product_id, pfv.value, f.name, f.data_type 
                          FROM product_feature_values pfv 
                          JOIN features f ON pfv.feature_id = f.id 
                          WHERE pfv.product_id IN ($id_placeholders)";
@@ -168,10 +178,25 @@ try {
         $features_by_product = [];
         foreach ($features_data as $feature) {
             $decoded_value = json_decode($feature['value'], true);
+            $feature_value = null;
+            $unit = $decoded_value['unit'] ?? null; // Unit is often stored inside the JSON
+
+            // Extract the correct value based on the stored JSON structure and data type
+            if ($feature['data_type'] === 'multiselect' && isset($decoded_value['values']) && is_array($decoded_value['values'])) {
+                 // **FIX for Multi-select:** Use the 'values' array directly
+                $feature_value = $decoded_value['values']; 
+            } else if (isset($decoded_value['value'])) {
+                // For 'decimal', 'boolean', 'varchar', 'text' (single value)
+                $feature_value = $decoded_value['value'];
+            } else if (is_string($decoded_value) || is_int($decoded_value) || is_bool($decoded_value) || is_float($decoded_value)) {
+                // Fallback for simple values stored directly (less common but safe)
+                $feature_value = $decoded_value;
+            }
+            
             $features_by_product[$feature['product_id']][] = [
                 'name' => $feature['name'],
-                'value' => $decoded_value['value'] ?? 'N/A',
-                'unit' => $decoded_value['unit'] ?? $feature['unit']
+                'value' => $feature_value,
+                'unit' => $unit
             ];
         }
 

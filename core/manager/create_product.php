@@ -245,7 +245,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }, $value);
                         break;
                     case 'boolean':
-                        $feature_data['value'] = ($value === '1') ? 1 : 0;
+                        // FIX: Check if the raw POST variable for this checkbox exists.
+                        // If it exists, it was checked (true); if it doesn't, it was unchecked (false).
+                        $is_checked = isset($_POST["feature_value_{$feature_id}"]) && $_POST["feature_value_{$feature_id}"] === '1';
+                        
+                        // Always save a value (true or false) for booleans
+                        $feature_data['value'] = $is_checked; // PHP 'true'/'false' JSON encodes to JSON 'true'/'false' literals
+                        $is_value_valid = true;
                         break;
                     case 'decimal(15,7)':
                         $feature_data['value'] = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
