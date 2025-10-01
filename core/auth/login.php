@@ -3,6 +3,17 @@
 session_start();
 require_once("../db/db.php");
 
+$errors = []; // Initialize $errors at the start
+
+// --------------------------------------------------------
+// --- NEW BLOCK: Check for Admin Block Message (from dashboard redirect) ---
+if (isset($_SESSION['blocked_by_admin']) && $_SESSION['blocked_by_admin'] === true) {
+    // Add the error message which will be displayed by SweetAlert
+    $errors[] = "Access Denied: Your account has been blocked by an administrator. Please contact support.";
+    unset($_SESSION['blocked_by_admin']); // Clear the flag immediately
+}
+// --------------------------------------------------------
+
 // --------------------------------------------------------
 // --- SECURITY CHECK: Redirect already logged-in users ---
 // --------------------------------------------------------
@@ -14,8 +25,7 @@ if (isset($_SESSION['user_id'])) {
 }
 // --------------------------------------------------------
 
-//
-$errors = [];
+// Moved $errors initialization up, removing it from here
 $username = trim($_POST['username'] ?? '');
 $password = trim($_POST['password'] ?? '');
 $captcha_input = trim($_POST['captcha'] ?? '');
@@ -62,28 +72,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['failures'][$username]++;
             log_login_attempt($conn, $ip, $username, 'wrong captcha');
         } else {
-            // Validate user credentials
-            $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+            // Validate user credentials. Select the new 'is_blocked' column.
+            $stmt = $conn->prepare("SELECT id, username, nickname, email, role, is_blocked, password FROM users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $res = $stmt->get_result();
             $user = $res->fetch_assoc();
 
-            if ($user && password_verify($password, $user['password'])) { //successful login
-                // Regenerate the session ID to prevent session fixation attacks
-                session_regenerate_id(true); //prevent session fixation attacks
+            if ($user && password_verify($password, $user['password'])) {
                 
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nickname'] = $user['nickname'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['role'] = $user['role'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['last_activity'] = time(); // Set initial activity timestamp
+                // --- NEW BLOCK: Check if user is blocked upon successful login ---
+                if ($user['is_blocked'] == 1) {
+                    $errors[] = "Access Denied: Your account has been blocked by an administrator. Please contact support.";
+                    log_login_attempt($conn, $ip, $username, 'blocked');
+                } else {
+                    // Successful login
+                    // Regenerate the session ID to prevent session fixation attacks
+                    session_regenerate_id(true); //prevent session fixation attacks
+                    
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['nickname'] = $user['nickname'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['last_activity'] = time(); // Set initial activity timestamp
 
-                log_login_attempt($conn, $ip, $username, 'ok');
-                $_SESSION['failures'][$username] = 0;
-                header("Location: dashboard.php");
-                exit;
+                    log_login_attempt($conn, $ip, $username, 'ok');
+                    $_SESSION['failures'][$username] = 0;
+                    header("Location: dashboard.php");
+                    exit;
+                }
             } else {
                 $errors[] = "Invalid username or password.";
                 $_SESSION['failures'][$username]++;
@@ -111,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Load form if not POST
 include("../../design/views/auth/login_form.php");
 
-//  LOG LOGIN function
+//  LOG LOGIN function
 function log_login_attempt($conn, $ip, $username, $status) {
     try {
         $stmt = $conn->prepare("INSERT INTO login_logs (ip, username, status) VALUES (?, ?, ?)");

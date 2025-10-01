@@ -299,7 +299,7 @@ function copyInviteLinkFromInput() {
  * @param {string} code The invite code to be copied.
  */
 function copyInviteLink(code) {
-    const fullLink = `http://localhost/megabag/rgs.php?code=${code}`;
+    const fullLink = `https://betapke.ir/rgs.php?code=${code}`;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(fullLink).then(() => {
             Swal.fire('Copied!', 'Invite link copied to clipboard.', 'success');

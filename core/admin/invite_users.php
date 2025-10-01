@@ -100,7 +100,7 @@ try {
 
                 if ($stmt->execute()) {
                     // Redirect with invite link and success
-                    $inviteLink = "http://localhost/megabag/rgs.php?code=$code";
+                    $inviteLink = "https://betapke.ir/rgs.php?code=$code";
                     header("Location: ../auth/dashboard.php?page=invite_users&success=" . urlencode("Invite code generated.") . "&link=" . urlencode($inviteLink));
                     exit;
                 } else {

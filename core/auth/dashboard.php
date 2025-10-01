@@ -2,6 +2,9 @@
 session_start();
 ob_start();
 
+// Include the database connection
+require_once('../db/db.php');
+
 // Set the session timeout duration in seconds (e.g., 3600 seconds = 1 hour)
 $session_timeout = 3600;
 
@@ -19,6 +22,35 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/login.php");
     exit;
 }
+
+// --- NEW BLOCK: Check if the user is blocked by admin ---
+try {
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT is_blocked FROM users WHERE id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user_data = $result->fetch_assoc();
+
+    if ($user_data && $user_data['is_blocked'] == 1) {
+        // User is blocked! Log out, destroy session, and redirect.
+        session_unset();
+        session_destroy();
+        
+        // Start a new session briefly to set the message flag for login.php
+        session_start(); 
+        $_SESSION['blocked_by_admin'] = true; // Flag for the SweetAlert message
+        
+        header("Location: ../auth/login.php");
+        exit;
+    }
+
+} catch (Exception $e) {
+    // Log the error if the database query fails, but allow the user to continue if possible
+    error_log("Database error during user block check: " . $e->getMessage());
+}
+// --------------------------------------------------------
+
 
 // Update the last activity timestamp on every page load
 $_SESSION['last_activity'] = time();
