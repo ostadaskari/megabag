@@ -12,7 +12,6 @@ $format = $_GET['format'] ?? 'xlsx';
 $search = $_GET['search'] ?? '';
 $status = $_GET['status'] ?? '';
 
-// Query without products.tag
 $query = "SELECT 
               p.id, 
               p.part_number, 
@@ -30,7 +29,6 @@ $query = "SELECT
 $params = [];
 $types = '';
 
-// Search filter (removed tag search)
 if (!empty($search)) {
     $query .= " AND (p.part_number LIKE ?)";
     $kw = "%$search%";
@@ -132,7 +130,7 @@ elseif ($format === 'pdf') {
     $pdf->AddPage('L', 'A4');
     $pdf->SetFont('helvetica', '', 8);
 
-    // Headers (tag removed)
+    // Headers 
     $headers = ['#', 'P/N', 'MFG', 'Qty', 'Submitter', 'Category', 'Location', 'Status'];
     $columnWidths = ['4%', '30%', '10%', '8%', '12%', '20%', '10%', '6%'];
 

@@ -9,6 +9,7 @@
     <!-- link CSS -->
     <link rel="stylesheet" href="design/assets/css/style.css" />
     <link rel="stylesheet" href="design/assets/css/register.css" />
+    <link rel="icon" href="../../design/assets/img/Logo-main.png" type="image/png">
     <script src="design/assets/js/sweetalert2.js"></script>
 </head>
 <body>
