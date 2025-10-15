@@ -9,7 +9,7 @@ if (!isset($_GET['xc']) || empty($_GET['xc'])) {
 $x_code = $_GET['xc'];
 
 $generator = new BarcodeGeneratorPNG();
-$barcode = base64_encode($generator->getBarcode($x_code, $generator::TYPE_CODE_128, 1, 20)); // scale 1, height 20
+$barcode = base64_encode($generator->getBarcode($x_code, $generator::TYPE_CODE_128, 1, 30)); // scale 1, height 40
 
 // Minimal HTML wrapper for print
 echo '<!DOCTYPE html>
@@ -20,7 +20,7 @@ echo '<!DOCTYPE html>
 <body onload="window.print(); window.onafterprint = () => window.close();" style="text-align:center;margin:0;">
 <div>
     <img src="data:image/png;base64,' . $barcode . '" alt="Barcode">
-    <p style="font-size:10px;">' . htmlspecialchars($x_code) . '</p>
+    <p style="font-size:15px;margin-top:-3px;">' . htmlspecialchars($x_code) . '</p>
     </div>
 </body>
 </html>';

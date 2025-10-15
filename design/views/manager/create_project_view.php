@@ -117,39 +117,69 @@
 </div>
 
 <?php if (!empty($success) || !empty($errors)): ?>
-    <script>
-        // Combine all logic into a single script block
-        const url = new URL(window.location.href);
+<script>
+    // Get the URL and its parameters
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    
+    // Check if the success message should be shown
+    const successMessage = params.get('success');
+    if (successMessage) {
+        Swal.fire({ 
+            icon: 'success', 
+            title: 'Success', 
+            text: successMessage
+        });
+        // Remove the 'success' parameter from the URL
+        params.delete('success');
+    }
+    
+    // Check if the error message should be shown
+    const errorMessage = params.get('error');
+    if (errorMessage) {
+        const errorsArray = errorMessage.split(' | ');
+        const htmlContent = '<ul>' + errorsArray.map(error => '<li>' + error + '</li>').join('') + '</ul>';
+        Swal.fire({
+            icon: 'error',
+            title: 'Errors',
+            html: htmlContent
+        });
+        // Remove the 'error' parameter from the URL
+        params.delete('error');
+    }
 
-        <?php if (!empty($success)): ?>
-            // Display the success message
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: <?= json_encode($success) ?>
-            });
-            // After displaying the message, clean the URL
-            url.searchParams.delete('success');
-
-        <?php elseif (!empty($errors)): ?>
-            // Display the error message
-            Swal.fire({
-                icon: 'error',
-                title: 'Errors',
-                html: <?= json_encode('<ul><li>' . implode('</li><li>', $errors) . '</li></ul>') ?>
-            });
-            // After displaying the message, clean the URL
-            url.searchParams.delete('errors');
-        <?php endif; ?>
-
-        // Update the URL in the browser without reloading the page
-        history.replaceState(null, '', url);
-    </script>
+    // Replace the current URL with the cleaned-up version
+    const newUrl = `${url.pathname}?${params.toString()}`;
+    history.replaceState(null, '', newUrl);
+</script>
 <?php endif; ?>
 
 <script>
     // Select all inputs that trigger suggestions
     const inputs = document.querySelectorAll('.product-search');
+
+    // Helper function to handle the selection and UI update of a product lot
+    const selectProductLot = (inputElement, item) => {
+        const productRow = inputElement.closest('.stock-row');
+        const productLotIdInput = productRow.querySelector('.product-lot-id');
+        const availableQtySpan = productRow.querySelector('.available-qty');
+        const resultBox = productRow.querySelector('.autocomplete-box');
+
+        // Set the input value to the selected lot details
+        inputElement.value = `x-code: ${item.x_code} - PN: ${item.part_number}`;
+        productLotIdInput.value = item.id;
+        availableQtySpan.textContent = `(Available: ${item.qty_available})`;
+        
+        // Hide and clear the suggestions box
+        resultBox.innerHTML = '';
+        resultBox.style.display = 'none';
+
+        // Focus on the quantity input for faster data entry
+        const qtyInput = productRow.querySelector('input[type="number"]');
+        if (qtyInput) {
+            qtyInput.focus();
+        }
+    };
 
     document.addEventListener('click', (e) => {
         const clickedRow = e.target.closest('.stock-row');
@@ -163,13 +193,14 @@
             }
         });
 
-        // If clicked inside a row, open it
+        // If clicked inside a row, open it (used to keep the suggestion box open)
         if (clickedRow) {
             clickedRow.classList.add('is-open');
             const box = clickedRow.querySelector('.category-suggestions');
             if (box) box.style.display = 'block';
         }
     });
+
     // This script dynamically adds and removes product rows and handles product lot search.
     
     // Function to re-index rows and manage remove button visibility
@@ -201,17 +232,29 @@
             const newRow = firstRow.cloneNode(true);
             newRow.querySelectorAll('input, textarea').forEach(el => {
                 el.value = '';
-                if (el.classList.contains('product-lot-id')) {
-                    el.value = '';
-                }
             });
             const availableQtySpan = newRow.querySelector('.available-qty');
             if (availableQtySpan) {
                 availableQtySpan.textContent = '';
             }
+            // Clear lot ID for the new row
+            const productLotIdInput = newRow.querySelector('.product-lot-id');
+            if (productLotIdInput) {
+                productLotIdInput.value = '';
+            }
+            // Clear and hide suggestion box
+            const resultBox = newRow.querySelector('.autocomplete-box');
+            if (resultBox) {
+                resultBox.innerHTML = '';
+                resultBox.style.display = 'none';
+            }
+
             // Change: prepend the new row instead of appending it
             stockRowsContainer.prepend(newRow);
             updateRows();
+
+            // Focus the new input
+            newRow.querySelector('.product-search').focus();
         }
     });
 
@@ -225,28 +268,42 @@
             }
         }
     });
-    // Product lot search using AJAX
+
+    // --- Core Logic: Search and Auto-Select ---
+
+    // 1. Fuzzy Search (on Input/Typing) for suggestions
     document.addEventListener('input', function (e) {
         if (e.target.classList.contains('product-search')) {
             const input = e.target;
-            const keyword = input.value;
+            const keyword = input.value.trim();
             const wrapper = input.closest('.position-relative');
+            const productRow = input.closest('.stock-row');
             const resultBox = wrapper.querySelector('.autocomplete-box');
             
-            const productRow = input.closest('.stock-row');
+            const productLotIdInput = productRow.querySelector('.product-lot-id');
+            productLotIdInput.value = ''; // Clear lot ID on new input/search
             const availableQtySpan = productRow.querySelector('.available-qty');
             if (availableQtySpan) {
                 availableQtySpan.textContent = '';
             }
 
             if (keyword.length >= 2) {
-                fetch(`../ajax/search_product_lots.php?keyword=${encodeURIComponent(keyword)}`)
+                // Perform fuzzy search
+                fetch(`../ajax/search_lot_by_x.php?keyword=${encodeURIComponent(keyword)}`)
                     .then(res => res.json())
                     .then(data => {
                         resultBox.innerHTML = '';
                         resultBox.style.display = 'block';
+
+                        // Check for exact single match on fuzzy search and auto-select (improves scanner use if search is fast)
+                        const exactMatchItem = data.find(item => item.x_code.toLowerCase() === keyword.toLowerCase());
+                        if (exactMatchItem && data.length === 1 && exactMatchItem.lock == 0) {
+                             selectProductLot(input, exactMatchItem);
+                             return; // Stop processing suggestions
+                        }
+
                         if (data.length === 0) {
-                            resultBox.innerHTML = '<div class="p-2 text-muted">No part-lots(x-code) found</div>';
+                            resultBox.innerHTML = '<div class="p-2 text-muted">No part-lots (x-code) found</div>';
                         } else {
                             data.forEach(item => {
                                 const div = document.createElement('div');
@@ -254,9 +311,10 @@
                                 
                                 // Check if the item is locked
                                 if (item.lock == 1) { // Assuming 'lock' is 1 for true
-                                    div.classList.add('locked-item');
+                                    div.classList.add('locked-item', 'text-secondary', 'bg-light');
                                     div.innerHTML = `x-code: ${item.x_code} - PN: ${item.part_number} <span class="text-danger fw-bold">(Locked for: ${item.project_name})</span>`;
                                 } else {
+                                    div.classList.add('hover:bg-primary', 'hover:text-white', 'text-dark');
                                     div.textContent = `x-code: ${item.x_code} - PN: ${item.part_number} (Available: ${item.qty_available})`;
                                 }
 
@@ -269,17 +327,8 @@
                                             title: 'Item Locked',
                                             text: `This item is locked for the project: ${item.project_name}`
                                         });
-                                        // Do not select the item, just clear the dropdown
-                                        resultBox.innerHTML = '';
-                                        resultBox.style.display = 'none';
                                     } else {
-                                        // Set the input value to the selected lot details
-                                        input.value = `x-code: ${item.x_code} - PN: ${item.part_number}`;
-                                        const productLotIdInput = productRow.querySelector('.product-lot-id');
-                                        productLotIdInput.value = item.lot_id;
-                                        availableQtySpan.textContent = `(Available: ${item.qty_available})`;
-                                        resultBox.innerHTML = '';
-                                        resultBox.style.display = 'none';
+                                        selectProductLot(input, item);
                                     }
                                 });
                                 resultBox.appendChild(div);
@@ -293,6 +342,47 @@
             }
         }
     });
+
+    // 2. Exact Match Check (on Blur/Lost Focus) for scanner/exact typing
+    document.addEventListener('blur', function (e) {
+        if (e.target.classList.contains('product-search')) {
+            const input = e.target;
+            const keyword = input.value.trim();
+            const productRow = input.closest('.stock-row');
+            const productLotIdInput = productRow.querySelector('.product-lot-id');
+            const resultBox = productRow.querySelector('.autocomplete-box');
+
+            // Hide the suggestions box immediately on blur
+            resultBox.style.display = 'none';
+
+            // Only proceed if a lot ID hasn't been set (meaning a suggestion wasn't clicked)
+            if (productLotIdInput.value === '' && keyword.length > 0) {
+                // Perform exact search query
+                fetch(`../ajax/search_lot_by_x.php?exact_keyword=${encodeURIComponent(keyword)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        // Expect exactly one result for an exact match
+                        if (data.length === 1) {
+                            const item = data[0];
+                            if (item.lock == 1) {
+                                // If locked, inform the user
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Item Locked',
+                                    text: `This item is locked for the project: ${item.project_name}`
+                                });
+                                // Clear the lot ID just in case
+                                productLotIdInput.value = '';
+                            } else {
+                                // Automatically select the exact match
+                                selectProductLot(input, item);
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error fetching exact product lot:', error));
+            }
+        }
+    }, true); // Use capture phase for reliable blur handling
 
     // Hide autocomplete on click outside
     document.addEventListener('click', function(e) {

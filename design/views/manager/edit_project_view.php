@@ -1,6 +1,6 @@
 <div class="d-flex flex-row align-items-center justify-content-between titleTop">
     <h2 class="d-flex align-items-center">
-        <svg width="22" height="22" fill="currentColor" class="bi bi-database-add  mx-1 me-2" viewBox="0 0 16 16">
+        <svg width="22" height="22" fill="currentColor" class="bi bi-database-add mx-1 me-2" viewBox="0 0 16 16">
         <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
         <path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4"/>
         </svg>
@@ -62,14 +62,7 @@
                     </div>
                 </div>
             </div> 
-    
-            <!--
-             * FIX: BUTTON PLACEMENT
-             * The "Update Project" button has been moved to a more accessible location,
-             * right after the Project Details section and before the parts list.
-             * This allows the user to save changes without having to scroll
-             * past all the existing parts.
-             -->
+
             <div class="my-3 text-end">
                 <button type="submit" class="btn btn-primary" title="Submit">
                     Update Project
@@ -90,14 +83,14 @@
 
                 <!-- Add New Parts Section -->
                 <div class="d-flex align-items-center mb-2 bg-light py-2 rounded">
-                 <h5 class="my-0 px-2">Click to add a new part</h5>
-                    <div title="Add Row">
-                        <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0 d-flex">
-                            <svg width="20" height="20" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
-                                <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                            </svg>
-                        </button>
-                    </div>
+                   <h5 class="my-0 px-2">Click to add a new part</h5>
+                        <div title="Add Row">
+                            <button type="button" id="addRowBtn" class="btn btn-link btnSvg p-0 d-flex">
+                                <svg width="20" height="20" fill="green" class="bi bi-plus-circle-dotted hoverSvg" viewBox="0 0 16 16">
+                                    <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                </svg>
+                            </button>
+                        </div>
                 </div>
                 
                 <div id="newPartsContainer" class="my-3">
@@ -183,7 +176,7 @@
                         <svg width="24" height="24" fill="#8b000d" class="bi bi-trash hoverSvg" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
-                        </svg>
+                    </svg>
                     </button>
                 </div>
             </div>
@@ -234,41 +227,99 @@
     const newPartsContainer = document.getElementById('newPartsContainer');
     const newRowTemplate = document.getElementById('newRowTemplate');
 
-    // Function to re-index rows and manage remove button visibility
-    const updateNewRows = () => {
-        const rows = newPartsContainer.querySelectorAll('.stock-row');
-        rows.forEach((row, index) => {
-            row.querySelectorAll('input, textarea').forEach(el => {
-                const name = el.getAttribute('name');
-                if (name) {
-                    el.setAttribute('name', name.replace(/\[\d+\]/, `[${index}]`));
-                }
+        // Function to re-index rows and manage remove button visibility
+        const updateNewRows = () => {
+            const allRows = document.querySelectorAll('#existingPartsContainer .stock-row, #newPartsContainer .stock-row');
+            allRows.forEach((row, index) => {
+                row.querySelectorAll('input[name], textarea[name]').forEach(el => {
+                    let name = el.getAttribute('name');
+                    if (name) {
+                        // FIX: Changed the regex to target only the numerical index part 
+                        // (e.g., [0] in products[0][field_name]) while preserving the field name.
+                        name = name.replace(/products\[\d*\]/, `products[${index}]`);
+                        el.setAttribute('name', name);
+                    }
+                });
             });
-            const removeButton = row.querySelector('.btn-remove-row');
-            if (removeButton) {
-                removeButton.style.display = rows.length > 0 ? 'block' : 'none';
-            }
-        });
-    };
+        };
 
     // Add a new row
-    document.getElementById('addRowBtn').addEventListener('click', () => {
-        const newRow = newRowTemplate.cloneNode(true);
-        newRow.style.display = 'block';
-        newPartsContainer.appendChild(newRow);
-        updateNewRows();
-    });
+        document.getElementById('addRowBtn').addEventListener('click', () => {
+            const newRow = newRowTemplate.cloneNode(true);
+            newRow.style.display = 'block';
+            newPartsContainer.appendChild(newRow);
+            updateNewRows();
+        });
 
     // Remove a row
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-remove-row')) {
-            const rowToRemove = e.target.closest('.stock-row');
-            if (rowToRemove) {
-                rowToRemove.remove();
-                updateNewRows();
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-remove-row')) {
+                const row = e.target.closest('.stock-row');
+                if (row) {
+                    row.remove();
+                    updateNewRows();
+                }
+            }
+        });
+
+    document.addEventListener('keydown', function(e) {
+        // Use 'Enter' or key code 13 for cross-browser compatibility
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            const targetTag = e.target.tagName;
+            // Only prevent if the focused element is a non-submit/non-button INPUT
+            if (targetTag === 'INPUT' && e.target.type !== 'submit' && e.target.type !== 'button') {
+                e.preventDefault();
+                
+                // If the user just scanned into the product-search field, 
+                // move focus to the Quantity input next for faster workflow.
+                if (e.target.classList.contains('product-search')) {
+                       // Find the next quantity input (if exists) and focus it
+                    const row = e.target.closest('.stock-row');
+                    if (row) {
+                        // Selects the input whose name ends with [used_qty]
+                        const qtyInput = row.querySelector('[name$="[used_qty]"]');
+                        if (qtyInput) {
+                            qtyInput.focus();
+                        }
+                    }
+                } else if (e.target.name === 'project_name' || e.target.name === 'owner') {
+                    // For main project details inputs, you may want to move to the next field instead of submitting
+                    // Simple logic to move focus to the next field
+                    const currentInput = e.target;
+                    const formInputs = Array.from(document.querySelectorAll('form input:not([type="hidden"]), form select, form textarea'));
+                    const currentIndex = formInputs.indexOf(currentInput);
+                    if (currentIndex > -1 && currentIndex + 1 < formInputs.length) {
+                           // Find the next input that is not disabled or hidden
+                        for (let i = currentIndex + 1; i < formInputs.length; i++) {
+                            if (!formInputs[i].hasAttribute('disabled') && formInputs[i].type !== 'hidden') {
+                                formInputs[i].focus();
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if (targetTag === 'TEXTAREA') {
+
             }
         }
     });
+
+    // NEW: BLUR EVENT LISTENER for Autocomplete
+
+    document.addEventListener('blur', function (e) {
+        if (e.target.classList.contains('product-search')) {
+            const input = e.target;
+            const wrapper = input.closest('.position-relative');
+            const resultBox = wrapper ? wrapper.querySelector('.autocomplete-box') : null;
+
+            if (resultBox) {
+                // Delay hiding to allow click event on suggestion item to register
+                setTimeout(() => {
+                    resultBox.style.display = 'none';
+                }, 150); 
+            }
+        }
+    }, true); // Use capture phase for delegated blur events
 
     // Product lot search using AJAX (same as create_project_view.php)
     document.addEventListener('input', function (e) {
@@ -285,7 +336,7 @@
             }
 
             if (keyword.length >= 2) {
-                fetch(`../ajax/search_product_lots.php?keyword=${encodeURIComponent(keyword)}`)
+                fetch(`../ajax/search_lot_by_x.php?keyword=${encodeURIComponent(keyword)}`)
                     .then(res => res.json())
                     .then(data => {
                         resultBox.innerHTML = '';
@@ -321,7 +372,7 @@
                                         // Set the input value to the selected lot details
                                         input.value = `${item.part_number} - x-code: ${item.x_code}`;
                                         const productLotIdInput = productRow.querySelector('.product-lot-id');
-                                        productLotIdInput.value = item.lot_id;
+                                        productLotIdInput.value = item.id;
                                         availableQtySpan.textContent = `(Available: ${item.qty_available})`;
                                         resultBox.innerHTML = '';
                                         resultBox.style.display = 'none';
@@ -354,11 +405,10 @@
     if (clickedRow) {
         clickedRow.classList.add('is-open');
         const box = clickedRow.querySelector('.category-suggestions');
-        if (box) box.style.display = 'block';
     }
     });
 
-    // Hide autocomplete on click outside
+    // Hide autocomplete on click outside (this is a fallback/extra safety layer)
     document.addEventListener('click', function(e) {
         if (!e.target.classList.contains('product-search') && !e.target.closest('.autocomplete-box')) {
             document.querySelectorAll('.autocomplete-box').forEach(box => {
@@ -367,3 +417,4 @@
         }
     });
 </script>
+

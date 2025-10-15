@@ -64,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 
 // Handle POST request to update the project
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     echo "<pre>";
+    // print_r($_POST['products']);
+    // exit;
     $user_id = $_SESSION['user_id'];
     $now = date('Y-m-d H:i:s');
     $errors = [];

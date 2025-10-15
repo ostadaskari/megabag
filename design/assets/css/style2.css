@@ -584,3 +584,70 @@ font-size: 16px;
     height: 80vh;
     overflow-y: auto;
 }
+
+
+        /* General styling for autocomplete */
+        .autocomplete-dropdown {
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 0.5rem 0.5rem;
+            margin-top: -1px;
+        }
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+        /* Style for a truly locked (invalid for issue) item */
+        .locked-item, .lot-search.locked-input {
+            background-color: #ffeaea; /* Light red background */
+            border-color: #dc3545 !important;
+            color: #dc3545;
+        }
+        /* Style for a successfully selected/locked-in item (NEW CLASS) */
+        .lot-search.selection-complete {
+            background-color: #e6ffe6; /* Light green for success */
+            border-color: #198754 !important;
+        }
+        /* Custom styles for the form layout */
+        .titleTop {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+        .backBtn {
+            text-decoration: none;
+            color: #0d6efd;
+            display: flex;
+            align-items: center;
+        }
+        .add-row-btn {
+            cursor: pointer;
+        }
+        .aButton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+            width: 38px;
+            border-radius: 0.25rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .aButton:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        /* Ensure the input doesn't look disabled, just marked as complete */
+        .lot-search.selection-complete[disabled] {
+            opacity: 1; 
+            cursor: default;
+        }

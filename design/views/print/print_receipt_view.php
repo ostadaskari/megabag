@@ -22,6 +22,6 @@
     <div class="barcode">
         <img src="data:image/png;base64,<?php echo $barcode; ?>" alt="Barcode">
     </div>
-    <div><?php echo htmlspecialchars($x_code); ?></div>
+    <div><h4><?php echo htmlspecialchars($x_code); ?></h4></div>
 </body>
 </html>
