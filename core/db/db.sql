@@ -48,6 +48,7 @@ CREATE TABLE bans (
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
+    slug VARCHAR(255) UNIQUE,
     parent_id INT DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE CASCADE
@@ -57,6 +58,7 @@ CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     part_number VARCHAR(80) NOT NULL UNIQUE,      -- Renamed "p-n" to "part_number"
+    slug VARCHAR(255) NULL,
     mfg VARCHAR(80),                            -- Manufacturer
     qty MEDIUMINT UNSIGNED DEFAULT 0,              -- 0 to 16777215
     company_cmt TEXT,                            -- company comment
@@ -106,7 +108,7 @@ CREATE TABLE product_lots (
     user_id INT NULL,                   -- User who created/owns the lot (nullable)
     purchase_code VARCHAR(40),          -- The specific purchase code (nullable now)
     x_code VARCHAR(70) NOT NULL UNIQUE, -- The unique x_code for the physical pack
-    vrm_x_code VARCHAR(70) UNIQUE,      -- The unique vrm_x_code for the physical pack
+    vrm_x_code VARCHAR(70) NULL UNIQUE,      -- The nullable vrm_x_code for the physical pack
     qty_received INT UNSIGNED DEFAULT 0,  -- The original quantity in this lot
     qty_available INT UNSIGNED DEFAULT 0, -- The current quantity left in this lot
     date_code YEAR,                     -- year of made

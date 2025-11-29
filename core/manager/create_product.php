@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Sanitize the part number for use in filenames
         $safe_pn = str_replace('/', '-', $pn);
         
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', str_replace('/', '-', $pn))));
+
         $mfg = trim($_POST['mfg'] ?? '');
         $qty = (int) ($_POST['qty'] ?? 0);
         $company_cmt = trim($_POST['company_cmt'] ?? '');
@@ -41,6 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $location = trim($_POST['location'] ?? '');
         $status = trim($_POST['status'] ?? 'available');
 
+        // To ensure slug uniqueness, check if it already exists:
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM products WHERE slug = ?");
+        $stmt->bind_param("s", $slug);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+
+        if ($count > 0) {
+            $slug .= '-' . uniqid(); // or append incremental number if you prefer
+        }
 
 
         $features_values = $_POST['feature'] ?? [];
@@ -52,12 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($is_update) {
             // It's an update. Prepare the UPDATE statement.
-            $stmt = $conn->prepare("UPDATE products SET part_number = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ? WHERE id = ?");
-            $stmt->bind_param("ssisiissi", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status,  $product_id);
+            $stmt = $conn->prepare("UPDATE products SET part_number = ?, slug = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ? WHERE id = ?");
+            $stmt->bind_param("sssisiissi", $pn, $slug, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status,  $product_id);
         } else {
             // It's a new product. Prepare the INSERT statement.
-            $stmt = $conn->prepare("INSERT INTO products (part_number, mfg, qty, company_cmt, user_id, category_id, location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssisiiss", $pn, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status);
+            $stmt = $conn->prepare("INSERT INTO products (part_number, slug, mfg, qty, company_cmt, user_id, category_id, location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssisiiss", $pn, $slug, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status);
         }
 
         // Execute the main database query

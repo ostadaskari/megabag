@@ -94,7 +94,10 @@ while ($row = $result->fetch_assoc()) {
 
     $html .= "<tr>
         <td>{$i}</td>
-        <td style=\"color:brown\" onclick=\"printXcode('".htmlspecialchars($row['x_code'])."')\" >" . htmlspecialchars($row['x_code']) . "</td>
+        <td style=\"color:brown; cursor:pointer;\"
+            onclick=\"printXcode('".htmlspecialchars($row['x_code'])."', '".htmlspecialchars($row['part_number'])."')\">
+            " . htmlspecialchars($row['x_code']) . "
+        </td>
         <td>" . htmlspecialchars($row['part_number']) . "</td>
         <td>" . htmlspecialchars($row['mfg']) . "</td>
         <td>" . htmlspecialchars($row['date_code']) . "</td>

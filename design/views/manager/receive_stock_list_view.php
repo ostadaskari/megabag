@@ -271,8 +271,8 @@
     };
 
 
-            function printXcode(receiptxc) {
-                const w = window.open(`../auth/dashboard.php?page=print_receipt&xc=${encodeURIComponent(receiptxc)}`, "_blank");
+            function printXcode(receiptxc, receiptpn) { 
+                const w = window.open(`../print/print_receipt.php?xc=${encodeURIComponent(receiptxc)}&pn=${encodeURIComponent(receiptpn)}`, "_blank");
                 w.onload = () => {
                     w.print();
                     w.onafterprint = () => w.close();

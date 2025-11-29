@@ -1,10 +1,12 @@
 <?php
 require_once("../db/db.php");
-// Check if a session has already been started before starting a new one.
+
+// Start session if not already
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// ACL: Only admin/manager allowed
+
+// ACL check
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
     header("Location: ../auth/login.php");
     exit;
@@ -20,15 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $category_id = intval($_POST['category_id'] ?? 0);
 
+    // Generate slug from name
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+
+    // Ensure slug uniqueness
+    $baseSlug = $slug;
+    $i = 1;
+    $checkStmt = $conn->prepare("SELECT id FROM categories WHERE slug = ? AND id != ?");
+    do {
+        $checkSlug = $slug;
+        $checkStmt->bind_param("si", $checkSlug, $category_id);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
+        if ($checkResult->num_rows > 0) {
+            $slug = $baseSlug . '-' . $i++;
+        }
+    } while ($checkResult->num_rows > 0);
+    $checkStmt->close();
+
     try {
         if ($action === 'add') {
-            $stmt = $conn->prepare("INSERT INTO categories (name, parent_id) VALUES (?, ?)");
-            $stmt->bind_param("si", $name, $parent_id);
+            $stmt = $conn->prepare("INSERT INTO categories (name, parent_id, slug) VALUES (?, ?, ?)");
+            $stmt->bind_param("sis", $name, $parent_id, $slug);
             $stmt->execute();
             $success = "Category added successfully.";
         } elseif ($action === 'edit' && $category_id) {
-            $stmt = $conn->prepare("UPDATE categories SET name = ?, parent_id = ? WHERE id = ?");
-            $stmt->bind_param("sii", $name, $parent_id, $category_id);
+            $stmt = $conn->prepare("UPDATE categories SET name = ?, parent_id = ?, slug = ? WHERE id = ?");
+            $stmt->bind_param("sisi", $name, $parent_id, $slug, $category_id);
             $stmt->execute();
             $success = "Category updated successfully.";
         } elseif ($action === 'delete' && $category_id) {
@@ -49,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = 'error=' . urlencode(implode(' | ', $errors));
     }
 
-    // Redirect with PRG, fixing the double '?'
+    // Redirect with PRG pattern
     header("Location: ../auth/dashboard.php?page=manage_categories" . ($query ? "&$query" : ""));
     exit;
 }
@@ -64,7 +84,7 @@ if (isset($_GET['error'])) {
 
 // --- Recursive Category Fetcher ---
 function fetchCategories($conn) {
-    $stmt = $conn->prepare("SELECT id, name, parent_id FROM categories ORDER BY name ASC");
+    $stmt = $conn->prepare("SELECT id, name, parent_id, slug FROM categories ORDER BY name ASC");
     $stmt->execute();
     $res = $stmt->get_result();
     return $res->fetch_all(MYSQLI_ASSOC);
@@ -93,3 +113,4 @@ $allCategories = fetchCategories($conn);
 
 // --- Load View ---
 include("../../design/views/manager/manage_categories_view.php");
+?>
