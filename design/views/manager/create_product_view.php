@@ -492,7 +492,7 @@ fetchCategories();
                 mouserSearchBtn.addEventListener('click', async () => {
                     const partNumber = pnInput.value.trim();
                     // Use your actual API key here.
-                    const apiKey = '9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2';
+                    const apiKey = 'ca828053-bee9-4209-924a-7b1fe6cbadfb'; //9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2
                     const apiUrl = `https://api.mouser.com/api/v4/search/keyword?apiKey=${apiKey}`;
 
                     if (!partNumber) {

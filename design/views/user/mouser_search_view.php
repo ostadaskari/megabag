@@ -93,8 +93,8 @@
             
             const keyword = document.getElementById('keyword').value;
             // The API key is provided by the user.
-            const apiKey = '9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2';
-            const apiUrl = `https://api.mouser.com/api/v4/search/keyword?apiKey=${apiKey}`;
+            const apiKey = 'ca828053-bee9-4209-924a-7b1fe6cbadfb'; //9baf5ef4-62ab-498f-9fad-c50eb4ae8dd2
+            const apiUrl = `https://api.mouser.com/api/v1/search/keyword?apiKey=${apiKey}`;
 
             // Clear previous results and messages
             resultsTableBody.innerHTML = '';
