@@ -44,11 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = trim($_POST['status'] ?? 'available');
 
         // To ensure slug uniqueness, check if it already exists:
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM products WHERE slug = ?");
-        $stmt->bind_param("s", $slug);
-        $stmt->execute();
-        $stmt->bind_result($count);
-        $stmt->fetch();
+        // Renamed variable to $stmt_slug to avoid conflict.
+        $stmt_slug = $conn->prepare("SELECT COUNT(*) FROM products WHERE slug = ?");
+        $stmt_slug->bind_param("s", $slug);
+        $stmt_slug->execute();
+        $stmt_slug->bind_result($count);
+        $stmt_slug->fetch();
+        // FIX: Close the statement immediately after fetching the result to avoid
+        // the "Commands out of sync" error.
+        $stmt_slug->close(); 
 
         if ($count > 0) {
             $slug .= '-' . uniqid(); // or append incremental number if you prefer
@@ -65,10 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($is_update) {
             // It's an update. Prepare the UPDATE statement.
             $stmt = $conn->prepare("UPDATE products SET part_number = ?, slug = ?, mfg = ?, qty = ?, company_cmt = ?, user_id = ?, category_id = ?, location = ?, status = ? WHERE id = ?");
-            $stmt->bind_param("sssisiissi", $pn, $slug, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status,  $product_id);
+            $stmt->bind_param("sssisiissi", $pn, $slug, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status, $product_id);
         } else {
             // It's a new product. Prepare the INSERT statement.
-            $stmt = $conn->prepare("INSERT INTO products (part_number, slug, mfg, qty, company_cmt, user_id, category_id, location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO products (part_number, slug, mfg, qty, company_cmt, user_id, category_id, location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sssisiiss", $pn, $slug, $mfg, $qty, $company_cmt, $user_id, $category_id, $location, $status);
         }
 
@@ -81,6 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$is_update) {
             $product_id = $stmt->insert_id;
         }
+        
+        // Close the main product statement
+        $stmt->close();
 
         // Define allowed file types and max size
         $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -121,14 +128,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $oldCoverQuery->bind_param("i", $product_id);
                     $oldCoverQuery->execute();
                     $oldCoverResult = $oldCoverQuery->get_result();
+                    
                     if ($oldCoverResult->num_rows > 0) {
                         $oldCoverPath = $oldCoverResult->fetch_assoc()['file_path'];
-                        if (file_exists($oldCoverPath)) {
-                            unlink($oldCoverPath);
+                        // NOTE: $oldCoverPath here is the relative path from the DB. 
+                        // To delete the file, we must prepend the absolute path prefix.
+                        $absolute_old_path = realpath(__DIR__ . '/../../') . DIRECTORY_SEPARATOR . $oldCoverPath; 
+                        
+                        if (file_exists($absolute_old_path)) {
+                            unlink($absolute_old_path);
                         }
                         // Delete the database entry for the old cover
                         $conn->query("DELETE FROM images WHERE product_id = $product_id AND is_cover = 1");
                     }
+                    // FIX: Close the old cover check statement.
+                    $oldCoverQuery->close();
                 }
 
                 if (move_uploaded_file($file['tmp_name'], $target)) {
@@ -221,8 +235,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $feature_ids_in = implode(',', array_map('intval', array_keys($features_values)));
             $feature_types_query = $conn->query("SELECT id, data_type FROM features WHERE id IN ($feature_ids_in)");
             $feature_types = [];
-            while ($row = $feature_types_query->fetch_assoc()) {
-                $feature_types[$row['id']] = $row['data_type'];
+            if ($feature_types_query) {
+                while ($row = $feature_types_query->fetch_assoc()) {
+                    $feature_types[$row['id']] = $row['data_type'];
+                }
+                $feature_types_query->free();
             }
             
             // If this is an update, delete all old feature values first
@@ -238,6 +255,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             foreach ($features_values as $feature_id => $value) {
+                // Ensure $value is not null/empty for processing, especially for checkboxes/booleans
+                if (empty($value) && $value !== 0 && !is_array($value)) continue;
+
                 $unit = $features_units[$feature_id] ?? null;
                 $data_type = $feature_types[$feature_id] ?? null;
                 
@@ -245,6 +265,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 switch ($data_type) {
                     case 'range':
+                        // Ensure $value is an array for range
+                        if (!is_array($value)) $value = ['min' => null, 'max' => null];
                         $feature_data = [
                             'min' => filter_var($value['min'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                             'max' => filter_var($value['max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
@@ -252,18 +274,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         break;
                     case 'multiselect':
+                        // Ensure $value is an array for multiselect
+                        if (!is_array($value)) $value = [];
                         $feature_data['values'] = array_map(function($val) {
                             return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
                         }, $value);
                         break;
                     case 'boolean':
-                        // FIX: Check if the raw POST variable for this checkbox exists.
-                        // If it exists, it was checked (true); if it doesn't, it was unchecked (false).
+                        // FIX: Check if the raw POST variable for this checkbox exists and is '1'.
+                        // The 'feature' array might not contain the ID if the checkbox is unchecked.
                         $is_checked = isset($_POST["feature_value_{$feature_id}"]) && $_POST["feature_value_{$feature_id}"] === '1';
                         
                         // Always save a value (true or false) for booleans
                         $feature_data['value'] = $is_checked; // PHP 'true'/'false' JSON encodes to JSON 'true'/'false' literals
-                        $is_value_valid = true;
                         break;
                     case 'decimal(15,7)':
                         $feature_data['value'] = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);

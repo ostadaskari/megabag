@@ -17,7 +17,7 @@ $error = null;
 
 // Handle form submission for updating a receipt
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn->begin_transaction(); // ✨ Start the transaction here
+    $conn->begin_transaction(); //  Start the transaction here
 
     try {
         // Validate the CSRF token before processing any form data.
