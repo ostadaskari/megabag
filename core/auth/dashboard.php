@@ -5,10 +5,13 @@ ob_start();
 // Include the database connection
 require_once('../db/db.php');
 
-// Set the session timeout duration in seconds (e.g., 3600 seconds = 1 hour)
-$session_timeout = 3600;
+// Set the session timeout duration in seconds
+$session_timeout = 7200;
 
-// Check for session inactivity and log out if necessary
+// Update the last activity timestamp FIRST
+$_SESSION['last_activity'] = time();
+
+// NOW check for session inactivity
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $session_timeout)) {
     // Session has expired, so we destroy it and redirect to the login page.
     session_unset();
@@ -16,6 +19,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     header("Location: ../auth/login.php");
     exit;
 }
+
+// Calculate remaining time using the UPDATED last_activity
+$remaining_seconds = $session_timeout; // Fresh page load = full timeout
+$remaining_minutes = floor($remaining_seconds / 60);
+$remaining_seconds_display = $remaining_seconds % 60;
+$expiry_time = date('H:i:s', $_SESSION['last_activity'] + $session_timeout);
 
 // Check if user is logged in. If not, redirect to login page.
 if (!isset($_SESSION['user_id'])) {
@@ -88,6 +97,7 @@ $allowed_pages = [
     'login_logs' => '../logs/login_logs.php',
     'bans' => '../logs/bans.php',
     'profile' => '../auth/profile.php',
+    'session_refresh' => '../auth/session_refresh.php',
     'user_search_products' => '../user/user_search_products.php',
     'mouser_search' => '../user/mouser_search.php',
     'filter_search' => '../user/filter_search.php'
