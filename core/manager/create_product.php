@@ -18,6 +18,12 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Wrap the entire POST logic in a try-catch block for comprehensive error handling
     try {
+        error_log('=== CSRF DEBUG in create_product.php ===');
+error_log('Session ID: ' . session_id());
+error_log('Session token: ' . ($_SESSION['csrf_token'] ?? 'NOT SET'));
+error_log('POST token: ' . ($_POST['csrf_token'] ?? 'NOT SET'));
+error_log('Request Method: ' . $_SERVER['REQUEST_METHOD']);
+error_log('========================================');
         // Validate the CSRF token before processing any form data.
         if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
             // Log the error for security monitoring purposes.

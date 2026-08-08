@@ -1,4 +1,5 @@
 <?php
+ini_set('session.gc_maxlifetime', 7500); // Match your 2 hours
 session_start();
 ob_start();
 
@@ -41,18 +42,19 @@ try {
     $result = $stmt->get_result();
     $user_data = $result->fetch_assoc();
 
-    if ($user_data && $user_data['is_blocked'] == 1) {
-        // User is blocked! Log out, destroy session, and redirect.
-        session_unset();
-        session_destroy();
-        
-        // Start a new session briefly to set the message flag for login.php
-        session_start(); 
-        $_SESSION['blocked_by_admin'] = true; // Flag for the SweetAlert message
-        
-        header("Location: ../auth/login.php");
-        exit;
-    }
+if ($user_data && $user_data['is_blocked'] == 1) {
+    // User is blocked! Log out, destroy session, and redirect.
+    session_unset();
+    session_destroy();
+    
+    // Start a new session with a new ID
+    session_start();
+    session_regenerate_id(true);
+    $_SESSION['blocked_by_admin'] = true;
+    
+    header("Location: ../auth/login.php");
+    exit;
+}
 
 } catch (Exception $e) {
     // Log the error if the database query fails, but allow the user to continue if possible

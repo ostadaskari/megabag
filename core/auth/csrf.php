@@ -18,9 +18,10 @@ if (session_status() === PHP_SESSION_NONE) {
  * is returned as a string to be placed inside a form.
  */
 function generate_csrf_token() {
-    // Generate a new, random token on every call to prevent token reuse across different forms.
-    // This is the key change for enhanced security.
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    // Only generate a new token if one doesn't exist
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
     
     // Echo the hidden input field with the token value.
     echo '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($_SESSION['csrf_token']) . '">';

@@ -1,5 +1,3 @@
-
-
 <?php include(__DIR__ . '/../partials/header.php'); ?>
 <?php include(__DIR__ . '/../partials/navbar.php'); ?>
 
@@ -42,6 +40,9 @@
 
 <?php include(__DIR__ . '/../partials/footer.php'); ?>
 
+
+
+// timeout Session 
 <div id="sessionBadge" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.85); color: white; padding: 8px 12px; border-radius: 20px; font-family: monospace; font-size: 13px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); cursor: pointer; transition: all 0.3s;">
     🔐 <span id="badgeTimer">--:--</span>
     <div id="badgeDetails" style="display: none; margin-top: 5px; font-size: 11px;">
