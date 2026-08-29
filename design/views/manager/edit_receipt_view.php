@@ -22,10 +22,10 @@
 <div id="Edit-Receipt" class="tab-content">
     <div class="container px-0 mt-1">
         <form method="POST" action="">
-         <!-- CSRF token -->
-        <?php generate_csrf_token(); ?>
+            <!-- CSRF token -->
+            <?php generate_csrf_token(); ?>
 
-            <input type="hidden" name="receipt_id" value="<?php echo htmlspecialchars($receiptData['id']); ?>">
+            <input type="hidden" name="receipt_id" value="<?php echo htmlspecialchars((string)($receiptData['id'] ?? '')); ?>">
             
             <div id="receiptRow">
                 <div class="stock-row border p-1 rounded mb-1 bg-light position-relative">
@@ -34,14 +34,14 @@
                         <!-- Product info (read-only) -->
                         <div class="col-12 col-md-3 px-1">
                             <label for="product_part_number" class="form-label">Part Number:</label>
-                            <input type="text" id="product_part_number" class="form-control disabled" value="<?php echo htmlspecialchars($receiptData['part_number']); ?>" readonly >
+                            <input type="text" id="product_part_number" class="form-control disabled" value="<?php echo htmlspecialchars($receiptData['part_number'] ?? ''); ?>" readonly >
                         </div>
                         <div class="col-12 col-md-2 px-1">
                             <label for="product_x_code" class="form-label" style="color:coral;">X-Code:</label>
-                            <input type="text" id="product_x_code" class="form-control disabled" value="<?php echo htmlspecialchars($receiptData['x_code']); ?>" readonly >
+                            <input type="text" id="product_x_code" class="form-control disabled" value="<?php echo htmlspecialchars($receiptData['x_code'] ?? ''); ?>" readonly >
                         </div>
 
-                        <!-- New Fields: Lot Location and Project Name -->
+                        <!-- Lot Location and Project Name -->
                         <div class="col-12 col-md-2 px-1 mt-2 mt-md-0">
                             <label for="lotLocation" class="form-label">Lot Location:</label>
                             <input type="text" id="lotLocation" name="lot_location" class="form-control" value="<?php echo htmlspecialchars($receiptData['lot_location'] ?? ''); ?>">
@@ -54,41 +54,41 @@
                         <!-- Qty -->
                         <div class="col-6 col-md-1 px-1 mt-2 mt-md-0">
                             <label for="quantityInput" class="form-label">Rcvd QTY:</label>
-                            <input type="number" name="qty_received" class="form-control" min="1" value="<?php echo htmlspecialchars($receiptData['qty_received']); ?>" required>
+                            <input type="number" name="qty_received" class="form-control" min="1" value="<?php echo htmlspecialchars((string)($receiptData['qty_received'] ?? 1)); ?>" required>
                         </div>
 
-                        <!-- Optional purchase code -->
+                        <!-- Purchase Code -->
                         <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
                             <label class="form-label">Purchase Code:</label>
-                            <input type="text" name="purchase_code" class="form-control" placeholder="Invoice # (optional)" value="<?php echo htmlspecialchars($receiptData['purchase_code']); ?>">
+                            <input type="text" name="purchase_code" class="form-control" placeholder="Invoice # (optional)" value="<?php echo htmlspecialchars($receiptData['purchase_code'] ?? ''); ?>">
                         </div>
 
-                        <!-- Optional VRM X Code -->
+                        <!-- VRM X Code -->
                         <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
                             <label class="form-label">VRM X Code:</label>
-                            <input type="text" name="vrm_x_code" class="form-control" placeholder="VRM-X-Code(optional)" value="<?php echo htmlspecialchars($receiptData['vrm_x_code']); ?>">
+                            <input type="text" name="vrm_x_code" class="form-control" placeholder="VRM-X-Code(optional)" value="<?php echo htmlspecialchars($receiptData['vrm_x_code'] ?? ''); ?>">
                         </div>
 
-                        <!-- Optional date code -->
+                        <!-- Date Code -->
                         <div class="col-6 col-md-2 px-1 mt-2 mt-md-0">
-                            <label for="" class="form-label">Date Code:</label>
+                            <label for="date_code" class="form-label">Date Code:</label>
                             <select name="date_code" id="date_code" class="form-select" required>
-                                <!-- Options will be populated by JavaScript -->
+                                <!-- Options populated by JavaScript -->
                             </select>
                         </div>
 
-                        <!-- New Field: Lock Checkbox -->
+                        <!-- Lock Checkbox -->
                         <div class="col-12 col-md-1 px-1 mt-2 mt-md-0">
                             <div class="form-check d-flex flex-column align-items-center justify-content-center h-100">
                                 <label class="form-check-label" for="lockCheckbox">Lock:</label>
-                                <input class="form-check-input mt-2" type="checkbox" name="lock" id="lockCheckbox" value="1" <?php echo ($receiptData['is_locked'] ?? false) ? 'checked' : ''; ?>>
+                                <input class="form-check-input mt-2" type="checkbox" name="lock" id="lockCheckbox" value="1" <?php echo !empty($receiptData['is_locked']) ? 'checked' : ''; ?>>
                             </div>
                         </div>
 
                         <!-- Remarks -->
                         <div class="col-12 px-1 mt-2">
                             <label class="form-label">Comment:</label>
-                            <textarea class="form-control" name="remarks" rows="3"><?php echo htmlspecialchars($receiptData['remarks']); ?></textarea>
+                            <textarea class="form-control" name="remarks" rows="3"><?php echo htmlspecialchars($receiptData['remarks'] ?? ''); ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -107,17 +107,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Function to populate the date code select with years from current year back to 2017
         function populateDateCode(select, selectedYear) {
             const startYear = 2017;
             const currentYear = new Date().getFullYear();
-            select.innerHTML = ''; // Clear existing options
+            select.innerHTML = '';
 
             for (let year = currentYear; year >= startYear; year--) {
                 const option = document.createElement('option');
                 option.value = year;
                 option.textContent = year;
-                // Set the option as selected if it matches the current value
                 if (year == selectedYear) {
                     option.selected = true;
                 }
@@ -127,7 +125,7 @@
 
         const dateCodeSelect = document.getElementById('date_code');
         if (dateCodeSelect) {
-            const savedDateCode = "<?= htmlspecialchars($receiptData['date_code'] ?? '') ?>";
+            const savedDateCode = "<?= htmlspecialchars((string)($receiptData['date_code'] ?? '')) ?>";
             populateDateCode(dateCodeSelect, savedDateCode);
         }
     });

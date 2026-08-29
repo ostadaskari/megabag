@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../db/db.php';
-require_once '../auth/csrf.php'; // This file contains the validate_csrf_token function
+require_once '../auth/csrf.php';
 
 // (ACL) Restrict access to admins/managers only
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'manager')) {
@@ -17,15 +17,13 @@ $error = null;
 
 // Handle form submission for updating a receipt
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn->begin_transaction(); //  Start the transaction here
+    $conn->begin_transaction();
 
     try {
-        // Validate the CSRF token before processing any form data.
         if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
             throw new Exception("Invalid or missing CSRF token. Request denied.");
         }
 
-        // Sanitize and validate input
         $receiptId = (int)($_POST['receipt_id'] ?? 0);
         $newQty = (int)($_POST['qty_received'] ?? 0);
         $newPurchaseCode = trim($_POST['purchase_code'] ?? '');
@@ -36,12 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $isLocked = isset($_POST['lock']) ? 1 : 0;
         $newRemarks = trim($_POST['remarks'] ?? '');
 
-        // Ensure all required fields are present and valid
         if ($receiptId <= 0 || $newQty <= 0) {
             throw new Exception("Invalid receipt ID or quantity.");
         }
 
-        // Step 1: Get current receipt data (old quantity and product lot ID)
+        // Step 1: Get current receipt data
         $stmt = $conn->prepare("SELECT product_lot_id, qty_received FROM stock_receipts WHERE id = ?");
         if ($stmt === false) {
             throw new Exception("Failed to prepare receipt data query: " . $conn->error);
@@ -53,12 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Receipt not found.");
         }
         $oldReceiptData = $result->fetch_assoc();
-        $oldQty = $oldReceiptData['qty_received'];
-        $lotId = $oldReceiptData['product_lot_id'];
+        $oldQty = (int)$oldReceiptData['qty_received'];
+        $lotId = (int)$oldReceiptData['product_lot_id'];
         $stmt->close();
 
-        // Step 2: Get product ID from product lots
-        $stmt = $conn->prepare("SELECT product_id FROM product_lots WHERE id = ?");
+        // Step 2: Get product lot details
+        $stmt = $conn->prepare("SELECT product_id, qty_available FROM product_lots WHERE id = ?");
         if ($stmt === false) {
             throw new Exception("Failed to prepare product lot query: " . $conn->error);
         }
@@ -69,11 +66,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Product lot not found.");
         }
         $lotData = $result->fetch_assoc();
-        $productId = $lotData['product_id'];
+        $productId = (int)$lotData['product_id'];
+        $currentQtyAvailable = (int)$lotData['qty_available'];
         $stmt->close();
 
-        // Step 3: Update products table by adjusting the quantity
         $qtyDifference = $newQty - $oldQty;
+
+        // Prevent negative stock availability in lot
+        if (($currentQtyAvailable + $qtyDifference) < 0) {
+            throw new Exception("Cannot reduce quantity below what has already been issued from this lot.");
+        }
+
+        // Step 3: Update products table
         $updateProduct = $conn->prepare("UPDATE products SET qty = qty + ? WHERE id = ?");
         if ($updateProduct === false) {
             throw new Exception("Failed to prepare product quantity update.");
@@ -84,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $updateProduct->close();
         
-        // Step 4: Update the stock_receipts table
+        // Step 4: Update stock_receipts table
         $updateReceipt = $conn->prepare("UPDATE stock_receipts SET qty_received = ?, remarks = ? WHERE id = ?");
         if ($updateReceipt === false) {
             throw new Exception("Failed to prepare stock receipt update.");
@@ -95,8 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $updateReceipt->close();
 
-        // Step 5: Update the product_lots table with new values,
-        // adjusting the qty_available by the difference
+        // Step 5: Update product_lots table
         $updateLot = $conn->prepare("UPDATE product_lots SET qty_received = ?, qty_available = qty_available + ?, purchase_code = ?, vrm_x_code = ?, date_code = ?, lot_location = ?, project_name = ?, `lock` = ? WHERE id = ?");
         if ($updateLot === false) {
             throw new Exception("Failed to prepare product lot update.");
@@ -107,12 +110,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $updateLot->close();
 
-        $conn->commit(); // ✨ Commit the transaction
+        $conn->commit();
         header("Location: ../auth/dashboard.php?page=list_receipts&status=updated");
         exit;
 
     } catch (Exception $e) {
-        $conn->rollback(); // ⏪ Rollback on any failure
+        $conn->rollback();
         $error = "Failed to update receipt: " . $e->getMessage();
         error_log("Receipt update failed: " . $e->getMessage());
         header("Location: ../auth/dashboard.php?page=edit_receipt&id={$receiptId}&error=" . urlencode($error));
@@ -120,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch receipt data for display (on initial page load)
+// Fetch receipt data for display (GET request)
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $receiptId = (int)$_GET['id'];
     if ($receiptId > 0) {

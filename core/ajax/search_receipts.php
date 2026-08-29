@@ -1,4 +1,8 @@
 <?php
+// غیرفعال‌سازی نمایش مستقیم خطاها در پاسخ AJAX
+error_reporting(0);
+ini_set('display_errors', 0);
+
 require_once '../db/db.php';
 require_once '../auth/check_manager.php';
 
@@ -6,7 +10,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, intval($_GET['page'] ?? 1));
-$limit = 13; //per page
+$limit = 13; // per page
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -14,9 +18,7 @@ $params = [];
 $types = '';
 
 if (!empty($keyword)) {
-    // Added product_lots.x_code, product_lots.lot_location, product_lots.project_name to the search conditions
     $conditions[] = "(products.part_number LIKE ? OR users.name LIKE ? OR users.family LIKE ? OR users.nickname LIKE ? OR product_lots.x_code LIKE ? OR product_lots.lot_location LIKE ? OR product_lots.project_name LIKE ?)";
-    // We now have 7 parameters for the keyword
     for ($i = 0; $i < 7; $i++) {
         $params[] = "%$keyword%";
         $types .= 's';
@@ -68,7 +70,6 @@ ORDER BY stock_receipts.created_at DESC
 LIMIT ? OFFSET ?";
 
 $stmt = $conn->prepare($query);
-// Append limit and offset types and parameters
 $types .= 'ii';
 $params[] = $limit;
 $params[] = $offset;
@@ -80,37 +81,44 @@ $result = $stmt->get_result();
 $html = '';
 $i = $offset + 1;
 while ($row = $result->fetch_assoc()) {
-    $remarks = htmlspecialchars($row['remarks']);
+    // استفاده از null coalescing (?? '') برای جلوگیری از Deprecated warning
+    $remarks = htmlspecialchars($row['remarks'] ?? '');
     $shortRemarks = mb_strlen($remarks) > 10 ? htmlspecialchars(mb_substr($remarks, 0, 10)) . '...' : $remarks;
     $tooltip = $remarks ? "title=\"$remarks\"" : '';
 
-    $lockIcon = $row['lock'] == 1 ? 
+    $x_code = htmlspecialchars($row['x_code'] ?? '');
+    $part_number = htmlspecialchars($row['part_number'] ?? '');
+    $mfg = htmlspecialchars($row['mfg'] ?? '');
+    $date_code = htmlspecialchars($row['date_code'] ?? '');
+    $lot_location = htmlspecialchars($row['lot_location'] ?? '');
+    $project_name = htmlspecialchars($row['project_name'] ?? '');
+    $vrm_x_code = htmlspecialchars($row['vrm_x_code'] ?? '');
+    $nickname = htmlspecialchars($row['nickname'] ?? '');
+
+    $lockIcon = ($row['lock'] ?? 0) == 1 ? 
         '<svg width="16" height="16" fill="red" class="bi bi-lock-fill" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
         </svg>' :
-                '<svg fill="green" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+        '<svg fill="green" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M12 0a4 4 0 0 1 4 4v2.5h-1V4a3 3 0 1 0-6 0v2h.5A2.5 2.5 0 0 1 12 8.5v5A2.5 2.5 0 0 1 9.5 16h-7A2.5 2.5 0 0 1 0 13.5v-5A2.5 2.5 0 0 1 2.5 6H8V4a4 4 0 0 1 4-4M2.5 7A1.5 1.5 0 0 0 1 8.5v5A1.5 1.5 0 0 0 2.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 9.5 7z"/>
         </svg>';
 
     $html .= "<tr>
         <td>{$i}</td>
-        <td style=\"color:brown; cursor:pointer;\"
-            onclick=\"printXcode('".htmlspecialchars($row['x_code'])."', '".htmlspecialchars($row['part_number'])."')\">
-            " . htmlspecialchars($row['x_code']) . "
-        </td>
-        <td>" . htmlspecialchars($row['part_number']) . "</td>
-        <td>" . htmlspecialchars($row['mfg']) . "</td>
-        <td>" . htmlspecialchars($row['date_code']) . "</td>
-        <td>" . htmlspecialchars($row['lot_location']) . "</td>
-        <td>" . htmlspecialchars($row['project_name']) . "</td>
-        <td>" . htmlspecialchars($row['vrm_x_code']) . "</td>
-        <td>{$row['qty_received']}</td>
-        <td>{$row['qty_available']}</td>
-        <td>" . htmlspecialchars($row['nickname']) . "</td>
-        <td><span {$tooltip}>" . $shortRemarks . "</span></td>
-         <td>
-            <button class=\"btnSvg hoverSvg\" onclick=\"toggleLock({$row['product_lot_id']})\" title=\"" . ($row['lock'] == 1 ? 'Unlock' : 'Lock') . "\">
-                " . $lockIcon . "
+        <td style=\"color:brown; cursor:pointer;\" onclick=\"printXcode('{$x_code}', '{$part_number}')\">{$x_code}</td>
+        <td>{$part_number}</td>
+        <td>{$mfg}</td>
+        <td>{$date_code}</td>
+        <td>{$lot_location}</td>
+        <td>{$project_name}</td>
+        <td>{$vrm_x_code}</td>
+        <td>" . ($row['qty_received'] ?? 0) . "</td>
+        <td>" . ($row['qty_available'] ?? 0) . "</td>
+        <td>{$nickname}</td>
+        <td><span {$tooltip}>{$shortRemarks}</span></td>
+        <td>
+            <button class=\"btnSvg hoverSvg\" onclick=\"toggleLock(" . intval($row['product_lot_id'] ?? 0) . ")\" title=\"" . (($row['lock'] ?? 0) == 1 ? 'Unlock' : 'Lock') . "\">
+                {$lockIcon}
             </button>
         </td>
         <td>
@@ -122,13 +130,13 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </td>
         <td class=\"flex justify-center space-x-2\">
-            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"editReceipt({$row['id']})\" title=\"Edit\">
-              <svg width=\"18\" height=\"18\" fill=\"var(--main-bg1-color)\" class=\"bi bi-pencil-square\" viewBox=\"0 0 16 16\">
+            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"editReceipt(" . intval($row['id']) . ")\" title=\"Edit\">
+                <svg width=\"18\" height=\"18\" fill=\"var(--main-bg1-color)\" class=\"bi bi-pencil-square\" viewBox=\"0 0 16 16\">
                     <path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"></path>
                     <path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z\"></path>
                 </svg>
             </button>
-            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"deleteReceipt({$row['id']})\" title=\"Delete\">
+            <button class=\"btnSvg hoverSvg\" style=\"font-size:15px;\" onclick=\"deleteReceipt(" . intval($row['id']) . ")\" title=\"Delete\">
                 <svg width=\"18\" height=\"18\" fill=\"#8b000d\" class=\"bi bi-trash hoverSvg\" viewBox=\"0 0 16 16\">
                     <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"></path>
                     <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"></path>
@@ -145,19 +153,16 @@ if ($totalPages > 1) {
     $paginationHtml .= '<div class="row my-2"><div class="col-12 d-flex justify-content-center">';
     $paginationHtml .= '<div class="d-flex align-items-center justify-content-between rounded border gap-2" style="background-color: #b5d4e073;padding: 3px;">';
 
-    // First button
     $firstDisabled = ($page <= 1) ? 'disabled' : '';
     $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ' . $firstDisabled . '" onclick="fetchReceipts(1)" id="firstBtn">';
     $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"></path></svg>';
     $paginationHtml .= 'First</a>';
 
-    // Prev button
     $prevDisabled = ($page <= 1) ? 'disabled' : '';
     $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderRight ' . $prevDisabled . '" onclick="fetchReceipts(' . max(1, $page - 1) . ')" id="prevBtn">';
     $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path></svg>';
     $paginationHtml .= 'Prev</a>';
 
-    // Page numbers
     $paginationHtml .= '<div class="px-4 px-custom">';
     $startPage = max(1, $page - 2);
     $endPage = min($totalPages, $page + 2);
@@ -168,14 +173,12 @@ if ($totalPages > 1) {
     }
     $paginationHtml .= '</div>';
 
-    // Next button
     $nextDisabled = ($page >= $totalPages) ? 'disabled' : '';
     $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ' . $nextDisabled . '" onclick="fetchReceipts(' . min($totalPages, $page + 1) . ')" id="nextBtn">';
     $paginationHtml .= 'Next';
     $paginationHtml .= '<svg width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path></svg>';
     $paginationHtml .= '</a>';
 
-    // Last button
     $lastDisabled = ($page >= $totalPages) ? 'disabled' : '';
     $paginationHtml .= '<a href="#" class="btn btn-outline-primary px-3 px-custom d-flex align-items-center btnNP borderLeft ' . $lastDisabled . '" onclick="fetchReceipts(' . $totalPages . ')" id="lastBtn">';
     $paginationHtml .= 'Last';
@@ -186,7 +189,7 @@ if ($totalPages > 1) {
 }
 
 echo json_encode([
-    'html' => $html ?: '<tr><td colspan="15" class="text-center">No receipts found.</td></tr>', // Adjusted colspan for 15 columns
+    'html' => $html ?: '<tr><td colspan="15" class="text-center">No receipts found.</td></tr>',
     'pagination' => $paginationHtml,
     'totalPages' => $totalPages,
     'currentPage' => $page
