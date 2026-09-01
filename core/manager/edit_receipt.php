@@ -26,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $receiptId = (int)($_POST['receipt_id'] ?? 0);
         $newQty = (int)($_POST['qty_received'] ?? 0);
-        $newPurchaseCode = trim($_POST['purchase_code'] ?? '');
-        $newVrmXCode = trim($_POST['vrm_x_code'] ?? '');
+        $newPurchaseCode = !empty(trim($_POST['purchase_code'] ?? '')) ? trim($_POST['purchase_code']) : null;
+        $newVrmXCode = !empty(trim($_POST['vrm_x_code'] ?? '')) ? trim($_POST['vrm_x_code']) : null;
         $newDateCode = (int)($_POST['date_code'] ?? 0);
-        $newLotLocation = trim($_POST['lot_location'] ?? '');
-        $newProjectName = trim($_POST['project_name'] ?? '');
+        $newLotLocation = !empty(trim($_POST['lot_location'] ?? '')) ? trim($_POST['lot_location']) : null;
+        $newProjectName = !empty(trim($_POST['project_name'] ?? '')) ? trim($_POST['project_name']) : null;
         $isLocked = isset($_POST['lock']) ? 1 : 0;
         $newRemarks = trim($_POST['remarks'] ?? '');
 
