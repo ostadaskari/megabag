@@ -55,6 +55,9 @@
             </div>
         </div>
     </div>
+    <div class="mb-1">
+        <strong>Total Products:</strong> <span id="totalProductsCount">0</span>
+    </div>
     <div class="row mt-2">
     <div class="col-12">
         <div class="table-responsive fixed-table-container border rounded shadow-sm bg-light p-1" style="height: 65vh;">
@@ -360,8 +363,16 @@
                 if (xhr.status === 200) {
                     try {
                         const result = JSON.parse(xhr.responseText);
+                        
+                        // Update table HTML & Pagination
                         productsTableBody.innerHTML = result.html;
                         document.getElementById("pagination").innerHTML = result.pagination;
+                        
+                        // Update total products count
+                        const totalCountElem = document.getElementById("totalProductsCount");
+                        if (totalCountElem && result.total_count !== undefined) {
+                            totalCountElem.textContent = result.total_count;
+                        }
                     } catch (e) {
                         console.error("Failed to parse JSON response:", e);
                         productsTableBody.innerHTML = '<tr><td colspan="11" class="text-center">Error: Invalid response from server.</td></tr>';

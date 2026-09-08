@@ -12,9 +12,13 @@
                 <div class="mb-2">
                     <select id="category-select" class="form-select">
                         <option value="">-- Select Category --</option>
-                        <option value="25">Capacitors</option>
-                        <option value="22">Resistors</option>
-                        <option value="64">ICs</option>
+                        <?php if (!empty($categories)): ?>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= htmlspecialchars($cat['id']) ?>">
+                                    <?= htmlspecialchars($cat['name']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
 

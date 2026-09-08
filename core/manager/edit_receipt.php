@@ -104,9 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($updateLot === false) {
             throw new Exception("Failed to prepare product lot update.");
         }
+
+        // ارسال مستقیم مقادیر (حاوی NULL یا string)
         $updateLot->bind_param("iississii", $newQty, $qtyDifference, $newPurchaseCode, $newVrmXCode, $newDateCode, $newLotLocation, $newProjectName, $isLocked, $lotId);
+
         if (!$updateLot->execute()) {
-            throw new Exception("Failed to update product lot.");
+            throw new Exception("Failed to update product lot: " . $updateLot->error);
         }
         $updateLot->close();
 

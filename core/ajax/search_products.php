@@ -30,7 +30,7 @@ if ($status === 'available') {
     $types .= "s";
 }
 
-// Count total for pagination
+// Count total for pagination and total product count display
 $countQuery = "SELECT COUNT(*) as total FROM products $where";
 $countStmt = $conn->prepare($countQuery);
 if ($types) $countStmt->bind_param($types, ...$params);
@@ -63,15 +63,15 @@ while ($row = $result->fetch_assoc()) {
     // We've added an onclick event to the row to open the modal
     $html .= "<tr data-id=\"{$row['id']}\" >
         <td>{$count}</td>
-         <td>" . htmlspecialchars($row['part_number']) . "</td>
-        <td>" . htmlspecialchars($row['mfg']) . "</td>
+        <td>" . htmlspecialchars($row['part_number'] ?? '') . "</td>
+        <td>" . htmlspecialchars($row['mfg'] ?? '') . "</td>
 
         <td>{$row['qty']}</td>
-  
-        <td>" . htmlspecialchars($row['submitter']) . "</td>
-        <td>" . htmlspecialchars($row['category_name']) . "</td>
-        <td>" . htmlspecialchars($row['location']) . "</td>
-        <td>" . htmlspecialchars($row['status']) . "</td>
+
+        <td>" . htmlspecialchars($row['submitter'] ?? '') . "</td>
+        <td>" . htmlspecialchars($row['category_name'] ?? '') . "</td>
+        <td>" . htmlspecialchars($row['location'] ?? '') . "</td>
+        <td>" . htmlspecialchars($row['status'] ?? '') . "</td>
 
         <!-- We've added onclick=\"event.stopPropagation()\" to the <td> to prevent the row's click event from firing -->
         <td class=\"flex justify-center space-x-2\" onclick=\"event.stopPropagation()\">
@@ -145,7 +145,8 @@ echo json_encode([
     'html' => $html ?: '<tr><td colspan="14" class="text-center">No products found.</td></tr>',
     'pagination' => $paginationHtml,
     'totalPages' => $totalPages,
-    'currentPage' => $page
+    'currentPage' => $page,
+    'total_count' => (int)$total
 ]);
 
 $conn->close();

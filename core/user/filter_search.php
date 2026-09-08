@@ -11,5 +11,14 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
     exit;
 }
 
+// دریافت لیست دسته‌بندی‌ها با MySQLi
+$categories = [];
+$query = "SELECT id, name, parent_id, slug FROM categories ORDER BY name ASC";
+$result = $conn->query($query);
+
+if ($result) {
+    $categories = $result->fetch_all(MYSQLI_ASSOC);
+}
+
 
 include("../../design/views/user/filter_search_view.php");
