@@ -75,79 +75,107 @@
                 <div class="card" style="max-height:60vh; overflow: auto;">
                 <div>
                     <?php
-                  function displayTreeFancy($categories, $parentId = null){
-                      $hasChildren = false;
-                      foreach ($categories as $cat) {
-                          if ($cat['parent_id'] == $parentId) {
-                              if (!$hasChildren) {
-                                  echo "<ul class='tree'>";
-                                  $hasChildren = true;
-                              }
-                  
-                              
-                              $hasSub = false;
-                              foreach ($categories as $child) {
-                                  if ($child['parent_id'] == $cat['id']) {
-                                      $hasSub = true;
-                                      break;
-                                  }
-                              }
-                  
-                              if ($hasSub) {
-                                  echo "<li>";
-                                  echo "<details>";
-                                  echo "<summary class='d-flex align-items-center'>";
-                                  echo "<span class='d-flex align-items-center'>";
-                                  echo "<span class='folder-icon me-2 closed'>
-                                          <svg width='22' height='22' fill='#ffd55f' viewBox='0 0 16 16'>
+                    function displayTreeFancy($categories, $parentId = null) {
+                        $hasChildren = false;
+
+                        foreach ($categories as $cat) {
+                            // نرمال‌سازی parent_id برای جلوگیری از خطای مقایسه null و 0
+                            $catParent = !empty($cat['parent_id']) ? (int)$cat['parent_id'] : null;
+                            $currentParentCheck = !empty($parentId) ? (int)$parentId : null;
+
+                            if ($catParent === $currentParentCheck) {
+                                if (!$hasChildren) {
+                                    echo "<ul class='tree'>";
+                                    $hasChildren = true;
+                                }
+
+                                $hasSub = false;
+                                $subCount = 0;
+
+                                // محاسبه تعداد زیردسته‌ها
+                                foreach ($categories as $child) {
+                                    $childParent = !empty($child['parent_id']) ? (int)$child['parent_id'] : null;
+                                    if ($childParent === (int)$cat['id']) {
+                                        $hasSub = true;
+                                        $subCount++;
+                                    }
+                                }
+
+                                // خواندن تعداد محصولات (دریافتی از fetchCategories)
+                                $prodCount = (int)($cat['products_count'] ?? 0);
+
+                                // ساخت نشانگرهای تعداد (Badges)
+                                $countsBadge = "<span class='ms-2 d-inline-flex align-items-center gap-1'>";
+                                if ($subCount > 0) {
+                                    $countsBadge .= "<span title='Subcategories' class='badge bg-warning text-dark border px-2 py-1' style='font-size: 0.72rem;'><i class='fa fa-folder me-1'></i>{$subCount} subs</span>";
+                                }
+                                // این نشانگر برای تمام دسته‌ها (حتی زیردسته آخر) چاپ می‌شود
+                                $countsBadge .= "<span title='Products / Parts' class='badge bg-primary text-white px-2 py-1' style='font-size: 0.72rem;'><i class='fa fa-microchip me-1'></i>{$prodCount} parts</span>";
+                                $countsBadge .= "</span>";
+
+                                $catNameEscaped = htmlspecialchars($cat['name']);
+                                $parentIdJs = !empty($cat['parent_id']) ? (int)$cat['parent_id'] : 'null';
+
+                                if ($hasSub) {
+                                    // حالت دسته‌های دارای زیردسته (شاخه‌ها)
+                                    echo "<li>";
+                                    echo "<details>";
+                                    echo "<summary class='d-flex align-items-center justify-content-between py-1'>";
+                                    echo "<span class='d-flex align-items-center'>";
+                                    echo "<span class='folder-icon me-2 closed'>
+                                            <svg width='18' height='18' fill='#ffc107' viewBox='0 0 16 16'>
                                             <path d='M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3z'/>
-                                          </svg>
-                                        </span>";
-                                  echo " <span class='folder-icon open d-none'>
-                                            <svg width='22' height='22' fill='#ffd55f' class='bi bi-folder mr-2' viewBox='0 0 16 16'>
-                                              <path d='M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z'/>
                                             </svg>
-                                          </span>";       
-                                  echo htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'></span>";
-                                  echo "</span>";
-                  
-                                  
-                                  echo "<span class='d-flex align-items-center ms-2'>";
-                                  echo "<button type='button' class='action-icon btnSvg me-1' onclick=\"editCategory(" . $cat['id'] . ", '" . addslashes($cat['name']) . "', " . ($cat['parent_id'] ?? 'null') . ")\">";
-                                  echo '<svg width="16" height="16" fill="#0780c7ff" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>';
-                                  echo "</button>";
-                                  echo "<button type='button' class='action-icon btnSvg' onclick=\"confirmDelete(" . $cat['id'] . ")\">";
-                                  echo '<svg width="16" height="16" fill="#b81509ff" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
-                                  echo "</button>";
-                                  echo "</span>";
-                  
-                                  echo "</summary>";
-                  
-                                  displayTreeFancy($categories, $cat['id']);
-                                  echo "</details>";
-                                  echo "</li>";
-                              } else {
-                                  
-                                  echo "<li class='d-flex align-items-center'>";
-                                  echo "<i class='fa fa-file me-2'></i> " . htmlspecialchars($cat['name']) . " <span class='text-muted ms-1'></span>";
-                                  echo "<span class='d-flex align-items-center ms-2'>";
-                                  echo "<button type='button' class='action-icon btnSvg me-1' onclick=\"editCategory(" . $cat['id'] . ", '" . addslashes($cat['name']) . "', " . ($cat['parent_id'] ?? 'null') . ")\">";
-                                  echo '<svg width="16" height="16" fill="#0780c7ff" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>';
-                                  echo "</button>";
-                                  echo "<button type='button' class='action-icon btnSvg' onclick=\"confirmDelete(" . $cat['id'] . ")\">";
-                                  echo '<svg width="16" height="16" fill="#b81509ff" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
-                                  echo "</button>";
-                                  echo "</span>";
-                                  echo "</li>";
-                              }
-                          }
-                      }
-                      if ($hasChildren) {
-                          echo "</ul>";
-                      }
-                  }
-                  
-                  
+                                        </span>";
+                                    echo "<span class='folder-icon open d-none me-2'>
+                                            <svg width='18' height='18' fill='#ffc107' viewBox='0 0 16 16'>
+                                            <path d='M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z'/>
+                                            </svg>
+                                        </span>";       
+                                    echo "<strong class='text-dark' style='font-size: 0.92rem;'>{$catNameEscaped}</strong>";
+                                    echo $countsBadge;
+                                    echo "</span>";
+
+                                    echo "<span class='d-flex align-items-center ms-2'>";
+                                    echo "<button type='button' class='action-icon btnSvg me-1' onclick=\"editCategory(" . (int)$cat['id'] . ", '" . addslashes($cat['name']) . "', {$parentIdJs})\">";
+                                    echo '<svg width="15" height="15" fill="#0780c7" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>';
+                                    echo "</button>";
+                                    echo "<button type='button' class='action-icon btnSvg' onclick=\"confirmDelete(" . (int)$cat['id'] . ")\">";
+                                    echo '<svg width="15" height="15" fill="#b81509" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
+                                    echo "</button>";
+                                    echo "</span>";
+
+                                    echo "</summary>";
+
+                                    displayTreeFancy($categories, $cat['id']);
+                                    echo "</details>";
+                                    echo "</li>";
+                                } else {
+                                    // حالت زیردسته آخر / بدون زیردسته (برگ‌ها)
+                                    echo "<li class='d-flex align-items-center justify-content-between py-1'>";
+                                    echo "<span class='d-flex align-items-center'>";
+                                    echo "<i class='fa fa-tag text-muted me-2'></i> <span class='text-dark'>{$catNameEscaped}</span>";
+                                    echo $countsBadge; // اضافه شدن بج محصولات در بخش else
+                                    echo "</span>";
+
+                                    echo "<span class='d-flex align-items-center ms-2'>";
+                                    echo "<button type='button' class='action-icon btnSvg me-1' onclick=\"editCategory(" . (int)$cat['id'] . ", '" . addslashes($cat['name']) . "', {$parentIdJs})\">";
+                                    echo '<svg width="15" height="15" fill="#0780c7" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>';
+                                    echo "</button>";
+                                    echo "<button type='button' class='action-icon btnSvg' onclick=\"confirmDelete(" . (int)$cat['id'] . ")\">";
+                                    echo '<svg width="15" height="15" fill="#b81509" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
+                                    echo "</button>";
+                                    echo "</span>";
+                                    echo "</li>";
+                                }
+                            }
+                        }
+
+                        if ($hasChildren) {
+                            echo "</ul>";
+                        }
+                    }
+                      
                     displayTreeFancy($allCategories);
                     ?>
                 </div>
