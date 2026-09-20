@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <label class="form-label">Units:</label>
             <input type="text" class="form-control" name="metadata_units"
                 value="${(metadata.units || []).join(', ')}"
-                placeholder="e.g., mΩ, Ω, kΩ" autocomplete="off">
+                placeholder="e.g., mΩ, Ω, kΩ" autocomplete="on">
         </div>
         `);
     } else if (type === 'multiselect') {
@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="col-12 col-md-6 px-1 d-flex flex-row align-items-center metadata-field">
                         <label class="form-label">Units (comma-separated):</label>
-                        <input type="text" class="form-control" name="features[${counter}][units]" placeholder="e.g., mΩ, Ω, kΩ" autocomplete="off">
+                        <input type="text" class="form-control" name="features[${counter}][units]" placeholder="e.g., mΩ, Ω, kΩ" autocomplete="on">
                     </div>
                 `);
             } else if (e.target.value === 'multiselect') {
