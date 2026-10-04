@@ -27,6 +27,8 @@
         </div>
     </div>
 
+    
+
     <!-- Container for existing feature rows -->
     <div id="existingFeaturesContainer" class="existing-features" style="display:none;">
         <label>Existing Features:</label>
@@ -45,6 +47,1105 @@
         </div>
     </div>
 </form>
+
+<!-- =========================================================
+     Floating Common Units Button
+========================================================= -->
+<button type="button"
+        id="openUnitsHelper"
+        class="units-helper-floating-btn"
+        title="Common Units">
+
+    <!-- Bootstrap Rulers SVG -->
+    <svg  width="16" height="16" fill="currentColor" class="bi bi-rulers" viewBox="0 0 16 16">
+        <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1z"/>
+    </svg>
+
+    <span>Units</span>
+</button>
+
+
+<!-- =========================================================
+     Common Units Overlay
+========================================================= -->
+<div id="unitsHelperOverlay"
+     class="units-helper-overlay">
+
+    <div class="units-helper-modal">
+
+        <!-- ================= Header ================= -->
+        <div class="units-helper-header">
+
+            <div>
+
+                <div class="units-helper-title">
+
+                    <!-- Rulers SVG -->
+                    <svg  width="16" height="16" fill="currentColor" class="bi bi-rulers" viewBox="0 0 16 16">
+                    <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1z"/>
+                    </svg>
+
+                    <span>Common Units</span>
+                </div>
+
+                <div class="units-helper-subtitle">
+                    Click any row to copy the complete unit list
+                </div>
+
+            </div>
+
+
+            <!-- Close -->
+            <button type="button"
+                    id="closeUnitsHelper"
+                    class="units-helper-close"
+                    aria-label="Close">
+
+                <!-- X-lg SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="18"
+                     height="18"
+                     fill="currentColor"
+                     viewBox="0 0 16 16"
+                     aria-hidden="true">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= Body ================= -->
+        <div class="units-helper-body">
+
+            <div class="units-helper-grid">
+
+
+                <!-- =================================================
+                     ELECTRICAL
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- Lightning SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16"
+                             aria-hidden="true">
+                            <path d="M11.3 0 1.5 9.5h5.2L5.8 16l8.7-10H9.3z"/>
+                        </svg>
+
+                        <span>Electrical</span>
+
+                    </div>
+
+
+                    <!-- Resistance -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="mΩ, Ω, kΩ, MΩ, GΩ">
+
+                        <span class="unit-copy-name">Resistance</span>
+
+                        <span class="unit-copy-values">
+                            mΩ, Ω, kΩ, MΩ, GΩ
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+
+                            <!-- Copy -->
+                            <svg class="copy-icon"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+
+                            <!-- Check -->
+                            <svg class="check-icon"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+
+                        </span>
+
+                    </button>
+
+
+                    <!-- Current -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="µA, mA, A, kA">
+
+                        <span class="unit-copy-name">Current</span>
+
+                        <span class="unit-copy-values">
+                            µA, mA, A, kA
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Voltage -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="µV, mV, V, kV">
+
+                        <span class="unit-copy-name">Voltage</span>
+
+                        <span class="unit-copy-values">
+                            µV, mV, V, kV
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Power -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="µW, mW, W, kW">
+
+                        <span class="unit-copy-name">Power</span>
+
+                        <span class="unit-copy-values">
+                            µW, mW, W, kW
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Capacitance -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="pF, nF, µF, mF, F">
+
+                        <span class="unit-copy-name">Capacitance</span>
+
+                        <span class="unit-copy-values">
+                            pF, nF, µF, mF, F
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Inductance -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="nH, µH, mH, H">
+
+                        <span class="unit-copy-name">Inductance</span>
+
+                        <span class="unit-copy-values">
+                            nH, µH, mH, H
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Frequency -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="Hz, kHz, MHz, GHz">
+
+                        <span class="unit-copy-name">Frequency</span>
+
+                        <span class="unit-copy-values">
+                            Hz, kHz, MHz, GHz
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Conductance -->
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="nS, µS, mS, S">
+
+                        <span class="unit-copy-name">Conductance</span>
+
+                        <span class="unit-copy-values">
+                            nS, µS, mS, S
+                        </span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ELECTRONICS
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- CPU SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16"
+                             aria-hidden="true">
+                            <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h.5A1.5 1.5 0 0 1 13.5 3.5V4h1.5a.5.5 0 0 1 0 1h-1.5v1h1.5a.5.5 0 0 1 0 1h-1.5v1h1.5a.5.5 0 0 1 0 1h-1.5v1h1.5a.5.5 0 0 1 0 1h-1.5v.5A1.5 1.5 0 0 1 12 13h-.5v1.5a.5.5 0 0 1-1 0V13h-1v1.5a.5.5 0 0 1-1 0V13h-1v1.5a.5.5 0 0 1-1 0V13h-1v1.5a.5.5 0 0 1-1 0V13H4a1.5 1.5 0 0 1-1.5-1.5V11H1a.5.5 0 0 1 0-1h1.5V9H1a.5.5 0 0 1 0-1h1.5V7H1a.5.5 0 0 1 0-1h1.5V5H1a.5.5 0 0 1 0-1h1.5v-.5A1.5 1.5 0 0 1 4 2.0h.5V.5A.5.5 0 0 1 5 0"/>
+                            <path d="M5 4.5A.5.5 0 0 1 5.5 4h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+
+                        <span>Electronics</span>
+
+                    </div>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="dBm, dB">
+
+                        <span class="unit-copy-name">Gain / Level</span>
+                        <span class="unit-copy-values">dBm, dB</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="mV, V">
+
+                        <span class="unit-copy-name">Threshold</span>
+                        <span class="unit-copy-values">mV, V</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="µV, mV, V">
+
+                        <span class="unit-copy-name">Offset</span>
+                        <span class="unit-copy-values">µV, mV, V</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="mV, V, %">
+
+                        <span class="unit-copy-name">Ripple</span>
+                        <span class="unit-copy-values">mV, V, %</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="mΩ, Ω">
+
+                        <span class="unit-copy-name">ESR</span>
+                        <span class="unit-copy-values">mΩ, Ω</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="nV/√Hz, µV/√Hz">
+
+                        <span class="unit-copy-name">Noise</span>
+                        <span class="unit-copy-values">nV/√Hz, µV/√Hz</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="V/µs, V/ms, V/ns">
+
+                        <span class="unit-copy-name">Slew Rate</span>
+                        <span class="unit-copy-values">V/µs, V/ms, V/ns</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="mV/µs, mV/ms, mV/ns">
+
+                        <span class="unit-copy-name">mV Slew Rate</span>
+                        <span class="unit-copy-values">mV/µs, mV/ms, mV/ns</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="S/s, kS/s, MS/s, GS/s">
+
+                        <span class="unit-copy-name">Sample Rate</span>
+                        <span class="unit-copy-values">S/s, kS/s, MS/s, GS/s</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="b/s, kb/s, Mb/s">
+
+                        <span class="unit-copy-name">Data Rate</span>
+                        <span class="unit-copy-values">b/s, kb/s, Mb/s</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="Channel">
+
+                        <span class="unit-copy-name">Channel</span>
+                        <span class="unit-copy-values">Channel</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="Input">
+
+                        <span class="unit-copy-name">Input</span>
+                        <span class="unit-copy-values">Input</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="Output">
+
+                        <span class="unit-copy-name">Output</span>
+                        <span class="unit-copy-values">Output</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="Series">
+
+                        <span class="unit-copy-name">Series</span>
+                        <span class="unit-copy-values">Series</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button"
+                            class="unit-copy-row"
+                            data-units="LSB">
+
+                        <span class="unit-copy-name">LSB</span>
+                        <span class="unit-copy-values">LSB</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PHYSICAL
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- Rulers -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M1.5 1.5a1 1 0 0 1 1.414 0l11.586 11.586a1 1 0 0 1 0 1.414l-1.586 1.586a1 1 0 0 1-1.414 0L.5 4.5a1 1 0 0 1 0-1.414z"/>
+                            <path d="m3.5 2.914 9.586 9.586-1.086 1.086-1.5-1.5.793-.793-.707-.707-.793.793-1.5-1.5.793-.793-.707-.707-.793.793-1.5-1.5.793-.793-.707-.707-.793.793-1.5-1.5.793-.793-.707-.707-.793.793-1.5-1.5z"/>
+                        </svg>
+
+                        <span>Physical</span>
+
+                    </div>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="nm, µm, mm, cm, m, km">
+
+                        <span class="unit-copy-name">Length</span>
+                        <span class="unit-copy-values">nm, µm, mm, cm, m, km</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="mm², cm², m²">
+
+                        <span class="unit-copy-name">Area</span>
+                        <span class="unit-copy-values">mm², cm², m²</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="mm³, cm³, mL, L">
+
+                        <span class="unit-copy-name">Volume</span>
+                        <span class="unit-copy-values">mm³, cm³, mL, L</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="mg, g, kg">
+
+                        <span class="unit-copy-name">Weight</span>
+                        <span class="unit-copy-values">mg, g, kg</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="°C, °F, K">
+
+                        <span class="unit-copy-name">Temperature</span>
+                        <span class="unit-copy-values">°C, °F, K</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="Pa, kPa, MPa, bar, psi">
+
+                        <span class="unit-copy-name">Pressure</span>
+                        <span class="unit-copy-values">Pa, kPa, MPa, bar, psi</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MECHANICAL / PACKAGE
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- Gear -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M9.405 1.05c-.25-.8-1.36-.8-1.61 0l-.18.58a5.6 5.6 0 0 0-1.18.49l-.52-.29c-.73-.41-1.55.41-1.14 1.14l.29.52a5.6 5.6 0 0 0-.49 1.18l-.58.18c-.8.25-.8 1.36 0 1.61l.58.18c.12.42.29.82.49 1.18l-.29.52c-.41.73.41 1.55 1.14 1.14l.52-.29c.36.2.76.37 1.18.49l.18.58c.25.8 1.36.8 1.61 0l.18-.58c.42-.12.82-.29 1.18-.49l.52.29c.73.41 1.55-.41 1.14-1.14l-.29-.52c.2-.36.37-.76.49-1.18l.58-.18c.8-.25.8-1.36 0-1.61l-.58-.18a5.6 5.6 0 0 0-.49-1.18l.29-.52c.41-.73-.41-1.55-1.14-1.14l-.52.29a5.6 5.6 0 0 0-1.18-.49zM8.6 5.5a2 2 0 1 1-1.2 0 2 2 0 0 1 1.2 0"/>
+                        </svg>
+
+                        <span>Mechanical / Package</span>
+
+                    </div>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="µm, mm">
+
+                        <span class="unit-copy-name">Pitch</span>
+                        <span class="unit-copy-values">µm, mm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="µm, mm, cm">
+
+                        <span class="unit-copy-name">Diameter</span>
+                        <span class="unit-copy-values">µm, mm, cm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="µm, mm, cm">
+
+                        <span class="unit-copy-name">Thickness</span>
+                        <span class="unit-copy-values">µm, mm, cm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="µm, mm, cm">
+
+                        <span class="unit-copy-name">Height</span>
+                        <span class="unit-copy-values">µm, mm, cm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="µm, mm, cm">
+
+                        <span class="unit-copy-name">Width</span>
+                        <span class="unit-copy-values">µm, mm, cm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TIME / SIGNAL
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- Clock -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 1 .5.5v3.75l2.25 1.3a.5.5 0 0 1-.5.866l-2.5-1.443A.5.5 0 0 1 7.5 8V4A.5.5 0 0 1 8 3.5"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m0-1A7 7 0 1 1 8 1a7 7 0 0 1 0 14"/>
+                        </svg>
+
+                        <span>Time / Signal</span>
+
+                    </div>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="ns, µs, ms, s, min, h">
+
+                        <span class="unit-copy-name">Time</span>
+                        <span class="unit-copy-values">ns, µs, ms, s, min, h</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="ns, µs, ms, s">
+
+                        <span class="unit-copy-name">Period</span>
+                        <span class="unit-copy-values">ns, µs, ms, s</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="ns, µs, ms, s">
+
+                        <span class="unit-copy-name">Rise Time</span>
+                        <span class="unit-copy-values">ns, µs, ms, s</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="ns, µs, ms, s">
+
+                        <span class="unit-copy-name">Fall Time</span>
+                        <span class="unit-copy-values">ns, µs, ms, s</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="%">
+
+                        <span class="unit-copy-name">Duty Cycle</span>
+                        <span class="unit-copy-values">%</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1-1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="°, rad">
+
+                        <span class="unit-copy-name">Phase</span>
+                        <span class="unit-copy-values">°, rad</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="rpm">
+
+                        <span class="unit-copy-name">Speed</span>
+                        <span class="unit-copy-values">rpm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.5 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TOLERANCE / ACCURACY
+                ================================================== -->
+                <div class="unit-category">
+
+                    <div class="unit-category-title">
+
+                        <!-- Bullseye -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="17"
+                             height="17"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14m0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
+                            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8m0 1a5 5 0 1 1 0-10 5 5 0 0 1 0 10"/>
+                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                        </svg>
+
+                        <span>Tolerance / Accuracy</span>
+
+                    </div>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="%, ppm">
+
+                        <span class="unit-copy-name">Tolerance</span>
+                        <span class="unit-copy-values">%, ppm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="%, ppm">
+
+                        <span class="unit-copy-name">Accuracy</span>
+                        <span class="unit-copy-values">%, ppm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+
+                    <button type="button" class="unit-copy-row"
+                            data-units="%, ppm">
+
+                        <span class="unit-copy-name">Error</span>
+                        <span class="unit-copy-values">%, ppm</span>
+
+                        <span class="unit-copy-icons" aria-hidden="true">
+                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 1.5a.5.5 0 0 1 .5-.5h7A1.5 1.5 0 0 1 13 2.5v9a.5.5 0 0 1-1 0v-9a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 1-.5-.5"/>
+                                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h7A1.5 1.5 0 0 1 12 3.5v9A1.5 1.5 0 0 1 10.5 14h-7A1.5 1.5 0 0 1 2 12.5zM3.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.5 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -487,5 +1588,161 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial row creation
     createNewFeatureRow();
+
+
+    //units==================================
+    
+      const openButton = document.getElementById('openUnitsHelper');
+    const closeButton = document.getElementById('closeUnitsHelper');
+    const overlay = document.getElementById('unitsHelperOverlay');
+
+
+    /* =========================
+       Open
+       ========================= */
+
+    function openUnitsHelper() {
+
+        overlay.classList.add('show');
+
+        document.body.style.overflow = 'hidden';
+    }
+
+
+    /* =========================
+       Close
+       ========================= */
+
+    function closeUnitsHelper() {
+
+        overlay.classList.remove('show');
+
+        document.body.style.overflow = '';
+    }
+
+
+    openButton.addEventListener('click', openUnitsHelper);
+
+    closeButton.addEventListener('click', closeUnitsHelper);
+
+
+    /* =========================
+       Click outside modal
+       ========================= */
+
+    overlay.addEventListener('click', function (event) {
+
+        if (event.target === overlay) {
+            closeUnitsHelper();
+        }
+
+    });
+
+
+    /* =========================
+       ESC
+       ========================= */
+
+    document.addEventListener('keydown', function (event) {
+
+        if (
+            event.key === 'Escape' &&
+            overlay.classList.contains('show')
+        ) {
+            closeUnitsHelper();
+        }
+
+    });
+
+
+    /* =========================
+       Copy Unit List
+       ========================= */
+
+    document.querySelectorAll('.unit-copy-row').forEach(function (row) {
+
+        row.addEventListener('click', async function () {
+
+            const units = row.dataset.units;
+
+            if (!units) {
+                return;
+            }
+
+
+            try {
+
+                await navigator.clipboard.writeText(units);
+
+            } catch (error) {
+
+                /*
+                 * Fallback
+                 */
+                const textarea = document.createElement('textarea');
+
+                textarea.value = units;
+
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+
+                document.body.appendChild(textarea);
+
+                textarea.focus();
+                textarea.select();
+
+                document.execCommand('copy');
+
+                textarea.remove();
+            }
+
+
+            /* Visual feedback */
+
+            row.classList.add('copied');
+
+            const icon = row.querySelector('svg');
+
+            if (icon) {
+                icon.className = 'bi bi-check-lg';
+            }
+
+
+            /*
+             * SweetAlert2
+             * اگر SweetAlert2 در صفحه‌ات لود شده
+             */
+            if (typeof Swal !== 'undefined') {
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Copied!',
+                    text: units,
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 1400,
+                    timerProgressBar: true
+                });
+
+            }
+
+
+            setTimeout(function () {
+
+                row.classList.remove('copied');
+
+                if (icon) {
+                    icon.innerHTML = `
+                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6 10.793l7.146-7.147a.5.5 0 0 1 .708 0"/>
+                    `;
+                }
+
+            }, 1000);
+
+        });
+
+    });
+
 });
 </script>
