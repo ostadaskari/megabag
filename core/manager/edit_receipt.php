@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $isLocked = isset($_POST['lock']) ? 1 : 0;
         $newRemarks = trim($_POST['remarks'] ?? '');
 
-        if ($receiptId <= 0 || $newQty <= 0) {
+        if ($receiptId <= 0 || $newQty < 0) {
             throw new Exception("Invalid receipt ID or quantity.");
         }
 

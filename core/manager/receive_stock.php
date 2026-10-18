@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products']) && is_arr
             if ($product_id <= 0) {
                 throw new Exception("Row " . ($index + 1) . ": Invalid product selection.");
             }
-            if ($qty_received <= 0) {
+            if ($qty_received < 0) {
                 throw new Exception("Row " . ($index + 1) . ": Quantity must be greater than 0.");
             }
 
