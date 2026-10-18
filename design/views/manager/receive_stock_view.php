@@ -33,7 +33,7 @@
                         <!-- Qty -->
                         <div class="col-6 col-md-2 px-1">
                             <label for="quantityInput" class="form-label">QTY:</label>
-                            <input type="number" name="products[0][qty_received]" class="form-control" min="1" required>
+                            <input type="number" name="products[0][qty_received]" class="form-control" min="0" required>
                         </div>
 
                         <!-- Optional purchase code -->

@@ -186,12 +186,12 @@
                     <!-- Current -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="µA, mA, A, kA">
+                            data-units="uA, mA, A, kA">
 
                         <span class="unit-copy-name">Current</span>
 
                         <span class="unit-copy-values">
-                            µA, mA, A, kA
+                            uA, mA, A, kA
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -210,12 +210,12 @@
                     <!-- Voltage -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="µV, mV, V, kV">
+                            data-units="uV, mV, V, kV">
 
                         <span class="unit-copy-name">Voltage</span>
 
                         <span class="unit-copy-values">
-                            µV, mV, V, kV
+                            uV, mV, V, kV
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -234,12 +234,12 @@
                     <!-- Power -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="µW, mW, W, kW">
+                            data-units="uW, mW, W, kW">
 
                         <span class="unit-copy-name">Power</span>
 
                         <span class="unit-copy-values">
-                            µW, mW, W, kW
+                            uW, mW, W, kW
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -258,12 +258,12 @@
                     <!-- Capacitance -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="pF, nF, µF, mF, F">
+                            data-units="pF, nF, uF, mF, F">
 
                         <span class="unit-copy-name">Capacitance</span>
 
                         <span class="unit-copy-values">
-                            pF, nF, µF, mF, F
+                            pF, nF, uF, mF, F
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -282,12 +282,12 @@
                     <!-- Inductance -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="nH, µH, mH, H">
+                            data-units="nH, uH, mH, H">
 
                         <span class="unit-copy-name">Inductance</span>
 
                         <span class="unit-copy-values">
-                            nH, µH, mH, H
+                            nH, uH, mH, H
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -330,12 +330,12 @@
                     <!-- Conductance -->
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="nS, µS, mS, S">
+                            data-units="nS, uS, mS, S">
 
                         <span class="unit-copy-name">Conductance</span>
 
                         <span class="unit-copy-values">
-                            nS, µS, mS, S
+                            nS, uS, mS, S
                         </span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
@@ -417,10 +417,10 @@
 
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="µV, mV, V">
+                            data-units="uV, mV, V">
 
                         <span class="unit-copy-name">Offset</span>
-                        <span class="unit-copy-values">µV, mV, V</span>
+                        <span class="unit-copy-values">uV, mV, V</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -474,10 +474,10 @@
 
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="nV/√Hz, µV/√Hz">
+                            data-units="nV/√Hz, uV/√Hz">
 
                         <span class="unit-copy-name">Noise</span>
-                        <span class="unit-copy-values">nV/√Hz, µV/√Hz</span>
+                        <span class="unit-copy-values">nV/√Hz, uV/√Hz</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -493,10 +493,10 @@
 
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="V/µs, V/ms, V/ns">
+                            data-units="V/us, V/ms, V/ns">
 
                         <span class="unit-copy-name">Slew Rate</span>
-                        <span class="unit-copy-values">V/µs, V/ms, V/ns</span>
+                        <span class="unit-copy-values">V/us, V/ms, V/ns</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -512,10 +512,10 @@
 
                     <button type="button"
                             class="unit-copy-row"
-                            data-units="mV/µs, mV/ms, mV/ns">
+                            data-units="mV/us, mV/ms, mV/ns">
 
                         <span class="unit-copy-name">mV Slew Rate</span>
-                        <span class="unit-copy-values">mV/µs, mV/ms, mV/ns</span>
+                        <span class="unit-copy-values">mV/us, mV/ms, mV/ns</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -688,10 +688,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="nm, µm, mm, cm, m, km">
+                            data-units="nm, um, mm, cm, m, km">
 
                         <span class="unit-copy-name">Length</span>
-                        <span class="unit-copy-values">nm, µm, mm, cm, m, km</span>
+                        <span class="unit-copy-values">nm, um, mm, cm, m, km</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -820,10 +820,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="µm, mm">
+                            data-units="um, mm">
 
                         <span class="unit-copy-name">Pitch</span>
-                        <span class="unit-copy-values">µm, mm</span>
+                        <span class="unit-copy-values">um, mm</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -838,10 +838,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="µm, mm, cm">
+                            data-units="um, mm, cm">
 
                         <span class="unit-copy-name">Diameter</span>
-                        <span class="unit-copy-values">µm, mm, cm</span>
+                        <span class="unit-copy-values">um, mm, cm</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -856,10 +856,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="µm, mm, cm">
+                            data-units="um, mm, cm">
 
                         <span class="unit-copy-name">Thickness</span>
-                        <span class="unit-copy-values">µm, mm, cm</span>
+                        <span class="unit-copy-values">um, mm, cm</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -874,10 +874,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="µm, mm, cm">
+                            data-units="um, mm, cm">
 
                         <span class="unit-copy-name">Height</span>
-                        <span class="unit-copy-values">µm, mm, cm</span>
+                        <span class="unit-copy-values">um, mm, cm</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -892,10 +892,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="µm, mm, cm">
+                            data-units="um, mm, cm">
 
                         <span class="unit-copy-name">Width</span>
-                        <span class="unit-copy-values">µm, mm, cm</span>
+                        <span class="unit-copy-values">um, mm, cm</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -935,10 +935,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="ns, µs, ms, s, min, h">
+                            data-units="ns, us, ms, s, min, h">
 
                         <span class="unit-copy-name">Time</span>
-                        <span class="unit-copy-values">ns, µs, ms, s, min, h</span>
+                        <span class="unit-copy-values">ns, us, ms, s, min, h</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -953,10 +953,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="ns, µs, ms, s">
+                            data-units="ns, us, ms, s">
 
                         <span class="unit-copy-name">Period</span>
-                        <span class="unit-copy-values">ns, µs, ms, s</span>
+                        <span class="unit-copy-values">ns, us, ms, s</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -971,10 +971,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="ns, µs, ms, s">
+                            data-units="ns, us, ms, s">
 
                         <span class="unit-copy-name">Rise Time</span>
-                        <span class="unit-copy-values">ns, µs, ms, s</span>
+                        <span class="unit-copy-values">ns, us, ms, s</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -989,10 +989,10 @@
 
 
                     <button type="button" class="unit-copy-row"
-                            data-units="ns, µs, ms, s">
+                            data-units="ns, us, ms, s">
 
                         <span class="unit-copy-name">Fall Time</span>
-                        <span class="unit-copy-values">ns, µs, ms, s</span>
+                        <span class="unit-copy-values">ns, us, ms, s</span>
 
                         <span class="unit-copy-icons" aria-hidden="true">
                             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

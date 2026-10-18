@@ -54,7 +54,7 @@
                         <!-- Qty -->
                         <div class="col-6 col-md-1 px-1 mt-2 mt-md-0">
                             <label for="quantityInput" class="form-label">Rcvd QTY:</label>
-                            <input type="number" name="qty_received" class="form-control" min="1" value="<?php echo htmlspecialchars((string)($receiptData['qty_received'] ?? 1)); ?>" required>
+                            <input type="number" name="qty_received" class="form-control" min="0" value="<?php echo htmlspecialchars((string)($receiptData['qty_received'] ?? 0)); ?>" required>
                         </div>
 
                         <!-- Purchase Code -->
