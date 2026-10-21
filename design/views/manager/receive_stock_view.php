@@ -335,6 +335,8 @@
         "Refurbished",
         "Repaired",
         "Reconditioned",
+        "Reballing done",
+        "Solder balls removed",
         "Part number to be verified"
     ];
 
