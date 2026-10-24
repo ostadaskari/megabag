@@ -317,6 +317,10 @@
     // ==========================================
     const predefinedComments = [
         "Available to Order",
+        "Discontinued",
+        "Obsolete",
+        "EOL (End of Life)",
+        "NRND (Not Recognised for New Designs)",
         "In stock",
         "non-stock",
         "unavailable",
