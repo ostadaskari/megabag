@@ -139,6 +139,11 @@
         // WordPress-Style Multi-Tag Comments Feature (Edit Page)
         // ==========================================
         const predefinedComments = [
+            "Available to Order",
+            "In stock",
+            "non-stock",
+            "unavailable",
+            "Out of Stock",
             "Cap detached",
             "Suspected Faulty",
             "Broken Pin",
