@@ -25,8 +25,16 @@
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                         </svg>
                     </div>
-                    <input class="px-5" id="searchInput" type="text" autocomplete="off" placeholder="Search here...">
+                    <input class="px-5" 
+                    id="searchInput" 
+                    type="text" 
+                    autocomplete="off"  
+                    placeholder="P/N, X-Code, Submitter, Location, Project, Comment..."
+                    title="Search by Part Number, X-Code, Submitter name, Lot Location, Project Name or Comment">
                     </div>
+                        <small class="text-muted d-block mt-1" style="font-size: 11px;">
+                            Search by P/N, X-Code, Submitter, Location, Project Name or Remarks.
+                        </small>
                 </div>
 
                 <div class="col-5 col-md-2 mt-md-0 mt-2">
@@ -82,8 +90,18 @@
                         </button>
                     </div> 
                 </div>
+                        <!-- counter -->
+                    <div class="d-flex justify-content-end align-items-center mb-1 px-2">
+                        <span class="text-muted" id="receiptsCountLabel" style="font-size: x-small;">
+                            N:
+                        </span>
+
+                        <strong class="ms-2" id="receiptsCount">0</strong>
+                    </div>
             </div>
         </div>
+
+
         
         <div class="row d-flex justify-content-center align-items-center mt-1">
             <div class="col-12">
@@ -151,17 +169,36 @@
 
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `../ajax/search_receipts.php?keyword=${encodeURIComponent(keyword)}&from=${from}&to=${to}&page=${page}`, true);
+
         xhr.onload = function () {
             if (xhr.status === 200) {
                 const result = JSON.parse(xhr.responseText);
+
                 document.getElementById("receiptsTableBody").innerHTML = result.html;
                 document.getElementById("pagination").innerHTML = result.pagination;
-                setupCommentModals(); // Call the function to set up the modals after content is loaded
+
+                // Update receipts counter
+                const hasSearch =
+                    keyword.trim() !== '' ||
+                    from !== '' ||
+                    to !== '';
+
+                document.getElementById('receiptsCountLabel').textContent =
+                    hasSearch ? 'Found:' : 'Total:';
+
+                document.getElementById('receiptsCount').textContent =
+                    Number(
+                        hasSearch ? result.filtered_count : result.total_count
+                    ).toLocaleString();
+
+                setupCommentModals();
             }
         };
+
         xhr.send();
     }
-        // New function to toggle the lock status of a product lot
+
+    // Toggle lock status of a product lot
     window.toggleLock = function(lotId) {
         Swal.fire({
             title: 'Are you sure?',
@@ -176,12 +213,14 @@
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", `../ajax/toggle_receipt_lock.php`, true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
+
                         if (response.success) {
                             Swal.fire('Success!', response.message, 'success');
-                            fetchReceipts(); // Refresh the table to show the new status
+                            fetchReceipts();
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -189,6 +228,7 @@
                         Swal.fire('Error!', 'An error occurred while communicating with the server.', 'error');
                     }
                 };
+
                 xhr.send(`product_lot_id=${lotId}`);
             }
         });
@@ -198,6 +238,7 @@
         const keyword = document.getElementById("searchInput").value;
         const fromDate = document.getElementById("fromDate").value;
         const toDate = document.getElementById("toDate").value;
+
         const url = `../ajax/export_receipts.php?format=${format}&keyword=${encodeURIComponent(keyword)}&from_date=${fromDate}&to_date=${toDate}`;
         window.open(url, '_blank');
     }
@@ -206,7 +247,8 @@
         document.getElementById('searchInput').value = '';
         document.getElementById('fromDate').value = '';
         document.getElementById('toDate').value = '';
-        fetchReceipts(1); // Reload full list
+
+        fetchReceipts(1);
     }
 
     // Modal functionality for comments
@@ -220,6 +262,7 @@
         openModalButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
+
                 const comment = this.getAttribute('data-comment');
                 modalBody.textContent = comment;
                 modal.style.display = 'block';
@@ -234,7 +277,6 @@
             modal.style.display = 'none';
         });
     }
-
 
     window.editReceipt = function(receiptId) {
         window.location.href = `../auth/dashboard.php?page=edit_receipt&id=${receiptId}`;
@@ -254,80 +296,85 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '';
+
                 const actionInput = document.createElement('input');
                 actionInput.type = 'hidden';
                 actionInput.name = 'action';
                 actionInput.value = 'delete_receipt';
+
                 const idInput = document.createElement('input');
                 idInput.type = 'hidden';
                 idInput.name = 'receipt_id';
                 idInput.value = receiptId;
+
                 form.appendChild(actionInput);
                 form.appendChild(idInput);
+
                 document.body.appendChild(form);
                 form.submit();
             }
         });
     };
 
+    function printXcode(receiptxc, receiptpn) {
+        const w = window.open(
+            `../print/print_receipt.php?xc=${encodeURIComponent(receiptxc)}&pn=${encodeURIComponent(receiptpn)}`,
+            "_blank"
+        );
 
-            function printXcode(receiptxc, receiptpn) { 
-                const w = window.open(`../print/print_receipt.php?xc=${encodeURIComponent(receiptxc)}&pn=${encodeURIComponent(receiptpn)}`, "_blank");
-                w.onload = () => {
-                    w.print();
-                    w.onafterprint = () => w.close();
-                };
-            }
+        w.onload = () => {
+            w.print();
+            w.onafterprint = () => w.close();
+        };
+    }
 
-        
-        
     // Initial load
-document.addEventListener("DOMContentLoaded", () => {
-    fetchReceipts();
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchReceipts();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const error = urlParams.get('error');
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const error = urlParams.get('error');
 
-    // Handle generic status messages (deleted, updated)
-    if (status === 'deleted') {
-        Swal.fire({
-            title: 'Deleted!',
-            text: 'The receipt has been deleted.',
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        });
-    } else if (status === 'updated') {
-        Swal.fire({
-            title: 'Updated!',
-            text: 'The receipt has been updated.',
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        });
-    }
+        if (status === 'deleted') {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'The receipt has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        } else if (status === 'updated') {
+            Swal.fire({
+                title: 'Updated!',
+                text: 'The receipt has been updated.',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
 
-    // Handle specific error messages from the backend
-    if (error) {
-        Swal.fire({
-            title: 'Error!',
-            text: decodeURIComponent(error),
-            icon: 'error',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        });
-    }
+        if (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: decodeURIComponent(error),
+                icon: 'error',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            });
+        }
 
-    // Clean up the URL after displaying the alert
-    if (status) {
-        urlParams.delete('status');
-    }
-    if (error) {
-        urlParams.delete('error');
-    }
-    if (status || error) {
-        history.replaceState(null, '', `?${urlParams.toString()}`);
-    }
-});
+        if (status) {
+            urlParams.delete('status');
+        }
+
+        if (error) {
+            urlParams.delete('error');
+        }
+
+        if (status || error) {
+            history.replaceState(null, '', `?${urlParams.toString()}`);
+        }
+    });
 </script>
+

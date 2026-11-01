@@ -10,7 +10,7 @@ $keyword = $_GET['keyword'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $page = max(1, intval($_GET['page'] ?? 1));
-$limit = 13; // per page
+$limit = 15; // per page
 $offset = ($page - 1) * $limit;
 
 $conditions = [];
@@ -18,13 +18,23 @@ $params = [];
 $types = '';
 
 if (!empty($keyword)) {
-    $conditions[] = "(products.part_number LIKE ? OR users.name LIKE ? OR users.family LIKE ? OR users.nickname LIKE ? OR product_lots.x_code LIKE ? OR product_lots.lot_location LIKE ? OR product_lots.project_name LIKE ?)";
-    for ($i = 0; $i < 7; $i++) {
+
+    $conditions[] = "(
+        products.part_number LIKE ?
+        OR users.name LIKE ?
+        OR users.family LIKE ?
+        OR users.nickname LIKE ?
+        OR product_lots.x_code LIKE ?
+        OR product_lots.lot_location LIKE ?
+        OR product_lots.project_name LIKE ?
+        OR LOWER(stock_receipts.remarks) LIKE LOWER(?)
+    )";
+
+    for ($i = 0; $i < 8; $i++) {
         $params[] = "%$keyword%";
         $types .= 's';
     }
 }
-
 if (!empty($from)) {
     $conditions[] = "stock_receipts.created_at >= ?";
     $params[] = $from . " 00:00:00";
@@ -38,15 +48,29 @@ if (!empty($to)) {
 }
 
 $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+// Total number of receipts without filters
+$totalStmt = $conn->prepare("
+    SELECT COUNT(*)
+    FROM stock_receipts
+");
+
+$totalStmt->execute();
+$totalCount = (int) $totalStmt->get_result()->fetch_row()[0];
+$totalStmt->close();
 
 $countStmt = $conn->prepare("SELECT COUNT(*) FROM stock_receipts
     JOIN product_lots ON stock_receipts.product_lot_id = product_lots.id
     JOIN products ON product_lots.product_id = products.id
     JOIN users ON stock_receipts.user_id = users.id $where"); 
 
-if (!empty($params)) $countStmt->bind_param($types, ...$params);
+if (!empty($params)) {
+    $countStmt->bind_param($types, ...$params);
+}
+
 $countStmt->execute();
-$count = $countStmt->get_result()->fetch_row()[0];
+$count = (int) $countStmt->get_result()->fetch_row()[0];
+$countStmt->close();
+
 $totalPages = ceil($count / $limit);
 
 $query = "SELECT stock_receipts.*,
@@ -192,7 +216,9 @@ echo json_encode([
     'html' => $html ?: '<tr><td colspan="15" class="text-center">No receipts found.</td></tr>',
     'pagination' => $paginationHtml,
     'totalPages' => $totalPages,
-    'currentPage' => $page
+    'currentPage' => $page,
+    'total_count' => $totalCount,
+    'filtered_count' => $count
 ]);
 
 $stmt->close();
