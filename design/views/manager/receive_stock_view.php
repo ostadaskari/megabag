@@ -346,7 +346,20 @@
         "Reconditioned",
         "Reballing done",
         "Solder balls removed",
-        "Part number to be verified"
+        "Part number to be verified",
+        "Domestic Purchase",
+        "General",
+        "Red LEDS",
+        "Green LEDS",
+        "White LEDS",
+        "Orange LEDS",
+        "Blue LEDS",
+        "Red-Light",
+        "Green-Light",
+        "White-Light",
+        "Orange-Light",
+        "Blue-Light",
+        "Part numbrt and datasheet are unavailable"
     ];
 
     // Focus input when clicking tag textarea box
